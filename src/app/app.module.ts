@@ -6,15 +6,20 @@ import { AppComponent } from './app.component';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { CharactersComponent } from './characters/characters.component';
 import { CharacterDetailComponent } from './character-detail/character-detail.component';
 import { CharacterListComponent } from './character-list/character-list.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-  declarations: [AppComponent, CharactersComponent, CharacterDetailComponent, CharacterListComponent],
+  declarations: [
+    AppComponent,
+    CharacterDetailComponent,
+    CharacterListComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CommonModule,
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyCPMpyIIJ5kEz6baDWs8FlGN9zZ-DhttEU',
       authDomain: 'tales-280319.firebaseapp.com',

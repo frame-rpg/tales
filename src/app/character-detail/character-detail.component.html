@@ -1,1 +1,8 @@
-<p>character-detail works!</p>
+<div>
+  <div>Name:</div>
+  <div>{{ (character$ | async)?.name }}</div>
+</div>
+<div>
+  <div>Description:</div>
+  <div>{{ (character$ | async)?.description }}</div>
+</div>
