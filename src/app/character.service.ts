@@ -21,9 +21,7 @@ export class CharacterService {
       .doc<Character>(`/characters/${id}`)
       .snapshotChanges()
       .pipe(
-        tap((v) => console.log(v)),
-        map((v) => ({ id: v.payload.id, ...v.payload.data() } as Character)),
-        tap((v) => console.log(v))
+        map((v) => ({ id: v.payload.id, ...v.payload.data() } as Character))
       );
   }
 
