@@ -9,6 +9,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { CharacterDetailComponent } from './character-detail/character-detail.component';
 import { CharacterListComponent } from './character-list/character-list.component';
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { CommonModule } from '@angular/common';
       measurementId: 'G-Q6Z05NHF7L',
     }),
     AngularFireAuthModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
