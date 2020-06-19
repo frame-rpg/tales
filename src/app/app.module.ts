@@ -16,12 +16,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { ListComponent as CharactersListComponent } from './pages/characters/list/list.component';
+import { DetailComponent as CharactersDetailComponent } from './pages/characters/detail/detail.component';
+import { ListComponent as CampaignsListComponent } from './pages/campaigns/list/list.component';
+import { DetailComponent as CampaignsDetailComponent } from './pages/campaigns/detail/detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CharacterDetailComponent,
     CharacterListComponent,
+    CharactersListComponent,
+    CharactersDetailComponent,
+    CampaignsListComponent,
+    CampaignsDetailComponent,
   ],
   imports: [
     BrowserModule,
