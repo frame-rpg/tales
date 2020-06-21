@@ -1,1 +1,5 @@
-<p>list works!</p>
+<ul>
+  <li *ngFor="let character of list$ | async">
+    <a [routerLink]="['/characters', character.id]">{{ character.name }}</a>
+  </li>
+</ul>

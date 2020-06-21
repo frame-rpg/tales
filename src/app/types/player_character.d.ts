@@ -1,23 +1,20 @@
-import { Acl } from './acl.model';
+import { CharacterBase } from './character_base';
 
-export class Attribute {
+export interface Attribute {
   maxPool: number;
   currentPool: number;
   edge: number;
   wound: boolean;
 }
 
-export class Skill {
+export interface Skill {
   name: string;
   level: number;
   attributes: string[];
 }
 
-export class Character {
-  id: string;
-  name: string;
-  description: string;
-  acl: Acl;
+export interface PlayerCharacter extends CharacterBase {
+  type: 'player';
   speed: Attribute;
   might: Attribute;
   focus: Attribute;

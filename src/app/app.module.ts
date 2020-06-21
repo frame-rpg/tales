@@ -6,8 +6,6 @@ import { AppComponent } from './app.component';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { CharacterDetailComponent } from './character-detail/character-detail.component';
-import { CharacterListComponent } from './character-list/character-list.component';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -20,16 +18,16 @@ import { ListComponent as CharactersListComponent } from './pages/characters/lis
 import { DetailComponent as CharactersDetailComponent } from './pages/characters/detail/detail.component';
 import { ListComponent as CampaignsListComponent } from './pages/campaigns/list/list.component';
 import { DetailComponent as CampaignsDetailComponent } from './pages/campaigns/detail/detail.component';
+import { DetailComponent as ScenesDetailComponent } from './pages/scenes/detail/detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CharacterDetailComponent,
-    CharacterListComponent,
     CharactersListComponent,
     CharactersDetailComponent,
     CampaignsListComponent,
     CampaignsDetailComponent,
+    ScenesDetailComponent,
   ],
   imports: [
     BrowserModule,
