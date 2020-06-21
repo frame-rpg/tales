@@ -1,5 +1,3 @@
 export interface Acl {
-  primary: string;
-  view: string[];
-  edit: string[];
+  [uid: string]: 'read' | 'write' | 'admin';
 }
