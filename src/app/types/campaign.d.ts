@@ -1,8 +1,11 @@
 import { Acl } from './acl';
 
-export interface Campaign {
+export interface NewCampaign {
   acl: Acl;
-  id: string;
   description: string;
   name: string;
+}
+
+export interface Campaign extends NewCampaign {
+  id: string;
 }

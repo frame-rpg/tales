@@ -1,8 +1,12 @@
-import { ActionBase } from './action_base';
+import { ActionBase, NewActionBase } from './action_base';
 
-export interface Do extends ActionBase {
+export interface NewDo extends NewActionBase {
   type: 'do';
   roll: number;
   critical: boolean;
   initiative: number;
+}
+
+export interface Do extends NewDo {
+  id: string;
 }

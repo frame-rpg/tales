@@ -1,4 +1,4 @@
-import { CharacterBase } from './character_base';
+import { NewCharacterBase } from './character_base';
 
 export interface Attribute {
   maxPool: number;
@@ -13,7 +13,7 @@ export interface Skill {
   attributes: string[];
 }
 
-export interface PlayerCharacter extends CharacterBase {
+export interface NewPlayerCharacter extends NewCharacterBase {
   type: 'player';
   speed: Attribute;
   might: Attribute;
@@ -23,4 +23,8 @@ export interface PlayerCharacter extends CharacterBase {
   skills: {
     [name: string]: Skill;
   };
+}
+
+export interface PlayerCharacter extends NewPlayerCharacter {
+  id: string;
 }

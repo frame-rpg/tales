@@ -1,5 +1,9 @@
-import { ActionBase } from './action_base';
+import { NewActionBase } from './action_base';
 
-export interface Say extends ActionBase {
+export interface NewSay extends NewActionBase {
   type: 'say';
+}
+
+export interface Say extends NewSay {
+  id: string;
 }

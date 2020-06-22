@@ -1,60 +1,65 @@
 rules_version = '2';
 
 service cloud.firestore {
-
-  function isSignedIn() {
-    return request.auth != null;
-  }
-
-  function getData(table, id) {
-    return get(/databases/$(database)/documents/$(table)/$(id))
-  }
-
-  function isAdmin() {
-    return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true;
-  }
-
-  function getRole(rsc) {
-    return rsc.data.acl[request.auth.uid];
-  }
-
-  function isOneOfRoles(rsc, array) {
-    return isSignedIn() && (getRole(rsc) in array);
-  }
-
-  function preservesRoles(rsc) {
-    return  request.resource.data.acl == rsc.data.acl;
-  }
-
-  function writeAclZ(rsc) {
-    return isAdmin() || (isOneOfRoles(rsc, ['write']) && preservesRoles(rsc)) || isOneOfRoles(rsc, ['admin']);
-  }
-
-  function readAclZ(rsc) {
-    return isAdmin() || isOneOfRoles(rsc, ['read', 'write', 'admin']);
-  }
-
   match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function getData(table, id) {
+      return get(/databases/$(database)/documents/$(table)/$(id))
+    }
+
+    function isAdmin() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true;
+    }
+
+    function getRole(rsc) {
+      return rsc.data.acl[request.auth.uid];
+    }
+
+    function isOneOfRoles(rsc, array) {
+      return isSignedIn() && (getRole(rsc) in array);
+    }
+
+    function preservesRoles(rsc) {
+      return  request.resource.data.acl == rsc.data.acl;
+    }
+
+    function writeAclZ(rsc) {
+      return isAdmin() || (isOneOfRoles(rsc, ['write']) && preservesRoles(rsc)) || isOneOfRoles(rsc, ['admin']);
+    }
+
+    function readAclZ(rsc) {
+      return isAdmin() || isOneOfRoles(rsc, ['read', 'write', 'admin']);
+    }
+
     match /users/{userId} {
       allow read: if isSignedIn()
       allow write: if isAdmin() || request.auth.uid == request.resource.data.id
+      match /messages/{messageId} {
+        allow read: if writeAclZ(getData('users', userId))
+        allow write: if readAclZ(getData('users', userId))
+      }
     }
-    match /users/{userId}/messages/{messageId} {
-      allow read: if writeAclZ(getData('users', userId))
-      allow write: if readAclZ(getData('users', userId))
-    }
+
+
     match /characters/{characterId} {
       allow read: if readAclZ(resource)
       allow write: if writeAclZ(resource)
+
+      match /messages/{messageId} {
+        allow read: if writeAclZ(getData('characters', characterId))
+        allow write: if readAclZ(getData('characters', characterId))
+      }
     }
-    match /characters/{characterId}/messages/{messageId} {
-      allow read: if writeAclZ(getData('characters', characterId))
-      allow write: if readAclZ(getData('characters', characterId))
-    }
+
     match /campaigns/{campaignId} {
-      allow read: if readAclZ()
-      allow write: if writeAclZ()
+      allow read: if readAclZ(resource)
+      allow write: if writeAclZ(resource)
     }
+
     match /{document=**} {
       allow read, write: if false
     }
