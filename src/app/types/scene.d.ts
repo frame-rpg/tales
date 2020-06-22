@@ -1,7 +1,10 @@
 import { Acl } from './acl';
 
 export interface NewScene {
-  acl: Acl;
+  name: string;
+  description: string;
+  active: boolean;
+  campaignId: string;
 }
 
 export interface Scene {

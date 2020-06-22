@@ -11,10 +11,6 @@ service cloud.firestore {
       return get(/databases/$(database)/documents/$(table)/$(id))
     }
 
-    function isAdmin() {
-      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true;
-    }
-
     function getRole(rsc) {
       return rsc.data.acl[request.auth.uid];
     }
@@ -28,16 +24,16 @@ service cloud.firestore {
     }
 
     function writeAclZ(rsc) {
-      return isAdmin() || (isOneOfRoles(rsc, ['write']) && preservesRoles(rsc)) || isOneOfRoles(rsc, ['admin']);
+      return (isOneOfRoles(rsc, ['write']) && preservesRoles(rsc)) || isOneOfRoles(rsc, ['admin']);
     }
 
     function readAclZ(rsc) {
-      return isAdmin() || isOneOfRoles(rsc, ['read', 'write', 'admin']);
+      return isOneOfRoles(rsc, ['read', 'write', 'admin']);
     }
 
     match /users/{userId} {
       allow read: if isSignedIn()
-      allow write: if isAdmin() || request.auth.uid == request.resource.data.id
+      allow write: if request.auth.uid == request.resource.data.id
       match /messages/{messageId} {
         allow read: if writeAclZ(getData('users', userId))
         allow write: if readAclZ(getData('users', userId))
@@ -58,6 +54,18 @@ service cloud.firestore {
     match /campaigns/{campaignId} {
       allow read: if readAclZ(resource)
       allow write: if writeAclZ(resource)
+
+      match /scenes/{sceneId} {
+        allow read: if readAclZ(getData('campaigns', campaignId))
+        allow write: if writeAclZ(getData('campaigns', campaignId))
+
+        match /participants/{participantId} {
+          allow create: if writeAclZ(getData('campaigns', campaignId))
+          allow update: if writeAclZ(resource)
+          allow read: if readAclZ(getData('campaigns', campaignId))
+          allow delete: if writeAclZ(getData('campaigns', campaignId))
+        }
+      }
     }
 
     match /{document=**} {

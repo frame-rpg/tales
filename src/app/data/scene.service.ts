@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Scene } from '../types/scene';
 import { map } from 'rxjs/operators';
-import { Participant } from '../types/participant';
+import { Participant, NewParticipant } from '../types/participant';
 
 @Injectable({
   providedIn: 'root',
@@ -10,9 +10,9 @@ import { Participant } from '../types/participant';
 export class SceneService {
   constructor(private firestore: AngularFirestore) {}
 
-  get(id: String) {
+  get(campaignId: string, sceneId: string) {
     return this.firestore
-      .doc<Scene>(`/scenes/${id}`)
+      .doc<Scene>(`/campaigns/${campaignId}/scenes/${sceneId}`)
       .snapshotChanges()
       .pipe(map((v) => ({ id: v.payload.id, ...v.payload.data() } as Scene)));
   }
@@ -21,9 +21,27 @@ export class SceneService {
     return this.firestore.doc(`scenes/${id}`).update(scene);
   }
 
-  listParticipants(id: string) {
+  listParticipants(campaignId: string, sceneId: string) {
     return this.firestore
-      .collection<Participant>(`/scenes/${id}/participants`)
+      .collection<Participant>(
+        `/campaigns/${campaignId}/scenes/${sceneId}/participants`
+      )
       .valueChanges({ idField: 'id' });
+  }
+
+  addParticipant(
+    campaignId: string,
+    sceneId: string,
+    participant: NewParticipant
+  ) {
+    return this.firestore
+      .collection(`/campaigns/${campaignId}/scenes/${sceneId}/participants`)
+      .add(participant);
+  }
+
+  updateParticipant(sceneId: string, participant: Participant) {
+    return this.firestore
+      .doc(`/scenes/${sceneId}/participants/${participant.id}`)
+      .set(participant);
   }
 }

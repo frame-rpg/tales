@@ -11,7 +11,7 @@ export class ParticipantService {
 
   get(id: String) {
     return this.firestore
-      .doc<Participant>(`/participants/${id}`)
+      .doc<Participant>(`/scenes//participants/${id}`)
       .snapshotChanges()
       .pipe(
         map((v) => ({ id: v.payload.id, ...v.payload.data() } as Participant))

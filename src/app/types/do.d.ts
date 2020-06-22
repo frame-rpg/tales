@@ -1,4 +1,4 @@
-import { ActionBase, NewActionBase } from './action_base';
+import { NewActionBase } from './action_base';
 
 export interface NewDo extends NewActionBase {
   type: 'do';
