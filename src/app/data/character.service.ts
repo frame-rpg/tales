@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Character } from '../types/character';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -16,7 +15,7 @@ export class CharacterService {
       .valueChanges({ idField: 'id' });
   }
 
-  get(id: String): Observable<Character> {
+  get(id: String) {
     return this.firestore
       .doc<Character>(`/characters/${id}`)
       .snapshotChanges()

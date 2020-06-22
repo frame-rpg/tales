@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Participant } from '../types/participant';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -10,7 +9,7 @@ import { map } from 'rxjs/operators';
 export class ParticipantService {
   constructor(private firestore: AngularFirestore) {}
 
-  get(id: String): Observable<Participant> {
+  get(id: String) {
     return this.firestore
       .doc<Participant>(`/participants/${id}`)
       .snapshotChanges()
