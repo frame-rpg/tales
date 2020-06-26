@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Campaign, NewCampaign } from '../types/campaign';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { NewScene, Scene } from '../types/scene';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,17 +15,20 @@ export class CampaignService {
     private auth: AngularFireAuth
   ) {}
 
-  async list() {
-    const user = await this.auth.currentUser;
-    return this.firestore
-      .collection<Campaign>('campaigns', (ref) =>
-        ref.where(`acl.${user.uid}`, 'array-contains-any', [
-          'read',
-          'write',
-          'admin',
-        ])
+  list() {
+    return this.auth.user.pipe(
+      switchMap((user) =>
+        this.firestore
+          .collection<Campaign>('campaigns', (ref) =>
+            ref.where(`acl.${user.uid}`, 'array-contains-any', [
+              'read',
+              'write',
+              'admin',
+            ])
+          )
+          .valueChanges({ idField: 'id' })
       )
-      .valueChanges({ idField: 'id' });
+    );
   }
 
   get(id: string) {

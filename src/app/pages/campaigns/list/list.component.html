@@ -1,1 +1,5 @@
-<p>list works!</p>
+<ul>
+  <li *ngFor="let campaign of list$ | async">
+    <a [routerLink]="['/campaigns', campaign.id]">{{ campaign.name }}</a>
+  </li>
+</ul>

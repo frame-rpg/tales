@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Character, NewCharacter } from '../types/character';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
@@ -13,17 +13,20 @@ export class CharacterService {
     private auth: AngularFireAuth
   ) {}
 
-  async list() {
-    const user = await this.auth.currentUser;
-    return this.firestore
-      .collection<Character>('characters', (ref) =>
-        ref.where(`acl.${user.uid}`, 'array-contains-any', [
-          'read',
-          'write',
-          'admin',
-        ])
+  list() {
+    return this.auth.user.pipe(
+      switchMap((user) =>
+        this.firestore
+          .collection<Character>('characters', (ref) =>
+            ref.where(`acl.${user.uid}`, 'array-contains-any', [
+              'read',
+              'write',
+              'admin',
+            ])
+          )
+          .valueChanges({ idField: 'id' })
       )
-      .valueChanges({ idField: 'id' });
+    );
   }
 
   get(id: String) {
