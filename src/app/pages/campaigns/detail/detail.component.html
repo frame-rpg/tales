@@ -1,1 +1,6 @@
-<p>detail works!</p>
+<h1>{{ name | async }}</h1>
+<div>{{ description | async }}</div>
+
+<ul>
+  <li *ngFor="let scene of scenes | async">{{ scene.name }}</li>
+</ul>

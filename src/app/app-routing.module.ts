@@ -1,15 +1,25 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ListComponent } from './pages/characters/list/list.component';
-import { DetailComponent } from './pages/characters/detail/detail.component';
+import { ListComponent as CharactersListComponent } from './pages/characters/list/list.component';
+import { DetailComponent as CharactersDetailComponent } from './pages/characters/detail/detail.component';
+import { ListComponent as CampaignsListComponent } from './pages/campaigns/list/list.component';
+import { DetailComponent as CampaignsDetailComponent } from './pages/campaigns/detail/detail.component';
 const routes: Routes = [
   {
     path: 'characters',
-    component: ListComponent,
+    component: CharactersListComponent,
   },
   {
     path: 'characters/:id',
-    component: DetailComponent,
+    component: CharactersDetailComponent,
+  },
+  {
+    path: 'campaigns',
+    component: CampaignsListComponent,
+  },
+  {
+    path: 'campaigns/:id',
+    component: CampaignsDetailComponent,
   },
 ];
 

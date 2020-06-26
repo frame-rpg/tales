@@ -2,6 +2,7 @@
   <mat-toolbar-row>
     <h1>Tales of Foo and Bar</h1>
     <a mat-button [routerLink]="'/characters'">Characters</a>
+    <a mat-button [routerLink]="'/campaigns'">Campaigns</a>
   </mat-toolbar-row>
 </mat-toolbar>
 <div *ngIf="auth.user | async as user; else showLogin">

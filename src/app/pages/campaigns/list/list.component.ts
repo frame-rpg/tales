@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { CampaignService } from 'src/app/data/campaign.service';
 import { Campaign, NewCampaign } from 'src/app/types/campaign';
+import { Component, OnInit } from '@angular/core';
+
+import { CampaignService } from 'src/app/data/campaign.service';
+import { CreateComponent } from '../create/create.component';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -10,11 +13,22 @@ import { Observable } from 'rxjs';
 })
 export class ListComponent implements OnInit {
   list$: Observable<Campaign[]>;
-  constructor(private campaignService: CampaignService) {}
+  constructor(
+    private campaignService: CampaignService,
+    private dialog: MatDialog
+  ) {}
   ngOnInit(): void {
     this.list$ = this.campaignService.list();
   }
-  createCampaign(name: string, description: string) {
-    return this.campaignService.create({ name, description, acl: {} });
+  openAdd() {
+    this.dialog
+      .open(CreateComponent)
+      .afterClosed()
+      .subscribe((v?: { name: string; description: string }) => {
+        if (v) {
+          console.log(v);
+          this.campaignService.create({ ...v, acl: {} });
+        }
+      });
   }
 }

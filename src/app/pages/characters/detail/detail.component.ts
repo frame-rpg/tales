@@ -1,9 +1,10 @@
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { switchMap } from 'rxjs/operators';
-import { ParamMap, Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+
 import { Character } from 'src/app/types/character';
 import { CharacterService } from 'src/app/data/character.service';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-detail',
@@ -15,7 +16,6 @@ export class DetailComponent implements OnInit {
 
   constructor(
     private characterService: CharacterService,
-    private router: Router,
     private route: ActivatedRoute
   ) {}
 

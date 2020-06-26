@@ -1,0 +1,23 @@
+<div class="dialogContent">
+  <h1 mat-dialog-title>Create Campaign</h1>
+  <div class="dialogBody" mat-dialog-content>
+    <mat-form-field appearance="outline">
+      <mat-label>Campaign Name</mat-label>
+      <input matInput [(ngModel)]="name" placeholder="Placeholder" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Campaign Description</mat-label>
+      <textarea matInput [(ngModel)]="description"> </textarea>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button
+      mat-button
+      [matDialogClose]="{ description: description, name: name }"
+      cdkFocusInitial
+    >
+      Ok
+    </button>
+  </div>
+</div>

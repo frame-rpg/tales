@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
 import { Campaign, NewCampaign } from '../types/campaign';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { map, switchMap } from 'rxjs/operators';
 import { NewScene, Scene } from '../types/scene';
+import { map, switchMap, tap } from 'rxjs/operators';
+
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -20,13 +21,10 @@ export class CampaignService {
       switchMap((user) =>
         this.firestore
           .collection<Campaign>('campaigns', (ref) =>
-            ref.where(`acl.${user.uid}`, 'array-contains-any', [
-              'read',
-              'write',
-              'admin',
-            ])
+            ref.where(`acl.${user.uid}`, 'in', ['read', 'write', 'admin'])
           )
           .valueChanges({ idField: 'id' })
+          .pipe(tap((v) => console.log(v)))
       )
     );
   }
@@ -60,6 +58,7 @@ export class CampaignService {
     const user = await this.auth.currentUser;
     const toAdd = { ...campaign };
     toAdd.acl[user.uid] = 'admin';
+    console.log(toAdd);
     return this.firestore.collection('/campaigns').add(toAdd);
   }
 }

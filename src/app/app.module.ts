@@ -12,13 +12,18 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
 import { ListComponent as CharactersListComponent } from './pages/characters/list/list.component';
 import { DetailComponent as CharactersDetailComponent } from './pages/characters/detail/detail.component';
 import { ListComponent as CampaignsListComponent } from './pages/campaigns/list/list.component';
 import { DetailComponent as CampaignsDetailComponent } from './pages/campaigns/detail/detail.component';
 import { DetailComponent as ScenesDetailComponent } from './pages/scenes/detail/detail.component';
+import { CreateComponent } from './pages/campaigns/create/create.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,6 +33,7 @@ import { DetailComponent as ScenesDetailComponent } from './pages/scenes/detail/
     CampaignsListComponent,
     CampaignsDetailComponent,
     ScenesDetailComponent,
+    CreateComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +52,10 @@ import { DetailComponent as ScenesDetailComponent } from './pages/scenes/detail/
     AngularFireAuthModule,
     BrowserAnimationsModule,
     LayoutModule,
+    FormsModule,
+    MatInputModule,
+    MatDialogModule,
+    MatFormFieldModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
