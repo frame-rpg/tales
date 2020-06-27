@@ -4,3 +4,8 @@
 <ul>
   <li *ngFor="let scene of scenes | async">{{ scene.name }}</li>
 </ul>
+
+<mat-card *ngFor="let character of playerCharacters | async">
+  <mat-card-title>{{character.name}}</mat-card-title>
+  <mat-card-subtitle>{{character.description}}</mat-card-subtitle>
+</mat-card>

@@ -4,7 +4,10 @@ import { map, switchMap, tap } from 'rxjs/operators';
 
 import { Campaign } from 'src/app/types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
+import { Companion } from 'src/app/types/companion';
+import { NonplayerCharacter } from 'src/app/types/nonplayer_character';
 import { Observable } from 'rxjs';
+import { PlayerCharacter } from 'src/app/types/player_character';
 import { Scene } from 'src/app/types/scene';
 
 @Component({
@@ -17,6 +20,9 @@ export class DetailComponent implements OnInit {
   description: Observable<string>;
   name: Observable<string>;
   scenes: Observable<Scene[]>;
+  playerCharacters: Observable<PlayerCharacter[]>;
+  nonplayerCharacters: Observable<NonplayerCharacter[]>;
+  companions: Observable<Companion[]>;
 
   constructor(
     private campaignService: CampaignService,
@@ -33,6 +39,27 @@ export class DetailComponent implements OnInit {
     this.description = this.campaign.pipe(map((v) => v.description));
     this.scenes = this.campaign.pipe(
       switchMap((campaign) => this.campaignService.listScenes(campaign.id))
+    );
+    this.playerCharacters = this.campaign.pipe(
+      switchMap((campaign) =>
+        this.campaignService.listCharacters(campaign.id, {
+          type: 'player',
+        } as Partial<PlayerCharacter>)
+      )
+    );
+    this.nonplayerCharacters = this.campaign.pipe(
+      switchMap((campaign) =>
+        this.campaignService.listCharacters(campaign.id, {
+          type: 'nonplayer',
+        } as Partial<NonplayerCharacter>)
+      )
+    );
+    this.companions = this.campaign.pipe(
+      switchMap((campaign) =>
+        this.campaignService.listCharacters(campaign.id, {
+          type: 'companion',
+        } as Partial<Companion>)
+      )
     );
   }
 }
