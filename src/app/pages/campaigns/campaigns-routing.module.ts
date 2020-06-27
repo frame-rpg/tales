@@ -6,7 +6,7 @@ import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   { path: '', component: ListComponent },
-  { path: '/:id', component: DetailComponent },
+  { path: ':id', component: DetailComponent },
 ];
 
 @NgModule({

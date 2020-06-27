@@ -19,11 +19,7 @@ export class CharacterService {
       switchMap((user) =>
         this.firestore
           .collection<Character>('characters', (ref) =>
-            ref.where(`acl.${user.uid}`, 'array-contains-any', [
-              'read',
-              'write',
-              'admin',
-            ])
+            ref.where(`acl.${user.uid}`, 'in', ['read', 'write', 'admin'])
           )
           .valueChanges({ idField: 'id' })
       )
