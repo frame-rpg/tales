@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
+import { Character } from '../../../types/character';
+import { CharacterService } from '../../../data/character.service';
 import { Observable } from 'rxjs';
-import { Character } from 'src/app/types/character';
-import { CharacterService } from 'src/app/data/character.service';
 
 @Component({
   selector: 'app-list',

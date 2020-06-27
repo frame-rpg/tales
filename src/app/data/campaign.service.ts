@@ -5,10 +5,8 @@ import { map, switchMap, tap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Character } from '../types/character';
 import { CharacterBase } from '../types/character_base';
 import { Injectable } from '@angular/core';
-import { PlayerCharacter } from '../types/player_character';
 import { firestore } from 'firebase/app';
 
 @Injectable({

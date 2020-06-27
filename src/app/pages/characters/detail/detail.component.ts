@@ -1,8 +1,8 @@
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
-import { Character } from 'src/app/types/character';
-import { CharacterService } from 'src/app/data/character.service';
+import { Character } from '../../../types/character';
+import { CharacterService } from '../../../data/character.service';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 

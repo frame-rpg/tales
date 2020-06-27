@@ -1,25 +1,20 @@
+import { RouterModule, Routes } from '@angular/router';
+
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ListComponent as CharactersListComponent } from './pages/characters/list/list.component';
-import { DetailComponent as CharactersDetailComponent } from './pages/characters/detail/detail.component';
-import { ListComponent as CampaignsListComponent } from './pages/campaigns/list/list.component';
-import { DetailComponent as CampaignsDetailComponent } from './pages/campaigns/detail/detail.component';
 const routes: Routes = [
   {
-    path: 'characters',
-    component: CharactersListComponent,
+    path: '/characters',
+    loadChildren: () =>
+      import('./pages/characters/characters.module').then(
+        (m) => m.CharactersModule
+      ),
   },
   {
-    path: 'characters/:id',
-    component: CharactersDetailComponent,
-  },
-  {
-    path: 'campaigns',
-    component: CampaignsListComponent,
-  },
-  {
-    path: 'campaigns/:id',
-    component: CampaignsDetailComponent,
+    path: '/campaigns',
+    loadChildren: () =>
+      import('./pages/campaigns/campaigns.module').then(
+        (m) => m.CampaignsModule
+      ),
   },
 ];
 

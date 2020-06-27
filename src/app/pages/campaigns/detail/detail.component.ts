@@ -1,6 +1,6 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, publishReplay, refCount, switchMap, tap } from 'rxjs/operators';
 
 import { Campaign } from 'src/app/types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
@@ -33,7 +33,9 @@ export class DetailComponent implements OnInit {
     this.campaign = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.campaignService.get(params.get('id'))
-      )
+      ),
+      publishReplay(1),
+      refCount()
     );
     this.name = this.campaign.pipe(map((v) => v.name));
     this.description = this.campaign.pipe(map((v) => v.description));

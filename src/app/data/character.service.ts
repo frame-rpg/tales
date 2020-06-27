@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Character, NewCharacter } from '../types/character';
 import { map, switchMap } from 'rxjs/operators';
+
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',

@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { NewParticipant, Participant } from '../types/participant';
+
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Injectable } from '@angular/core';
 import { Scene } from '../types/scene';
 import { map } from 'rxjs/operators';
-import { Participant, NewParticipant } from '../types/participant';
 
 @Injectable({
   providedIn: 'root',

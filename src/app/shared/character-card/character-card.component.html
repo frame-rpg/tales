@@ -1,16 +1,9 @@
-<h1>{{ name | async }}</h1>
-<div>{{ description | async }}</div>
-
-<ul>
-  <li *ngFor="let scene of scenes | async">{{ scene.name }}</li>
-</ul>
-
-<mat-card *ngFor="let character of playerCharacters | async">
+<mat-card>
   <mat-card-header>
     <mat-card-title>{{character.name}}</mat-card-title>
     <mat-card-subtitle>{{character.description}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-
+    Some stuff here.
   </mat-card-content>
 </mat-card>
