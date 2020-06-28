@@ -1,7 +1,6 @@
 import { Campaign, NewCampaign } from '../types/campaign';
 import { NewScene, Scene } from '../types/scene';
-import { Observable, combineLatest } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';

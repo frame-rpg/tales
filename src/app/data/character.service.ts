@@ -1,9 +1,4 @@
 import { Character, NewCharacter } from '../types/character';
-import {
-  NewPlayerCharacter,
-  SkillDescription,
-  SkillNames,
-} from '../types/player_character';
 import { map, switchMap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -12,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { NewCharacterBase } from '../types/character_base';
 import { NewCompanion } from '../types/companion';
 import { NewNonplayerCharacter } from '../types/nonplayer_character';
+import { NewPlayerCharacter } from '../types/player_character';
 
 @Injectable({
   providedIn: 'root',
@@ -73,33 +69,23 @@ export const PLAYER_TEMPLATE: NewPlayerCharacter = {
   type: 'player',
   health: {
     edge: 0,
-    maxPool: 5,
-    currentPool: 5,
-    wound: false,
+    pool: 5,
   },
   speed: {
     edge: 0,
-    maxPool: 5,
-    currentPool: 5,
-    wound: false,
+    pool: 5,
   },
   might: {
     edge: 0,
-    maxPool: 5,
-    currentPool: 5,
-    wound: false,
+    pool: 5,
   },
   focus: {
     edge: 0,
-    maxPool: 5,
-    currentPool: 5,
-    wound: false,
+    pool: 5,
   },
   conviction: {
     edge: 0,
-    maxPool: 5,
-    currentPool: 5,
-    wound: false,
+    pool: 5,
   },
   skills: {
     movement: 0,
@@ -135,15 +121,11 @@ export const COMPANION_TEMPLATE: NewCompanion = {
   armor: 0,
   health: {
     edge: 0,
-    maxPool: 5,
-    currentPool: 5,
-    wound: false,
+    pool: 5,
   },
   loyalty: {
     edge: 0,
-    maxPool: 5,
-    currentPool: 5,
-    wound: false,
+    pool: 5,
   },
   skills: {},
 };
@@ -161,86 +143,3 @@ export function levels(level: number) {
     return 'Expert';
   }
 }
-
-export const SKILLS: { [name in SkillNames]: SkillDescription } = {
-  movement: {
-    name: 'Movement',
-    description: '',
-    attributes: ['might', 'speed'],
-  },
-  riding: {
-    name: 'Riding',
-    description: '',
-    attributes: ['speed', 'conviction'],
-  },
-  piloting: {
-    name: 'Piloting',
-    description: '',
-    attributes: ['speed', 'conviction', 'focus'],
-  },
-  swimming: { name: 'Swimming', description: '', attributes: ['might'] },
-  sneaking: {
-    name: 'Sneaking',
-    description: '',
-    attributes: ['speed', 'focus'],
-  },
-  wildernessLore: {
-    name: 'Wilderness Lore',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  medicine: {
-    name: 'Medicine',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  commandAnimal: {
-    name: 'Command Animal',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  perception: {
-    name: 'Perception',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  wetScienceKnowledge: {
-    name: 'Wet Science Knowledge',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  wetScienceTinker: {
-    name: 'Wet Science Tinker',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  dryScienceKnowledge: {
-    name: 'Dry Science Knowledge',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  dryScienceTinker: {
-    name: 'Dry Science Tinker',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  persuade: { name: 'Persuade', description: '', attributes: ['focus'] },
-  lie: { name: 'Lie', description: '', attributes: ['conviction'] },
-  senseMotive: { name: 'Sense Motive', description: '', attributes: ['focus'] },
-  legerdemain: { name: 'Legerdemain', description: '', attributes: ['speed'] },
-  hacking: {
-    name: 'Hacking',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  pickLocks: {
-    name: 'Pick Locks',
-    description: '',
-    attributes: ['speed', 'focus', 'conviction'],
-  },
-  advancedSecurity: {
-    name: 'Advanced Security',
-    description: '',
-    attributes: ['focus', 'conviction'],
-  },
-};

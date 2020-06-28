@@ -1,15 +1,15 @@
 import { NewCharacterBase } from './character_base';
-import { Attribute, SkillNames } from './player_character';
+import { CharacterAttribute } from './attribute';
 
 export interface NewCompanion extends NewCharacterBase {
   type: 'companion';
   attack: number;
   defend: number;
-  health: Attribute;
-  loyalty: Attribute;
+  health: CharacterAttribute;
+  loyalty: CharacterAttribute;
   armor: number;
   skills: {
-    [name in SkillNames]?: number;
+    [name: string]: number;
   };
 }
 
