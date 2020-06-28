@@ -17,13 +17,9 @@ await app.firestore().doc('/rules/skills').set(skillSeed);
 await app.firestore().doc('/rules/skillLevels').set(skillLevelSeed);
 await app
   .firestore()
-  .doc('/rules/characters/templates/player')
-  .set(PLAYER_TEMPLATE);
-await app
-  .firestore()
-  .doc('/rules/characters/templates/nonplayer')
-  .set(NONPLAYER_TEMPLATE);
-await app
-  .firestore()
-  .doc('/rules/characters/templates/companion')
-  .set(COMPANION_TEMPLATE);
+  .doc('/rules/characterTemplates')
+  .set({
+    player: PLAYER_TEMPLATE,
+    nonplayer: NONPLAYER_TEMPLATE,
+    companion: COMPANION_TEMPLATE,
+  });
