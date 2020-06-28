@@ -1,10 +1,10 @@
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { publishReplay, refCount, switchMap } from 'rxjs/operators';
 
 import { Character } from '../../../types/character';
 import { CharacterService } from '../../../data/character.service';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-detail',
@@ -23,7 +23,9 @@ export class DetailComponent implements OnInit {
     this.character$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.characterService.get(params.get('id'))
-      )
+      ),
+      publishReplay(1),
+      refCount()
     );
   }
 }

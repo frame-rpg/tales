@@ -7,12 +7,6 @@ export interface Attribute {
   wound: boolean;
 }
 
-export interface Skill {
-  name: string;
-  level: number;
-  attributes: string[];
-}
-
 export interface NewPlayerCharacter extends NewCharacterBase {
   type: 'player';
   speed: Attribute;
@@ -21,10 +15,39 @@ export interface NewPlayerCharacter extends NewCharacterBase {
   conviction: Attribute;
   health: Attribute;
   skills: {
-    [name: string]: Skill;
+    [name in SkillNames]?: number;
   };
 }
 
 export interface PlayerCharacter extends NewPlayerCharacter {
   id: string;
+}
+
+export type AttributeNames = 'might' | 'speed' | 'focus' | 'conviction';
+export type SkillNames =
+  | 'movement'
+  | 'riding'
+  | 'piloting'
+  | 'swimming'
+  | 'sneaking'
+  | 'wildernessLore'
+  | 'medicine'
+  | 'commandAnimal'
+  | 'perception'
+  | 'wetScienceKnowledge'
+  | 'wetScienceTinker'
+  | 'dryScienceKnowledge'
+  | 'dryScienceTinker'
+  | 'persuade'
+  | 'lie'
+  | 'senseMotive'
+  | 'legerdemain'
+  | 'hacking'
+  | 'pickLocks'
+  | 'advancedSecurity';
+
+export interface SkillDescription {
+  name: string;
+  description: string;
+  attributes: AttributeNames[];
 }

@@ -43,7 +43,8 @@ service cloud.firestore {
 
     match /characters/{characterId} {
       allow read: if readAclZ(resource)
-      allow write: if writeAclZ(resource)
+      allow update: if writeAclZ(resource)
+      allow create: if isSignedIn()
 
       match /messages/{messageId} {
         allow read: if writeAclZ(getData('characters', characterId))
@@ -53,7 +54,8 @@ service cloud.firestore {
 
     match /campaigns/{campaignId} {
       allow read: if readAclZ(resource)
-      allow write: if writeAclZ(resource)
+      allow update: if writeAclZ(resource)
+      allow create: if isSignedIn()
 
       match /scenes/{sceneId} {
         allow read: if readAclZ(getData('campaigns', campaignId))

@@ -1,0 +1,24 @@
+<div class="dialogContent">
+  <h1 mat-dialog-title>Create Character</h1>
+  <div class="dialogBody" mat-dialog-content>
+    <mat-form-field appearance="outline">
+      <mat-label>Character Name</mat-label>
+      <input matInput [(ngModel)]="name" placeholder="Name" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Character type</mat-label>
+      <mat-select [(value)]="type">
+        <mat-option value="player">Player</mat-option>
+        <mat-option value="nonplayer">Nonplayer</mat-option>
+        <mat-option value="companion">Companion</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button [matDialogClose]="{ type: type, name: name }"
+        cdkFocusInitial>
+      Ok
+    </button>
+  </div>
+</div>
