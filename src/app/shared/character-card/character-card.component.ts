@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+import { Character } from 'src/app/types/character';
 
 @Component({
-  selector: 'app-character-card',
+  selector: 'character-card',
   templateUrl: './character-card.component.html',
   styleUrls: ['./character-card.component.scss'],
 })
 export class CharacterCardComponent implements OnInit {
-  name: string;
-  description: string;
-
+  @Input() character: Character;
+  @Input() showLink: boolean;
   constructor() {}
 
   ngOnInit(): void {}

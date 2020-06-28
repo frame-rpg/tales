@@ -3,7 +3,8 @@
   <div class="dialogBody" mat-dialog-content>
     <mat-form-field appearance="outline">
       <mat-label>Character Name</mat-label>
-      <input matInput [(ngModel)]="name" placeholder="Name" />
+      <input matInput [(ngModel)]="name" placeholder="Name"
+          autocomplete="disabled" />
     </mat-form-field>
     <mat-form-field>
       <mat-label>Character type</mat-label>
@@ -14,10 +15,10 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <div mat-dialog-actions>
-    <button mat-button (click)="onCancel()">Cancel</button>
-    <button mat-button [matDialogClose]="{ type: type, name: name }"
-        cdkFocusInitial>
+  <div mat-dialog-actions class="buttonRow">
+    <button mat-raised-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary"
+        [matDialogClose]="{ type: type, name: name }" cdkFocusInitial>
       Ok
     </button>
   </div>

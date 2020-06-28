@@ -6,7 +6,7 @@ import {
 } from '../../../data/character.service';
 import { Component, OnInit } from '@angular/core';
 
-import { Character } from '../../../types/character';
+import { Character } from 'src/app/types/character';
 import { CharacterTypes } from 'src/app/types/character_base';
 import { CreateComponent } from '../create/create.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,11 +20,13 @@ import { Router } from '@angular/router';
 })
 export class ListComponent implements OnInit {
   list$: Observable<Character[]>;
+
   constructor(
     private characterService: CharacterService,
     private dialog: MatDialog,
     private router: Router
   ) {}
+
   ngOnInit(): void {
     this.list$ = this.characterService.list();
   }

@@ -1,0 +1,11 @@
+.list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+[mat-fab] {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}

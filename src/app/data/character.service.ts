@@ -148,19 +148,33 @@ export const COMPANION_TEMPLATE: NewCompanion = {
   skills: {},
 };
 
+export function levels(level: number) {
+  if (level === -2) {
+    return 'Inept';
+  } else if (level === -1) {
+    return 'Unskilled';
+  } else if (level === 0) {
+    return 'Proficient';
+  } else if (level === 1) {
+    return 'Trained';
+  } else if (level === 2) {
+    return 'Expert';
+  }
+}
+
 export const SKILLS: { [name in SkillNames]: SkillDescription } = {
   movement: {
-    name: 'movement',
+    name: 'Movement',
     description: '',
     attributes: ['might', 'speed'],
   },
   riding: {
-    name: 'riding',
+    name: 'Riding',
     description: '',
     attributes: ['speed', 'conviction'],
   },
   piloting: {
-    name: 'piloting',
+    name: 'Piloting',
     description: '',
     attributes: ['speed', 'conviction', 'focus'],
   },

@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { NgModule } from '@angular/core';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [DetailComponent, ListComponent, CreateComponent],
@@ -22,6 +23,7 @@ import { NgModule } from '@angular/core';
     MatIconModule,
     MatInputModule,
     MatSelectModule,
+    SharedModule,
   ],
 })
 export class CharactersModule {}

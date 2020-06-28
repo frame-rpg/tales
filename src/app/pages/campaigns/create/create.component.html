@@ -3,16 +3,17 @@
   <div class="dialogBody" mat-dialog-content>
     <mat-form-field appearance="outline">
       <mat-label>Campaign Name</mat-label>
-      <input matInput [(ngModel)]="name" placeholder="Placeholder" />
+      <input matInput [(ngModel)]="name" placeholder="Placeholder"
+          autocomplete="disabled" />
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Campaign Description</mat-label>
       <textarea matInput [(ngModel)]="description"> </textarea>
     </mat-form-field>
   </div>
-  <div mat-dialog-actions>
-    <button mat-button (click)="onCancel()">Cancel</button>
-    <button mat-button
+  <div mat-dialog-actions class="buttonRow">
+    <button mat-raised-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary"
         [matDialogClose]="{ description: description, name: name }"
         cdkFocusInitial>
       Ok
