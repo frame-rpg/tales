@@ -6,9 +6,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
 import { PlayerCardComponent } from './character-card/player-card.component';
 import { RouterModule } from '@angular/router';
+import { SkillBlockComponent } from './character-card/skill-block.component';
 
 @NgModule({
-  declarations: [CharacterCardComponent, PlayerCardComponent],
+  declarations: [
+    CharacterCardComponent,
+    PlayerCardComponent,
+    SkillBlockComponent,
+  ],
   imports: [
     CommonModule,
     MatCardModule,

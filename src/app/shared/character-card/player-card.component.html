@@ -1,6 +1,4 @@
 <div>
   <div>Skills</div>
-  <div *ngFor="let skill of character.skills | keyvalue">
-    {{ skillsMap[skill.key].name || skill.key }}: {{ levels(skill.value) }}
-  </div>
+  <skill-block [character]="character"></skill-block>
 </div>
