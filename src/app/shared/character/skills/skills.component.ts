@@ -7,10 +7,10 @@ import { PlayerCharacter } from 'src/app/types/player_character';
 
 @Component({
   selector: 'skill-block',
-  templateUrl: './skill-block.component.html',
-  styleUrls: ['./skill-block.component.scss'],
+  templateUrl: './skills.component.html',
+  styleUrls: ['./skills.component.scss'],
 })
-export class SkillBlockComponent implements OnInit {
+export class SkillsComponent implements OnInit {
   @Input() character: PlayerCharacter | Companion;
   skillsMap = SKILLS;
   levels = levels;

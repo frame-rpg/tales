@@ -9,7 +9,8 @@
     <mat-card-subtitle>{{character.description}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <player-card *ngIf="character.type == 'player'" [character]="character">
-    </player-card>
+    <player-character *ngIf="character.type == 'player'"
+        [character]="character">
+    </player-character>
   </mat-card-content>
 </mat-card>

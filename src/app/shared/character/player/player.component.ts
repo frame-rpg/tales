@@ -4,11 +4,11 @@ import { SKILLS, levels } from 'src/app/data/character.service';
 import { PlayerCharacter } from 'src/app/types/player_character';
 
 @Component({
-  selector: 'player-card',
-  templateUrl: './player-card.component.html',
-  styleUrls: ['./player-card.component.scss'],
+  selector: 'player-character',
+  templateUrl: './player.component.html',
+  styleUrls: ['./player.component.scss'],
 })
-export class PlayerCardComponent implements OnInit {
+export class PlayerComponent implements OnInit {
   @Input() character: PlayerCharacter;
   skillsMap = SKILLS;
   levels = levels;
