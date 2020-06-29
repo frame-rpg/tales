@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import { Companion } from 'src/types/companion';
+import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-companion',
+  selector: 'companion',
   templateUrl: './companion.component.html',
-  styleUrls: ['./companion.component.scss']
+  styleUrls: ['./companion.component.scss'],
 })
-export class CompanionComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class CompanionComponent {
+  @Input() character: Observable<Companion>;
+  constructor() {}
 }

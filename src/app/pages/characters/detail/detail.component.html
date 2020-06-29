@@ -1,3 +1,2 @@
-<div *ngIf="(character | async)?.type == 'player'">
-  <player-character [character]="character"></player-character>
-</div>
+<character-sheet [character]="character">
+</character-sheet>

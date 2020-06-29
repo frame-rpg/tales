@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { NonplayerComponent } from './nonplayer/nonplayer.component';
 import { PlayerComponent } from './player/player.component';
 import { RouterModule } from '@angular/router';
+import { SheetComponent } from './sheet/sheet.component';
 import { SkillsComponent } from './skills/skills.component';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { SkillsComponent } from './skills/skills.component';
     NonplayerComponent,
     CompanionComponent,
     SkillsComponent,
+    SheetComponent,
   ],
   imports: [CommonModule, MatIconModule, MatButtonModule, RouterModule],
   exports: [
@@ -24,6 +26,7 @@ import { SkillsComponent } from './skills/skills.component';
     NonplayerComponent,
     CompanionComponent,
     SkillsComponent,
+    SheetComponent,
   ],
 })
 export class CharacterModule {}

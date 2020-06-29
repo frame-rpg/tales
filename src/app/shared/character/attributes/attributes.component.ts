@@ -34,14 +34,14 @@ export class AttributesComponent implements OnInit {
               pool: v.attributes.speed.pool,
             },
             {
-              name: 'Focus',
-              edge: v.attributes.focus.edge,
-              pool: v.attributes.focus.pool,
-            },
-            {
               name: 'Conviction',
               edge: v.attributes.conviction.edge,
               pool: v.attributes.conviction.pool,
+            },
+            {
+              name: 'Focus',
+              edge: v.attributes.focus.edge,
+              pool: v.attributes.focus.pool,
             },
             {
               name: 'Health',

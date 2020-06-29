@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
-import { SkillDescription, SkillDetails, SkillLevels } from 'src/types/skill';
-import { filter, map, publishReplay, refCount, tap } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 import { Companion } from 'src/types/companion';
 import { DiceService } from 'src/app/core/random/dice/dice.service';
 import { PlayerCharacter } from 'src/types/player_character';
 import { RulesService } from 'src/app/data/rules.service';
+import { SkillDescription } from 'src/types/skill';
 
 @Component({
   selector: 'skill-block',
@@ -29,11 +29,13 @@ export class SkillsComponent implements OnInit {
           !!skillInfo && !!skillLevels && !!character
       ),
       map(([skillInfo, skillLevels, character]) =>
-        Object.keys(character.skills).map((skillName) => ({
-          ...skillInfo[skillName],
-          levelName: skillLevels[character.skills[skillName]],
-          level: character.skills[skillName],
-        }))
+        Object.keys(character.skills)
+          .sort()
+          .map((skillName) => ({
+            ...skillInfo[skillName],
+            levelName: skillLevels[character.skills[skillName]],
+            level: character.skills[skillName],
+          }))
       )
     );
   }

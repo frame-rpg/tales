@@ -1,8 +1,26 @@
 .skill {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   margin: 10px;
   max-width: 30vw;
+}
+
+.rollers {
+  display: flex;
+  flex-direction: row;
+}
+
+.rollButton {
+  min-width: 2rem;
+  padding: 0;
+  min-height: 2rem;
+  margin: 0 1px 0 1px;
+}
+
+.suggested {
+  background-color: var(--lightblue);
+}
+
+.unusual {
+  background-color: var(--honeydew);
 }

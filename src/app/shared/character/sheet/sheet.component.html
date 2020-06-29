@@ -1,0 +1,9 @@
+<player-character *ngIf="(character | async)?.type == 'player'"
+    [character]="character">
+</player-character>
+<nonplayer-character *ngIf="(character | async)?.type == 'nonplayer'"
+    [character]="character">
+</nonplayer-character>
+<companion *ngIf="(character | async)?.type == 'companion'"
+    [character]="character">
+</companion>
