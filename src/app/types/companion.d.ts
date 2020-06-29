@@ -5,8 +5,10 @@ export interface NewCompanion extends NewCharacterBase {
   type: 'companion';
   attack: number;
   defend: number;
-  health: CharacterAttribute;
-  loyalty: CharacterAttribute;
+  attributes: {
+    health: CharacterAttribute;
+    loyalty: CharacterAttribute;
+  };
   armor: number;
   skills: {
     [name: string]: number;

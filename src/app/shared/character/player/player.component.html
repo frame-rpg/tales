@@ -1,4 +1,8 @@
 <div>
+  <div>{{ (character | async)?.name }}</div>
+  <div>{{ (character | async)?.description }}</div>
+  <div>Attributes</div>
+  <attributes-block [character]="character"></attributes-block>
   <div>Skills</div>
   <skill-block [character]="character"></skill-block>
 </div>

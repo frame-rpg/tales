@@ -12,12 +12,14 @@ import { PlayerCharacter } from 'src/app/types/player_character';
 })
 export class PlayerComponent implements OnInit {
   @Input() characterId: string;
-  character: Observable<PlayerCharacter>;
+  @Input() character: Observable<PlayerCharacter>;
   constructor(private characterService: CharacterService) {}
 
   ngOnInit(): void {
-    this.character = this.characterService
-      .get(this.characterId)
-      .pipe(publishReplay(1), refCount()) as Observable<PlayerCharacter>;
+    if (!this.character) {
+      this.character = this.characterService
+        .get(this.characterId)
+        .pipe(publishReplay(1), refCount()) as Observable<PlayerCharacter>;
+    }
   }
 }

@@ -3,11 +3,13 @@ import { CharacterAttribute } from './attribute';
 
 export interface NewPlayerCharacter extends NewCharacterBase {
   type: 'player';
-  speed: CharacterAttribute;
-  might: CharacterAttribute;
-  focus: CharacterAttribute;
-  conviction: CharacterAttribute;
-  health: CharacterAttribute;
+  attributes: {
+    speed: CharacterAttribute;
+    might: CharacterAttribute;
+    focus: CharacterAttribute;
+    conviction: CharacterAttribute;
+    health: CharacterAttribute;
+  };
   skills: {
     [name: string]: number;
   };

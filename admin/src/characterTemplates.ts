@@ -7,25 +7,27 @@ export const PLAYER_TEMPLATE: NewPlayerCharacter = {
   acl: {},
   description: '',
   type: 'player',
-  health: {
-    edge: 0,
-    pool: 5,
-  },
-  speed: {
-    edge: 0,
-    pool: 5,
-  },
-  might: {
-    edge: 0,
-    pool: 5,
-  },
-  focus: {
-    edge: 0,
-    pool: 5,
-  },
-  conviction: {
-    edge: 0,
-    pool: 5,
+  attributes: {
+    health: {
+      edge: 0,
+      pool: 5,
+    },
+    speed: {
+      edge: 0,
+      pool: 5,
+    },
+    might: {
+      edge: 0,
+      pool: 5,
+    },
+    focus: {
+      edge: 0,
+      pool: 5,
+    },
+    conviction: {
+      edge: 0,
+      pool: 5,
+    },
   },
   skills: {
     movement: 0,
@@ -59,13 +61,15 @@ export const COMPANION_TEMPLATE: NewCompanion = {
   attack: 0,
   defend: 0,
   armor: 0,
-  health: {
-    edge: 0,
-    pool: 5,
-  },
-  loyalty: {
-    edge: 0,
-    pool: 5,
+  attributes: {
+    health: {
+      edge: 0,
+      pool: 5,
+    },
+    loyalty: {
+      edge: 0,
+      pool: 5,
+    },
   },
   skills: {},
 };

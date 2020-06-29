@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./detail.component.scss'],
 })
 export class DetailComponent implements OnInit {
-  character$: Observable<Character>;
+  character: Observable<Character>;
 
   constructor(
     private characterService: CharacterService,
@@ -20,7 +20,7 @@ export class DetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.character$ = this.route.paramMap.pipe(
+    this.character = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.characterService.get(params.get('id'))
       ),
