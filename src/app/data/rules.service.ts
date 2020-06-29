@@ -1,4 +1,4 @@
-import { SkillDetails, SkillLevels } from '../types/skill';
+import { SkillDetails, SkillLevels } from 'src/types/skill';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';

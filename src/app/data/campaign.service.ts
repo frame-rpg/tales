@@ -1,10 +1,10 @@
-import { Campaign, NewCampaign } from '../types/campaign';
-import { NewScene, Scene } from '../types/scene';
+import { Campaign, NewCampaign } from 'src/types/campaign';
+import { NewScene, Scene } from 'src/types/scene';
 import { map, switchMap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { CharacterBase } from '../types/character_base';
+import { CharacterBase } from 'src/types/character_base';
 import { Injectable } from '@angular/core';
 import { firestore } from 'firebase/app';
 

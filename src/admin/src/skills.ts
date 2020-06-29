@@ -1,4 +1,4 @@
-import { SkillDetails, SkillLevels } from '../../src/app/types/skill';
+import { SkillDetails, SkillLevels } from '../../../src/types/skill';
 
 export const skillSeed: SkillDetails = {
   movement: {

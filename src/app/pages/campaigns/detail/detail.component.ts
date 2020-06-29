@@ -2,13 +2,13 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { map, publishReplay, refCount, switchMap, tap } from 'rxjs/operators';
 
-import { Campaign } from 'src/app/types/campaign';
+import { Campaign } from 'src/types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
-import { Companion } from 'src/app/types/companion';
-import { NonplayerCharacter } from 'src/app/types/nonplayer_character';
+import { Companion } from 'src/types/companion';
+import { NonplayerCharacter } from 'src/types/nonplayer_character';
 import { Observable } from 'rxjs';
-import { PlayerCharacter } from 'src/app/types/player_character';
-import { Scene } from 'src/app/types/scene';
+import { PlayerCharacter } from 'src/types/player_character';
+import { Scene } from 'src/types/scene';
 
 @Component({
   selector: 'app-detail',

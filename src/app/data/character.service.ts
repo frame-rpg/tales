@@ -1,4 +1,4 @@
-import { Character, NewCharacter } from '../types/character';
+import { Character, NewCharacter } from 'src/types/character';
 import { map, switchMap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';

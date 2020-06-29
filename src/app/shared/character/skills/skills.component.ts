@@ -1,15 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
-import {
-  SkillDescription,
-  SkillDetails,
-  SkillLevels,
-} from 'src/app/types/skill';
+import { SkillDescription, SkillDetails, SkillLevels } from 'src/types/skill';
 import { filter, map, publishReplay, refCount, tap } from 'rxjs/operators';
 
-import { Companion } from 'src/app/types/companion';
+import { Companion } from 'src/types/companion';
 import { DiceService } from 'src/app/core/random/dice/dice.service';
-import { PlayerCharacter } from 'src/app/types/player_character';
+import { PlayerCharacter } from 'src/types/player_character';
 import { RulesService } from 'src/app/data/rules.service';
 
 @Component({

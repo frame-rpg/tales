@@ -3,7 +3,7 @@ import { publishReplay, refCount } from 'rxjs/operators';
 
 import { CharacterService } from 'src/app/data/character.service';
 import { Observable } from 'rxjs';
-import { PlayerCharacter } from 'src/app/types/player_character';
+import { PlayerCharacter } from 'src/types/player_character';
 
 @Component({
   selector: 'player-character',

@@ -1,8 +1,8 @@
-import { NewParticipant, Participant } from '../types/participant';
+import { NewParticipant, Participant } from 'src/types/participant';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
-import { Scene } from '../types/scene';
+import { Scene } from 'src/types/scene';
 import { map } from 'rxjs/operators';
 
 @Injectable({

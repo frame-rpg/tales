@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
 
-import { Character } from 'src/app/types/character';
+import { Character } from 'src/types/character';
 import { CharacterService } from 'src/app/data/character.service';
 import { CreateComponent } from '../create/create.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { RulesService } from 'src/app/data/rules.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list',

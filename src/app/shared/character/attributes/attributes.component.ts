@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { filter, map } from 'rxjs/operators';
 
-import { Companion } from 'src/app/types/companion';
+import { Companion } from 'src/types/companion';
 import { Observable } from 'rxjs';
-import { PlayerCharacter } from 'src/app/types/player_character';
+import { PlayerCharacter } from 'src/types/player_character';
 
 @Component({
   selector: 'attributes-block',

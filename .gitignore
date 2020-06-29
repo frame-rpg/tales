@@ -8,7 +8,7 @@
 /bazel-out
 
 keys/
-admin/build/
+src/admin/build/
 
 # dependencies
 node_modules
