@@ -1,8 +1,8 @@
-  <div *ngFor="let skill of character.skills | keyvalue" class="skill">
-    <div class="skillInfo">
-      <!-- {{ skillsMap[skill.key].name || skill.key }}: {{ levels(skill.value) }} -->
-    </div>
-    <button mat-icon-button (click)="roll(skill)">
-      <mat-icon>casino</mat-icon>
-    </button>
+<div *ngFor="let skill of skillDetails | async" class="skill">
+  <div class="skillInfo">
+    {{skill.name}}: {{skill.levelName}}
   </div>
+  <button mat-icon-button (click)="roll(skill)">
+    <mat-icon>casino</mat-icon>
+  </button>
+</div>

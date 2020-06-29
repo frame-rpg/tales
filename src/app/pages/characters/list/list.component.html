@@ -1,7 +1,6 @@
 <div class="list">
-  <character-card [character]="character" [showLink]="true"
-      *ngFor="let character of list$ | async">
-  </character-card>
+  <a [routerLink]="['/characters', character.id]"
+      *ngFor="let character of list$ | async">{{character.name}}</a>
 </div>
 <button mat-fab color="accent" (click)="openAdd()">
   <mat-icon>add</mat-icon>

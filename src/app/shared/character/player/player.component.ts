@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { publishReplay, refCount } from 'rxjs/operators';
 
+import { CharacterService } from 'src/app/data/character.service';
+import { Observable } from 'rxjs';
 import { PlayerCharacter } from 'src/app/types/player_character';
 
 @Component({
@@ -8,8 +11,13 @@ import { PlayerCharacter } from 'src/app/types/player_character';
   styleUrls: ['./player.component.scss'],
 })
 export class PlayerComponent implements OnInit {
-  @Input() character: PlayerCharacter;
-  constructor() {}
+  @Input() characterId: string;
+  character: Observable<PlayerCharacter>;
+  constructor(private characterService: CharacterService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.character = this.characterService
+      .get(this.characterId)
+      .pipe(publishReplay(1), refCount()) as Observable<PlayerCharacter>;
+  }
 }

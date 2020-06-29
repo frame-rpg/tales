@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
+import { take, tap } from 'rxjs/operators';
 
 import { Character } from 'src/app/types/character';
 import { CharacterService } from 'src/app/data/character.service';
@@ -7,7 +8,6 @@ import { CreateComponent } from '../create/create.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { RulesService } from 'src/app/data/rules.service';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list',
@@ -33,7 +33,7 @@ export class ListComponent implements OnInit {
       this.rulesService.templates(),
       this.dialog.open(CreateComponent).afterClosed(),
     ])
-      .pipe(tap(console.log.bind(console)))
+      .pipe(take(1))
       .subscribe(async ([templates, result]) => {
         const created = await this.characterService.create({
           ...templates[result.type],

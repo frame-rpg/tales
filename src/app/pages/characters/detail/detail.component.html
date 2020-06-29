@@ -6,3 +6,6 @@
   <div>Description:</div>
   <div>{{ (character$ | async)?.description }}</div>
 </div>
+<div *ngIf="(character$ | async)?.type == 'player'">
+  <player-character [characterId]="(character$ | async)?.id"></player-character>
+</div>

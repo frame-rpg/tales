@@ -1,4 +1,3 @@
-import { CharacterCardComponent } from './character-card/character-card.component';
 import { CharacterModule } from './character/character.module';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,7 +7,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [CharacterCardComponent],
+  declarations: [],
   imports: [
     CommonModule,
     MatCardModule,
@@ -17,6 +16,6 @@ import { RouterModule } from '@angular/router';
     RouterModule,
     CharacterModule,
   ],
-  exports: [CharacterCardComponent],
+  exports: [CharacterModule],
 })
 export class SharedModule {}
