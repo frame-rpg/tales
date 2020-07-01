@@ -3,8 +3,10 @@ import { filter, map, switchMap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Character } from 'src/types/character';
 import { CharacterBase } from 'src/types/character_base';
 import { Injectable } from '@angular/core';
+import { Roll } from 'src/types/event';
 
 @Injectable({
   providedIn: 'root',
@@ -42,11 +44,28 @@ export class CampaignService {
 
   listCharacters<T extends CharacterBase>(id: string, inType: Partial<T>) {
     return this.firestore
-      .collection<T>(`/campaigns/${id}/characters`)
-      .valueChanges({ idField: 'id' })
-      .pipe(
-        map((characters) => characters.filter((v) => v.type === inType.type))
-      );
+      .collection<T>(`/campaigns/${id}/characters`, (query) =>
+        query.where('type', '==', inType.type)
+      )
+      .valueChanges({ idField: 'id' });
+  }
+
+  listMyCharacters(id: string) {
+    return this.auth.user.pipe(
+      switchMap((user) =>
+        this.firestore
+          .collection<Character>(`/campaigns/${id}/characters`, (query) =>
+            query.where(`acl.${user.uid}`, '==', 'admin')
+          )
+          .valueChanges({ idField: 'id' })
+      )
+    );
+  }
+
+  listRolls(id: string) {
+    return this.firestore
+      .collection<Roll>(`/campaigns/${id}/rolls`)
+      .valueChanges({ idField: 'id' });
   }
 
   async create(campaign: NewCampaign) {

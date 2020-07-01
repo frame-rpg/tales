@@ -30,3 +30,13 @@
       [character]="character">
   </character-sheet>
 </mat-expansion-panel>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Rolls needing attention
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div *ngFor="let roll of rollsNeedingAttention | async">
+    {{roll.skills}}
+  </div>
+</mat-expansion-panel>
