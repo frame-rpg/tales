@@ -67,7 +67,7 @@ service cloud.firestore {
         allow delete: if false
       }
 
-      match /events/{eventId} {
+      match /rolls/{rollId} {
 
         function eventWriter() {
               // the campaign owner can close the event
@@ -75,13 +75,10 @@ service cloud.firestore {
               // the requester can close the event
             || request.resource.data.requester == request.auth.uid 
               // the player can close the event
-            || request.resource.data.roller.player == request.auth.uid
-              // the owner of the character can close the event
-            || get(/databases/$(database)/documents/campaigns/$(campaignId)/characters/($request.resource.data.roller.character))
-                .acl[request.auth.uid] == 'admin';
+            || get(/databases/$(database)/documents/campaigns/$(campaignId)/characters/$(request.resource.data.roller)).acl[request.auth.uid] == 'admin';
         }
 
-        allow create: if readAclZ(getData('campaigns', campaignId)) && createAclCheck()
+        allow create: if readAclZ(getData('campaigns', campaignId)) && request.data.requester == request.auth.uid
         allow update: if eventWriter() || writeAclZ(getData('campaigns', campaignId))
         allow read: if readAclZ(getData('campaigns', campaignId))
         allow delete: if false;
