@@ -1,12 +1,10 @@
 import { Campaign, NewCampaign } from 'src/types/campaign';
-import { NewScene, Scene } from 'src/types/scene';
-import { map, switchMap } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { CharacterBase } from 'src/types/character_base';
 import { Injectable } from '@angular/core';
-import { firestore } from 'firebase/app';
 
 @Injectable({
   providedIn: 'root',
@@ -42,31 +40,13 @@ export class CampaignService {
     return this.firestore.doc(`/campaigns/${campaign.id}`).update(campaign);
   }
 
-  addScene(scene: NewScene) {
-    return this.firestore
-      .collection(`/campaigns/${scene.campaignId}/scenes`)
-      .add(scene);
-  }
-
-  listScenes(id: string) {
-    return this.firestore
-      .collection<Scene>(`/campaigns/${id}/scenes`)
-      .valueChanges({ idField: 'id' });
-  }
-
   listCharacters<T extends CharacterBase>(id: string, inType: Partial<T>) {
-    return this.get(id).pipe(
-      map((v) => v.characters),
-      switchMap((characters) => {
-        return this.firestore
-          .collection<T>('/characters', (query) =>
-            query
-              .where(firestore.FieldPath.documentId(), 'in', characters)
-              .where('type', '==', inType.type)
-          )
-          .valueChanges({ idField: 'id' });
-      })
-    );
+    return this.firestore
+      .collection<T>(`/campaigns/${id}/characters`)
+      .valueChanges({ idField: 'id' })
+      .pipe(
+        map((characters) => characters.filter((v) => v.type === inType.type))
+      );
   }
 
   async create(campaign: NewCampaign) {

@@ -1,6 +1,32 @@
 <h1>{{ name | async }}</h1>
 <div>{{ description | async }}</div>
-
-<ul>
-  <li *ngFor="let scene of scenes | async">{{ scene.name }}</li>
-</ul>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Player Characters
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <character-sheet *ngFor="let character of playerCharacters | async"
+      [character]="character">
+  </character-sheet>
+</mat-expansion-panel>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Nonplayer Characters
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <character-sheet *ngFor="let character of nonplayerCharacters | async"
+      [character]="character">
+  </character-sheet>
+</mat-expansion-panel>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Companions
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <character-sheet *ngFor="let character of companions | async"
+      [character]="character">
+  </character-sheet>
+</mat-expansion-panel>

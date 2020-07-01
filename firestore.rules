@@ -31,6 +31,10 @@ service cloud.firestore {
       return isOneOfRoles(rsc, ['read', 'write', 'admin']);
     }
 
+    function createAclCheck() {
+      return request.resource.acl[request.auth.uid] == 'admin' && request.resource.acl.size() == 1;
+    }
+
     match /users/{userId} {
       allow read: if isSignedIn()
       allow write: if request.auth.uid == request.resource.data.id
@@ -40,11 +44,10 @@ service cloud.firestore {
       }
     }
 
-
     match /characters/{characterId} {
       allow read: if readAclZ(resource)
       allow update: if writeAclZ(resource)
-      allow create: if isSignedIn()
+      allow create: if isSignedIn() && createAclCheck()
 
       match /messages/{messageId} {
         allow read: if writeAclZ(getData('characters', characterId))
@@ -55,18 +58,33 @@ service cloud.firestore {
     match /campaigns/{campaignId} {
       allow read: if readAclZ(resource)
       allow update: if writeAclZ(resource)
-      allow create: if isSignedIn()
+      allow create: if isSignedIn() && createAclCheck()
 
-      match /scenes/{sceneId} {
+      match /characters/{characterId} {
+        allow create: if readAclZ(getData('campaigns', campaignId)) && createAclCheck()
+        allow update: if writeAclZ(resource) || writeAclZ(getData('campaigns', campaignId))
         allow read: if readAclZ(getData('campaigns', campaignId))
-        allow write: if writeAclZ(getData('campaigns', campaignId))
+        allow delete: if false
+      }
 
-        match /participants/{participantId} {
-          allow create: if writeAclZ(getData('campaigns', campaignId))
-          allow update: if writeAclZ(resource)
-          allow read: if readAclZ(getData('campaigns', campaignId))
-          allow delete: if writeAclZ(getData('campaigns', campaignId))
+      match /events/{eventId} {
+
+        function eventWriter() {
+              // the campaign owner can close the event
+          return writeAclZ(getData('campaigns', campaignId)) 
+              // the requester can close the event
+            || request.resource.data.requester == request.auth.uid 
+              // the player can close the event
+            || request.resource.data.roller.player == request.auth.uid
+              // the owner of the character can close the event
+            || get(/databases/$(database)/documents/campaigns/$(campaignId)/characters/($request.resource.data.roller.character))
+                .acl[request.auth.uid] == 'admin';
         }
+
+        allow create: if readAclZ(getData('campaigns', campaignId)) && createAclCheck()
+        allow update: if eventWriter() || writeAclZ(getData('campaigns', campaignId))
+        allow read: if readAclZ(getData('campaigns', campaignId))
+        allow delete: if false;
       }
     }
 

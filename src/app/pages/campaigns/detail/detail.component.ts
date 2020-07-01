@@ -1,6 +1,6 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { map, publishReplay, refCount, switchMap, tap } from 'rxjs/operators';
+import { map, publishReplay, refCount, switchMap } from 'rxjs/operators';
 
 import { Campaign } from 'src/types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
@@ -8,7 +8,6 @@ import { Companion } from 'src/types/companion';
 import { NonplayerCharacter } from 'src/types/nonplayer_character';
 import { Observable } from 'rxjs';
 import { PlayerCharacter } from 'src/types/player_character';
-import { Scene } from 'src/types/scene';
 
 @Component({
   selector: 'app-detail',
@@ -19,7 +18,6 @@ export class DetailComponent implements OnInit {
   campaign: Observable<Campaign>;
   description: Observable<string>;
   name: Observable<string>;
-  scenes: Observable<Scene[]>;
   playerCharacters: Observable<PlayerCharacter[]>;
   nonplayerCharacters: Observable<NonplayerCharacter[]>;
   companions: Observable<Companion[]>;
@@ -39,9 +37,6 @@ export class DetailComponent implements OnInit {
     );
     this.name = this.campaign.pipe(map((v) => v.name));
     this.description = this.campaign.pipe(map((v) => v.description));
-    this.scenes = this.campaign.pipe(
-      switchMap((campaign) => this.campaignService.listScenes(campaign.id))
-    );
     this.playerCharacters = this.campaign.pipe(
       switchMap((campaign) =>
         this.campaignService.listCharacters(campaign.id, {

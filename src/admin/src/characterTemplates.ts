@@ -51,6 +51,7 @@ export const PLAYER_TEMPLATE: NewPlayerCharacter = {
     pickLocks: 0,
     advancedSecurity: 0,
   },
+  status: {},
 };
 
 export const COMPANION_TEMPLATE: NewCompanion = {
@@ -72,6 +73,7 @@ export const COMPANION_TEMPLATE: NewCompanion = {
     },
   },
   skills: {},
+  status: {},
 };
 
 export const NONPLAYER_TEMPLATE: NewNonplayerCharacter = {
@@ -83,4 +85,5 @@ export const NONPLAYER_TEMPLATE: NewNonplayerCharacter = {
   defend: 0,
   health: 0,
   acl: {},
+  status: {},
 };
