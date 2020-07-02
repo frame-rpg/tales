@@ -35,11 +35,13 @@ export class ListComponent implements OnInit {
     ])
       .pipe(take(1))
       .subscribe(async ([templates, result]) => {
-        const created = await this.characterService.create({
-          ...templates[result.type],
-          name: result.name,
-        });
-        this.router.navigate(['/characters', created.id]);
+        if (result) {
+          const created = await this.characterService.create({
+            ...templates[result.type],
+            name: result.name,
+          });
+          this.router.navigate(['/characters', created.id]);
+        }
       });
   }
 }

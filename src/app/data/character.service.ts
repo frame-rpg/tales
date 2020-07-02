@@ -43,7 +43,7 @@ export class CharacterService {
     const user = await this.auth.currentUser;
     const toAdd = { ...character };
     toAdd.acl[user.uid] = 'admin';
-    return this.firestore.collection('/characters').add(character);
+    return this.firestore.collection('/characters').add(toAdd);
   }
 }
 

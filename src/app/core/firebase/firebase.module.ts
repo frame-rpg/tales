@@ -2,9 +2,22 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { SETTINGS } from '@angular/fire/firestore';
+import { environment } from '../../../environments/environment';
 
 @NgModule({
   declarations: [],
+  providers: [
+    {
+      provide: SETTINGS,
+      useValue: environment.production
+        ? undefined
+        : {
+            host: 'localhost:8080',
+            ssl: false,
+          },
+    },
+  ],
   imports: [
     AngularFireAuthModule,
     AngularFireModule.initializeApp({

@@ -1,27 +1,35 @@
-# Ngtales
+# Tales of Foo and Bar
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.8.
+# Setting up
 
-## Development server
+It looks like you need the secret key to seed the local database even though the
+local database doesn't connect to the cloud. Talk to Eric about getting a copy of
+the key file, which should be put in src/admin/keys.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+You'll need a recent version of the jre (`apt install default-jdk`) to run the
+emulators. You also need node and the angular cli. Install [nvm](https://github.com/nvm-sh/nvm)
+and then use that to install node via `nvm i node stable`.
 
-## Code scaffolding
+Then in the root directory, `npm i -g @angular/cli firebase-tools` to install
+CLI tools.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Then `npm i` in the root directory. Then in the admin script directory... `cd src/admin && npm i`.
 
-## Build
+That's all you need.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+# Running
 
-## Running unit tests
+Usually: run the emulator locally
+`firebase emulators:start`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Then seed the local emulators:
 
-## Running end-to-end tests
+```
+cd src/admin
+npm run-script clean
+npm run-script build
+FIRESTORE_EMULATOR_HOST=localhost:8080 npm run-script seed
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Then run anuglar
+`ng serve`

@@ -32,7 +32,7 @@ service cloud.firestore {
     }
 
     function createAclCheck() {
-      return request.resource.acl[request.auth.uid] == 'admin' && request.resource.acl.size() == 1;
+      return request.resource.data.acl[request.auth.uid] == 'admin' && request.resource.data.acl.size() == 1;
     }
 
     match /users/{userId} {
