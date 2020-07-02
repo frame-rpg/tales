@@ -3,11 +3,8 @@ import { Observable, combineLatest } from 'rxjs';
 
 import { Character } from 'src/types/character';
 import { CharacterService } from 'src/app/data/character.service';
-import { CreateComponent } from '../create/create.component';
-import { MatDialog } from '@angular/material/dialog';
+import { CreateService } from 'src/app/shared/character/create/create.service';
 import { Router } from '@angular/router';
-import { RulesService } from 'src/app/data/rules.service';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list',
@@ -19,29 +16,18 @@ export class ListComponent implements OnInit {
 
   constructor(
     private characterService: CharacterService,
-    private rulesService: RulesService,
-    private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private createService: CreateService
   ) {}
 
   ngOnInit(): void {
     this.list$ = this.characterService.list();
   }
 
-  openAdd() {
-    combineLatest([
-      this.rulesService.templates(),
-      this.dialog.open(CreateComponent).afterClosed(),
-    ])
-      .pipe(take(1))
-      .subscribe(async ([templates, result]) => {
-        if (result) {
-          const created = await this.characterService.create({
-            ...templates[result.type],
-            name: result.name,
-          });
-          this.router.navigate(['/characters', created.id]);
-        }
-      });
+  async openAdd() {
+    const result = await this.createService.createCharacter();
+    if (result) {
+      this.router.navigate(['characters', result.id]);
+    }
   }
 }
