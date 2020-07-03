@@ -2,10 +2,6 @@
 
 # Setting up
 
-It looks like you need the secret key to seed the local database even though the
-local database doesn't connect to the cloud. Talk to Eric about getting a copy of
-the key file, which should be put in src/admin/keys.
-
 You'll need a recent version of the jre (`apt install default-jdk`) to run the
 emulators. You also need node and the angular cli. Install [nvm](https://github.com/nvm-sh/nvm)
 and then use that to install node via `nvm i node stable`.
