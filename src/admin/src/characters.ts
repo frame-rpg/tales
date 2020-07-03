@@ -91,6 +91,7 @@ export const PLAYERS: NewPlayerCharacter[] = [
     name: 'Connecticut (Connie) Butler',
     acl: {
       'malbertelli@gmail.com': 'admin',
+      'megan@albertelli.com': 'admin',
     },
     description: '',
     type: 'player',
@@ -261,6 +262,7 @@ export const PLAYERS: NewPlayerCharacter[] = [
     name: 'Chad',
     acl: {
       'albertel@gmail.com': 'admin',
+      'guy@albertelli.com': 'admin',
     },
     description: '',
     type: 'player',
@@ -460,6 +462,7 @@ export const COMPANIONS: NewCompanion[] = [
     description: 'Ankylosaur',
     acl: {
       'malbertelli@gmail.com': 'admin',
+      'megan@albertelli.com': 'admin',
     },
     type: 'companion',
     attack: 2,
@@ -513,6 +516,7 @@ export const COMPANIONS: NewCompanion[] = [
     description: 'Small Mammal and Occasional Plot Device',
     acl: {
       'albertel@gmail.com': 'admin',
+      'guy@albertelli.com': 'admin',
     },
     type: 'companion',
     attack: 1,

@@ -5,13 +5,18 @@ admin.initializeApp();
 const db = admin.firestore();
 
 export const onSignup = functions.auth.user().onCreate(async (user) => {
-  async function fixAcl({
-    item,
-    user,
-  }: {
-    item: FirebaseFirestore.QueryDocumentSnapshot;
-    user: admin.auth.UserRecord;
-  }) {
+  const importedUsers = [
+    'eric.eslinger@gmail.com',
+    'albertel@gmail.com',
+    'malbertelli@gmail.com',
+    'llahwehttam@gmail.com',
+    'guy@albertelli.com',
+    'megan@albertelli.com',
+    'chrissy.jacobs@sfuhs.org',
+    'phil.bowen@gmail.com',
+    'cljacobs1975@gmail.com',
+  ];
+  async function fixAcl(item: FirebaseFirestore.QueryDocumentSnapshot) {
     if (item.data().acl && item.data().acl[user.email!]) {
       const acl = {
         ...item.data().acl,
@@ -27,20 +32,18 @@ export const onSignup = functions.auth.user().onCreate(async (user) => {
     name: user.displayName,
     avatar: user.photoURL,
   });
-  const allCampaigns = await db.collection('/campaigns').get();
-  if (!!user.email) {
-    await Promise.all(
-      allCampaigns.docs.map(async (campaign) => {
-        fixAcl({ item: campaign, user });
-        const allCharacters = await db
-          .collection(`/campaigns/${campaign.id}/characters`)
-          .get();
-        await Promise.all(
-          allCharacters.docs.map(async (character) =>
-            fixAcl({ item: character, user })
-          )
-        );
-      })
-    );
+  if (user.email && importedUsers.indexOf(user.email) >= 0) {
+    const allCampaigns = await db.collection('/campaigns').get();
+    if (!!user.email) {
+      await Promise.all(
+        allCampaigns.docs.map(async (campaign) => {
+          await fixAcl(campaign);
+          const allCharacters = await db
+            .collection(`/campaigns/${campaign.id}/characters`)
+            .get();
+          await Promise.all(allCharacters.docs.map(fixAcl));
+        })
+      );
+    }
   }
 });
