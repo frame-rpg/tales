@@ -33,11 +33,18 @@ export class UserService {
 
   async postLogin() {
     const user = await this.auth.user.pipe(take(1)).toPromise();
-    return this.update(user.uid, {
-      name: user.displayName,
-      email: user.email,
-      id: user.uid,
-      avatar: user.photoURL,
-    });
+    const userDoc = await this.firestore
+      .doc<User>(`/users/${user.uid}`)
+      .get()
+      .pipe(take(1))
+      .toPromise();
+    if (userDoc.exists) {
+      return this.update(user.uid, {
+        name: user.displayName,
+        email: user.email,
+        id: user.uid,
+        avatar: user.photoURL,
+      });
+    }
   }
 }

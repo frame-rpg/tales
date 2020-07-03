@@ -34,12 +34,12 @@ const newCampaign = await app
 
 await Promise.all(
   PLAYERS.map((p) =>
-    app.firestore().collection(`/campaigns/${newCampaign.id}`).add(p)
+    app.firestore().collection(`/campaigns/${newCampaign.id}/characters`).add(p)
   )
 );
 
 await Promise.all(
   COMPANIONS.map((p) =>
-    app.firestore().collection(`/campaigns/${newCampaign.id}`).add(p)
+    app.firestore().collection(`/campaigns/${newCampaign.id}/characters`).add(p)
   )
 );
