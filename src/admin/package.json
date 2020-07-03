@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rm -rf build/",
     "build": "npx tsc",
-    "seed": "env FIRESTORE_EMULATOR_HOST=localhost:8080 node --harmony-top-level-await --experimental-json-modules build/seed.js"
+    "seed": "node --harmony-top-level-await --experimental-json-modules build/seed.js"
   },
   "author": "",
   "license": "ISC",

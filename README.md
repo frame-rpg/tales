@@ -24,7 +24,7 @@ Then seed the local emulators:
 cd src/admin
 npm run-script clean
 npm run-script build
-FIRESTORE_EMULATOR_HOST=localhost:8080 npm run-script seed
+npm run-script seed
 ```
 
 Then run anuglar

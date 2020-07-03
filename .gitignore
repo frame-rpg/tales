@@ -9,6 +9,8 @@
 
 keys/
 src/admin/build/
+.firebase/
+secret/
 
 # dependencies
 node_modules
