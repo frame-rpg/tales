@@ -29,6 +29,14 @@ const newCampaign = await app
     description: 'also Time Travel and Alien Spaceships',
     acl: {
       'eric.eslinger@gmail.com': 'admin',
+      'albertel@gmail.com': 'read',
+      'malbertelli@gmail.com': 'read',
+      'llahwehttam@gmail.com': 'read',
+      'guy@albertelli.com': 'read',
+      'megan@albertelli.com': 'read',
+      'chrissy.jacobs@sfuhs.org': 'read',
+      'phil.bowen@gmail.com': 'read',
+      'cljacobs1975@gmail.com': 'read',
     },
   });
 
