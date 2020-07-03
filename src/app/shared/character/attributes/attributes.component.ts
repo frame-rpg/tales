@@ -13,7 +13,5 @@ import { PlayerCharacter } from 'src/types/player_character';
 export class AttributesComponent {
   @Input() character: PlayerCharacter | Companion;
 
-  skillList: Observable<{ name: string; edge: number; pool: number }[]>;
-
   constructor() {}
 }

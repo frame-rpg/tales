@@ -1,27 +1,5 @@
 <div *ngFor="let skill of character.skills | keyvalue" class="skill">
-  <div class="skillInfo">
-    {{skill.key}}: {{skill.value}}
+  <div class="skillInfo" *ngIf="skillDetails && skillLevels">
+    {{skillDetails[skill.key].name}}: {{skillLevels[skill.value]}}
   </div>
-  <!-- <div class="rollers">
-    <button mat-flat-button class="rollButton"
-        [ngClass]="skill.attributes.indexOf('might') >= 0 ? 'suggested' : 'unusual'"
-        (click)="roll(skill)">
-      M
-    </button>
-    <button mat-flat-button class="rollButton"
-        [ngClass]="skill.attributes.indexOf('speed') >= 0 ? 'suggested' : 'unusual'"
-        (click)="roll(skill)">
-      S
-    </button>
-    <button mat-flat-button class="rollButton"
-        [ngClass]="skill.attributes.indexOf('conviction') >= 0 ? 'suggested' : 'unusual'"
-        (click)="roll(skill)">
-      C
-    </button>
-    <button mat-flat-button class="rollButton"
-        [ngClass]="skill.attributes.indexOf('focus') >= 0 ? 'suggested' : 'unusual'"
-        (click)="roll(skill)">
-      F
-    </button>
-  </div> -->
 </div>

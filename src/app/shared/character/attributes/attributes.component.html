@@ -1,3 +1,5 @@
 <div *ngFor="let attribute of character.attributes | keyvalue">
-
+  {{attribute.key}}:
+  {{ character.status?.pools && character.status.pools[attribute.key]?.current}}
+  / {{attribute.value.pool}}
 </div>

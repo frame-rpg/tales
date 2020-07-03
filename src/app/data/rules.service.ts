@@ -1,8 +1,13 @@
+import {
+  NewCompanion,
+  NewNonplayerCharacter,
+  NewPlayerCharacter,
+} from 'src/types/character';
 import { SkillDetails, SkillLevels } from 'src/types/skill';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -11,18 +16,20 @@ export class RulesService {
   constructor(private firestore: AngularFirestore) {}
 
   skillInfo() {
-    return this.firestore.doc(`/rules/skills`).valueChanges() as Observable<
-      SkillDetails
-    >;
+    return this.firestore.doc<SkillDetails>(`/rules/skills`).valueChanges();
   }
 
   templates() {
-    return this.firestore.doc('/rules/characterTemplates').valueChanges();
+    return this.firestore
+      .doc<{
+        player: NewPlayerCharacter;
+        nonplayer: NewNonplayerCharacter;
+        companion: NewCompanion;
+      }>(`/rules/characterTemplates`)
+      .valueChanges();
   }
 
   skillLevels() {
-    return this.firestore
-      .doc('/rules/skillLevels')
-      .valueChanges() as Observable<SkillLevels>;
+    return this.firestore.doc<SkillLevels>(`/rules/skillLevels`).valueChanges();
   }
 }
