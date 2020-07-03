@@ -16,7 +16,7 @@ export class CreateService {
     private characterService: CharacterService
   ) {}
 
-  async createCharacter() {
+  async createCharacter(options: { inCampaign?: string } = {}) {
     const [templates, result] = await combineLatest([
       this.rulesService.templates(),
       this.dialog.open(CreateComponent).afterClosed(),
@@ -24,10 +24,13 @@ export class CreateService {
       .pipe(take(1))
       .toPromise();
     if (result) {
-      const created = await this.characterService.create({
-        ...templates[result.type],
-        name: result.name,
-      });
+      const created = await this.characterService.create(
+        {
+          ...templates[result.type],
+          name: result.name,
+        },
+        options
+      );
       return created;
     } else {
       return null;

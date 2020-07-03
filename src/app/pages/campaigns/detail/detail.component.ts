@@ -6,12 +6,20 @@ import {
   PlayerCharacter,
 } from 'src/types/character';
 import { Component, OnInit } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
-import { map, publishReplay, refCount, switchMap } from 'rxjs/operators';
+import { Observable, combineLatest, of } from 'rxjs';
+import {
+  map,
+  publishReplay,
+  refCount,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Campaign } from 'src/types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
+import { CreateService } from 'src/app/shared/character/create/create.service';
 import { Roll } from 'src/types/event';
 
 @Component({
@@ -33,6 +41,7 @@ export class DetailComponent implements OnInit {
   constructor(
     private campaignService: CampaignService,
     private route: ActivatedRoute,
+    private characterCreateService: CreateService,
     private auth: AngularFireAuth
   ) {}
 
@@ -92,5 +101,22 @@ export class DetailComponent implements OnInit {
         } as Partial<Companion>)
       )
     );
+  }
+
+  trackById(idx, item: { id: string }) {
+    return item.id;
+  }
+
+  async createCharacter() {
+    await this.route.paramMap
+      .pipe(
+        map((params) =>
+          this.characterCreateService.createCharacter({
+            inCampaign: params.get('id'),
+          })
+        ),
+        take(1)
+      )
+      .toPromise();
   }
 }

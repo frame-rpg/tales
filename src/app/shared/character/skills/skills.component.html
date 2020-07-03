@@ -1,8 +1,8 @@
-<div *ngFor="let skill of skillDetails | async" class="skill">
+<div *ngFor="let skill of character.skills | keyvalue" class="skill">
   <div class="skillInfo">
-    {{skill.name}}: {{skill.levelName}}
+    {{skill.key}}: {{skill.value}}
   </div>
-  <div class="rollers">
+  <!-- <div class="rollers">
     <button mat-flat-button class="rollButton"
         [ngClass]="skill.attributes.indexOf('might') >= 0 ? 'suggested' : 'unusual'"
         (click)="roll(skill)">
@@ -23,5 +23,5 @@
         (click)="roll(skill)">
       F
     </button>
-  </div>
+  </div> -->
 </div>

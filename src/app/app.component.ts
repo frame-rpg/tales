@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { auth } from 'firebase/app';
 
 @Component({
   selector: 'app-root',

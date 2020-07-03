@@ -13,32 +13,32 @@ import { SkillDescription } from 'src/types/skill';
   templateUrl: './skills.component.html',
   styleUrls: ['./skills.component.scss'],
 })
-export class SkillsComponent implements OnInit {
-  @Input() character: Observable<PlayerCharacter | Companion>;
+export class SkillsComponent {
+  @Input() character: PlayerCharacter | Companion;
   skillDetails: Observable<SkillDescription[]>;
   constructor(private dice: DiceService, private rules: RulesService) {}
 
-  ngOnInit(): void {
-    this.skillDetails = combineLatest([
-      this.rules.skillInfo(),
-      this.rules.skillLevels(),
-      this.character,
-    ]).pipe(
-      filter(
-        ([skillInfo, skillLevels, character]) =>
-          !!skillInfo && !!skillLevels && !!character
-      ),
-      map(([skillInfo, skillLevels, character]) =>
-        Object.keys(character.skills)
-          .sort()
-          .map((skillName) => ({
-            ...skillInfo[skillName],
-            levelName: skillLevels[character.skills[skillName]],
-            level: character.skills[skillName],
-          }))
-      )
-    );
-  }
+  // ngOnInit(): void {
+  //   this.skillDetails = combineLatest([
+  //     this.rules.skillInfo(),
+  //     this.rules.skillLevels(),
+  //     this.character,
+  //   ]).pipe(
+  //     filter(
+  //       ([skillInfo, skillLevels, character]) =>
+  //         !!skillInfo && !!skillLevels && !!character
+  //     ),
+  //     map(([skillInfo, skillLevels, character]) =>
+  //       Object.keys(character.skills)
+  //         .sort()
+  //         .map((skillName) => ({
+  //           ...skillInfo[skillName],
+  //           levelName: skillLevels[character.skills[skillName]],
+  //           level: character.skills[skillName],
+  //         }))
+  //     )
+  //   );
+  // }
   async roll({ name, level }: { name: string; level: number }) {
     console.log(await this.dice.roll(level, 0));
   }

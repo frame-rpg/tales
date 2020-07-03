@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 
 import { Companion } from 'src/types/companion';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'companion',
@@ -9,6 +8,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./companion.component.scss'],
 })
 export class CompanionComponent {
-  @Input() character: Observable<Companion>;
+  @Input() character: Companion;
   constructor() {}
 }

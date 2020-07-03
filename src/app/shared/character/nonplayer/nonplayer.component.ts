@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { NonplayerCharacter } from 'src/types/nonplayer_character';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'nonplayer-character',
@@ -9,6 +8,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./nonplayer.component.scss'],
 })
 export class NonplayerComponent {
-  @Input() character: Observable<NonplayerCharacter>;
+  @Input() character: NonplayerCharacter;
   constructor() {}
 }

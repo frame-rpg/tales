@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 
-import { Observable } from 'rxjs';
 import { PlayerCharacter } from 'src/types/player_character';
 
 @Component({
@@ -9,6 +8,6 @@ import { PlayerCharacter } from 'src/types/player_character';
   styleUrls: ['./player.component.scss'],
 })
 export class PlayerComponent {
-  @Input() character: Observable<PlayerCharacter>;
+  @Input() character: PlayerCharacter;
   constructor() {}
 }

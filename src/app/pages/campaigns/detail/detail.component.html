@@ -1,12 +1,16 @@
 <h1>{{ name | async }}</h1>
 <div>{{ description | async }}</div>
+<button mat-stroked-button (click)="createCharacter()">
+  Add Character
+</button>
 <mat-expansion-panel>
   <mat-expansion-panel-header>
     <mat-panel-title>
       Player Characters
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <character-sheet *ngFor="let character of playerCharacters | async"
+  <character-sheet
+      *ngFor="let character of playerCharacters | async; trackBy:trackById "
       [character]="character">
   </character-sheet>
 </mat-expansion-panel>
@@ -16,7 +20,8 @@
       Nonplayer Characters
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <character-sheet *ngFor="let character of nonplayerCharacters | async"
+  <character-sheet
+      *ngFor="let character of nonplayerCharacters | async; trackBy:trackById"
       [character]="character">
   </character-sheet>
 </mat-expansion-panel>
@@ -26,7 +31,8 @@
       Companions
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <character-sheet *ngFor="let character of companions | async"
+  <character-sheet
+      *ngFor="let character of companions | async; trackBy:trackById"
       [character]="character">
   </character-sheet>
 </mat-expansion-panel>

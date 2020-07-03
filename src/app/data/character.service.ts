@@ -39,11 +39,17 @@ export class CharacterService {
     return this.firestore.doc(`/characters/${character.id}`).update(character);
   }
 
-  async create(character: NewCharacter) {
+  async create(character: NewCharacter, options: { inCampaign?: string } = {}) {
     const user = await this.auth.currentUser;
     const toAdd = { ...character };
     toAdd.acl[user.uid] = 'admin';
-    return this.firestore.collection('/characters').add(toAdd);
+    if (options?.inCampaign) {
+      return this.firestore
+        .collection(`/campaigns/${options.inCampaign}/characters`)
+        .add(toAdd);
+    } else {
+      return this.firestore.collection('/characters').add(toAdd);
+    }
   }
 }
 
