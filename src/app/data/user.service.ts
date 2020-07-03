@@ -1,13 +1,18 @@
+import { map, take } from 'rxjs/operators';
+
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { User } from '../../types/user';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private firestore: AngularFirestore) {}
+  constructor(
+    private firestore: AngularFirestore,
+    private auth: AngularFireAuth
+  ) {}
 
   list() {
     return this.firestore
@@ -24,5 +29,15 @@ export class UserService {
 
   update(id: String, user: User) {
     return this.firestore.doc(`users/${id}`).update(user);
+  }
+
+  async postLogin() {
+    const user = await this.auth.user.pipe(take(1)).toPromise();
+    return this.update(user.uid, {
+      name: user.displayName,
+      email: user.email,
+      id: user.uid,
+      avatar: user.photoURL,
+    });
   }
 }

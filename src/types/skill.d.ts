@@ -36,4 +36,11 @@ export type SkillNames =
   | 'legerdemain'
   | 'hacking'
   | 'pickLocks'
+  | 'initiative'
+  | 'otherKnowledge'
+  | 'speedDefense'
+  | 'mightDefense'
+  | 'focusDefense'
+  | 'convictionDefense'
+  | 'healthDefense'
   | 'advancedSecurity';

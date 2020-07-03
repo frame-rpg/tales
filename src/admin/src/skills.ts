@@ -89,6 +89,47 @@ export const skillSeed: SkillDetails = {
     description: '',
     attributes: ['focus', 'conviction'],
   },
+  mightDefense: {
+    name: 'Might Defense',
+    description: '',
+    attributes: ['might'],
+  },
+  speedDefense: {
+    name: 'Speed Defense',
+    description: '',
+    attributes: ['speed'],
+  },
+  focusDefense: {
+    name: 'Focus Defense',
+    description: '',
+    attributes: ['focus'],
+  },
+  convictionDefense: {
+    name: 'Conviction Defense',
+    description: '',
+    attributes: ['conviction'],
+  },
+  healthDefense: {
+    name: 'Health Defense',
+    description: '',
+    attributes: ['health'],
+  },
+  otherKnowledge: {
+    name: 'Knowledge',
+    description:
+      'Any knowledge that does not fall under Wet Science or Dry Science',
+    attributes: ['focus', 'conviction'],
+  },
+  initiative: {
+    name: 'Initiative',
+    description: '',
+    attributes: ['conviction', 'speed'],
+  },
+  intimidate: {
+    name: 'Intimidate',
+    description: '',
+    attributes: ['conviction', 'might'],
+  },
 };
 
 export const skillLevelSeed: SkillLevels = {

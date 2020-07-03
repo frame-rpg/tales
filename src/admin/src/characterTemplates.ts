@@ -35,6 +35,12 @@ export const PLAYER_TEMPLATE: NewPlayerCharacter = {
     piloting: 0,
     swimming: 0,
     sneaking: 0,
+    mightDefense: 0,
+    speedDefense: 0,
+    convictionDefense: 0,
+    focusDefense: 0,
+    healthDefense: 0,
+    initiative: 0,
     wildernessLore: 0,
     medicine: 0,
     commandAnimal: 0,
@@ -43,8 +49,10 @@ export const PLAYER_TEMPLATE: NewPlayerCharacter = {
     wetScienceTinker: 0,
     dryScienceKnowledge: 0,
     dryScienceTinker: 0,
+    otherKnowledge: 0,
     persuade: 0,
     lie: 0,
+    intimidate: 0,
     senseMotive: 0,
     legerdemain: 0,
     hacking: 0,
@@ -74,6 +82,7 @@ export const COMPANION_TEMPLATE: NewCompanion = {
   },
   skills: {},
   status: {},
+  abilities: [],
 };
 
 export const NONPLAYER_TEMPLATE: NewNonplayerCharacter = {

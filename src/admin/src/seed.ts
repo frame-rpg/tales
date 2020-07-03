@@ -1,3 +1,4 @@
+import { COMPANIONS, PLAYERS } from './characters.js';
 import {
   COMPANION_TEMPLATE,
   NONPLAYER_TEMPLATE,
@@ -19,3 +20,26 @@ await app.firestore().doc('/rules/characterTemplates').set({
   nonplayer: NONPLAYER_TEMPLATE,
   companion: COMPANION_TEMPLATE,
 });
+
+const newCampaign = await app
+  .firestore()
+  .collection('/campaigns')
+  .add({
+    name: 'Tales of Dinosaurs and Stuff',
+    description: 'also Time Travel and Alien Spaceships',
+    acl: {
+      'eric.eslinger@gmail.com': 'admin',
+    },
+  });
+
+await Promise.all(
+  PLAYERS.map((p) =>
+    app.firestore().collection(`/campaigns/${newCampaign.id}`).add(p)
+  )
+);
+
+await Promise.all(
+  COMPANIONS.map((p) =>
+    app.firestore().collection(`/campaigns/${newCampaign.id}`).add(p)
+  )
+);

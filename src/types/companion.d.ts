@@ -13,6 +13,7 @@ export interface NewCompanion extends NewCharacterBase {
   skills: {
     [name: string]: number;
   };
+  abilities: string[];
 }
 
 export interface Companion extends NewCompanion {
