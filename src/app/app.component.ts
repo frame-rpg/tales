@@ -12,7 +12,7 @@ import { auth } from 'firebase/app';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'ngtales';
+  title = 'tales';
   constructor(
     public auth: AngularFireAuth,
     private breakpointObserver: BreakpointObserver
