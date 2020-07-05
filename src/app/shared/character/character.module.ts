@@ -1,4 +1,5 @@
 import { AttributesComponent } from './attributes/attributes.component';
+import { CardComponent } from './card/card.component';
 import { CommonModule } from '@angular/common';
 import { CompanionComponent } from './companion/companion.component';
 import { CreateComponent } from './create/create.component';
@@ -25,6 +26,7 @@ import { SkillsComponent } from './skills/skills.component';
     SkillsComponent,
     SheetComponent,
     CreateComponent,
+    CardComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +46,7 @@ import { SkillsComponent } from './skills/skills.component';
     CompanionComponent,
     SkillsComponent,
     SheetComponent,
+    CardComponent,
   ],
 })
 export class CharacterModule {}
