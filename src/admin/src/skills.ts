@@ -1,134 +1,209 @@
 import { SkillDetails, SkillLevels } from '../../../src/types/skill';
 
 export const skillSeed: SkillDetails = {
-  movement: {
-    name: 'Movement',
+  advancedSecurity: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
     description: '',
-    attributes: ['might', 'speed'],
-  },
-  riding: {
-    name: 'Riding',
-    description: '',
-    attributes: ['speed', 'conviction'],
-  },
-  piloting: {
-    name: 'Piloting',
-    description: '',
-    attributes: ['speed', 'conviction', 'focus'],
-  },
-  swimming: { name: 'Swimming', description: '', attributes: ['might'] },
-  sneaking: {
-    name: 'Sneaking',
-    description: '',
-    attributes: ['speed', 'focus'],
-  },
-  wildernessLore: {
-    name: 'Wilderness Lore',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  medicine: {
-    name: 'Medicine',
-    description: '',
-    attributes: ['conviction', 'focus'],
+    name: 'Advanced Security',
+    preferredAttributes: ['focus', 'conviction'],
   },
   commandAnimal: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
     name: 'Command Animal',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  perception: {
-    name: 'Perception',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  wetScienceKnowledge: {
-    name: 'Wet Science Knowledge',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  wetScienceTinker: {
-    name: 'Wet Science Tinker',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  dryScienceKnowledge: {
-    name: 'Dry Science Knowledge',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  dryScienceTinker: {
-    name: 'Dry Science Tinker',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  persuade: { name: 'Persuade', description: '', attributes: ['focus'] },
-  lie: { name: 'Lie', description: '', attributes: ['conviction'] },
-  senseMotive: {
-    name: 'Sense Motive',
-    description: '',
-    attributes: ['focus'],
-  },
-  legerdemain: {
-    name: 'Legerdemain',
-    description: '',
-    attributes: ['speed'],
-  },
-  hacking: {
-    name: 'Hacking',
-    description: '',
-    attributes: ['conviction', 'focus'],
-  },
-  pickLocks: {
-    name: 'Pick Locks',
-    description: '',
-    attributes: ['speed', 'focus', 'conviction'],
-  },
-  advancedSecurity: {
-    name: 'Advanced Security',
-    description: '',
-    attributes: ['focus', 'conviction'],
-  },
-  mightDefense: {
-    name: 'Might Defense',
-    description: '',
-    attributes: ['might'],
-  },
-  speedDefense: {
-    name: 'Speed Defense',
-    description: '',
-    attributes: ['speed'],
-  },
-  focusDefense: {
-    name: 'Focus Defense',
-    description: '',
-    attributes: ['focus'],
+    preferredAttributes: ['conviction', 'focus'],
   },
   convictionDefense: {
-    name: 'Conviction Defense',
     description: '',
-    attributes: ['conviction'],
+    name: 'Conviction Defense',
+    preferredAttributes: ['conviction'],
+  },
+  convictionMeleeAttack: {
+    description: '',
+    name: 'Conviction Melee Attack',
+    preferredAttributes: ['conviction'],
+  },
+  convictionRangedAttack: {
+    description: '',
+    name: 'Conviction Ranged Attack',
+    preferredAttributes: ['conviction'],
+  },
+  dryScienceKnowledge: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Dry Science Knowledge',
+    preferredAttributes: ['conviction', 'focus'],
+  },
+  dryScienceTinker: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Dry Science Tinker',
+    preferredAttributes: ['conviction', 'focus'],
+  },
+  focusDefense: {
+    description: '',
+    name: 'Focus Defense',
+    preferredAttributes: ['focus'],
+  },
+  focusMeleeAttack: {
+    description: '',
+    name: 'Focus Melee Attack',
+    preferredAttributes: ['focus'],
+  },
+  focusRangedAttack: {
+    description: '',
+    name: 'Focus Ranged Attack',
+    preferredAttributes: ['focus'],
+  },
+  hacking: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Hacking',
+    preferredAttributes: ['conviction', 'focus'],
   },
   healthDefense: {
-    name: 'Health Defense',
     description: '',
-    attributes: ['health'],
-  },
-  otherKnowledge: {
-    name: 'Knowledge',
-    description:
-      'Any knowledge that does not fall under Wet Science or Dry Science',
-    attributes: ['focus', 'conviction'],
+    name: 'Health Defense',
+    preferredAttributes: ['health'],
   },
   initiative: {
-    name: 'Initiative',
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
     description: '',
-    attributes: ['conviction', 'speed'],
+    name: 'Initiative',
+    preferredAttributes: ['conviction', 'speed'],
   },
   intimidate: {
-    name: 'Intimidate',
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
     description: '',
-    attributes: ['conviction', 'might'],
+    name: 'Intimidate',
+    preferredAttributes: ['conviction', 'might'],
+  },
+  legerdemain: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Legerdemain',
+    preferredAttributes: ['speed'],
+  },
+  lie: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Lie',
+    preferredAttributes: ['conviction'],
+  },
+  medicine: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Medicine',
+    preferredAttributes: ['conviction', 'focus'],
+  },
+  mightDefense: {
+    description: '',
+    name: 'Might Defense',
+    preferredAttributes: ['might'],
+  },
+  mightMeleeAttack: {
+    description: '',
+    name: 'Might Melee Attack',
+    preferredAttributes: ['might'],
+  },
+  mightRangedAttack: {
+    description: '',
+    name: 'Might Ranged Attack',
+    preferredAttributes: ['might'],
+  },
+  movement: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Movement',
+    preferredAttributes: ['might', 'speed'],
+  },
+  otherKnowledge: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description:
+      'Any knowledge that does not fall under Wet Science or Dry Science',
+    name: 'Knowledge',
+    preferredAttributes: ['focus', 'conviction'],
+  },
+  perception: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Perception',
+    preferredAttributes: ['conviction', 'focus'],
+  },
+  persuade: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Persuade',
+    preferredAttributes: ['focus'],
+  },
+  pickLocks: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Pick Locks',
+    preferredAttributes: ['speed', 'focus', 'conviction'],
+  },
+  piloting: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Piloting',
+    preferredAttributes: ['speed', 'conviction', 'focus'],
+  },
+  riding: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Riding',
+    preferredAttributes: ['speed', 'conviction'],
+  },
+  senseMotive: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Sense Motive',
+    preferredAttributes: ['focus'],
+  },
+  sneaking: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Sneaking',
+    preferredAttributes: ['speed', 'focus'],
+  },
+  speedDefense: {
+    description: '',
+    name: 'Speed Defense',
+    preferredAttributes: ['speed'],
+  },
+  speedMeleeAttack: {
+    description: '',
+    name: 'Speed Melee Attack',
+    preferredAttributes: ['speed'],
+  },
+  speedRangedAttack: {
+    description: '',
+    name: 'Speed Ranged Attack',
+    preferredAttributes: ['speed'],
+  },
+  swimming: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Swimming',
+    preferredAttributes: ['might'],
+  },
+  wetScienceKnowledge: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Wet Science Knowledge',
+    preferredAttributes: ['conviction', 'focus'],
+  },
+  wetScienceTinker: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Wet Science Tinker',
+    preferredAttributes: ['conviction', 'focus'],
+  },
+  wildernessLore: {
+    allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
+    description: '',
+    name: 'Wilderness Lore',
+    preferredAttributes: ['conviction', 'focus'],
   },
 };
 

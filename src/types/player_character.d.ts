@@ -1,5 +1,6 @@
 import { NewCharacterBase } from './character_base';
 import { CharacterAttribute } from './attribute';
+import { SkillNames } from './skill';
 
 export interface NewPlayerCharacter extends NewCharacterBase {
   type: 'player';
@@ -10,9 +11,7 @@ export interface NewPlayerCharacter extends NewCharacterBase {
     conviction: CharacterAttribute;
     health: CharacterAttribute;
   };
-  skills: {
-    [name: string]: number;
-  };
+  skills: Record<SkillNames, number>;
 }
 
 export interface PlayerCharacter extends NewPlayerCharacter {

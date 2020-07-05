@@ -1,9 +1,10 @@
-import { COMPANIONS, PLAYERS } from './characters.js';
+import { campaign, campaignTemplate } from './campaign.js';
 import {
-  COMPANION_TEMPLATE,
-  NONPLAYER_TEMPLATE,
-  PLAYER_TEMPLATE,
+  companionTemplate,
+  nonplayerTemplate,
+  playerTemplate,
 } from './characterTemplates.js';
+import { companions, players } from './characters.js';
 import { skillLevelSeed, skillSeed } from './skills.js';
 
 import admin from 'firebase-admin';
@@ -15,39 +16,33 @@ const app = admin.initializeApp({
 
 await app.firestore().doc('/rules/skills').set(skillSeed);
 await app.firestore().doc('/rules/skillLevels').set(skillLevelSeed);
-await app.firestore().doc('/rules/characterTemplates').set({
-  player: PLAYER_TEMPLATE,
-  nonplayer: NONPLAYER_TEMPLATE,
-  companion: COMPANION_TEMPLATE,
+await app.firestore().doc('/rules/templates').set({
+  player: playerTemplate,
+  nonplayer: nonplayerTemplate,
+  companion: companionTemplate,
+  campaign: campaignTemplate,
 });
 
 const newCampaign = await app
   .firestore()
   .collection('/campaigns')
-  .add({
-    name: 'Tales of Dinosaurs and Stuff',
-    description: 'also Time Travel and Alien Spaceships',
-    acl: {
-      'eric.eslinger@gmail.com': 'admin',
-      'albertel@gmail.com': 'read',
-      'malbertelli@gmail.com': 'read',
-      'llahwehttam@gmail.com': 'read',
-      'guy@albertelli.com': 'read',
-      'megan@albertelli.com': 'read',
-      'chrissy.jacobs@sfuhs.org': 'read',
-      'phil.bowen@gmail.com': 'read',
-      'cljacobs1975@gmail.com': 'read',
-    },
-  });
+  .add(campaign);
 
-await Promise.all(
-  PLAYERS.map((p) =>
-    app.firestore().collection(`/campaigns/${newCampaign.id}/characters`).add(p)
-  )
-);
-
-await Promise.all(
-  COMPANIONS.map((p) =>
-    app.firestore().collection(`/campaigns/${newCampaign.id}/characters`).add(p)
-  )
-);
+await Promise.all([
+  Promise.all(
+    players.map((p) =>
+      app
+        .firestore()
+        .collection(`/campaigns/${newCampaign.id}/characters`)
+        .add(p)
+    )
+  ),
+  Promise.all(
+    companions.map((p) =>
+      app
+        .firestore()
+        .collection(`/campaigns/${newCampaign.id}/characters`)
+        .add(p)
+    )
+  ),
+]);

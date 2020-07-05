@@ -3,44 +3,52 @@ import { AttributeNames } from './attribute';
 export interface SkillDescription {
   name: string;
   description: string;
-  attributes: AttributeNames[];
+  preferredAttributes: AttributeNames[];
+  allowedAttributes?: AttributeNames[];
   levelName?: string;
   level?: number;
 }
 
-export interface SkillDetails {
-  [key: string]: SkillDescription;
-}
+type SkillDetails = Record<SkillNames, SkillDescription>;
 
 export interface SkillLevels {
   [key: string]: string;
 }
 
 export type SkillNames =
-  | 'movement'
-  | 'riding'
-  | 'piloting'
-  | 'swimming'
-  | 'sneaking'
-  | 'wildernessLore'
-  | 'medicine'
+  | 'advancedSecurity'
   | 'commandAnimal'
-  | 'perception'
-  | 'wetScienceKnowledge'
-  | 'wetScienceTinker'
+  | 'convictionDefense'
+  | 'convictionMeleeAttack'
+  | 'convictionRangedAttack'
   | 'dryScienceKnowledge'
   | 'dryScienceTinker'
-  | 'persuade'
-  | 'lie'
-  | 'senseMotive'
-  | 'legerdemain'
-  | 'hacking'
-  | 'pickLocks'
-  | 'initiative'
-  | 'otherKnowledge'
-  | 'speedDefense'
-  | 'mightDefense'
   | 'focusDefense'
-  | 'convictionDefense'
+  | 'focusMeleeAttack'
+  | 'focusRangedAttack'
+  | 'hacking'
   | 'healthDefense'
-  | 'advancedSecurity';
+  | 'initiative'
+  | 'intimidate'
+  | 'legerdemain'
+  | 'lie'
+  | 'medicine'
+  | 'mightDefense'
+  | 'mightMeleeAttack'
+  | 'mightRangedAttack'
+  | 'movement'
+  | 'otherKnowledge'
+  | 'perception'
+  | 'persuade'
+  | 'pickLocks'
+  | 'piloting'
+  | 'riding'
+  | 'senseMotive'
+  | 'sneaking'
+  | 'speedDefense'
+  | 'speedMeleeAttack'
+  | 'speedRangedAttack'
+  | 'swimming'
+  | 'wetScienceKnowledge'
+  | 'wetScienceTinker'
+  | 'wildernessLore';
