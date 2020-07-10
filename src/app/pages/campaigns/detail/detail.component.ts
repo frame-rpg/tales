@@ -55,9 +55,24 @@ export class DetailComponent implements OnInit {
     );
     this.name = this.campaign.pipe(map((v) => v.name));
     this.description = this.campaign.pipe(map((v) => v.description));
-    this.myCharacters = this.campaign.pipe(
-      switchMap((campaign) =>
-        this.campaignService.listMyCharacters(campaign.id)
+    this.myCharacters = combineLatest(this.campaign, this.auth.user).pipe(
+      switchMap(([campaign, user]) =>
+        campaign.acl[user.uid] === 'admin'
+          ? this.campaignService.listAllCharacters(campaign.id)
+          : this.campaignService.listMyCharacters(campaign.id)
+      ),
+      map((characters) =>
+        characters.sort((a, b) => {
+          if (a.status?.initiative && b.status?.initiative) {
+            return a.status.initiative - b.status.initiative;
+          } else if (a.status?.initiative) {
+            return -1;
+          } else if (b.status?.initiative) {
+            return 1;
+          } else {
+            return a.name.localeCompare(b.name);
+          }
+        })
       )
     );
 

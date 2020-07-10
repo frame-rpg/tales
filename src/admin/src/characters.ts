@@ -1,13 +1,13 @@
-import { NewCompanion, NewPlayerCharacter } from '../../../src/types/character';
+import { Companion, PlayerCharacter } from '../../../src/types/character';
 
 import { playerTemplate } from './characterTemplates.js';
 
-export const players: NewPlayerCharacter[] = [
+export const players: PlayerCharacter[] = [
   {
+    id: 'ry',
     name: 'Ry McGinnis',
     acl: {
       'cljacobs1975@gmail.com': 'admin',
-      'chrissy.jacobs@sfuhs.org': 'admin',
     },
     description: '',
     type: 'player',
@@ -82,9 +82,9 @@ export const players: NewPlayerCharacter[] = [
     },
   },
   {
+    id: 'connie',
     name: 'Connecticut (Connie) Butler',
     acl: {
-      'malbertelli@gmail.com': 'admin',
       'megan@albertelli.com': 'admin',
     },
     description: '',
@@ -155,6 +155,7 @@ export const players: NewPlayerCharacter[] = [
     },
   },
   {
+    id: 'momentusUndergrave',
     name: 'Momentus Undergrave',
     acl: {
       'llahwehttam@gmail.com': 'admin',
@@ -226,9 +227,9 @@ export const players: NewPlayerCharacter[] = [
     },
   },
   {
+    id: 'chad',
     name: 'Chad',
     acl: {
-      'albertel@gmail.com': 'admin',
       'guy@albertelli.com': 'admin',
     },
     description: '',
@@ -296,6 +297,7 @@ export const players: NewPlayerCharacter[] = [
     },
   },
   {
+    id: 'thomson',
     name: 'Thomson Anning',
     acl: {
       'phil.bowen@gmail.com': 'admin',
@@ -375,13 +377,13 @@ export const players: NewPlayerCharacter[] = [
   },
 ];
 
-export const companions: NewCompanion[] = [
+export const companions: Companion[] = [
   {
+    id: 'sparks',
     name: 'Sparks',
     description: 'Ornithomimid',
     acl: {
       'cljacobs1975@gmail.com': 'admin',
-      'chrissy.jacobs@sfuhs.org': 'admin',
     },
     type: 'companion',
     attack: 2,
@@ -402,6 +404,7 @@ export const companions: NewCompanion[] = [
     abilities: ['hands', 'birdseye'],
   },
   {
+    id: 'biscuit',
     name: 'Biscuit',
     description: 'Ankylosaur',
     acl: {
@@ -432,6 +435,7 @@ export const companions: NewCompanion[] = [
     ],
   },
   {
+    id: 'drFanta',
     name: 'Dr. Fantabulous',
     description: 'Centrosaurus',
     acl: {
@@ -456,10 +460,10 @@ export const companions: NewCompanion[] = [
     abilities: ['terrify', 'sturdyMount', 'mountedWeapon'],
   },
   {
+    id: 'smammal',
     name: 'Smammal',
     description: 'Small Mammal and Occasional Plot Device',
     acl: {
-      'albertel@gmail.com': 'admin',
       'guy@albertelli.com': 'admin',
     },
     type: 'companion',
@@ -481,6 +485,7 @@ export const companions: NewCompanion[] = [
     abilities: ['hands', 'makingTheGMRegretHisLifeChoices'],
   },
   {
+    id: 'nugget',
     name: 'Nugget 2.0',
     description: 'Raptor',
     acl: {

@@ -4,17 +4,17 @@
       <div class="name">
         {{ character.name }}
       </div>
-      <div class="owner"
-          *ngIf="owner?.id != (auth.user | async).uid; else itsMe">
-        {{ owner?.name }}
-      </div>
-      <ng-template #itsMe>
-        <div class="owner">Me</div>
-      </ng-template>
       <div class="initiative" *ngIf="character.status?.initiative">
         {{ character.status.initiative }}
       </div>
     </div>
   </mat-expansion-panel-header>
-  {{character.type}}
+  <div class="characterBody">
+    <div>
+      Player: {{ owner?.name }}
+    </div>
+    <div>
+      {{character.type}}
+    </div>
+  </div>
 </mat-expansion-panel>

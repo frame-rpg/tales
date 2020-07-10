@@ -1,5 +1,5 @@
 .playerCard {
-  max-width: 300px;
+  max-width: 500px;
 }
 
 .nameRow {
@@ -13,8 +13,7 @@
   font-weight: 500;
 }
 
-.type {
-}
-
-.initiative {
+.characterBody {
+  display: flex;
+  flex-direction: column;
 }

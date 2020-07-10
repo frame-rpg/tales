@@ -1,4 +1,4 @@
-import { NewCampaign } from '../../types/campaign';
+import { Campaign, NewCampaign } from '../../types/campaign';
 
 export const campaignTemplate: NewCampaign = {
   name: '',
@@ -7,7 +7,8 @@ export const campaignTemplate: NewCampaign = {
   skills: [],
 };
 
-export const campaign: NewCampaign = {
+export const campaign: Campaign = {
+  id: 'c1',
   name: 'Tales of Dinosaurs and Stuff',
   description: 'also Time Travel and Alien Spaceships',
   acl: {

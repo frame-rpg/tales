@@ -3,39 +3,10 @@
 <button mat-stroked-button (click)="createCharacter()">
   Add Character
 </button>
-<mat-expansion-panel>
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      Player Characters
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-  <character-sheet
-      *ngFor="let character of playerCharacters | async; trackBy:trackById "
-      [character]="character">
-  </character-sheet>
-</mat-expansion-panel>
-<mat-expansion-panel>
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      Nonplayer Characters
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-  <character-sheet
-      *ngFor="let character of nonplayerCharacters | async; trackBy:trackById"
-      [character]="character">
-  </character-sheet>
-</mat-expansion-panel>
-<mat-expansion-panel>
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      Companions
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-  <character-sheet
-      *ngFor="let character of companions | async; trackBy:trackById"
-      [character]="character">
-  </character-sheet>
-</mat-expansion-panel>
+<character-card
+    *ngFor="let character of myCharacters | async; trackBy:trackById "
+    [character]="character">
+</character-card>
 <mat-expansion-panel>
   <mat-expansion-panel-header>
     <mat-panel-title>

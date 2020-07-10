@@ -6,9 +6,9 @@ import {
 } from './characterTemplates.js';
 import { companions, players } from './characters.js';
 import { skillLevelSeed, skillSeed } from './skills.js';
+import { updateAcl, users } from './users.js';
 
 import admin from 'firebase-admin';
-import { updateAcl } from './userMap.js';
 
 const app = admin.initializeApp({
   credential: admin.credential.applicationDefault(),
@@ -25,20 +25,20 @@ await app.firestore().doc('/rules/templates').set({
   campaign: campaignTemplate,
 });
 
-const newCampaign = await app
-  .firestore()
-  .collection('/campaigns')
-  .add(updateAcl(campaign));
+await app.firestore().doc(`/campaigns/${campaign.id}`).set(updateAcl(campaign));
 
 await Promise.all([
+  Promise.all(
+    users.map((user) => app.firestore().doc(`/users/${user.id}`).set(user))
+  ),
   Promise.all(
     players
       .map(updateAcl)
       .map((p) =>
         app
           .firestore()
-          .collection(`/campaigns/${newCampaign.id}/characters`)
-          .add(p)
+          .doc(`/campaigns/${campaign.id}/characters/${p.id}`)
+          .set(p)
       )
   ),
   Promise.all(
@@ -47,8 +47,8 @@ await Promise.all([
       .map((p) =>
         app
           .firestore()
-          .collection(`/campaigns/${newCampaign.id}/characters`)
-          .add(p)
+          .doc(`/campaigns/${campaign.id}/characters/${p.id}`)
+          .set(p)
       )
   ),
 ]);

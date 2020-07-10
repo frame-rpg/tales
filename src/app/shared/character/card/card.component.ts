@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { take, tap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Character } from 'src/types/character';
 import { User } from 'src/types/user';
 import { UserService } from 'src/app/data/user.service';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'character-card',

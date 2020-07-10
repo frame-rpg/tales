@@ -50,6 +50,12 @@ export class CampaignService {
       .valueChanges({ idField: 'id' });
   }
 
+  listAllCharacters(id: string) {
+    return this.firestore
+      .collection<Character>(`/campaigns/${id}/characters`)
+      .valueChanges({ idField: 'id' });
+  }
+
   listMyCharacters(id: string) {
     return this.auth.user.pipe(
       switchMap((user) =>
