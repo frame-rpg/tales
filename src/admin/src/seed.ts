@@ -8,10 +8,12 @@ import { companions, players } from './characters.js';
 import { skillLevelSeed, skillSeed } from './skills.js';
 
 import admin from 'firebase-admin';
+import { updateAcl } from './userMap.js';
 
 const app = admin.initializeApp({
   credential: admin.credential.applicationDefault(),
-  databaseURL: 'https://stubgrub-10a8b.firebaseio.com',
+  databaseURL: 'https://tales-280319.firebaseio.com',
+  projectId: 'tales-280319',
 });
 
 await app.firestore().doc('/rules/skills').set(skillSeed);
@@ -26,23 +28,27 @@ await app.firestore().doc('/rules/templates').set({
 const newCampaign = await app
   .firestore()
   .collection('/campaigns')
-  .add(campaign);
+  .add(updateAcl(campaign));
 
 await Promise.all([
   Promise.all(
-    players.map((p) =>
-      app
-        .firestore()
-        .collection(`/campaigns/${newCampaign.id}/characters`)
-        .add(p)
-    )
+    players
+      .map(updateAcl)
+      .map((p) =>
+        app
+          .firestore()
+          .collection(`/campaigns/${newCampaign.id}/characters`)
+          .add(p)
+      )
   ),
   Promise.all(
-    companions.map((p) =>
-      app
-        .firestore()
-        .collection(`/campaigns/${newCampaign.id}/characters`)
-        .add(p)
-    )
+    companions
+      .map(updateAcl)
+      .map((p) =>
+        app
+          .firestore()
+          .collection(`/campaigns/${newCampaign.id}/characters`)
+          .add(p)
+      )
   ),
 ]);
