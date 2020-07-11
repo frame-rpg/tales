@@ -8,6 +8,7 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { Observable, combineLatest, of } from 'rxjs';
 import {
+  filter,
   map,
   publishReplay,
   refCount,
@@ -31,12 +32,10 @@ export class DetailComponent implements OnInit {
   campaign: Observable<Campaign>;
   description: Observable<string>;
   name: Observable<string>;
-  playerCharacters: Observable<PlayerCharacter[]>;
-  nonplayerCharacters: Observable<NonplayerCharacter[]>;
-  companions: Observable<Companion[]>;
-  myCharacters: Observable<Character[]>;
+  characters: Observable<Character[]>;
   allRolls: Observable<Roll[]>;
   rollsNeedingAttention: Observable<Roll[]>;
+  adminStatus: Observable<boolean>;
 
   constructor(
     private campaignService: CampaignService,
@@ -55,12 +54,8 @@ export class DetailComponent implements OnInit {
     );
     this.name = this.campaign.pipe(map((v) => v.name));
     this.description = this.campaign.pipe(map((v) => v.description));
-    this.myCharacters = combineLatest(this.campaign, this.auth.user).pipe(
-      switchMap(([campaign, user]) =>
-        campaign.acl[user.uid] === 'admin'
-          ? this.campaignService.listAllCharacters(campaign.id)
-          : this.campaignService.listMyCharacters(campaign.id)
-      ),
+    this.characters = this.campaign.pipe(
+      switchMap(({ id }) => this.campaignService.listAllCharacters(id)),
       map((characters) =>
         characters.sort((a, b) => {
           if (a.status?.initiative && b.status?.initiative) {
@@ -76,6 +71,10 @@ export class DetailComponent implements OnInit {
       )
     );
 
+    this.adminStatus = combineLatest([this.campaign, this.auth.user]).pipe(
+      map(([campaign, user]) => campaign.acl[user.uid] === 'admin')
+    );
+
     this.allRolls = this.campaign.pipe(
       switchMap((campaign) => this.campaignService.listRolls(campaign.id)),
       publishReplay(1),
@@ -83,42 +82,24 @@ export class DetailComponent implements OnInit {
     );
 
     this.rollsNeedingAttention = combineLatest([
-      this.myCharacters,
+      this.characters,
       this.allRolls,
+      this.adminStatus,
+      this.auth.user,
     ]).pipe(
-      map(([characters, rolls]) => ({
-        characterIds: characters.map((c) => c.id) as string[],
-        rolls: rolls as Roll[],
+      map(([characters, rolls, adminStatus, user]) => ({
+        characterIds: characters
+          .filter(({ acl }) => adminStatus || acl[user.uid] === 'admin')
+          .map(({ id }) => id),
+        rolls,
       })),
       map(({ characterIds, rolls }) =>
         rolls.filter((roll) => characterIds.indexOf(roll.roller) >= 0)
       )
     );
-
-    this.playerCharacters = this.campaign.pipe(
-      switchMap((campaign) =>
-        this.campaignService.listCharacters(campaign.id, {
-          type: 'player',
-        } as Partial<PlayerCharacter>)
-      )
-    );
-    this.nonplayerCharacters = this.campaign.pipe(
-      switchMap((campaign) =>
-        this.campaignService.listCharacters(campaign.id, {
-          type: 'nonplayer',
-        } as Partial<NonplayerCharacter>)
-      )
-    );
-    this.companions = this.campaign.pipe(
-      switchMap((campaign) =>
-        this.campaignService.listCharacters(campaign.id, {
-          type: 'companion',
-        } as Partial<Companion>)
-      )
-    );
   }
 
-  trackById(idx, item: { id: string }) {
+  trackById(_: number, item: { id: string }) {
     return item.id;
   }
 

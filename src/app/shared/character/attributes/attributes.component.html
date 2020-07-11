@@ -1,5 +1,17 @@
-<div *ngFor="let attribute of character.attributes | keyvalue">
-  {{attribute.key}}:
-  {{ character.status?.pools && character.status.pools[attribute.key]?.current}}
-  / {{attribute.value.pool}}
+<div *ngFor="let attribute of attributes " class="attribute">
+  <div class="attributeName">
+    {{attribute.name}}:
+  </div>
+  <div class="wound" *ngIf="attribute.wound; else unwounded">
+    <mat-icon>sentiment_very_dissatisfied</mat-icon>
+  </div>
+  <ng-template #unwounded>
+    <div class="currentPool"
+        [ngClass]="attribute.current < 2 ? 'dangerPool' : 'okayPool'">
+      {{ attribute.current }}
+    </div>
+    <div class="maxPool">
+      / {{attribute.pool}}
+    </div>
+  </ng-template>
 </div>

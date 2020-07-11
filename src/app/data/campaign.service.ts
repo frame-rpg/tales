@@ -1,17 +1,19 @@
 import { Campaign, NewCampaign } from 'src/types/campaign';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Character } from 'src/types/character';
 import { CharacterBase } from 'src/types/character_base';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Roll } from 'src/types/event';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CampaignService {
+  public current: Observable<Campaign>;
   constructor(
     private firestore: AngularFirestore,
     private auth: AngularFireAuth

@@ -4,13 +4,6 @@ import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   {
-    path: 'characters',
-    loadChildren: () =>
-      import('./pages/characters/characters.module').then(
-        (m) => m.CharactersModule
-      ),
-  },
-  {
     path: 'campaigns',
     loadChildren: () =>
       import('./pages/campaigns/campaigns.module').then(

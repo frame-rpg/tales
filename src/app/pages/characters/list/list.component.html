@@ -1,7 +1,0 @@
-<div class="list">
-  <a [routerLink]="['/characters', character.id]"
-      *ngFor="let character of list$ | async">{{character.name}}</a>
-</div>
-<button mat-fab color="accent" (click)="openAdd()">
-  <mat-icon>add</mat-icon>
-</button>

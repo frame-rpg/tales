@@ -13,8 +13,13 @@
     <div>
       Player: {{ owner?.name }}
     </div>
-    <div>
-      {{character.type}}
-    </div>
+    <attributes-block class="attributes" [character]="character">
+    </attributes-block>
+    <mat-expansion-panel
+        *ngIf="character.type !== 'nonplayer' && (character.skills | keyvalue)?.length > 0">
+      <mat-expansion-panel-header>Skills</mat-expansion-panel-header>
+      <skill-block class="skills" [character]="character">
+      </skill-block>
+    </mat-expansion-panel>
   </div>
 </mat-expansion-panel>
