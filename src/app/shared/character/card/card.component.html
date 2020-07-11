@@ -11,7 +11,7 @@
   </mat-expansion-panel-header>
   <div class="characterBody">
     <div>
-      Player: {{ owner?.name }}
+      Player: {{ (owner? | async).name }}
     </div>
     <attributes-block class="attributes" [character]="character">
     </attributes-block>

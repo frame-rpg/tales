@@ -4,6 +4,7 @@ import { take, tap } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Campaign } from 'src/types/campaign';
 import { Character } from 'src/types/character';
+import { Observable } from 'rxjs';
 import { User } from 'src/types/user';
 import { UserService } from 'src/app/data/user.service';
 
@@ -15,7 +16,7 @@ import { UserService } from 'src/app/data/user.service';
 export class CardComponent implements OnInit {
   @Input() character: Character;
   @Input() campaign: Campaign;
-  owner: User;
+  owner: Observable<User>;
   constructor(public auth: AngularFireAuth, private userService: UserService) {}
 
   async ngOnInit() {
@@ -23,19 +24,7 @@ export class CardComponent implements OnInit {
       (key) => this.character.acl[key] === 'admin'
     );
     if (admins.length > 0) {
-      if (admins[0].indexOf('@') >= 0) {
-        this.owner = {
-          name: admins[0].split('@')[0],
-          avatar: '',
-          id: admins[0],
-          email: admins[0],
-        };
-      } else {
-        this.owner = await this.userService
-          .get(admins[0])
-          .pipe(take(1))
-          .toPromise();
-      }
+      this.owner = this.userService.get(admins[0]);
     }
   }
 }
