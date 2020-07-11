@@ -1,8 +1,9 @@
 .skill {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 10px;
-  max-width: 30vw;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .rollers {

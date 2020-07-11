@@ -1,5 +1,5 @@
 import { Campaign, NewCampaign } from 'src/types/campaign';
-import { map, switchMap } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -8,6 +8,7 @@ import { CharacterBase } from 'src/types/character_base';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Roll } from 'src/types/event';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,8 @@ export class CampaignService {
   public current: Observable<Campaign>;
   constructor(
     private firestore: AngularFirestore,
-    private auth: AngularFireAuth
+    private auth: AngularFireAuth,
+    private userService: UserService
   ) {}
 
   list() {
@@ -28,6 +30,19 @@ export class CampaignService {
           )
           .valueChanges({ idField: 'id' })
       )
+    );
+  }
+
+  gm(campaign: Observable<Campaign>) {
+    return campaign.pipe(
+      map(({ acl }) =>
+        Object.entries(acl)
+          .filter(([, level]) => level === 'admin')
+          .map(([id]) => id)
+      ),
+      filter((gms) => gms.length > 0),
+      map((gms) => gms[0]),
+      switchMap((gm) => this.userService.get(gm))
     );
   }
 

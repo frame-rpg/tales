@@ -11,14 +11,14 @@
   </mat-expansion-panel-header>
   <div class="characterBody">
     <div>
-      Player: {{ (owner? | async).name }}
+      Player: {{ (owner | async)?.name }}
     </div>
     <attributes-block class="attributes" [character]="character">
     </attributes-block>
     <mat-expansion-panel
         *ngIf="character.type !== 'nonplayer' && (character.skills | keyvalue)?.length > 0">
       <mat-expansion-panel-header>Skills</mat-expansion-panel-header>
-      <skill-block class="skills" [character]="character">
+      <skill-block class="skills" [character]="character" [gm]="(gm | async)">
       </skill-block>
     </mat-expansion-panel>
   </div>

@@ -9,6 +9,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { NgModule } from '@angular/core';
 import { NonplayerComponent } from './nonplayer/nonplayer.component';
@@ -35,6 +36,7 @@ import { SkillsComponent } from './skills/skills.component';
     RouterModule,
     MatDialogModule,
     MatSelectModule,
+    MatMenuModule,
     MatInputModule,
     FormsModule,
     MatExpansionModule,
