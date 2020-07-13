@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: 'campaigns',
     loadChildren: () =>
-      import('./pages/campaigns/campaigns.module').then(
+      import('./components/campaigns/campaigns.module').then(
         (m) => m.CampaignsModule
       ),
   },

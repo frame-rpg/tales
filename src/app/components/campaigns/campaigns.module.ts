@@ -1,4 +1,5 @@
 import { CampaignsRoutingModule } from './campaigns-routing.module';
+import { CharactersModule } from '../characters/characters.module';
 import { CommonModule } from '@angular/common';
 import { CreateComponent } from './create/create.component';
 import { DetailComponent } from './detail/detail.component';
@@ -10,7 +11,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { NgModule } from '@angular/core';
-import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [CreateComponent, ListComponent, DetailComponent],
@@ -22,8 +22,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatDialogModule,
     MatExpansionModule,
     MatInputModule,
-    SharedModule,
     MatIconModule,
+    CharactersModule,
   ],
+  exports: [CreateComponent, ListComponent, DetailComponent],
 })
 export class CampaignsModule {}

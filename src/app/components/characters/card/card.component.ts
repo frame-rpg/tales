@@ -48,8 +48,6 @@ export class CardComponent implements OnChanges, OnInit {
   viewerIsGM: Observable<boolean>;
   viewerIsActivePlayer: Observable<boolean>;
   activePlayers: Observable<User[]>;
-  skillLevels: SkillLevels;
-  skillDetails: SkillDetails;
   attributes: Observable<DisplayAttribute[]>;
   skills: Observable<DisplaySkill[]>;
 
@@ -83,9 +81,6 @@ export class CardComponent implements OnChanges, OnInit {
       ),
       switchMap((users) => this.userService.getAll(users))
     );
-
-    this.skillLevels = await this.rules.skillLevels().pipe(take(1)).toPromise();
-    this.skillDetails = await this.rules.skillInfo().pipe(take(1)).toPromise();
 
     this.attributes = this.character$.pipe(
       filter(
