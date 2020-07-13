@@ -9,6 +9,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Roll } from 'src/types/event';
 import { UserService } from './user.service';
+import { firestore } from 'firebase/app';
 
 @Injectable({
   providedIn: 'root',
@@ -59,30 +60,12 @@ export class CampaignService {
     return this.firestore.doc(`/campaigns/${campaign.id}`).update(campaign);
   }
 
-  listCharacters<T extends CharacterBase>(id: string, inType: Partial<T>) {
+  characters({ id, characters }: { id: string; characters: string[] }) {
     return this.firestore
-      .collection<T>(`/campaigns/${id}/characters`, (query) =>
-        query.where('type', '==', inType.type)
+      .collection<Character>(`/campaigns/${id}/characters`, (query) =>
+        query.where(firestore.FieldPath.documentId(), 'in', characters)
       )
       .valueChanges({ idField: 'id' });
-  }
-
-  listAllCharacters(id: string) {
-    return this.firestore
-      .collection<Character>(`/campaigns/${id}/characters`)
-      .valueChanges({ idField: 'id' });
-  }
-
-  listMyCharacters(id: string) {
-    return this.auth.user.pipe(
-      switchMap((user) =>
-        this.firestore
-          .collection<Character>(`/campaigns/${id}/characters`, (query) =>
-            query.where(`acl.${user.uid}`, '==', 'admin')
-          )
-          .valueChanges({ idField: 'id' })
-      )
-    );
   }
 
   listRolls(id: string) {

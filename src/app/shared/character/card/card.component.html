@@ -4,22 +4,56 @@
       <div class="name">
         {{ character.name }}
       </div>
-      <div class="initiative" *ngIf="character.status?.initiative">
-        {{ character.status.initiative }}
+      <div class="initiative" *ngIf="character.status?.initiative >= 0">
+        I:{{ character.status.initiative }}
       </div>
     </div>
   </mat-expansion-panel-header>
   <div class="characterBody">
-    <div>
-      Player: {{ (owner | async)?.name }}
+    <div *ngFor="let player of activePlayers | async">
+      {{ player.name }}
     </div>
-    <attributes-block class="attributes" [character]="character">
-    </attributes-block>
+    <div class="attributes">
+      <div *ngFor="let attribute of attributes | async" class="attribute">
+        <div class="attributeName">
+          {{attribute.name}}:
+        </div>
+        <div class="wound" *ngIf="attribute.wound; else unwounded">
+          <mat-icon>sentiment_very_dissatisfied</mat-icon>
+        </div>
+        <ng-template #unwounded>
+          <div class="currentPool"
+              [ngClass]="attribute.current < 2 ? 'dangerPool' : 'okayPool'">
+            {{ attribute.current }}
+          </div>
+          <div class="maxPool">
+            / {{attribute.pool}}
+          </div>
+        </ng-template>
+      </div>
+    </div>
     <mat-expansion-panel
         *ngIf="character.type !== 'nonplayer' && (character.skills | keyvalue)?.length > 0">
       <mat-expansion-panel-header>Skills</mat-expansion-panel-header>
-      <skill-block class="skills" [character]="character" [gm]="(gm | async)">
-      </skill-block>
+      <div class="skills">
+        <div *ngFor="let skill of skills | async" class="skill">
+          <div class="skillInfo" *ngIf="skillDetails && skillLevels">
+            {{skill.name}}: {{skill.levelName}}
+          </div>
+          <div *ngIf="(viewerIsGM | async) || (viewerIsActivePlayer | async)">
+            <button mat-icon-button [matMenuTriggerFor]="menu"
+                aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <mat-icon>casino</mat-icon>
+                <span>Roll</span>
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
     </mat-expansion-panel>
   </div>
 </mat-expansion-panel>

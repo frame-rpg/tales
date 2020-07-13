@@ -6,6 +6,7 @@ export interface NewCampaign {
   description: string;
   name: string;
   skills: SkillNames[];
+  characters: string[];
 }
 
 export interface Campaign extends NewCampaign {

@@ -17,11 +17,9 @@ import {
   tap,
 } from 'rxjs/operators';
 
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Campaign } from 'src/types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
-import { CreateService } from 'src/app/shared/character/create/create.service';
-import { Roll } from 'src/types/event';
+import { CharacterService } from 'src/app/data/character.service';
 
 @Component({
   selector: 'app-detail',
@@ -33,15 +31,11 @@ export class DetailComponent implements OnInit {
   description: Observable<string>;
   name: Observable<string>;
   characters: Observable<Character[]>;
-  allRolls: Observable<Roll[]>;
-  rollsNeedingAttention: Observable<Roll[]>;
-  adminStatus: Observable<boolean>;
 
   constructor(
     private campaignService: CampaignService,
     private route: ActivatedRoute,
-    private characterCreateService: CreateService,
-    private auth: AngularFireAuth
+    private characterService: CharacterService
   ) {}
 
   ngOnInit(): void {
@@ -55,7 +49,9 @@ export class DetailComponent implements OnInit {
     this.name = this.campaign.pipe(map((v) => v.name));
     this.description = this.campaign.pipe(map((v) => v.description));
     this.characters = this.campaign.pipe(
-      switchMap(({ id }) => this.campaignService.listAllCharacters(id)),
+      switchMap(({ id, characters }) =>
+        this.campaignService.characters({ id, characters })
+      ),
       map((characters) =>
         characters.sort((a, b) => {
           if (a.status?.initiative && b.status?.initiative) {
@@ -70,49 +66,9 @@ export class DetailComponent implements OnInit {
         })
       )
     );
-
-    this.adminStatus = combineLatest([this.campaign, this.auth.user]).pipe(
-      map(([campaign, user]) => campaign.acl[user.uid] === 'admin')
-    );
-
-    this.allRolls = this.campaign.pipe(
-      switchMap((campaign) => this.campaignService.listRolls(campaign.id)),
-      publishReplay(1),
-      refCount()
-    );
-
-    this.rollsNeedingAttention = combineLatest([
-      this.characters,
-      this.allRolls,
-      this.adminStatus,
-      this.auth.user,
-    ]).pipe(
-      map(([characters, rolls, adminStatus, user]) => ({
-        characterIds: characters
-          .filter(({ acl }) => adminStatus || acl[user.uid] === 'admin')
-          .map(({ id }) => id),
-        rolls,
-      })),
-      map(({ characterIds, rolls }) =>
-        rolls.filter((roll) => characterIds.indexOf(roll.roller) >= 0)
-      )
-    );
   }
 
   trackById(_: number, item: { id: string }) {
     return item.id;
-  }
-
-  async createCharacter() {
-    await this.route.paramMap
-      .pipe(
-        map((params) =>
-          this.characterCreateService.createCharacter({
-            inCampaign: params.get('id'),
-          })
-        ),
-        take(1)
-      )
-      .toPromise();
   }
 }

@@ -5,12 +5,25 @@ export const campaignTemplate: NewCampaign = {
   description: '',
   acl: {},
   skills: [],
+  characters: [],
 };
 
 export const campaign: Campaign = {
   id: 'c1',
   name: 'Tales of Dinosaurs and Stuff',
   description: 'also Time Travel and Alien Spaceships',
+  characters: [
+    'ry',
+    'connie',
+    'momentusUndergrave',
+    'chad',
+    'thomson',
+    'sparks',
+    'biscuit',
+    'drFanta',
+    'smammal',
+    'nugget',
+  ],
   acl: {
     'eric.eslinger@gmail.com': 'admin',
     'albertel@gmail.com': 'read',

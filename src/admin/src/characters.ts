@@ -57,6 +57,7 @@ export const players: PlayerCharacter[] = [
     },
     status: {
       experience: 27,
+      initiative: 0,
       pools: {
         might: {
           current: 5,
@@ -130,6 +131,7 @@ export const players: PlayerCharacter[] = [
     },
     status: {
       experience: 34,
+      initiative: 0,
       pools: {
         might: {
           current: 5,
@@ -202,6 +204,7 @@ export const players: PlayerCharacter[] = [
     },
     status: {
       experience: 22,
+      initiative: 0,
       pools: {
         might: {
           current: 5,
@@ -272,6 +275,7 @@ export const players: PlayerCharacter[] = [
     },
     status: {
       experience: 18,
+      initiative: 0,
       pools: {
         might: {
           current: 10,
@@ -351,6 +355,7 @@ export const players: PlayerCharacter[] = [
     },
     status: {
       experience: 16,
+      initiative: 0,
       pools: {
         might: {
           current: 5,
@@ -400,7 +405,19 @@ export const companions: Companion[] = [
       },
     },
     skills: {},
-    status: {},
+    status: {
+      initiative: 0,
+      pools: {
+        health: {
+          current: 1,
+          wound: false,
+        },
+        loyalty: {
+          current: 5,
+          wound: false,
+        },
+      },
+    },
     abilities: ['hands', 'birdseye'],
   },
   {
@@ -426,7 +443,19 @@ export const companions: Companion[] = [
       },
     },
     skills: {},
-    status: {},
+    status: {
+      initiative: 0,
+      pools: {
+        health: {
+          current: 1,
+          wound: false,
+        },
+        loyalty: {
+          current: 5,
+          wound: false,
+        },
+      },
+    },
     abilities: [
       'temporalHunter',
       'boneBreaker',
@@ -456,7 +485,19 @@ export const companions: Companion[] = [
       },
     },
     skills: {},
-    status: {},
+    status: {
+      initiative: 0,
+      pools: {
+        health: {
+          current: 1,
+          wound: false,
+        },
+        loyalty: {
+          current: 5,
+          wound: false,
+        },
+      },
+    },
     abilities: ['terrify', 'sturdyMount', 'mountedWeapon'],
   },
   {
@@ -481,7 +522,19 @@ export const companions: Companion[] = [
       },
     },
     skills: {},
-    status: {},
+    status: {
+      initiative: 0,
+      pools: {
+        health: {
+          current: 1,
+          wound: false,
+        },
+        loyalty: {
+          current: 5,
+          wound: false,
+        },
+      },
+    },
     abilities: ['hands', 'makingTheGMRegretHisLifeChoices'],
   },
   {
@@ -506,7 +559,19 @@ export const companions: Companion[] = [
       },
     },
     skills: {},
-    status: {},
+    status: {
+      initiative: 0,
+      pools: {
+        health: {
+          current: 1,
+          wound: false,
+        },
+        loyalty: {
+          current: 5,
+          wound: false,
+        },
+      },
+    },
     abilities: [],
   },
 ];

@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { User } from '../../types/user';
+import { firestore } from 'firebase';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,14 @@ export class UserService {
 
   update(id: String, user: User) {
     return this.firestore.doc(`users/${id}`).update(user);
+  }
+
+  getAll(users: string[]) {
+    return this.firestore
+      .collection<User>(`/users`, (query) =>
+        query.where(firestore.FieldPath.documentId(), 'in', users)
+      )
+      .valueChanges({ idField: 'id' });
   }
 
   async postLogin() {
