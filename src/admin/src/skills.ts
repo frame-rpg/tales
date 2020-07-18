@@ -1,56 +1,56 @@
 import { SkillDetails, SkillLevels } from '../../../src/types/skill';
 
 export const skillSeed: SkillDetails = {
-  advancedSecurity: {
+  advancedsecurity: {
     allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
     description: '',
     name: 'Advanced Security',
     preferredAttributes: ['focus', 'conviction'],
   },
-  commandAnimal: {
+  commandanimal: {
     allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
     description: '',
     name: 'Command Animal',
     preferredAttributes: ['conviction', 'focus'],
   },
-  convictionDefense: {
+  convictiondefense: {
     description: '',
     name: 'Conviction Defense',
     preferredAttributes: ['conviction'],
   },
-  convictionMeleeAttack: {
+  convictionmeleeattack: {
     description: '',
     name: 'Conviction Melee Attack',
     preferredAttributes: ['conviction'],
   },
-  convictionRangedAttack: {
+  convictionrangedattack: {
     description: '',
     name: 'Conviction Ranged Attack',
     preferredAttributes: ['conviction'],
   },
-  dryScienceKnowledge: {
+  dryscienceknowledge: {
     allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
     description: '',
     name: 'Dry Science Knowledge',
     preferredAttributes: ['conviction', 'focus'],
   },
-  dryScienceTinker: {
+  drysciencetinker: {
     allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
     description: '',
     name: 'Dry Science Tinker',
     preferredAttributes: ['conviction', 'focus'],
   },
-  focusDefense: {
+  focusdefense: {
     description: '',
     name: 'Focus Defense',
     preferredAttributes: ['focus'],
   },
-  focusMeleeAttack: {
+  focusmeleeattack: {
     description: '',
     name: 'Focus Melee Attack',
     preferredAttributes: ['focus'],
   },
-  focusRangedAttack: {
+  focusrangedattack: {
     description: '',
     name: 'Focus Ranged Attack',
     preferredAttributes: ['focus'],
@@ -61,7 +61,7 @@ export const skillSeed: SkillDetails = {
     name: 'Hacking',
     preferredAttributes: ['conviction', 'focus'],
   },
-  healthDefense: {
+  healthdefense: {
     description: '',
     name: 'Health Defense',
     preferredAttributes: ['health'],
@@ -96,17 +96,17 @@ export const skillSeed: SkillDetails = {
     name: 'Medicine',
     preferredAttributes: ['conviction', 'focus'],
   },
-  mightDefense: {
+  mightdefense: {
     description: '',
     name: 'Might Defense',
     preferredAttributes: ['might'],
   },
-  mightMeleeAttack: {
+  mightmeleeattack: {
     description: '',
     name: 'Might Melee Attack',
     preferredAttributes: ['might'],
   },
-  mightRangedAttack: {
+  mightrangedattack: {
     description: '',
     name: 'Might Ranged Attack',
     preferredAttributes: ['might'],
@@ -117,7 +117,7 @@ export const skillSeed: SkillDetails = {
     name: 'Movement',
     preferredAttributes: ['might', 'speed'],
   },
-  otherKnowledge: {
+  otherknowledge: {
     allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
     description:
       'Any knowledge that does not fall under Wet Science or Dry Science',
@@ -136,7 +136,7 @@ export const skillSeed: SkillDetails = {
     name: 'Persuade',
     preferredAttributes: ['focus'],
   },
-  pickLocks: {
+  picklocks: {
     allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
     description: '',
     name: 'Pick Locks',
@@ -154,7 +154,7 @@ export const skillSeed: SkillDetails = {
     name: 'Riding',
     preferredAttributes: ['speed', 'conviction'],
   },
-  senseMotive: {
+  sensemotive: {
     allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
     description: '',
     name: 'Sense Motive',
@@ -166,17 +166,17 @@ export const skillSeed: SkillDetails = {
     name: 'Sneaking',
     preferredAttributes: ['speed', 'focus'],
   },
-  speedDefense: {
+  speeddefense: {
     description: '',
     name: 'Speed Defense',
     preferredAttributes: ['speed'],
   },
-  speedMeleeAttack: {
+  speedmeleeattack: {
     description: '',
     name: 'Speed Melee Attack',
     preferredAttributes: ['speed'],
   },
-  speedRangedAttack: {
+  speedrangedattack: {
     description: '',
     name: 'Speed Ranged Attack',
     preferredAttributes: ['speed'],
@@ -187,19 +187,19 @@ export const skillSeed: SkillDetails = {
     name: 'Swimming',
     preferredAttributes: ['might'],
   },
-  wetScienceKnowledge: {
+  wetscienceknowledge: {
     allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
     description: '',
     name: 'Wet Science Knowledge',
     preferredAttributes: ['conviction', 'focus'],
   },
-  wetScienceTinker: {
+  wetsciencetinker: {
     allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
     description: '',
     name: 'Wet Science Tinker',
     preferredAttributes: ['conviction', 'focus'],
   },
-  wildernessLore: {
+  wildernesslore: {
     allowedAttributes: ['focus', 'conviction', 'might', 'speed'],
     description: '',
     name: 'Wilderness Lore',
