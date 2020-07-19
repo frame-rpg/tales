@@ -1,6 +1,12 @@
 import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { Character, Companion, PlayerCharacter } from 'src/types/character';
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { SkillDetails, SkillLevels } from 'src/types/skill';
 import {
   distinctUntilChanged,
@@ -44,6 +50,7 @@ const characterAttributeNames = {
 export class CardComponent implements OnChanges, OnInit {
   @Input() character: Character;
   @Input() campaign: Observable<Campaign>;
+  @Input() skillFilter: Observable<string[]>;
 
   viewerIsGM: Observable<boolean>;
   viewerIsActivePlayer: Observable<boolean>;
@@ -128,7 +135,7 @@ export class CardComponent implements OnChanges, OnInit {
     );
   }
 
-  async ngOnChanges(update) {
+  async ngOnChanges(update: SimpleChanges) {
     this.characterSubject.next(update.character.currentValue);
   }
 }

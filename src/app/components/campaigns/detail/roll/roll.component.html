@@ -1,0 +1,7 @@
+<div>
+  <div>Rolling Character: {{ (roller | async).name }}</div>
+  <div>Are you rolling? {{ userIsRoller | async }}</div>
+  <div>Requesting Character: {{ (requester | async).name }}</div>
+  <div>Did you request? {{ userRequestedRoll | async }}</div>
+  <div *ngFor="skill of (roll$ | async).skills"></div>
+</div>
