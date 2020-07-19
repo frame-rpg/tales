@@ -20,6 +20,7 @@ import {
 import { Campaign } from 'src/types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
 import { CharacterService } from 'src/app/data/character.service';
+import { Roll } from 'src/types/event';
 
 @Component({
   selector: 'app-detail',
@@ -31,6 +32,7 @@ export class DetailComponent implements OnInit {
   description: Observable<string>;
   name: Observable<string>;
   characters: Observable<Character[]>;
+  rolls: Observable<Roll[]>;
 
   constructor(
     private campaignService: CampaignService,
@@ -65,6 +67,13 @@ export class DetailComponent implements OnInit {
           }
         })
       )
+    );
+    this.rolls = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.campaignService.listRolls(params.get('id'))
+      ),
+      publishReplay(1),
+      refCount()
     );
   }
 

@@ -11,6 +11,7 @@ export * from './companion';
 export * from './character_base';
 
 export type Character = PlayerCharacter | NonplayerCharacter | Companion;
+export type SkilledCharacter = PlayerCharacter | Companion;
 export type NewCharacter =
   | NewPlayerCharacter
   | NewNonplayerCharacter

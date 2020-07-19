@@ -9,6 +9,7 @@ import { skillLevelSeed, skillSeed } from './skills.js';
 import { updateAcl, users } from './users.js';
 
 import admin from 'firebase-admin';
+import { rolls } from './rolls.js';
 
 const app = admin.initializeApp({
   credential: admin.credential.applicationDefault(),
@@ -29,7 +30,9 @@ await app.firestore().doc(`/campaigns/${campaign.id}`).set(updateAcl(campaign));
 
 await Promise.all([
   Promise.all(
-    users.map((user) => app.firestore().doc(`/users/${user.id}`).set(user))
+    users
+      .map(updateAcl)
+      .map((user) => app.firestore().doc(`/users/${user.id}`).set(user))
   ),
   Promise.all(
     players
@@ -39,6 +42,13 @@ await Promise.all([
           .firestore()
           .doc(`/campaigns/${campaign.id}/characters/${p.id}`)
           .set(p)
+      )
+  ),
+  Promise.all(
+    rolls
+      .map(updateAcl)
+      .map((roll) =>
+        app.firestore().collection(`/campaigns/${campaign.id}/rolls`).add(roll)
       )
   ),
   Promise.all(

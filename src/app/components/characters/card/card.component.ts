@@ -1,5 +1,6 @@
 import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { Character, Companion, PlayerCharacter } from 'src/types/character';
+import { CharacterAttribute, DisplayAttribute } from 'src/types/attribute';
 import {
   Component,
   Input,
@@ -19,23 +20,10 @@ import {
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Campaign } from 'src/types/campaign';
-import { CharacterAttribute } from 'src/types/attribute';
+import { DisplaySkill } from 'src/types/skill';
 import { RulesService } from 'src/app/data/rules.service';
 import { User } from 'src/types/user';
 import { UserService } from 'src/app/data/user.service';
-
-interface DisplayAttribute extends CharacterAttribute {
-  wound: boolean;
-  current: number;
-  name: string;
-}
-
-interface DisplaySkill {
-  name: string;
-  levelName: string;
-  level: number;
-  description: string;
-}
 
 const characterAttributeNames = {
   player: ['might', 'speed', 'conviction', 'focus', 'health'],

@@ -26,9 +26,9 @@ export class CharacterService {
     );
   }
 
-  get(id: String) {
+  get(campaignId: string, id: string) {
     return this.firestore
-      .doc<Character>(`/characters/${id}`)
+      .doc<Character>(`/campaigns/${campaignId}/characters/${id}`)
       .snapshotChanges()
       .pipe(
         map((v) => ({ id: v.payload.id, ...v.payload.data() } as Character))

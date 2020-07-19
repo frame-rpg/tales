@@ -6,3 +6,9 @@ export interface CharacterAttribute {
   pool: number;
   edge: number;
 }
+
+export interface DisplayAttribute extends CharacterAttribute {
+  wound: boolean;
+  current: number;
+  name: string;
+}

@@ -7,7 +7,7 @@ export const players: PlayerCharacter[] = [
     id: 'ry',
     name: 'Ry McGinnis',
     acl: {
-      'cljacobs1975@gmail.com': 'admin',
+      chrissy: 'admin',
     },
     description: '',
     type: 'player',
@@ -86,7 +86,7 @@ export const players: PlayerCharacter[] = [
     id: 'connie',
     name: 'Connecticut (Connie) Butler',
     acl: {
-      'megan@albertelli.com': 'admin',
+      megan: 'admin',
     },
     description: '',
     type: 'player',
@@ -160,7 +160,7 @@ export const players: PlayerCharacter[] = [
     id: 'momentusUndergrave',
     name: 'Momentus Undergrave',
     acl: {
-      'llahwehttam@gmail.com': 'admin',
+      matthew: 'admin',
     },
     description: '',
     type: 'player',
@@ -233,7 +233,7 @@ export const players: PlayerCharacter[] = [
     id: 'chad',
     name: 'Chad',
     acl: {
-      'guy@albertelli.com': 'admin',
+      guy: 'admin',
     },
     description: '',
     type: 'player',
@@ -304,7 +304,7 @@ export const players: PlayerCharacter[] = [
     id: 'thomson',
     name: 'Thomson Anning',
     acl: {
-      'phil.bowen@gmail.com': 'admin',
+      phil: 'admin',
     },
     description: '',
     type: 'player',
@@ -388,7 +388,7 @@ export const companions: Companion[] = [
     name: 'Sparks',
     description: 'Ornithomimid',
     acl: {
-      'cljacobs1975@gmail.com': 'admin',
+      chrissy: 'admin',
     },
     type: 'companion',
     attack: 2,
@@ -404,7 +404,9 @@ export const companions: Companion[] = [
         pool: 8,
       },
     },
-    skills: {},
+    skills: {
+      initiative: 0,
+    },
     status: {
       initiative: 0,
       pools: {
@@ -426,7 +428,7 @@ export const companions: Companion[] = [
     description: 'Ankylosaur',
     acl: {
       'malbertelli@gmail.com': 'admin',
-      'megan@albertelli.com': 'admin',
+      megan: 'admin',
     },
     type: 'companion',
     attack: 2,
@@ -442,7 +444,9 @@ export const companions: Companion[] = [
         pool: 6,
       },
     },
-    skills: {},
+    skills: {
+      initiative: 0,
+    },
     status: {
       initiative: 0,
       pools: {
@@ -468,7 +472,7 @@ export const companions: Companion[] = [
     name: 'Dr. Fantabulous',
     description: 'Centrosaurus',
     acl: {
-      'llahwehttam@gmail.com': 'admin',
+      matthew: 'admin',
     },
     type: 'companion',
     attack: 1,
@@ -484,7 +488,9 @@ export const companions: Companion[] = [
         pool: 6,
       },
     },
-    skills: {},
+    skills: {
+      initiative: 0,
+    },
     status: {
       initiative: 0,
       pools: {
@@ -505,7 +511,7 @@ export const companions: Companion[] = [
     name: 'Smammal',
     description: 'Small Mammal and Occasional Plot Device',
     acl: {
-      'guy@albertelli.com': 'admin',
+      guy: 'admin',
     },
     type: 'companion',
     attack: 1,
@@ -521,7 +527,9 @@ export const companions: Companion[] = [
         pool: 4,
       },
     },
-    skills: {},
+    skills: {
+      initiative: 0,
+    },
     status: {
       initiative: 0,
       pools: {
@@ -542,7 +550,7 @@ export const companions: Companion[] = [
     name: 'Nugget 2.0',
     description: 'Raptor',
     acl: {
-      'phil.bowen@gmail.com': 'admin',
+      phil: 'admin',
     },
     type: 'companion',
     attack: 4,
@@ -558,7 +566,9 @@ export const companions: Companion[] = [
         pool: 5,
       },
     },
-    skills: {},
+    skills: {
+      initiative: 0,
+    },
     status: {
       initiative: 0,
       pools: {

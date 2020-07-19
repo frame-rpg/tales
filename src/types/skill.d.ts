@@ -15,6 +15,13 @@ export interface SkillLevels {
   [key: string]: string;
 }
 
+export interface DisplaySkill {
+  name: string;
+  levelName: string;
+  level: number;
+  description: string;
+}
+
 export type SkillNames =
   | 'advancedsecurity'
   | 'commandanimal'

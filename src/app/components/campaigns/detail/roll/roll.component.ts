@@ -1,4 +1,5 @@
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { Character, SkilledCharacter } from 'src/types/character';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import {
   distinctUntilChanged,
@@ -7,12 +8,14 @@ import {
   publishReplay,
   refCount,
   switchMap,
+  tap,
 } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Character } from 'src/types/character';
 import { CharacterService } from 'src/app/data/character.service';
+import { DisplaySkill } from 'src/types/skill';
 import { Roll } from 'src/types/event';
+import { RulesService } from 'src/app/data/rules.service';
 import { User } from 'src/types/user';
 import { UserService } from 'src/app/data/user.service';
 
@@ -23,27 +26,33 @@ import { UserService } from 'src/app/data/user.service';
 })
 export class RollComponent implements OnInit, OnChanges {
   @Input() roll: Roll;
+  @Input() campaignId: string;
   private rollSubject = new BehaviorSubject<Roll>(null);
   roll$ = this.rollSubject.asObservable().pipe(
-    publishReplay(1),
-    refCount(),
     filter((v) => !!v),
     distinctUntilChanged()
   );
   userIsRoller: Observable<boolean>;
   userRequestedRoll: Observable<boolean>;
-  roller: Observable<Character>;
+  roller: Observable<SkilledCharacter>;
   requester: Observable<User>;
+  skills: Observable<DisplaySkill[]>;
 
   constructor(
     private auth: AngularFireAuth,
     private characterService: CharacterService,
-    private userService: UserService
+    private userService: UserService,
+    private rulesService: RulesService
   ) {}
 
   ngOnInit(): void {
     this.roller = this.roll$.pipe(
-      switchMap((roll) => this.characterService.get(roll.roller))
+      switchMap(
+        (roll) =>
+          this.characterService.get(this.campaignId, roll.roller) as Observable<
+            SkilledCharacter
+          >
+      )
     );
 
     this.requester = this.roll$.pipe(
@@ -54,8 +63,25 @@ export class RollComponent implements OnInit, OnChanges {
       map(([roller, user]) => roller.acl[user.uid] === 'admin')
     );
 
-    this.userRequestedRoll = combineLatest([this.roll$, this.auth.user]).pipe(
-      map(([roll, user]) => roll.requester === user.uid)
+    this.userRequestedRoll = combineLatest([
+      this.requester,
+      this.auth.user,
+    ]).pipe(map(([requester, user]) => requester.id === user.uid));
+
+    this.skills = combineLatest([
+      this.roll$,
+      this.roller,
+      this.rulesService.skillInfo(),
+      this.rulesService.skillLevels(),
+    ]).pipe(
+      map(([roll, roller, skillInfo, skillLevels]) =>
+        roll.skills.map((skill) => ({
+          name: skillInfo[skill].name,
+          level: roller.skills[skill],
+          levelName: skillLevels[roller.skills[skill]],
+          description: skillInfo[skill].description,
+        }))
+      )
     );
   }
 
