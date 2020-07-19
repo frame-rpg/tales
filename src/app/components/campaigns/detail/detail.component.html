@@ -1,5 +1,17 @@
-<h1>{{ name | async }}</h1>
-<div>{{ description | async }}</div>
-<character-card *ngFor="let character of characters | async; trackBy:trackById "
-    [character]="character" [campaign]="campaign">
-</character-card>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <h1>{{ name | async }}</h1>
+    <a mat-button [routerLink]="'/campaigns'">Campaigns</a>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="main">
+  <div class="left">
+    <character-card
+        *ngFor="let character of characters | async; trackBy:trackById "
+        [character]="character" [campaign]="campaign">
+    </character-card>
+  </div>
+  <div class="right">
+    rolls here
+  </div>
+</div>

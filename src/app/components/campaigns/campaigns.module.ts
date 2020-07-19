@@ -10,6 +10,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgModule } from '@angular/core';
 
 @NgModule({
@@ -23,6 +25,8 @@ import { NgModule } from '@angular/core';
     MatExpansionModule,
     MatInputModule,
     MatIconModule,
+    MatSidenavModule,
+    MatToolbarModule,
     CharactersModule,
   ],
   exports: [CreateComponent, ListComponent, DetailComponent],

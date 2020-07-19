@@ -1,11 +1,4 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <h1>Tales of Foo and Bar</h1>
-    <a mat-button [routerLink]="'/campaigns'">Campaigns</a>
-    <button mat-button (click)="logout()">Log Out</button>
-  </mat-toolbar-row>
-</mat-toolbar>
-<div *ngIf="auth.user | async as user; else showLogin">
+<div class="root" *ngIf="auth.user | async as user; else showLogin">
   <router-outlet></router-outlet>
 </div>
 <ng-template #showLogin>
