@@ -1,0 +1,11 @@
+.rollPanel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: var(--fairy-light);
+  color: var(--fairy-dark);
+}
+
+.attention {
+  color: var(--fairy-red);
+}

@@ -1,6 +1,7 @@
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { Character, SkilledCharacter } from 'src/types/character';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { InjectedData, ResolveComponent } from '../resolve/resolve.component';
 import {
   distinctUntilChanged,
   filter,
@@ -13,18 +14,20 @@ import {
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { CharacterService } from 'src/app/data/character.service';
+import { DisplayAttribute } from 'src/types/attribute';
 import { DisplaySkill } from 'src/types/skill';
+import { MatDialog } from '@angular/material/dialog';
 import { Roll } from 'src/types/event';
 import { RulesService } from 'src/app/data/rules.service';
 import { User } from 'src/types/user';
 import { UserService } from 'src/app/data/user.service';
 
 @Component({
-  selector: 'roll',
-  templateUrl: './roll.component.html',
-  styleUrls: ['./roll.component.scss'],
+  selector: 'roll-panel',
+  templateUrl: './panel.component.html',
+  styleUrls: ['./panel.component.scss'],
 })
-export class RollComponent implements OnInit, OnChanges {
+export class PanelComponent implements OnInit, OnChanges {
   @Input() roll: Roll;
   @Input() campaignId: string;
   private rollSubject = new BehaviorSubject<Roll>(null);
@@ -37,12 +40,14 @@ export class RollComponent implements OnInit, OnChanges {
   roller: Observable<SkilledCharacter>;
   requester: Observable<User>;
   skills: Observable<DisplaySkill[]>;
+  attributes: Observable<DisplayAttribute[]>;
 
   constructor(
     private auth: AngularFireAuth,
     private characterService: CharacterService,
     private userService: UserService,
-    private rulesService: RulesService
+    private rulesService: RulesService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -87,5 +92,14 @@ export class RollComponent implements OnInit, OnChanges {
 
   ngOnChanges(update) {
     this.rollSubject.next(update.roll.currentValue);
+  }
+
+  resolve(skill) {
+    const injected: InjectedData = {
+      skill,
+      character: this.roller,
+      attributes: this.attributes,
+    };
+    this.dialog.open(ResolveComponent, { data: injected });
   }
 }

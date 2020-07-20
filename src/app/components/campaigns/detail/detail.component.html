@@ -12,8 +12,8 @@
     </character-card>
   </div>
   <div class="right">
-    <roll *ngFor="let roll of rolls | async; trackBy:trackById" [roll]="roll"
-        [campaignId]="(campaign | async).id">
-    </roll>
+    <roll-panel *ngFor="let roll of rolls | async; trackBy:trackById"
+        [roll]="roll" [campaignId]="(campaign | async).id">
+    </roll-panel>
   </div>
 </div>

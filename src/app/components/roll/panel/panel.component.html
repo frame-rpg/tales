@@ -1,0 +1,15 @@
+<div class="rollPanel">
+  <div [class.attention]="userIsRoller | async">
+    {{ (roller | async)?.name }}
+  </div>
+  <div class="skillPanel" *ngIf="userIsRoller | async; else nonRoller">
+    <div *ngFor="let skill of skills | async" (click)="resolve(skill)">
+      {{skill.name}}: {{skill.levelName}}
+    </div>
+  </div>
+  <ng-template #nonRoller>
+    <div *ngFor="let skill of skills | async">
+      {{skill.name}}
+    </div>
+  </ng-template>
+</div>

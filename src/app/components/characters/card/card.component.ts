@@ -20,6 +20,7 @@ import {
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Campaign } from 'src/types/campaign';
+import { CharacterService } from 'src/app/data/character.service';
 import { DisplaySkill } from 'src/types/skill';
 import { RulesService } from 'src/app/data/rules.service';
 import { User } from 'src/types/user';
@@ -55,6 +56,7 @@ export class CardComponent implements OnChanges, OnInit {
   constructor(
     public auth: AngularFireAuth,
     private userService: UserService,
+    private characterService: CharacterService,
     private rules: RulesService
   ) {}
 
@@ -77,21 +79,8 @@ export class CardComponent implements OnChanges, OnInit {
       switchMap((users) => this.userService.getAll(users))
     );
 
-    this.attributes = this.character$.pipe(
-      filter(
-        (character) =>
-          character.type === 'player' || character.type === 'companion'
-      ),
-      map((character: PlayerCharacter | Companion) =>
-        characterAttributeNames[character.type].map((attr) => ({
-          ...character.attributes[attr],
-          name: attr,
-          ...(character.status?.pools?.[attr] || {
-            wound: false,
-            current: character.attributes[attr].pool,
-          }),
-        }))
-      )
+    this.attributes = this.characterService.mapDisplayAttributes(
+      this.character$
     );
 
     this.skills = combineLatest([

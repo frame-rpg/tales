@@ -1,9 +1,0 @@
-<div class="rollPanel">
-  <div>Rolling Character: {{ (roller | async)?.name }}</div>
-  <div>Are you rolling? {{ userIsRoller | async }}</div>
-  <div>Requesting Person: {{ (requester | async)?.name }}</div>
-  <div>Did you request? {{ userRequestedRoll | async }}</div>
-  <div *ngFor="let skill of skills | async">
-    {{skill.name}}: {{skill.levelName}}
-  </div>
-</div>

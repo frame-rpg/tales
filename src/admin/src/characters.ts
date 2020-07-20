@@ -8,6 +8,7 @@ export const players: PlayerCharacter[] = [
     name: 'Ry McGinnis',
     acl: {
       chrissy: 'admin',
+      eric: 'admin',
     },
     description: '',
     type: 'player',
@@ -427,7 +428,7 @@ export const companions: Companion[] = [
     name: 'Biscuit',
     description: 'Ankylosaur',
     acl: {
-      'malbertelli@gmail.com': 'admin',
+      eric: 'admin',
       megan: 'admin',
     },
     type: 'companion',

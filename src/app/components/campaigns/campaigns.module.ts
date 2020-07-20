@@ -13,16 +13,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgModule } from '@angular/core';
-import { RollComponent } from './detail/roll/roll.component';
+import { RollModule } from '../roll/roll.module';
 
 @NgModule({
-  declarations: [CreateComponent, ListComponent, DetailComponent, RollComponent],
+  declarations: [CreateComponent, ListComponent, DetailComponent],
   imports: [
     CampaignsRoutingModule,
     CommonModule,
     FormsModule,
     MatButtonModule,
     MatDialogModule,
+    RollModule,
     MatExpansionModule,
     MatInputModule,
     MatIconModule,
