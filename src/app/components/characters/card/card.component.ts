@@ -83,32 +83,9 @@ export class CardComponent implements OnChanges, OnInit {
       this.character$
     );
 
-    this.skills = combineLatest([
+    this.skills = this.characterService.mapDisplaySkills(
       this.character$,
-      this.rules.skillLevels(),
-      this.rules.skillInfo(),
-      this.campaign,
-    ]).pipe(
-      filter(
-        ([character]) =>
-          character.type === 'player' || character.type === 'companion'
-      ),
-      map(
-        ([character, skillLevels, skillDetails, campaign]: [
-          PlayerCharacter | Companion,
-          SkillLevels,
-          SkillDetails,
-          Campaign
-        ]) =>
-          campaign.skills
-            .filter((skill) => !!character.skills[skill])
-            .map((skill) => ({
-              name: skillDetails[skill].name,
-              level: character.skills[skill],
-              levelName: skillLevels[character.skills[skill]],
-              description: skillDetails[skill].description,
-            }))
-      )
+      this.campaign.pipe(map((campaign) => campaign.skills))
     );
   }
 

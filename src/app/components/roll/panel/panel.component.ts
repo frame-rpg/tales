@@ -1,6 +1,6 @@
-import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, combineLatest } from 'rxjs';
 import { Character, SkilledCharacter } from 'src/types/character';
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { InjectedData, ResolveComponent } from '../resolve/resolve.component';
 import {
   distinctUntilChanged,
@@ -27,7 +27,7 @@ import { UserService } from 'src/app/data/user.service';
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss'],
 })
-export class PanelComponent implements OnInit, OnChanges {
+export class PanelComponent implements OnInit, OnChanges, OnDestroy {
   @Input() roll: Roll;
   @Input() campaignId: string;
   private rollSubject = new BehaviorSubject<Roll>(null);
@@ -41,6 +41,13 @@ export class PanelComponent implements OnInit, OnChanges {
   requester: Observable<User>;
   skills: Observable<DisplaySkill[]>;
   attributes: Observable<DisplayAttribute[]>;
+  subscription: Subscription;
+
+  private skillSubject = new BehaviorSubject<DisplaySkill>(null);
+  skill = this.skillSubject.asObservable().pipe(
+    filter((v) => !!v),
+    tap(console.log.bind(console))
+  );
 
   constructor(
     private auth: AngularFireAuth,
@@ -73,7 +80,12 @@ export class PanelComponent implements OnInit, OnChanges {
       this.auth.user,
     ]).pipe(map(([requester, user]) => requester.id === user.uid));
 
-    this.skills = combineLatest([
+    this.skills = this.characterService.mapDisplaySkills(
+      this.roller,
+      this.roll$.pipe(map((roll) => roll.skills))
+    );
+
+    combineLatest([
       this.roll$,
       this.roller,
       this.rulesService.skillInfo(),
@@ -88,18 +100,31 @@ export class PanelComponent implements OnInit, OnChanges {
         }))
       )
     );
+
+    this.attributes = this.characterService.mapDisplayAttributes(this.roller);
+
+    this.subscription = combineLatest([
+      this.skill,
+      this.roller,
+      this.attributes,
+    ])
+      .pipe(distinctUntilChanged((a, b) => a[0] !== b[0]))
+      .subscribe(([skill, character, attributes]) =>
+        this.dialog.open(ResolveComponent, {
+          data: { skill, character, attributes },
+        })
+      );
   }
 
   ngOnChanges(update) {
     this.rollSubject.next(update.roll.currentValue);
   }
 
-  resolve(skill) {
-    const injected: InjectedData = {
-      skill,
-      character: this.roller,
-      attributes: this.attributes,
-    };
-    this.dialog.open(ResolveComponent, { data: injected });
+  skillClick(skill) {
+    this.skillSubject.next(skill);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

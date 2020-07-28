@@ -3,8 +3,7 @@ import { AttributeNames } from './attribute';
 export interface SkillDescription {
   name: string;
   description: string;
-  preferredAttributes: AttributeNames[];
-  allowedAttributes?: AttributeNames[];
+  attributes: AttributeNames[];
   levelName?: string;
   level?: number;
 }
@@ -16,10 +15,12 @@ export interface SkillLevels {
 }
 
 export interface DisplaySkill {
+  id: string;
   name: string;
   levelName: string;
   level: number;
   description: string;
+  attributes: AttributeNames[];
 }
 
 export type SkillNames =

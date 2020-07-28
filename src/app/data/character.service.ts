@@ -1,11 +1,18 @@
 import { Character, NewCharacter, SkilledCharacter } from 'src/types/character';
+import {
+  DisplaySkill,
+  SkillDescription,
+  SkillDetails,
+  SkillLevels,
+} from 'src/types/skill';
+import { Observable, combineLatest } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { DisplayAttribute } from 'src/types/attribute';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { RulesService } from './rules.service';
 
 const characterAttributeNames = {
   player: ['might', 'speed', 'conviction', 'focus', 'health'],
@@ -18,7 +25,8 @@ const characterAttributeNames = {
 export class CharacterService {
   constructor(
     private firestore: AngularFirestore,
-    private auth: AngularFireAuth
+    private auth: AngularFireAuth,
+    private rulesService: RulesService
   ) {}
 
   list() {
@@ -76,6 +84,40 @@ export class CharacterService {
             current: character.attributes[attr].pool,
           }),
         }))
+      )
+    );
+  }
+
+  mapDisplaySkills(
+    character: Observable<Character>,
+    skills: Observable<string[]>
+  ): Observable<DisplaySkill[]> {
+    return combineLatest([
+      this.rulesService.skillLevels(),
+      this.rulesService.skillInfo(),
+      skills,
+      character,
+    ]).pipe(
+      filter(([, , , character]) => !!character),
+      filter(
+        ([, , , character]) =>
+          character.type === 'player' || character.type === 'companion'
+      ),
+      map(
+        ([skillLevels, skillInfo, skills, character]: [
+          SkillLevels,
+          SkillDetails,
+          string[],
+          SkilledCharacter
+        ]) =>
+          skills.map((skill) => ({
+            id: skill,
+            name: skillInfo[skill].name,
+            level: character.skills[skill],
+            levelName: skillLevels[character.skills[skill]],
+            description: skillInfo[skill].description,
+            attributes: skillInfo[skill].attributes,
+          }))
       )
     );
   }
