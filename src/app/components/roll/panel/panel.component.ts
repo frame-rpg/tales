@@ -9,7 +9,6 @@ import {
   publishReplay,
   refCount,
   switchMap,
-  tap,
 } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -28,10 +27,10 @@ import { UserService } from 'src/app/data/user.service';
   styleUrls: ['./panel.component.scss'],
 })
 export class PanelComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() roll: Roll;
+  @Input('roll') _roll: Roll;
   @Input() campaignId: string;
   private rollSubject = new BehaviorSubject<Roll>(null);
-  roll$ = this.rollSubject.asObservable().pipe(
+  roll = this.rollSubject.asObservable().pipe(
     filter((v) => !!v),
     distinctUntilChanged()
   );
@@ -44,10 +43,7 @@ export class PanelComponent implements OnInit, OnChanges, OnDestroy {
   subscription: Subscription;
 
   private skillSubject = new BehaviorSubject<DisplaySkill>(null);
-  skill = this.skillSubject.asObservable().pipe(
-    filter((v) => !!v),
-    tap(console.log.bind(console))
-  );
+  skill = this.skillSubject.asObservable().pipe(filter((v) => !!v));
 
   constructor(
     private auth: AngularFireAuth,
@@ -58,7 +54,7 @@ export class PanelComponent implements OnInit, OnChanges, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.roller = this.roll$.pipe(
+    this.roller = this.roll.pipe(
       switchMap(
         (roll) =>
           this.characterService.get(this.campaignId, roll.roller) as Observable<
@@ -67,7 +63,7 @@ export class PanelComponent implements OnInit, OnChanges, OnDestroy {
       )
     );
 
-    this.requester = this.roll$.pipe(
+    this.requester = this.roll.pipe(
       switchMap((roll) => this.userService.get(roll.requester))
     );
 
@@ -82,11 +78,11 @@ export class PanelComponent implements OnInit, OnChanges, OnDestroy {
 
     this.skills = this.characterService.mapDisplaySkills(
       this.roller,
-      this.roll$.pipe(map((roll) => roll.skills))
+      this.roll.pipe(map((roll) => roll.skills))
     );
 
     combineLatest([
-      this.roll$,
+      this.roll,
       this.roller,
       this.rulesService.skillInfo(),
       this.rulesService.skillLevels(),
@@ -117,7 +113,7 @@ export class PanelComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(update) {
-    this.rollSubject.next(update.roll.currentValue);
+    this.rollSubject.next(update._roll.currentValue);
   }
 
   skillClick(skill) {

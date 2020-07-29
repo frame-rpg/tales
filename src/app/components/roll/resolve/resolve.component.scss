@@ -1,0 +1,25 @@
+.attribute {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 200px;
+}
+
+.attributeName {
+  font-weight: 500;
+  padding-right: 4px;
+  text-transform: capitalize;
+  line-height: 1.5em;
+}
+
+.wound {
+  color: var(--warn-color);
+}
+
+.dangerPool {
+  color: var(--warn-color);
+}
+
+.roll {
+  margin-left: auto;
+}

@@ -1,21 +1,33 @@
-<div>
-  Rolling for {{ data.skill.name }}
-</div>
-<div *ngFor="let attribute of data.attributes">
-  <div class="attributeName">
-    {{attribute.name}}:
+<div class="dialog">
+  <h1 mat-dialog-title>
+    <span>Rolling for {{ data.skill.name }}</span>
+  </h1>
+  <div mat-dialog-content *ngIf="attribute | async; else selecting">
   </div>
-  <div class="wound" *ngIf="attribute.wound; else unwounded">
-    <mat-icon>sentiment_very_dissatisfied</mat-icon>
-  </div>
-  <ng-template #unwounded>
-    <div class="currentPool"
-        [ngClass]="attribute.current < 2 ? 'dangerPool' : 'okayPool'">
-      {{ attribute.current }}
-    </div>
-    <div class="maxPool">
-      / {{attribute.pool}}
+  <ng-template mat-dialog-content #selecting>
+    <div *ngFor="let attribute of data.attributes" class="attribute">
+      <div class="attributeName">
+        {{attribute.name}}:
+      </div>
+      <div class="wound" *ngIf="attribute.wound; else unwounded">
+        <mat-icon>sentiment_very_dissatisfied</mat-icon>
+      </div>
+      <ng-template #unwounded>
+        <div class="currentPool"
+            [ngClass]="attribute.current < 2 ? 'dangerPool' : 'okayPool'">
+          Pool: {{ attribute.current }}
+        </div>
+        <div class="maxPool">
+          /{{attribute.pool}}
+        </div>
+        <div class="edge">
+          Edge: {{attribute.edge}}
+        </div>
+      </ng-template>
+      <button mat-icon-button class="roll" (click)="startRoll(attribute)"
+          *ngIf="data.skill.attributes.includes(attribute.name) || (attribute.name === 'loyalty' && data.skill.id !== 'healthdefense')">
+        <mat-icon>casino</mat-icon>
+      </button>
     </div>
   </ng-template>
-  <div *ngIf="data.skill.attributes.includes(attribute.name)">ROLL</div>
 </div>

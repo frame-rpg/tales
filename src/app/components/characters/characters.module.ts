@@ -25,7 +25,6 @@ import { RouterModule } from '@angular/router';
     MatDialogModule,
     MatExpansionModule,
     MatIconModule,
-    MatIconModule,
     MatInputModule,
     MatMenuModule,
     MatSelectModule,
