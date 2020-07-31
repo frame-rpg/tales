@@ -2,7 +2,33 @@
   <h1 mat-dialog-title>
     <span>Rolling for {{ data.skill.name }}</span>
   </h1>
-  <div mat-dialog-content *ngIf="attribute | async; else selecting">
+  <div mat-dialog-content *ngIf="status | async as state; else selecting">
+    State: {{ state.state }}
+    <div *ngFor="let die of state.dice; index as i">
+      <input #dieInput
+          *ngIf="state.state === RollState.MANUAL_ROLL; else values" type=number
+          mat-input max="12" min="1" [ngModel]="die"
+          (blur)="state.dice[i] = dieInput.value">
+      <ng-template #values>{{ die }}</ng-template>
+    </div>
+    <div *ngIf="state.state === RollState.ROLLED">
+      <input #poolSelecttype=number mat-input [max]="state.attribute.current"
+          min="0" (blur)="state.dice[i] = dieInput.value">
+    </div>
+    <div class="actions" *ngIf="state.state >= RollState.ATTRIBUTE_SELECTED">
+      <button mat-button class="roll" (click)="autoRoll()"
+          *ngIf="state.state == RollState.ATTRIBUTE_SELECTED">
+        Auto Roll
+      </button>
+      <button mat-button class="roll" (click)="manualRoll()"
+          *ngIf="state.state == RollState.ATTRIBUTE_SELECTED">
+        Manual Roll
+      </button>
+      <button mat-button class="roll" (click)="acceptManual(state.dice)"
+          *ngIf="state.state == RollState.MANUAL_ROLL">
+        Accept
+      </button>
+    </div>
   </div>
   <ng-template mat-dialog-content #selecting>
     <div *ngFor="let attribute of data.attributes" class="attribute">
