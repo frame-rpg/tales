@@ -10,5 +10,5 @@ export interface CharacterAttribute {
 export interface DisplayAttribute extends CharacterAttribute {
   wound: boolean;
   current: number;
-  name: string;
+  name: AttributeNames;
 }

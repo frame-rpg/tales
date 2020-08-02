@@ -1,5 +1,6 @@
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SETTINGS } from '@angular/fire/firestore';
@@ -30,6 +31,7 @@ import { environment } from '../../../environments/environment';
       appId: '1:566075741185:web:5ab6e5b64399c8165edc00',
       measurementId: 'G-Q6Z05NHF7L',
     }),
+    AngularFirestoreModule.enablePersistence(),
     CommonModule,
   ],
 })

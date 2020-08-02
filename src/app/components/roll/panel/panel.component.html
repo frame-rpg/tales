@@ -3,7 +3,7 @@
     {{ (roller | async)?.name }}
   </div>
   <div class="skillPanel" *ngIf="userIsRoller | async; else nonRoller">
-    <div *ngFor="let skill of skills | async" (click)="skillClick(skill)">
+    <div *ngFor="let skill of skills | async" (click)="skillClick()">
       {{skill.name}}: {{skill.levelName}}
     </div>
   </div>

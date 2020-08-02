@@ -1,4 +1,54 @@
-<div class="dialog">
+<div class="dialog" *ngIf="roll | async as roll">
+  Rolling
+  <div *ngIf="!roll.skill">
+    <div>Select Skill to Roll</div>
+    <div *ngFor="let skill of skills | async" (click)="selectSkill(skill)">
+      {{skill.name}}:
+      {{skill.levelName}}</div>
+  </div>
+  <div *ngIf="roll.skill && !roll.attribute">
+    <div>Select Attribute</div>
+    <div *ngFor="let attribute of attributes | async" class="attribute"
+        (click)="selectAttribute(attribute)">
+      <div class="attributeName">
+        {{attribute.name}}:
+      </div>
+      <div class="wound" *ngIf="attribute.wound; else unwounded">
+        <mat-icon>sentiment_very_dissatisfied</mat-icon>
+      </div>
+      <ng-template #unwounded>
+        <div class="currentPool"
+            [ngClass]="attribute.current < 2 ? 'dangerPool' : 'okayPool'">
+          Pool: {{ attribute.current }}
+        </div>
+        <div class="maxPool">
+          /{{attribute.pool}}
+        </div>
+        <div class="edge">
+          Edge: {{attribute.edge}}
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div *ngIf="roll.attribute && !roll.dice">
+    <button mat-button (click)="autoRoll(roll)">RNG</button>
+    <button mat-button (click)="manualRoll(roll)">Manual</button>
+  </div>
+  <div *ngIf="roll.dice && !rolled(roll.dice)">
+    <div>Manual Roll Input:</div>
+    <input #dieInput mat-input max="12" min="1"
+        *ngFor="let die of roll.dice; index as i" type="number" [ngModel]="die"
+        (blur)="roll.dice[i] = dieInput.value">
+    <button mat-button (click)="setRoll(roll.dice)">Accept</button>
+  </div>
+  <div *ngIf="roll.dice && rolled(roll.dice)">
+    <div>Rolls:</div>
+    <div *ngFor="let die of roll.dice">{{ die }}</div>
+  </div>
+</div>
+<!-- 
+
+
   <h1 mat-dialog-title>
     <span>Rolling for {{ data.skill.name }}</span>
   </h1>
@@ -55,5 +105,4 @@
         <mat-icon>casino</mat-icon>
       </button>
     </div>
-  </ng-template>
-</div>
+  </ng-template> -->
