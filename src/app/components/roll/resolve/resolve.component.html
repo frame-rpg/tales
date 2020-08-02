@@ -1,5 +1,9 @@
 <div class="dialog" *ngIf="roll | async as roll">
-  Rolling
+  <div>Rolling</div>
+  <div *ngIf="roll.target === 'open'; else targetValue">Open Difficulty</div>
+  <ng-template #targetValue>
+    <div>Target: {{roll.target}}</div>
+  </ng-template>
   <div *ngIf="!roll.skill">
     <div>Select Skill to Roll</div>
     <div *ngFor="let skill of skills | async" (click)="selectSkill(skill)">
