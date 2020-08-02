@@ -48,10 +48,21 @@ function reduceRoll(data: InjectedData) {
         (attribute) => attribute.name === soFar.skill.attributes[0]
       )[0];
     }
+    if (
+      soFar.dice &&
+      soFar.dice.length > 0 &&
+      soFar.dice.every((die) => die > 0 && die < 13) &&
+      !!soFar.die
+    ) {
+      if (soFar.skill.level > 0 || soFar.skill.name === 'initative') {
+      }
+    }
     console.log(soFar);
     return soFar;
   };
 }
+
+function skillDirection(skill: DisplaySkill) {}
 
 enum RollState {
   SELECTING_ATTRIBUTE,
