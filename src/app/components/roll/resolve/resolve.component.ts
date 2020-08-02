@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DisplaySkill } from 'src/types/skill';
 import { SkilledCharacter } from 'src/types/character';
 import { DisplayAttribute } from 'src/types/attribute';
@@ -25,6 +25,7 @@ import {
 import { RollService } from '../roll.service';
 import { Roll } from 'src/types/event';
 import { CharacterService } from 'src/app/data/character.service';
+import { CampaignService } from 'src/app/data/campaign.service';
 
 export interface InjectedData {
   skills: DisplaySkill[];
@@ -48,28 +49,31 @@ function reduceRoll(data: InjectedData) {
         (attribute) => attribute.name === soFar.skill.attributes[0]
       )[0];
     }
+    if (soFar.skill && !soFar.direction) {
+      soFar.direction = skillDirection(soFar.skill);
+    }
     if (
       soFar.dice &&
       soFar.dice.length > 0 &&
       soFar.dice.every((die) => die > 0 && die < 13) &&
-      !!soFar.die
+      !soFar.die
     ) {
-      if (soFar.skill.level > 0 || soFar.skill.name === 'initative') {
-      }
+      soFar.die =
+        soFar.direction * soFar.skill.level > 0
+          ? Math.max(...soFar.dice)
+          : Math.min(...soFar.dice);
     }
     console.log(soFar);
     return soFar;
   };
 }
 
-function skillDirection(skill: DisplaySkill) {}
-
-enum RollState {
-  SELECTING_ATTRIBUTE,
-  ATTRIBUTE_SELECTED,
-  MANUAL_ROLL,
-  ROLLED,
-  POOLED,
+function skillDirection(skill: DisplaySkill) {
+  if (skill.id !== 'initiative') {
+    return 1;
+  } else {
+    return -1;
+  }
 }
 
 @Component({
@@ -81,11 +85,10 @@ export class ResolveComponent implements OnInit, OnDestroy {
   private rollSubject = new BehaviorSubject<Partial<Roll>>(null);
   roll: Observable<Roll>;
   attributes: Observable<DisplayAttribute[]>;
-  RollState = RollState;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: InjectedData,
-    private rollService: RollService,
-    private characterService: CharacterService
+    private campaignService: CampaignService,
+    public matDialogRef: MatDialogRef<ResolveComponent>
   ) {
     this.roll = this.rollSubject
       .asObservable()
@@ -135,6 +138,10 @@ export class ResolveComponent implements OnInit, OnDestroy {
 
   setRoll(numbers: number[]) {
     this.rollSubject.next({ dice: numbers });
+  }
+
+  finalize(roll: Roll) {
+    this.matDialogRef.close(roll);
   }
 
   rolled(numbers: number[]) {

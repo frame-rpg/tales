@@ -31,7 +31,6 @@ import { environment } from '../../../environments/environment';
       appId: '1:566075741185:web:5ab6e5b64399c8165edc00',
       measurementId: 'G-Q6Z05NHF7L',
     }),
-    AngularFirestoreModule.enablePersistence(),
     CommonModule,
   ],
 })

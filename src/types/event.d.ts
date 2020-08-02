@@ -10,5 +10,6 @@ export interface Roll {
   skill?: DisplaySkill;
   skills: string[];
   effort?: number;
+  direction?: 1 | -1;
   target: number | 'open';
 }

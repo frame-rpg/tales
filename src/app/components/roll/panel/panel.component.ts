@@ -18,10 +18,12 @@ import { InjectedData, ResolveComponent } from '../resolve/resolve.component';
 import {
   distinctUntilChanged,
   filter,
+  flatMap,
   map,
   publishReplay,
   refCount,
   switchMap,
+  take,
   tap,
 } from 'rxjs/operators';
 
@@ -108,13 +110,22 @@ export class PanelComponent implements OnInit, OnChanges, OnDestroy {
     ])
       .pipe(
         tap(console.log.bind(console)),
-        distinctUntilChanged((a, b) => a[0] === b[0])
+        distinctUntilChanged((a, b) => a[0] === b[0]),
+        flatMap(([, character, attributes, roll, skills]) => {
+          const data: InjectedData = { roll, character, attributes, skills };
+          return this.dialog
+            .open(ResolveComponent, {
+              data,
+            })
+            .afterClosed();
+        })
       )
-      .subscribe(([, character, attributes, roll, skills]) => {
-        const data: InjectedData = { roll, character, attributes, skills };
-        this.dialog.open(ResolveComponent, {
-          data,
-        });
+      .subscribe((result) => {
+        if (result) {
+          console.log(result);
+        } else {
+          console.log('cancel');
+        }
       });
   }
 

@@ -53,8 +53,23 @@
     <div>Rolls:</div>
     <div *ngFor="let die of roll.dice">{{ die }}</div>
   </div>
-</div>
-<!-- 
+  <div *ngIf="roll.die">
+    <div>Rolled:</div>
+    <div>{{roll.die}}</div>
+    <input matNativeControl #effortInput mat-input type="number"
+        [ngModel]="roll.effort" (blur)="roll.effort = effortInput.value">
+    <div>Total:</div>
+    <div *ngIf="roll.effort; else noEffort">
+      {{roll.die + roll.direction * roll.effort}}
+    </div>
+    <ng-template #noEffort>
+      <div>
+        {{ roll.die }}
+      </div>
+    </ng-template>
+    <button mat-button (click)="finalize(roll)">Accept</button>
+  </div>
+  <!-- 
 
 
   <h1 mat-dialog-title>
