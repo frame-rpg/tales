@@ -6,7 +6,7 @@
   </ng-template>
   <div *ngIf="!roll.skill">
     <div>Select Skill to Roll</div>
-    <div *ngFor="let skill of skills | async" (click)="selectSkill(skill)">
+    <div *ngFor="let skill of data.skills" (click)="selectSkill(skill)">
       {{skill.name}}:
       {{skill.levelName}}</div>
   </div>
@@ -40,9 +40,13 @@
   </div>
   <div *ngIf="roll.dice && !rolled(roll.dice)">
     <div>Manual Roll Input:</div>
-    <input #dieInput mat-input max="12" min="1"
-        *ngFor="let die of roll.dice; index as i" type="number" [ngModel]="die"
-        (blur)="roll.dice[i] = dieInput.value">
+    <mat-form-field *ngFor="let die of roll.dice; index as i">
+      <input matNativeControl #dieInput mat-input max="12" min="1" type="number"
+          [ngModel]="die" (blur)="roll.dice[i] = dieInput.value">
+      <mat-error *ngIf="dieInput.value < 1 || dieInput.value > 12">Rolled dice
+        must be between 1 and
+        12</mat-error>
+    </mat-form-field>
     <button mat-button (click)="setRoll(roll.dice)">Accept</button>
   </div>
   <div *ngIf="roll.dice && rolled(roll.dice)">

@@ -6,7 +6,14 @@ import {
   combineLatest,
 } from 'rxjs';
 import { Character, SkilledCharacter } from 'src/types/character';
-import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { InjectedData, ResolveComponent } from '../resolve/resolve.component';
 import {
   distinctUntilChanged,
@@ -97,16 +104,18 @@ export class PanelComponent implements OnInit, OnChanges, OnDestroy {
       this.roller,
       this.attributes,
       this.roll,
+      this.skills,
     ])
       .pipe(
         tap(console.log.bind(console)),
         distinctUntilChanged((a, b) => a[0] === b[0])
       )
-      .subscribe(([, character, attributes, roll]) =>
+      .subscribe(([, character, attributes, roll, skills]) => {
+        const data: InjectedData = { roll, character, attributes, skills };
         this.dialog.open(ResolveComponent, {
-          data: { roll, character, attributes },
-        })
-      );
+          data,
+        });
+      });
   }
 
   ngOnChanges(update) {

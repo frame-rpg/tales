@@ -19,20 +19,38 @@ import {
   scan,
   startWith,
   distinctUntilChanged,
+  publishReplay,
+  refCount,
 } from 'rxjs/operators';
 import { RollService } from '../roll.service';
 import { Roll } from 'src/types/event';
 import { CharacterService } from 'src/app/data/character.service';
 
 export interface InjectedData {
-  skill: DisplaySkill;
+  skills: DisplaySkill[];
   attributes: DisplayAttribute[];
   character: SkilledCharacter;
   roll: Roll;
 }
 
-function reduceRoll(roll: Roll, thing: Partial<Roll>): Roll {
-  return { ...roll, ...thing };
+function reduceRoll(data: InjectedData) {
+  return (roll: Roll, thing: Partial<Roll>): Roll => {
+    const soFar: Roll = { ...roll, ...thing };
+    if (!soFar.skill && soFar.skills && soFar.skills.length === 1) {
+      soFar.skill = data.skills[0];
+    }
+    if (
+      !soFar.attribute &&
+      soFar.skill &&
+      soFar.skill.attributes.length === 1
+    ) {
+      soFar.attribute = data.attributes.filter(
+        (attribute) => attribute.name === soFar.skill.attributes[0]
+      )[0];
+    }
+    console.log(soFar);
+    return soFar;
+  };
 }
 
 enum RollState {
@@ -49,63 +67,38 @@ enum RollState {
   styleUrls: ['./resolve.component.scss'],
 })
 export class ResolveComponent implements OnInit, OnDestroy {
-  private rollSubject = new BehaviorSubject<Partial<Roll>>({});
-  roll: Observable<Roll> = this.rollSubject
-    .asObservable()
-    .pipe(
-      scan<Partial<Roll>, Roll>(reduceRoll),
-      tap(console.log.bind(console))
-    );
-  skills: Observable<DisplaySkill[]>;
+  private rollSubject = new BehaviorSubject<Partial<Roll>>(null);
+  roll: Observable<Roll>;
   attributes: Observable<DisplayAttribute[]>;
-  subcription: Subscription;
   RollState = RollState;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: InjectedData,
     private rollService: RollService,
     private characterService: CharacterService
   ) {
-    this.rollSubject.next(data.roll);
-    this.skills = this.characterService.mapDisplaySkills(
-      from([this.data.character]),
-      this.roll.pipe(map((roll) => roll.skills))
-    );
-
-    this.attributes = combineLatest([
-      this.characterService.mapDisplayAttributes(from([this.data.character])),
-      this.roll,
-    ]).pipe(
-      filter(([c, r]) => c && !!r.skill),
-      map(([characterAttributes, roll]) =>
-        characterAttributes.filter((attr) =>
+    this.roll = this.rollSubject
+      .asObservable()
+      .pipe(
+        publishReplay(1),
+        refCount(),
+        startWith({}),
+        scan<Partial<Roll>, Roll>(reduceRoll(this.data))
+      );
+    this.attributes = this.roll.pipe(
+      filter((r) => !!r.skill),
+      map((roll) =>
+        this.data.attributes.filter((attr) =>
           roll.skill.attributes.includes(attr.name)
         )
       ),
       startWith([])
     );
-    this.subcription = combineLatest([this.roll, this.attributes, this.skills])
-      .pipe(distinctUntilChanged((a, b) => a[0] === b[0]))
-      .subscribe(([roll, attributes, skills]) => {
-        console.log(roll);
-        if (
-          roll.skill &&
-          attributes &&
-          attributes.length === 1 &&
-          !roll.attribute
-        ) {
-          this.rollSubject.next({ attribute: attributes[0] });
-        }
-        if (!roll.skill && skills && skills.length === 1) {
-          this.rollSubject.next({ skill: skills[0] });
-        }
-      });
+    this.rollSubject.next(data.roll);
   }
 
   ngOnInit(): void {}
 
-  ngOnDestroy(): void {
-    this.subcription.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   selectAttribute(attribute: DisplayAttribute) {
     this.rollSubject.next({ attribute });
@@ -135,9 +128,5 @@ export class ResolveComponent implements OnInit, OnDestroy {
 
   rolled(numbers: number[]) {
     return numbers.every((v) => !!v && v > 0);
-  }
-
-  private skillSize() {
-    return Math.abs(this.data.skill.level) + 1;
   }
 }
