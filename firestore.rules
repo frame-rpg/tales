@@ -16,7 +16,7 @@ service cloud.firestore {
     }
 
     function isOneOfRoles(rsc, array) {
-      return isSignedIn() && (getRole(rsc) in array);
+      return isSignedIn() && getRole(rsc) != null && (getRole(rsc) in array);
     }
 
     function preservesRoles(rsc) {
@@ -32,7 +32,7 @@ service cloud.firestore {
     }
 
     function campaignReader(rsc) {
-      return readAclZ(get(/databases/$(database)/documents/campaigns/$(rsc.campaign)));
+      return readAclZ(get(/databases/$(database)/documents/campaigns/$(rsc.data.campaign)));
     }
 
     function createAclCheck() {
@@ -49,7 +49,7 @@ service cloud.firestore {
     }
 
     match /characters/{characterId} {
-      allow read: if readAclZ(resource)
+      allow read: if readAclZ(resource) || campaignReader(resource)
       allow update: if writeAclZ(resource)
       allow create: if isSignedIn() && createAclCheck()
 
@@ -59,34 +59,17 @@ service cloud.firestore {
       }
     }
 
+    match /rolls/{rollId} {
+      allow create: if writeAclZ(getData('campaigns', request.resource.data.campaign))
+      allow update: if writeAclZ(getData('campaigns', request.resource.data.campaign)) || writeAclZ(getData('characters', request.resource.data.roller))
+      allow read: if campaignReader(resource)
+      allow delete: if false;
+    }
+
     match /campaigns/{campaignId} {
       allow read: if readAclZ(resource)
       allow update: if writeAclZ(resource)
       allow create: if isSignedIn() && createAclCheck()
-
-      match /characters/{characterId} {
-        allow create: if readAclZ(getData('campaigns', campaignId)) && createAclCheck()
-        allow update: if writeAclZ(resource) || writeAclZ(getData('campaigns', campaignId))
-        allow read: if readAclZ(getData('campaigns', campaignId))
-        allow delete: if false
-      }
-
-      match /rolls/{rollId} {
-
-        function eventWriter() {
-              // the campaign owner can close the event
-          return writeAclZ(getData('campaigns', campaignId)) 
-              // the requester can close the event
-            || request.resource.data.requester == request.auth.uid 
-              // the player can close the event
-            || get(/databases/$(database)/documents/campaigns/$(campaignId)/characters/$(request.resource.data.roller)).acl[request.auth.uid] == 'admin';
-        }
-
-        allow create: if readAclZ(getData('campaigns', campaignId)) && request.data.requester == request.auth.uid
-        allow update: if eventWriter() || writeAclZ(getData('campaigns', campaignId))
-        allow read: if readAclZ(getData('campaigns', campaignId))
-        allow delete: if false;
-      }
     }
 
     match /rules/{document=**} {

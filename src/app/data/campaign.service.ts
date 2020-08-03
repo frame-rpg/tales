@@ -62,15 +62,17 @@ export class CampaignService {
 
   characters({ id, characters }: { id: string; characters: string[] }) {
     return this.firestore
-      .collection<Character>(`/campaigns/${id}/characters`, (query) =>
-        query.where(firestore.FieldPath.documentId(), 'in', characters)
+      .collection<Character>(`/characters`, (query) =>
+        query
+          .where(firestore.FieldPath.documentId(), 'in', characters)
+          .where('campaign', '==', id)
       )
       .valueChanges({ idField: 'id' });
   }
 
   listRolls(id: string) {
     return this.firestore
-      .collection<Roll>(`/campaigns/${id}/rolls`)
+      .collection<Roll>(`/rolls`, (query) => query.where('campaign', '==', id))
       .valueChanges({ idField: 'id' });
   }
 
