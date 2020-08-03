@@ -8,6 +8,7 @@ export interface NewCharacterBase {
   description: string;
   acl: Acl;
   type: CharacterTypes;
+  campaign: string;
   status: Status;
 }
 

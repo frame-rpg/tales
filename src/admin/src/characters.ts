@@ -5,6 +5,7 @@ import { playerTemplate } from './characterTemplates.js';
 export const players: PlayerCharacter[] = [
   {
     id: 'ry',
+    campaign: 'c1',
     name: 'Ry McGinnis',
     acl: {
       chrissy: 'admin',
@@ -85,6 +86,7 @@ export const players: PlayerCharacter[] = [
   },
   {
     id: 'connie',
+    campaign: 'c1',
     name: 'Connecticut (Connie) Butler',
     acl: {
       megan: 'admin',
@@ -159,6 +161,7 @@ export const players: PlayerCharacter[] = [
   },
   {
     id: 'momentusUndergrave',
+    campaign: 'c1',
     name: 'Momentus Undergrave',
     acl: {
       matthew: 'admin',
@@ -232,6 +235,7 @@ export const players: PlayerCharacter[] = [
   },
   {
     id: 'chad',
+    campaign: 'c1',
     name: 'Chad',
     acl: {
       guy: 'admin',
@@ -303,6 +307,7 @@ export const players: PlayerCharacter[] = [
   },
   {
     id: 'thomson',
+    campaign: 'c1',
     name: 'Thomson Anning',
     acl: {
       phil: 'admin',
@@ -386,6 +391,7 @@ export const players: PlayerCharacter[] = [
 export const companions: Companion[] = [
   {
     id: 'sparks',
+    campaign: 'c1',
     name: 'Sparks',
     description: 'Ornithomimid',
     acl: {
@@ -425,6 +431,7 @@ export const companions: Companion[] = [
   },
   {
     id: 'biscuit',
+    campaign: 'c1',
     name: 'Biscuit',
     description: 'Ankylosaur',
     acl: {
@@ -470,6 +477,7 @@ export const companions: Companion[] = [
   },
   {
     id: 'drFanta',
+    campaign: 'c1',
     name: 'Dr. Fantabulous',
     description: 'Centrosaurus',
     acl: {
@@ -509,6 +517,7 @@ export const companions: Companion[] = [
   },
   {
     id: 'smammal',
+    campaign: 'c1',
     name: 'Smammal',
     description: 'Small Mammal and Occasional Plot Device',
     acl: {
@@ -548,6 +557,7 @@ export const companions: Companion[] = [
   },
   {
     id: 'nugget',
+    campaign: 'c1',
     name: 'Nugget 2.0',
     description: 'Raptor',
     acl: {

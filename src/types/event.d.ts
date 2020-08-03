@@ -3,6 +3,7 @@ import { DisplayAttribute } from './attribute';
 
 export interface Roll {
   attribute?: DisplayAttribute;
+  campaign: string;
   dice?: number[];
   die?: number;
   requester: string;

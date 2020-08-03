@@ -37,28 +37,16 @@ await Promise.all([
   Promise.all(
     players
       .map(updateAcl)
-      .map((p) =>
-        app
-          .firestore()
-          .doc(`/campaigns/${campaign.id}/characters/${p.id}`)
-          .set(p)
-      )
+      .map((p) => app.firestore().doc(`/characters/${p.id}`).set(p))
   ),
   Promise.all(
     rolls
       .map(updateAcl)
-      .map((roll) =>
-        app.firestore().collection(`/campaigns/${campaign.id}/rolls`).add(roll)
-      )
+      .map((roll) => app.firestore().collection(`/rolls`).add(roll))
   ),
   Promise.all(
     companions
       .map(updateAcl)
-      .map((p) =>
-        app
-          .firestore()
-          .doc(`/campaigns/${campaign.id}/characters/${p.id}`)
-          .set(p)
-      )
+      .map((p) => app.firestore().doc(`/characters/${p.id}`).set(p))
   ),
 ]);

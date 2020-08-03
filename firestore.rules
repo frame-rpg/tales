@@ -31,6 +31,10 @@ service cloud.firestore {
       return isOneOfRoles(rsc, ['read', 'write', 'admin']);
     }
 
+    function campaignReader(rsc) {
+      return readAclZ(get(/databases/$(database)/documents/campaigns/$(rsc.campaign)));
+    }
+
     function createAclCheck() {
       return request.resource.data.acl[request.auth.uid] == 'admin' && request.resource.data.acl.size() == 1;
     }
