@@ -25,12 +25,12 @@ export const campaign: Campaign = {
     'nugget',
   ],
   acl: {
-    eric: 'admin',
-    matthew: 'read',
-    guy: 'read',
-    megan: 'read',
-    chrissy: 'read',
-    phil: 'read',
+    'eric.eslinger@gmail.com': 'admin',
+    'llahwehttam@gmail.com': 'read',
+    'guy@albertelli.com': 'read',
+    'megan@albertelli.com': 'read',
+    'cljacobs1975@gmail.com': 'read',
+    'phil.bowen@gmail.com': 'read',
   },
   skills: [
     'advancedsecurity',

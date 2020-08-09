@@ -1,5 +1,5 @@
 import { Campaign, NewCampaign } from 'src/types/campaign';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -27,7 +27,7 @@ export class CampaignService {
       switchMap((user) =>
         this.firestore
           .collection<Campaign>('campaigns', (ref) =>
-            ref.where(`acl.${user.uid}`, 'in', ['read', 'write', 'admin'])
+            ref.where(`acl.${user.email}`, 'in', ['read', 'write', 'admin'])
           )
           .valueChanges({ idField: 'id' })
       )
@@ -48,12 +48,7 @@ export class CampaignService {
   }
 
   get(id: string) {
-    return this.firestore
-      .doc<Campaign>(`/campaigns/${id}`)
-      .snapshotChanges()
-      .pipe(
-        map((v) => ({ id: v.payload.id, ...v.payload.data() } as Campaign))
-      );
+    return this.firestore.doc<Campaign>(`/campaigns/${id}`).valueChanges();
   }
 
   update(campaign: Partial<Campaign> & { id: string }) {
@@ -79,7 +74,7 @@ export class CampaignService {
   async create(campaign: NewCampaign) {
     const user = await this.auth.currentUser;
     const toAdd = { ...campaign };
-    toAdd.acl[user.uid] = 'admin';
+    toAdd.acl[user.email] = 'admin';
     console.log(toAdd);
     return this.firestore.collection('/campaigns').add(toAdd);
   }

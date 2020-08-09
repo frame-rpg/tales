@@ -64,10 +64,10 @@ export class CardComponent implements OnChanges, OnInit {
     this.viewerIsActivePlayer = combineLatest([
       this.character$,
       this.auth.user,
-    ]).pipe(map(([{ acl }, { uid }]) => acl[uid] === 'admin'));
+    ]).pipe(map(([{ acl }, { email }]) => acl[email] === 'admin'));
 
     this.viewerIsGM = combineLatest([this.campaign, this.auth.user]).pipe(
-      map(([{ acl }, { uid }]) => acl[uid] === 'admin')
+      map(([{ acl }, { email }]) => acl[email] === 'admin')
     );
 
     this.activePlayers = this.character$.pipe(

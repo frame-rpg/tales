@@ -12,7 +12,7 @@ service cloud.firestore {
     }
 
     function getRole(rsc) {
-      return rsc.data.acl[request.auth.uid];
+      return rsc.data.acl[request.auth.token.email];
     }
 
     function isOneOfRoles(rsc, array) {
@@ -36,12 +36,12 @@ service cloud.firestore {
     }
 
     function createAclCheck() {
-      return request.resource.data.acl[request.auth.uid] == 'admin' && request.resource.data.acl.size() == 1;
+      return request.resource.data.acl[request.auth.token.email] == 'admin' && request.resource.data.acl.size() == 1;
     }
 
     match /users/{userId} {
       allow read: if isSignedIn()
-      allow write: if request.auth.uid == request.resource.data.id
+      allow write: if request.auth.token.email == request.resource.data.email
       match /messages/{messageId} {
         allow read: if writeAclZ(getData('users', userId))
         allow write: if readAclZ(getData('users', userId))
@@ -61,7 +61,8 @@ service cloud.firestore {
 
     match /rolls/{rollId} {
       allow create: if writeAclZ(getData('campaigns', request.resource.data.campaign))
-      allow update: if writeAclZ(getData('campaigns', request.resource.data.campaign)) || writeAclZ(getData('characters', request.resource.data.roller))
+      allow update: if writeAclZ(getData('campaigns', request.resource.data.campaign)) 
+        || writeAclZ(getData('characters', request.resource.data.roller))
       allow read: if campaignReader(resource)
       allow delete: if false;
     }
@@ -78,7 +79,7 @@ service cloud.firestore {
     }
 
     match /{document=**} {
-      allow read, write: if false
+      allow read, write: if true
     }
   }
 }

@@ -75,9 +75,7 @@ export class PanelComponent implements OnInit, OnChanges, OnDestroy {
     this.roller = this.roll.pipe(
       switchMap(
         (roll) =>
-          this.characterService.get(this.campaignId, roll.roller) as Observable<
-            SkilledCharacter
-          >
+          this.characterService.get(roll.roller) as Observable<SkilledCharacter>
       )
     );
 
@@ -86,13 +84,12 @@ export class PanelComponent implements OnInit, OnChanges, OnDestroy {
     );
 
     this.userIsRoller = combineLatest([this.roller, this.auth.user]).pipe(
-      map(([roller, user]) => roller.acl[user.uid] === 'admin')
+      map(([roller, user]) => roller.acl[user.email] === 'admin')
     );
 
-    this.userRequestedRoll = combineLatest([
-      this.requester,
-      this.auth.user,
-    ]).pipe(map(([requester, user]) => requester.id === user.uid));
+    this.userRequestedRoll = combineLatest([this.roll, this.auth.user]).pipe(
+      map(([roll, user]) => roll.requester === user.email)
+    );
 
     this.skills = this.characterService.mapDisplaySkills(
       this.roller,

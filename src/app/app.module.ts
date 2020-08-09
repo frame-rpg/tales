@@ -7,8 +7,7 @@ import { ComponentsModule } from './components/components.module';
 import { CoreModule } from './core/core.module';
 import { FormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { MaterialModule } from './core/material/material.module';
 import { NgModule } from '@angular/core';
 
 @NgModule({
@@ -22,8 +21,7 @@ import { NgModule } from '@angular/core';
     FormsModule,
     LayoutModule,
     CoreModule,
-    MatButtonModule,
-    MatToolbarModule,
+    MaterialModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

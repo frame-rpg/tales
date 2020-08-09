@@ -8,8 +8,8 @@ export const players: PlayerCharacter[] = [
     campaign: 'c1',
     name: 'Ry McGinnis',
     acl: {
-      chrissy: 'admin',
-      eric: 'admin',
+      'cljacobs1975@gmail.com': 'admin',
+      'eric.eslinger@gmail.com': 'admin',
     },
     description: '',
     type: 'player',
@@ -89,7 +89,7 @@ export const players: PlayerCharacter[] = [
     campaign: 'c1',
     name: 'Connecticut (Connie) Butler',
     acl: {
-      megan: 'admin',
+      'megan@albertelli.com': 'admin',
     },
     description: '',
     type: 'player',
@@ -164,7 +164,7 @@ export const players: PlayerCharacter[] = [
     campaign: 'c1',
     name: 'Momentus Undergrave',
     acl: {
-      matthew: 'admin',
+      'llahwehttam@gmail.com': 'admin',
     },
     description: '',
     type: 'player',
@@ -238,7 +238,7 @@ export const players: PlayerCharacter[] = [
     campaign: 'c1',
     name: 'Chad',
     acl: {
-      guy: 'admin',
+      'guy@albertelli.com': 'admin',
     },
     description: '',
     type: 'player',
@@ -310,7 +310,7 @@ export const players: PlayerCharacter[] = [
     campaign: 'c1',
     name: 'Thomson Anning',
     acl: {
-      phil: 'admin',
+      'phil.bowen@gmail.com': 'admin',
     },
     description: '',
     type: 'player',
@@ -395,7 +395,7 @@ export const companions: Companion[] = [
     name: 'Sparks',
     description: 'Ornithomimid',
     acl: {
-      chrissy: 'admin',
+      'cljacobs1975@gmail.com': 'admin',
     },
     type: 'companion',
     attack: 2,
@@ -435,8 +435,8 @@ export const companions: Companion[] = [
     name: 'Biscuit',
     description: 'Ankylosaur',
     acl: {
-      eric: 'admin',
-      megan: 'admin',
+      'eric.eslinger@gmail.com': 'admin',
+      'megan@albertelli.com': 'admin',
     },
     type: 'companion',
     attack: 2,
@@ -481,7 +481,7 @@ export const companions: Companion[] = [
     name: 'Dr. Fantabulous',
     description: 'Centrosaurus',
     acl: {
-      matthew: 'admin',
+      'llahwehttam@gmail.com': 'admin',
     },
     type: 'companion',
     attack: 1,
@@ -521,7 +521,7 @@ export const companions: Companion[] = [
     name: 'Smammal',
     description: 'Small Mammal and Occasional Plot Device',
     acl: {
-      guy: 'admin',
+      'guy@albertelli.com': 'admin',
     },
     type: 'companion',
     attack: 1,
@@ -561,7 +561,7 @@ export const companions: Companion[] = [
     name: 'Nugget 2.0',
     description: 'Raptor',
     acl: {
-      phil: 'admin',
+      'phil.bowen@gmail.com': 'admin',
     },
     type: 'companion',
     attack: 4,

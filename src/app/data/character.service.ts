@@ -34,20 +34,15 @@ export class CharacterService {
       switchMap((user) =>
         this.firestore
           .collection<Character>('characters', (ref) =>
-            ref.where(`acl.${user.uid}`, 'in', ['read', 'write', 'admin'])
+            ref.where(`acl.${user.email}`, 'in', ['read', 'write', 'admin'])
           )
           .valueChanges({ idField: 'id' })
       )
     );
   }
 
-  get(campaignId: string, id: string) {
-    return this.firestore
-      .doc<Character>(`/campaigns/${campaignId}/characters/${id}`)
-      .snapshotChanges()
-      .pipe(
-        map((v) => ({ id: v.payload.id, ...v.payload.data() } as Character))
-      );
+  get(id: string) {
+    return this.firestore.doc<Character>(`/characters/${id}`).valueChanges();
   }
 
   update(character: Partial<Character> & { id: string }) {
@@ -57,7 +52,7 @@ export class CharacterService {
   async create(character: NewCharacter, options: { inCampaign?: string } = {}) {
     const user = await this.auth.currentUser;
     const toAdd = { ...character };
-    toAdd.acl[user.uid] = 'admin';
+    toAdd.acl[user.email] = 'admin';
     if (options?.inCampaign) {
       return this.firestore
         .collection(`/campaigns/${options.inCampaign}/characters`)

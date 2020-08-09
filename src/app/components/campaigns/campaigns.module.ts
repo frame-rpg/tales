@@ -5,13 +5,7 @@ import { CreateComponent } from './create/create.component';
 import { DetailComponent } from './detail/detail.component';
 import { FormsModule } from '@angular/forms';
 import { ListComponent } from './list/list.component';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { MaterialModule } from '../../core/material/material.module';
 import { NgModule } from '@angular/core';
 import { RollModule } from '../roll/roll.module';
 
@@ -19,17 +13,11 @@ import { RollModule } from '../roll/roll.module';
   declarations: [CreateComponent, ListComponent, DetailComponent],
   imports: [
     CampaignsRoutingModule,
+    CharactersModule,
     CommonModule,
     FormsModule,
-    MatButtonModule,
-    MatDialogModule,
+    MaterialModule,
     RollModule,
-    MatExpansionModule,
-    MatInputModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    CharactersModule,
   ],
   exports: [CreateComponent, ListComponent, DetailComponent],
 })
