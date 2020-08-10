@@ -5,6 +5,14 @@ import { DisplaySkill } from 'src/types/skill';
 import { SkilledCharacter } from 'src/types/character';
 import { DisplayAttribute } from 'src/types/attribute';
 import {
+  FormControl,
+  FormGroupDirective,
+  NgForm,
+  Validators,
+  FormArray,
+  FormGroup,
+} from '@angular/forms';
+import {
   BehaviorSubject,
   combineLatest,
   Observable,
@@ -34,40 +42,6 @@ export interface InjectedData {
   roll: Roll;
 }
 
-function reduceRoll(data: InjectedData) {
-  return (roll: Roll, thing: Partial<Roll>): Roll => {
-    const soFar: Roll = { ...roll, ...thing };
-    if (!soFar.skill && soFar.skills && soFar.skills.length === 1) {
-      soFar.skill = data.skills[0];
-    }
-    if (
-      !soFar.attribute &&
-      soFar.skill &&
-      soFar.skill.attributes.length === 1
-    ) {
-      soFar.attribute = data.attributes.filter(
-        (attribute) => attribute.name === soFar.skill.attributes[0]
-      )[0];
-    }
-    if (soFar.skill && !soFar.direction) {
-      soFar.direction = skillDirection(soFar.skill);
-    }
-    if (
-      soFar.dice &&
-      soFar.dice.length > 0 &&
-      soFar.dice.every((die) => die > 0 && die < 13) &&
-      !soFar.die
-    ) {
-      soFar.die =
-        soFar.direction * soFar.skill.level > 0
-          ? Math.max(...soFar.dice)
-          : Math.min(...soFar.dice);
-    }
-    console.log(soFar);
-    return soFar;
-  };
-}
-
 function skillDirection(skill: DisplaySkill) {
   if (skill.id !== 'initiative') {
     return 1;
@@ -82,66 +56,132 @@ function skillDirection(skill: DisplaySkill) {
   styleUrls: ['./resolve.component.scss'],
 })
 export class ResolveComponent implements OnInit, OnDestroy {
-  private rollSubject = new BehaviorSubject<Partial<Roll>>(null);
-  roll: Observable<Roll>;
-  attributes: Observable<DisplayAttribute[]>;
+  rollState = new FormGroup({
+    attribute: new FormControl(null),
+    skill: new FormControl(null),
+    target: new FormControl('open'),
+    dice: new FormArray([]),
+    effort: new FormControl(0, [Validators.min(0)]),
+    state: new FormControl('pickSkill'),
+  });
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: InjectedData,
     private campaignService: CampaignService,
     public matDialogRef: MatDialogRef<ResolveComponent>
   ) {
-    this.roll = this.rollSubject
-      .asObservable()
-      .pipe(
-        publishReplay(1),
-        refCount(),
-        startWith({}),
-        scan<Partial<Roll>, Roll>(reduceRoll(this.data))
-      );
-    this.attributes = this.roll.pipe(
-      filter((r) => !!r.skill),
-      map((roll) =>
-        this.data.attributes.filter((attr) =>
-          roll.skill.attributes.includes(attr.name)
-        )
-      ),
-      startWith([])
-    );
-    this.rollSubject.next(data.roll);
+    if (data.skills.length === 1) {
+      this.rollState.get('skill').setValue(data.skills[0]);
+    }
+    this.rollState.get('target').setValue(data.roll.target);
   }
 
   ngOnInit(): void {}
 
   ngOnDestroy(): void {}
 
+  get skill() {
+    return this.rollState.get('skill').value as DisplaySkill;
+  }
+
+  get attribute() {
+    return this.rollState.get('attribute').value as DisplayAttribute;
+  }
+
+  get dice() {
+    return this.rollState.get('dice').value as number[];
+  }
+
+  get target() {
+    return this.rollState.get('target').value as string;
+  }
+
+  get attributes() {
+    return this.data.attributes.filter((attribute) =>
+      this.skill?.attributes.includes(attribute.name)
+    );
+  }
+
+  get die() {
+    if (this.dice.length === 0) {
+      return 0;
+    } else if (this.skill.level < 0 || this.direction < 0) {
+      return Math.min(...this.dice);
+    } else {
+      return Math.max(...this.dice);
+    }
+  }
+
+  get direction() {
+    if (this.skill && this.skill.id === 'initiative') {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+
+  get effort() {
+    return this.rollState.get('effort').value as number;
+  }
+
+  get step(): string {
+    if (this.skill === null) {
+      return 'pickSkill';
+    } else if (this.attribute === null) {
+      return 'pickAttribute';
+    } else if (this.dice.length === 0) {
+      return 'chooseRollType';
+    } else if (this.dice.some((v) => v === 0)) {
+      return 'manualRoll';
+    }
+    return 'ready';
+  }
+
   selectAttribute(attribute: DisplayAttribute) {
-    this.rollSubject.next({ attribute });
+    this.rollState.get('attribute').setValue(attribute);
+    this.rollState.get('state').setValue('pickSkill');
   }
 
   selectSkill(skill: DisplaySkill) {
-    this.rollSubject.next({ skill });
+    this.rollState.get('skill').setValue(skill);
+    this.rollState.get('state').setValue('chooseRollType');
   }
 
-  autoRoll(roll: Roll) {
-    this.rollSubject.next({
-      dice: new Array(Math.abs(roll.skill.level) + 1)
-        .fill(0)
-        .map(() => Math.floor(Math.random() * 12) + 1),
-    });
+  autoRoll() {
+    const diceCount = Math.abs(this.skill.level) + 1;
+    const dice = new Array(diceCount)
+      .fill(0)
+      .map((v) => Math.floor(Math.random() * 12) + 1);
+    dice.forEach((die) =>
+      (this.rollState.get('dice') as FormArray).push(
+        new FormControl(die, [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(12),
+        ])
+      )
+    );
   }
 
-  manualRoll(roll: Roll) {
-    this.rollSubject.next({
-      dice: new Array(Math.abs(roll.skill.level) + 1).fill(0),
-    });
+  manualRoll() {
+    const diceCount = Math.abs(this.skill.level) + 1;
+    const dice = new Array(diceCount).fill(0);
+    dice.forEach((die) =>
+      (this.rollState.get('dice') as FormArray).push(
+        new FormControl(die, [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(12),
+        ])
+      )
+    );
   }
 
-  setRoll(numbers: number[]) {
-    this.rollSubject.next({ dice: numbers });
-  }
+  acceptRoll() {}
 
-  finalize(roll: Roll) {
-    this.matDialogRef.close(roll);
+  setRoll() {}
+
+  finalize() {
+    this.matDialogRef.close();
   }
 
   rolled(numbers: number[]) {

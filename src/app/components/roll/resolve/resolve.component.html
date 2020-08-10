@@ -1,18 +1,20 @@
-<div class="dialog" *ngIf="roll | async as roll">
-  <div>Rolling</div>
-  <div *ngIf="roll.target === 'open'; else targetValue">Open Difficulty</div>
+<div class="dialog" [formGroup]="rollState">
+  <div>Rolling: {{step}}-{{rollState.value | json}}</div>
+  <div *ngIf="data.roll.target === 'open'; else targetValue">
+    Open Difficulty
+  </div>
   <ng-template #targetValue>
-    <div>Target: {{roll.target}}</div>
+    <div>Target: {{data.roll.target}}</div>
   </ng-template>
-  <div *ngIf="!roll.skill">
+  <div *ngIf="step === 'pickSkill'">
     <div>Select Skill to Roll</div>
     <div *ngFor="let skill of data.skills" (click)="selectSkill(skill)">
-      {{skill.name}}:
-      {{skill.levelName}}</div>
+      {{skill.name}}: {{skill.levelName}}
+    </div>
   </div>
-  <div *ngIf="roll.skill && !roll.attribute">
+  <div *ngIf="step === 'pickAttribute'">
     <div>Select Attribute</div>
-    <div *ngFor="let attribute of attributes | async" class="attribute"
+    <div *ngFor="let attribute of attributes" class="attribute"
         (click)="selectAttribute(attribute)">
       <div class="attributeName">
         {{attribute.name}}:
@@ -34,98 +36,35 @@
       </ng-template>
     </div>
   </div>
-  <div *ngIf="roll.attribute && !roll.dice">
-    <button mat-button (click)="autoRoll(roll)">RNG</button>
-    <button mat-button (click)="manualRoll(roll)">Manual</button>
+  <div *ngIf="step === 'chooseRollType'">
+    <button mat-button (click)="autoRoll()">RNG</button>
+    <button mat-button (click)="manualRoll()">Manual</button>
   </div>
-  <div *ngIf="roll.dice && !rolled(roll.dice)">
+  <div *ngIf="step === 'manualRoll'">
     <div>Manual Roll Input:</div>
-    <mat-form-field *ngFor="let die of roll.dice; index as i">
-      <input matNativeControl #dieInput mat-input max="12" min="1" type="number"
-          [ngModel]="die" (blur)="roll.dice[i] = dieInput.value">
-      <mat-error *ngIf="dieInput.value < 1 || dieInput.value > 12">
-        Rolled dice must be between 1 and 12
-      </mat-error>
-    </mat-form-field>
-    <button mat-button (click)="setRoll(roll.dice)">Accept</button>
+    <ng-container formArrayName="dice">
+      <mat-form-field *ngFor="let d of dice.controls; index as i"
+          [formControlName]="i">
+        <input matInput max="12" min="1" type="number">
+      </mat-form-field>
+    </ng-container>
+    <button mat-button (click)="acceptRoll()">Accept</button>
   </div>
-  <div *ngIf="roll.dice && rolled(roll.dice)">
+  <div *ngIf="step === 'ready'" formArrayName="dice">
     <div>Rolls:</div>
-    <div *ngFor="let die of roll.dice">{{ die }}</div>
-  </div>
-  <div *ngIf="roll.die">
+    <mat-form-field *ngFor="let d of dice; index as i" [formControlName]="i">
+      <input matInput max="12" min="1" type="number">
+    </mat-form-field>
     <div>Rolled:</div>
-    <div>{{roll.die}}</div>
-    <input matNativeControl #effortInput mat-input type="number"
-        [ngModel]="roll.effort" (blur)="roll.effort = effortInput.value">
+    <div>{{die}}</div>
+    <mat-form-field formControlName="effort">
+      <mat-label>Effort</mat-label>
+      <input #effortInput matInput type="number">
+    </mat-form-field>
     <div>Total:</div>
-    <div *ngIf="roll.effort; else noEffort">
-      {{roll.die + roll.direction * roll.effort}}
+    <div>
+      {{die + direction * effort}}
     </div>
-    <ng-template #noEffort>
-      <div>
-        {{ roll.die }}
-      </div>
-    </ng-template>
-    <button mat-button (click)="finalize(roll)">Accept</button>
+    <button mat-button (click)="finalize()">Accept</button>
   </div>
-  <!-- 
-
-
-  <h1 mat-dialog-title>
-    <span>Rolling for {{ data.skill.name }}</span>
-  </h1>
-  <div mat-dialog-content *ngIf="status | async as state; else selecting">
-    State: {{ state.state }}
-    <div *ngFor="let die of state.dice; index as i">
-      <input #dieInput
-          *ngIf="state.state === RollState.MANUAL_ROLL; else values" type=number
-          mat-input max="12" min="1" [ngModel]="die"
-          (blur)="state.dice[i] = dieInput.value">
-      <ng-template #values>{{ die }}</ng-template>
-    </div>
-    <div *ngIf="state.state === RollState.ROLLED">
-      <input #poolSelecttype=number mat-input [max]="state.attribute.current"
-          min="0" (blur)="state.dice[i] = dieInput.value">
-    </div>
-    <div class="actions" *ngIf="state.state >= RollState.ATTRIBUTE_SELECTED">
-      <button mat-button class="roll" (click)="autoRoll()"
-          *ngIf="state.state == RollState.ATTRIBUTE_SELECTED">
-        Auto Roll
-      </button>
-      <button mat-button class="roll" (click)="manualRoll()"
-          *ngIf="state.state == RollState.ATTRIBUTE_SELECTED">
-        Manual Roll
-      </button>
-      <button mat-button class="roll" (click)="acceptManual(state.dice)"
-          *ngIf="state.state == RollState.MANUAL_ROLL">
-        Accept
-      </button>
-    </div>
-  </div>
-  <ng-template mat-dialog-content #selecting>
-    <div *ngFor="let attribute of data.attributes" class="attribute">
-      <div class="attributeName">
-        {{attribute.name}}:
-      </div>
-      <div class="wound" *ngIf="attribute.wound; else unwounded">
-        <mat-icon>sentiment_very_dissatisfied</mat-icon>
-      </div>
-      <ng-template #unwounded>
-        <div class="currentPool"
-            [ngClass]="attribute.current < 2 ? 'dangerPool' : 'okayPool'">
-          Pool: {{ attribute.current }}
-        </div>
-        <div class="maxPool">
-          /{{attribute.pool}}
-        </div>
-        <div class="edge">
-          Edge: {{attribute.edge}}
-        </div>
-      </ng-template>
-      <button mat-icon-button class="roll" (click)="startRoll(attribute)"
-          *ngIf="data.skill.attributes.includes(attribute.name) || (attribute.name === 'loyalty' && data.skill.id !== 'healthdefense')">
-        <mat-icon>casino</mat-icon>
-      </button>
-    </div>
-  </ng-template> -->
+</div>
