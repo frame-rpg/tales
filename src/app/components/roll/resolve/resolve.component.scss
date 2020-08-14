@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 .attribute {
   display: flex;
   flex-direction: row;
@@ -12,8 +14,18 @@
   line-height: 1.5em;
 }
 
+.dieInput {
+  max-width: 60px;
+  margin: 4px;
+  padding: 4px;
+}
+
 .wound {
   color: var(--warn-color);
+}
+
+.chosenDie {
+  background-color: var(--lightblue);
 }
 
 .dangerPool {

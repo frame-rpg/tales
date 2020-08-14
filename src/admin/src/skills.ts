@@ -64,7 +64,7 @@ export const skillSeed: SkillDetails = {
   initiative: {
     description: '',
     name: 'Initiative',
-    attributes: ['conviction', 'speed'],
+    attributes: ['conviction', 'speed', 'focus', 'might'],
   },
   intimidate: {
     description: '',

@@ -1,11 +1,26 @@
 <div class="dialog" [formGroup]="rollState">
-  <div>Rolling: {{step}}-{{rollState.value | json}}</div>
-  <div *ngIf="data.roll.target === 'open'; else targetValue">
-    Open Difficulty
+  <div>Target: {{data.roll.target}}</div>
+  <div *ngIf="skill"> {{skill.name}}</div>
+  <div *ngIf="attribute" class="attribute">
+    <div class="attributeName">
+      {{attribute.name}}:
+    </div>
+    <div class="wound" *ngIf="attribute.wound; else unwounded">
+      <mat-icon>sentiment_very_dissatisfied</mat-icon>
+    </div>
+    <ng-template #unwounded>
+      <div class="currentPool"
+          [ngClass]="attribute.current < 2 ? 'dangerPool' : 'okayPool'">
+        Pool: {{ attribute.current }}
+      </div>
+      <div class="maxPool">
+        /{{attribute.pool}}
+      </div>
+      <div class="edge">
+        Edge: {{attribute.edge}}
+      </div>
+    </ng-template>
   </div>
-  <ng-template #targetValue>
-    <div>Target: {{data.roll.target}}</div>
-  </ng-template>
   <div *ngIf="step === 'pickSkill'">
     <div>Select Skill to Roll</div>
     <div *ngFor="let skill of data.skills" (click)="selectSkill(skill)">
@@ -40,31 +55,27 @@
     <button mat-button (click)="autoRoll()">RNG</button>
     <button mat-button (click)="manualRoll()">Manual</button>
   </div>
-  <div *ngIf="step === 'manualRoll'">
-    <div>Manual Roll Input:</div>
-    <ng-container formArrayName="dice">
-      <mat-form-field *ngFor="let d of dice.controls; index as i"
-          [formControlName]="i">
-        <input matInput max="12" min="1" type="number">
-      </mat-form-field>
-    </ng-container>
-    <button mat-button (click)="acceptRoll()">Accept</button>
-  </div>
-  <div *ngIf="step === 'ready'" formArrayName="dice">
-    <div>Rolls:</div>
-    <mat-form-field *ngFor="let d of dice; index as i" [formControlName]="i">
-      <input matInput max="12" min="1" type="number">
+  <ng-container *ngIf="step === 'finalizing'">
+    <div>Roll:</div>
+    <mat-form-field *ngFor="let d of dice.controls; index as i"
+        formArrayName="dice" class="dieInput"
+        [class.mat-elevation-z6]="dice.valid && i === chosenDieIndex">
+      <mat-label>d12</mat-label>
+      <input matInput min="1" max="12" [formControlName]="i" type="number"
+          [readonly]="!manuallyRolling">
+      <mat-error *ngIf="d.invalid">Between 1 and 12</mat-error>
     </mat-form-field>
-    <div>Rolled:</div>
-    <div>{{die}}</div>
-    <mat-form-field formControlName="effort">
+    <mat-form-field *ngIf="!dice.invalid">
       <mat-label>Effort</mat-label>
-      <input #effortInput matInput type="number">
+      <input #effortInput matInput type="number" min="0"
+          formControlName="effort">
+      <mat-error *ngIf="effort.invalid">Effort too high</mat-error>
     </mat-form-field>
     <div>Total:</div>
     <div>
-      {{die + direction * effort}}
+      {{die + direction * (effort.value + attribute.edge)}}
     </div>
-    <button mat-button (click)="finalize()">Accept</button>
-  </div>
+    <button mat-button (click)="finalize()"
+        [disabled]="rollState.invalid">Accept</button>
+  </ng-container>
 </div>
