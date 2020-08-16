@@ -1,16 +1,16 @@
-import { Character, NewCharacter, SkilledCharacter } from 'src/types/character';
+import { Character, NewCharacter, SkilledCharacter } from 'types/character';
 import {
   DisplaySkill,
   SkillDescription,
   SkillDetails,
   SkillLevels,
-} from 'src/types/skill';
+} from 'types/skill';
 import { Observable, combineLatest } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { DisplayAttribute } from 'src/types/attribute';
+import { DisplayAttribute } from 'types/attribute';
 import { Injectable } from '@angular/core';
 import { RulesService } from './rules.service';
 

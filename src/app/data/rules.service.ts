@@ -2,8 +2,8 @@ import {
   NewCompanion,
   NewNonplayerCharacter,
   NewPlayerCharacter,
-} from 'src/types/character';
-import { SkillDetails, SkillLevels } from 'src/types/skill';
+} from 'types/character';
+import { SkillDetails, SkillLevels } from 'types/skill';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';

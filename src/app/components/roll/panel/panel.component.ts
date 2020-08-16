@@ -5,7 +5,7 @@ import {
   Subscription,
   combineLatest,
 } from 'rxjs';
-import { Character, SkilledCharacter } from 'src/types/character';
+import { Character, SkilledCharacter } from 'types/character';
 import {
   Component,
   Inject,
@@ -29,12 +29,12 @@ import {
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { CharacterService } from 'src/app/data/character.service';
-import { DisplayAttribute } from 'src/types/attribute';
-import { DisplaySkill } from 'src/types/skill';
+import { DisplayAttribute } from 'types/attribute';
+import { DisplaySkill } from 'types/skill';
 import { MatDialog } from '@angular/material/dialog';
-import { Roll } from 'src/types/event';
+import { Roll } from 'types/event';
 import { RulesService } from 'src/app/data/rules.service';
-import { User } from 'src/types/user';
+import { User } from 'types/user';
 import { UserService } from 'src/app/data/user.service';
 
 @Component({

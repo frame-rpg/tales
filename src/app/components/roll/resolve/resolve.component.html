@@ -1,5 +1,9 @@
 <div class="dialog" [formGroup]="rollState">
   <div>Target: {{data.roll.target}}</div>
+  <mat-form-field>
+    <mat-label>Base Initiative for Action</mat-label>
+    <input matInput formControlName="baseInitiative" type="number">
+  </mat-form-field>
   <div *ngIf="skill"> {{skill.name}}</div>
   <div *ngIf="attribute" class="attribute">
     <div class="attributeName">

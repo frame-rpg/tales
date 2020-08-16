@@ -1,6 +1,6 @@
 import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
-import { Character, Companion, PlayerCharacter } from 'src/types/character';
-import { CharacterAttribute, DisplayAttribute } from 'src/types/attribute';
+import { Character, Companion, PlayerCharacter } from 'types/character';
+import { CharacterAttribute, DisplayAttribute } from 'types/attribute';
 import {
   Component,
   Input,
@@ -8,7 +8,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { SkillDetails, SkillLevels } from 'src/types/skill';
+import { SkillDetails, SkillLevels } from 'types/skill';
 import {
   distinctUntilChanged,
   filter,
@@ -19,11 +19,11 @@ import {
 } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Campaign } from 'src/types/campaign';
+import { Campaign } from 'types/campaign';
 import { CharacterService } from 'src/app/data/character.service';
-import { DisplaySkill } from 'src/types/skill';
+import { DisplaySkill } from 'types/skill';
 import { RulesService } from 'src/app/data/rules.service';
-import { User } from 'src/types/user';
+import { User } from 'types/user';
 import { UserService } from 'src/app/data/user.service';
 
 const characterAttributeNames = {

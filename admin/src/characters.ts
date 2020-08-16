@@ -1,4 +1,4 @@
-import { Companion, PlayerCharacter } from '../../../src/types/character';
+import { Companion, PlayerCharacter } from '../../types/character';
 
 import { playerTemplate } from './characterTemplates.js';
 

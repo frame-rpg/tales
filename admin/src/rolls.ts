@@ -1,4 +1,4 @@
-import { Roll } from '../../../src/types/event';
+import { Roll } from '../../types/event';
 
 export const rolls: Roll[] = [
   {

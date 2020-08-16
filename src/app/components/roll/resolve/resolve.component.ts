@@ -1,39 +1,17 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DisplaySkill, SkillDescription } from 'src/types/skill';
-import { SkilledCharacter } from 'src/types/character';
-import { DisplayAttribute } from 'src/types/attribute';
+import { DisplaySkill } from 'types/skill';
+import { SkilledCharacter } from 'types/character';
+import { DisplayAttribute } from 'types/attribute';
 import {
   FormControl,
-  FormGroupDirective,
-  NgForm,
   Validators,
   FormArray,
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
-import {
-  BehaviorSubject,
-  combineLatest,
-  Observable,
-  from,
-  Subscription,
-} from 'rxjs';
-import {
-  filter,
-  map,
-  reduce,
-  tap,
-  scan,
-  startWith,
-  distinctUntilChanged,
-  publishReplay,
-  refCount,
-} from 'rxjs/operators';
-import { RollService } from '../roll.service';
-import { Roll } from 'src/types/event';
-import { CharacterService } from 'src/app/data/character.service';
+import { Roll } from 'types/event';
 import { CampaignService } from 'src/app/data/campaign.service';
 
 export interface InjectedData {
@@ -61,6 +39,7 @@ export class ResolveComponent implements OnInit, OnDestroy {
     {
       target: new FormControl('open'),
       dice: new FormArray([]),
+      baseInitiative: new FormControl(0),
       effort: new FormControl(0, [
         Validators.min(0),
         (e) => this.validateEffort(e),
@@ -229,6 +208,8 @@ export class ResolveComponent implements OnInit, OnDestroy {
   setRoll() {}
 
   finalize() {
-    this.matDialogRef.close();
+    this.matDialogRef.close({
+      ...this.data.roll,
+    });
   }
 }

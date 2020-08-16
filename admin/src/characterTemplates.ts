@@ -1,6 +1,6 @@
-import { NewCompanion } from '../../../src/types/companion';
-import { NewNonplayerCharacter } from '../../../src/types/nonplayer_character';
-import { NewPlayerCharacter } from '../../../src/types/player_character';
+import { NewCompanion } from '../../types/companion';
+import { NewNonplayerCharacter } from '../../types/nonplayer_character';
+import { NewPlayerCharacter } from '../../types/player_character';
 
 export const playerTemplate: NewPlayerCharacter = {
   name: '',

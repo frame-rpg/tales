@@ -1,4 +1,4 @@
-import { Campaign, NewCampaign } from 'src/types/campaign';
+import { Campaign, NewCampaign } from 'types/campaign';
 import { Component, OnInit } from '@angular/core';
 
 import { CampaignService } from 'src/app/data/campaign.service';

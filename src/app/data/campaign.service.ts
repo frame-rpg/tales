@@ -1,13 +1,13 @@
-import { Campaign, NewCampaign } from 'src/types/campaign';
+import { Campaign, NewCampaign } from 'types/campaign';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Character } from 'src/types/character';
-import { CharacterBase } from 'src/types/character_base';
+import { Character } from 'types/character';
+import { CharacterBase } from 'types/character_base';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Roll } from 'src/types/event';
+import { Roll } from 'types/event';
 import { UserService } from './user.service';
 import { firestore } from 'firebase/app';
 

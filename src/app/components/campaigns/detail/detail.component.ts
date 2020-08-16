@@ -4,7 +4,7 @@ import {
   Companion,
   NonplayerCharacter,
   PlayerCharacter,
-} from 'src/types/character';
+} from 'types/character';
 import { Component, OnInit } from '@angular/core';
 import { Observable, combineLatest, of } from 'rxjs';
 import {
@@ -17,10 +17,10 @@ import {
   tap,
 } from 'rxjs/operators';
 
-import { Campaign } from 'src/types/campaign';
+import { Campaign } from 'types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
 import { CharacterService } from 'src/app/data/character.service';
-import { Roll } from 'src/types/event';
+import { Roll } from 'types/event';
 
 @Component({
   selector: 'app-detail',

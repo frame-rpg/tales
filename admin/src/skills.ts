@@ -1,4 +1,4 @@
-import { SkillDetails, SkillLevels } from '../../../src/types/skill';
+import { SkillDetails, SkillLevels } from '../../types/skill';
 
 export const skillSeed: SkillDetails = {
   advancedsecurity: {
