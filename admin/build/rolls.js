@@ -5,6 +5,7 @@ export const rolls = [
         skills: ['initiative'],
         target: 'open',
         campaign: 'c1',
+        state: 'requested',
     },
     {
         roller: 'ry',
@@ -12,6 +13,7 @@ export const rolls = [
         skills: ['mightmeleeattack', 'speedrangedattack'],
         target: 10,
         campaign: 'c1',
+        state: 'requested',
     },
     {
         roller: 'momentusUndergrave',
@@ -19,6 +21,7 @@ export const rolls = [
         skills: ['initiative'],
         target: 'open',
         campaign: 'c1',
+        state: 'requested',
     },
     {
         roller: 'biscuit',
@@ -26,6 +29,7 @@ export const rolls = [
         skills: ['initiative'],
         target: 'open',
         campaign: 'c1',
+        state: 'requested',
     },
     {
         roller: 'nugget',
@@ -33,5 +37,6 @@ export const rolls = [
         skills: ['initiative'],
         target: 'open',
         campaign: 'c1',
+        state: 'requested',
     },
 ];

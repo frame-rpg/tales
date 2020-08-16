@@ -56,7 +56,7 @@ export class DetailComponent implements OnInit {
       ),
       map((characters) =>
         characters.sort((a, b) => {
-          if (a.status?.initiative && b.status?.initiative) {
+          if (a.status?.initiative >= 0 && b.status?.initiative >= 0) {
             return a.status.initiative - b.status.initiative;
           } else if (a.status?.initiative) {
             return -1;

@@ -65,6 +65,10 @@ export class CampaignService {
       .valueChanges({ idField: 'id' });
   }
 
+  doRoll(roll: Roll) {
+    return this.firestore.doc<Roll>(`/rolls/${roll.id}`).set(roll);
+  }
+
   listRolls(id: string) {
     return this.firestore
       .collection<Roll>(`/rolls`, (query) => query.where('campaign', '==', id))

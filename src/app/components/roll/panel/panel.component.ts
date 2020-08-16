@@ -28,6 +28,7 @@ import {
 } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
+import { CampaignService } from 'src/app/data/campaign.service';
 import { CharacterService } from 'src/app/data/character.service';
 import { DisplayAttribute } from 'types/attribute';
 import { DisplaySkill } from 'types/skill';
@@ -50,7 +51,7 @@ export class PanelComponent implements OnInit, OnChanges, OnDestroy {
     filter((v) => !!v),
     distinctUntilChanged()
   );
-  userIsRoller: Observable<boolean>;
+  rollRequired: Observable<boolean>;
   userRequestedRoll: Observable<boolean>;
   roller: Observable<SkilledCharacter>;
   requester: Observable<User>;
@@ -68,7 +69,8 @@ export class PanelComponent implements OnInit, OnChanges, OnDestroy {
     private characterService: CharacterService,
     private userService: UserService,
     private rulesService: RulesService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private campaignService: CampaignService
   ) {}
 
   ngOnInit(): void {
@@ -83,8 +85,15 @@ export class PanelComponent implements OnInit, OnChanges, OnDestroy {
       switchMap((roll) => this.userService.get(roll.requester))
     );
 
-    this.userIsRoller = combineLatest([this.roller, this.auth.user]).pipe(
-      map(([roller, user]) => roller.acl[user.email] === 'admin')
+    this.rollRequired = combineLatest([
+      this.roller,
+      this.auth.user,
+      this.roll,
+    ]).pipe(
+      map(
+        ([roller, user, roll]) =>
+          roller.acl[user.email] === 'admin' && roll.state === 'requested'
+      )
     );
 
     this.userRequestedRoll = combineLatest([this.roll, this.auth.user]).pipe(
@@ -119,7 +128,7 @@ export class PanelComponent implements OnInit, OnChanges, OnDestroy {
       )
       .subscribe((result) => {
         if (result) {
-          console.log(result);
+          this.campaignService.doRoll(result);
         } else {
           console.log('cancel');
         }

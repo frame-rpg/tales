@@ -11,7 +11,7 @@ import {
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
-import { Roll } from 'types/event';
+import { Roll, RolledRoll, RequestedRoll } from 'types/event';
 import { CampaignService } from 'src/app/data/campaign.service';
 
 export interface InjectedData {
@@ -208,8 +208,16 @@ export class ResolveComponent implements OnInit, OnDestroy {
   setRoll() {}
 
   finalize() {
-    this.matDialogRef.close({
-      ...this.data.roll,
-    });
+    const result: RolledRoll = {
+      ...(this.data.roll as RequestedRoll),
+      id: this.data.roll.id,
+      dice: this.dice.value,
+      die: this.die,
+      skill: this.skill,
+      attribute: this.attribute,
+      effort: this.effort.value,
+      state: 'rolled',
+    };
+    this.matDialogRef.close(result);
   }
 }
