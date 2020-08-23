@@ -1,3 +1,10 @@
+import {
+  BaseRoll,
+  FinalizedRoll,
+  RequestedRoll,
+  Roll,
+  RolledRoll,
+} from 'types/event';
 import { Campaign, NewCampaign } from 'types/campaign';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 
@@ -7,7 +14,6 @@ import { Character } from 'types/character';
 import { CharacterBase } from 'types/character_base';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Roll } from 'types/event';
 import { UserService } from './user.service';
 import { firestore } from 'firebase/app';
 
@@ -69,6 +75,10 @@ export class CampaignService {
     return this.firestore.doc<Roll>(`/rolls/${roll.id}`).set(roll);
   }
 
+  requestRoll(roll: BaseRoll) {
+    return this.firestore.collection('/rolls').add(roll);
+  }
+
   listRolls(id: string) {
     return this.firestore
       .collection<Roll>(`/rolls`, (query) => query.where('campaign', '==', id))
@@ -79,7 +89,6 @@ export class CampaignService {
     const user = await this.auth.currentUser;
     const toAdd = { ...campaign };
     toAdd.acl[user.email] = 'admin';
-    console.log(toAdd);
     return this.firestore.collection('/campaigns').add(toAdd);
   }
 }

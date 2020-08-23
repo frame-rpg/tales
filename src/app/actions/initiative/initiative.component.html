@@ -1,0 +1,17 @@
+<div class="dialogContent">
+  <h1 mat-dialog-title>Trigger Initiative</h1>
+  <div class="dialogBody" mat-dialog-content>
+    <mat-form-field appearance="outline">
+      <mat-label>Modifier: Assets / Hindrances</mat-label>
+      <input matInput [(ngModel)]="modifier" type="number" max="5" min="-5"
+          autocomplete="disabled" />
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions class="buttonRow">
+    <button mat-raised-button [matDialogClose]="false">Cancel</button>
+    <button mat-raised-button color="primary"
+        [matDialogClose]="{ modifier: modifier }" cdkFocusInitial>
+      Ok
+    </button>
+  </div>
+</div>

@@ -115,7 +115,6 @@ export class PanelComponent implements OnInit, OnChanges, OnDestroy {
       this.skills,
     ])
       .pipe(
-        tap(console.log.bind(console)),
         distinctUntilChanged((a, b) => a[0] === b[0]),
         flatMap(([, character, attributes, roll, skills]) => {
           const data: InjectedData = { roll, character, attributes, skills };
@@ -129,8 +128,6 @@ export class PanelComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe((result) => {
         if (result) {
           this.campaignService.doRoll(result);
-        } else {
-          console.log('cancel');
         }
       });
   }

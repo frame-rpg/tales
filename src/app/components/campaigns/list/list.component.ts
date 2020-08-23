@@ -26,7 +26,6 @@ export class ListComponent implements OnInit {
       .afterClosed()
       .subscribe((v?: { name: string; description: string }) => {
         if (v) {
-          console.log(v);
           this.campaignService.create({
             ...v,
             acl: {},

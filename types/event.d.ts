@@ -9,12 +9,13 @@ export interface BaseRoll {
   roller: string;
   skills: string[];
   target: number | 'open';
+  modifier: number;
   state: RollState;
 }
 
 export interface RequestedRoll extends BaseRoll {
-  id: string;
   state: 'requested';
+  id: string;
 }
 
 export interface RolledRoll extends BaseRoll {

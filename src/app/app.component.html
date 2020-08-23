@@ -1,10 +1,86 @@
-<div class="root" *ngIf="auth.user | async as user; else showLogin">
-  <router-outlet></router-outlet>
+<div *ngIf="auth.user | async as user; else showLogin" class="root">
+  <mat-toolbar color="primary">
+    <h1>Tales</h1>
+    <button mat-icon-button class="toolbarEnd">
+      <mat-icon (click)="toggleSidenav()">menu</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-sidenav-container *ngIf="user.emailVerified" class="sidenavContent">
+    <mat-sidenav mode="side" #sidenav opened>
+      <mat-nav-list>
+        <a mat-list-item [routerLink]="'/campaigns'">Campaigns</a>
+        <a mat-list-item [routerLink]="'/characters'">Characters</a>
+        <a mat-list-item [routerLink]="'/rules'">Rules</a>
+        <a mat-list-item href="#" (click)="logout()">Log out</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="sidenavContent">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <div *ngIf="user.emailVerified === false" class="verification">
+    <button mat-stroked-button (click)="verify()">
+      <mat-icon>warning</mat-icon>
+      Verify your email.
+    </button>
+  </div>
 </div>
 <ng-template #showLogin>
-  <div>Please log in.</div>
-  <button mat-stroked-button (click)="login()">
-    <img src="/assets/g-logo.png" class="loginIcon" alt="Google Logo">
-    Log in with Google.
-  </button>
+  <div class="signup">
+    <form [formGroup]="passwordForm" class="loginForm"
+        *ngIf="authAction | async as action">
+      <div *ngIf="action !== 'create'">Please log in.</div>
+      <div *ngIf="action === 'create'">Creating an account</div>
+      <div class="manual"
+          *ngIf="action === 'create' || action === 'login' || action === 'reset'">
+        <mat-form-field>
+          <mat-label>email</mat-label>
+          <input matInput formControlName="username" type="email" required>
+        </mat-form-field>
+        <mat-form-field *ngIf="action !== 'reset'">
+          <input matInput placeholder="Password"
+              [type]="hidePassword ? 'password' : 'text'"
+              formControlName="password" required>
+          <mat-icon matSuffix (click)="hidePassword = !hidePassword">
+            {{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </mat-form-field>
+        <div class="buttonRow">
+          <button mat-flat-button (click)="signup()" type="submit"
+              [disabled]="passwordForm.invalid" *ngIf="action === 'create'"
+              color="primary">
+            Create
+          </button>
+          <button mat-flat-button (click)="resetPassword()"
+              [disabled]="passwordForm.get('username').invalid"
+              *ngIf="action === 'reset'" color="primary">
+            Reset Password
+          </button>
+          <button mat-flat-button (click)="offerReset()" color="warn"
+              [disabled]="passwordForm.get('password').value.length > 0"
+              *ngIf="action === 'login'">
+            Reset Password
+          </button>
+          <button mat-flat-button (click)="loginWithPassword()" type="submit"
+              [disabled]="passwordForm.invalid" *ngIf="action === 'login'"
+              color="primary">
+            Log In
+          </button>
+        </div>
+      </div>
+      <button mat-stroked-button (click)="emailCreate()"
+          *ngIf="action === 'choose'">
+        Create account with email.
+      </button>
+      <button mat-stroked-button (click)="emailAuth()"
+          *ngIf="action === 'choose'">
+        Log in with your email.
+      </button>
+      <button mat-stroked-button (click)="loginWithGoogle()"
+          *ngIf="action === 'choose'">
+        <img src="/assets/g-logo.png" class="loginIcon" alt="Google Logo">
+        Log in with Google.
+      </button>
+    </form>
+  </div>
 </ng-template>
