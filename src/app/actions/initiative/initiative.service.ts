@@ -22,7 +22,7 @@ export class InitiativeService {
       .toPromise();
     if (rollRequest) {
       await Promise.all(
-        c.characters.map((character) =>
+        c.characters.map((character) => {
           this.campaignService.requestRoll({
             campaign: c.id,
             state: 'requested',
@@ -31,8 +31,8 @@ export class InitiativeService {
             requester: gm,
             skills: ['initiative'],
             target: 'open',
-          })
-        )
+          });
+        })
       );
     }
     return rollRequest;
