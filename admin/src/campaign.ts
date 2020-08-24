@@ -26,6 +26,7 @@ export const campaign: Campaign = {
   ],
   acl: {
     'eric.eslinger@gmail.com': 'admin',
+    'eric.eslinger+tales@gmail.com': 'read',
     'llahwehttam@gmail.com': 'read',
     'guy@albertelli.com': 'read',
     'megan@albertelli.com': 'read',

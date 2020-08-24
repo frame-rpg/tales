@@ -24,17 +24,15 @@ import { InitiativeService } from 'src/app/actions/initiative/initiative.service
 import { Roll } from 'types/event';
 
 @Component({
-  selector: 'app-detail',
-  templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.scss'],
+  selector: 'campaign-gmview',
+  templateUrl: './gmview.component.html',
+  styleUrls: ['./gmview.component.scss'],
 })
-export class DetailComponent implements OnInit, OnDestroy {
+export class GmviewComponent implements OnInit, OnDestroy {
   campaign: Observable<Campaign>;
-  description: Observable<string>;
-  name: Observable<string>;
-  characters: Observable<Character[]>;
+  openCharacter: Character;
+  allCharacters: Observable<Character[]>;
   rolls: Observable<Roll[]>;
-  userIsGm: Observable<boolean>;
   triggerInitiative = new Subject<MouseEvent>();
   destroyingSubject = new Subject<boolean>();
   destroying = this.destroyingSubject
@@ -60,9 +58,7 @@ export class DetailComponent implements OnInit, OnDestroy {
       publishReplay(1),
       refCount()
     );
-    this.name = this.campaign.pipe(map((v) => v.name));
-    this.description = this.campaign.pipe(map((v) => v.description));
-    this.characters = this.campaign.pipe(
+    this.allCharacters = this.campaign.pipe(
       switchMap(({ id, characters }) =>
         this.campaignService.characters({ id, characters })
       ),
@@ -84,11 +80,6 @@ export class DetailComponent implements OnInit, OnDestroy {
       switchMap((params: ParamMap) =>
         this.campaignService.listRolls(params.get('id'))
       ),
-      publishReplay(1),
-      refCount()
-    );
-    this.userIsGm = combineLatest([this.campaign, this.auth.user]).pipe(
-      map(([campaign, user]) => campaign.acl[user.email] === 'admin'),
       publishReplay(1),
       refCount()
     );

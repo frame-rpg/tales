@@ -1,14 +1,9 @@
-<mat-expansion-panel class="playerCard">
-  <mat-expansion-panel-header hideToggle>
-    <div class="nameRow">
-      <div class="name">
-        {{ character.name }}
-      </div>
-      <div class="initiative" *ngIf="character.status?.initiative >= 0">
-        I:{{ character.status.initiative }}
-      </div>
+<div class="playerCard">
+  <div class="nameRow">
+    <div class="name">
+      {{ character.name }}
     </div>
-  </mat-expansion-panel-header>
+  </div>
   <div class="characterBody">
     <div *ngFor="let player of activePlayers | async">
       {{ player.name }}
@@ -31,10 +26,14 @@
           </div>
         </ng-template>
       </div>
+      <div class="attribute" *ngIf="character.status?.initiative >= 0">
+        <div class="attributeName">Initiative:</div>
+        <div class="currentPool">{{character.status.initiative}}</div>
+      </div>
     </div>
-    <mat-expansion-panel
-        *ngIf="character.type !== 'nonplayer' && (character.skills | keyvalue)?.length > 0">
-      <mat-expansion-panel-header>Skills</mat-expansion-panel-header>
+    <div
+        *ngIf="expanded && character.type !== 'nonplayer' && (character.skills | keyvalue)?.length > 0">
+      <div>Skills</div>
       <div class="skills">
         <div *ngFor="let skill of skills | async" class="skill">
           <div class="skillInfo">
@@ -54,10 +53,6 @@
           </div>
         </div>
       </div>
-    </mat-expansion-panel>
+    </div>
   </div>
-  <div class="actions">
-    <button mat-button>Attack</button>
-    <button mat-button>Defend</button>
-  </div>
-</mat-expansion-panel>
+</div>

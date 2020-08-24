@@ -1,0 +1,20 @@
+<div class="main">
+  <div class="left">
+    <character-card (click)="openCharacter = character"
+        *ngFor="let character of allCharacters | async; trackBy:trackById"
+        [character]="character" [campaign]="campaign">
+    </character-card>
+  </div>
+  <div class="right">
+    <div class="actions">
+      <button mat-raised-button (click)="initiative($event)"
+          color="accent">Initiative</button>
+    </div>
+    <div class="right">
+      <character-card *ngIf="openCharacter" [expanded]="true"
+          class="openCharacter" [character]="openCharacter"
+          [campaign]="campaign">
+      </character-card>
+    </div>
+  </div>
+</div>

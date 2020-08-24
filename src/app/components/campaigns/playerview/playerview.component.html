@@ -1,0 +1,10 @@
+<div class="main">
+  <div class="left">
+    <character-card [expanded]="true"
+        *ngFor="let character of myCharacters | async; trackBy:trackById"
+        [character]="character" [campaign]="campaign">
+    </character-card>
+  </div>
+  <div class="right">
+  </div>
+</div>

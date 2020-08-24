@@ -6,6 +6,7 @@ import {
   RolledRoll,
 } from 'types/event';
 import { Campaign, NewCampaign } from 'types/campaign';
+import { Observable, combineLatest } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -13,7 +14,6 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Character } from 'types/character';
 import { CharacterBase } from 'types/character_base';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { UserService } from './user.service';
 import { firestore } from 'firebase/app';
 
@@ -69,6 +69,20 @@ export class CampaignService {
           .where('campaign', '==', id)
       )
       .valueChanges({ idField: 'id' });
+  }
+
+  usersCharacters(campaignId: string): Observable<Character[]> {
+    return this.auth.user.pipe(
+      switchMap((user) =>
+        this.firestore
+          .collection<Character>('/characters', (query) =>
+            query
+              .where('campaign', '==', campaignId)
+              .where(new firestore.FieldPath('acl', user.email), '==', 'admin')
+          )
+          .valueChanges({ idField: 'id' })
+      )
+    );
   }
 
   doRoll(roll: Roll) {
