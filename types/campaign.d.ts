@@ -1,11 +1,11 @@
 import { Acl } from './acl';
-import { SkillNames } from './skill';
+import { Skill } from './skill';
 
 export interface NewCampaign {
   acl: Acl;
   description: string;
   name: string;
-  skills: SkillNames[];
+  skills: Skill[];
   characters: string[];
 }
 

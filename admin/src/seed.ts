@@ -5,7 +5,6 @@ import {
   playerTemplate,
 } from './characterTemplates.js';
 import { companions, players } from './characters.js';
-import { skillLevelSeed, skillSeed } from './skills.js';
 
 import admin from 'firebase-admin';
 import { users } from './users.js';
@@ -16,8 +15,6 @@ const app = admin.initializeApp({
   projectId: 'tales-280319',
 });
 
-await app.firestore().doc('/rules/skills').set(skillSeed);
-await app.firestore().doc('/rules/skillLevels').set(skillLevelSeed);
 await app.firestore().doc('/rules/templates').set({
   player: playerTemplate,
   nonplayer: nonplayerTemplate,

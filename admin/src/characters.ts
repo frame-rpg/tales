@@ -11,7 +11,7 @@ function skill(s: string, l: LevelNames): CharacterSkill {
 }
 
 const baseSkills: Record<string, CharacterSkill> = campaign.skills.reduce(
-  (acc, curr) => ({ ...acc, [curr]: skill(curr, 'unskilled') }),
+  (acc, curr) => ({ ...acc, [curr.id]: skill(curr.id, 'unskilled') }),
   {}
 );
 

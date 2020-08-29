@@ -1,19 +1,12 @@
-import {
-  BaseRoll,
-  FinalizedRoll,
-  RequestedRoll,
-  Roll,
-  RolledRoll,
-} from 'types/event';
+import { BaseRoll, Roll } from 'types/event';
 import { Campaign, NewCampaign } from 'types/campaign';
-import { Observable, combineLatest } from 'rxjs';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Character } from 'types/character';
-import { CharacterBase } from 'types/character_base';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { UserService } from './user.service';
 import { firestore } from 'firebase/app';
 
