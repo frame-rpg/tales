@@ -40,6 +40,7 @@ export class CardComponent implements OnChanges, OnInit {
   @Input() character: Character;
   @Input() campaign: Observable<Campaign>;
   @Input() skillFilter: Observable<string[]>;
+  @Input() expanded = false;
 
   viewerIsGM: Observable<boolean>;
   viewerIsActivePlayer: Observable<boolean>;

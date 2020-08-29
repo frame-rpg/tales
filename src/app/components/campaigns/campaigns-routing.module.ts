@@ -1,12 +1,14 @@
 import { RouterModule, Routes } from '@angular/router';
 
-import { DetailComponent } from './detail/detail.component';
+import { GmviewComponent } from './gmview/gmview.component';
 import { ListComponent } from './list/list.component';
 import { NgModule } from '@angular/core';
+import { PlayerviewComponent } from './playerview/playerview.component';
 
 const routes: Routes = [
   { path: '', component: ListComponent },
-  { path: ':id', component: DetailComponent },
+  { path: ':id/gm', component: GmviewComponent },
+  { path: ':id/player', component: PlayerviewComponent },
 ];
 
 @NgModule({

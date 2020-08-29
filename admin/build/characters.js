@@ -6,7 +6,7 @@ export const players = [
         name: 'Ry McGinnis',
         acl: {
             'cljacobs1975@gmail.com': 'admin',
-            'eric.eslinger@gmail.com': 'admin',
+            'eric.eslinger+tales@gmail.com': 'admin',
         },
         description: '',
         type: 'player',
@@ -431,7 +431,7 @@ export const companions = [
         name: 'Biscuit',
         description: 'Ankylosaur',
         acl: {
-            'eric.eslinger@gmail.com': 'admin',
+            'eric.eslinger+tales@gmail.com': 'admin',
             'megan@albertelli.com': 'admin',
         },
         type: 'companion',

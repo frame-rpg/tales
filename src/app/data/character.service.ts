@@ -98,6 +98,14 @@ export class CharacterService {
         ([, , , character]) =>
           character.type === 'player' || character.type === 'companion'
       ),
+      map(([skillLevels, skillInfo, skills, character]) => [
+        skillLevels,
+        skillInfo,
+        skills.filter(
+          (skill) => (character as SkilledCharacter).skills[skill] !== undefined
+        ),
+        character,
+      ]),
       map(
         ([skillLevels, skillInfo, skills, character]: [
           SkillLevels,

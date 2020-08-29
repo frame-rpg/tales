@@ -1,5 +1,6 @@
 .playerCard {
   max-width: 500px;
+  padding: 8px;
 }
 
 .nameRow {
@@ -47,6 +48,7 @@
 .dangerPool {
   color: var(--warn-color);
 }
+
 .skill {
   display: flex;
   flex-direction: row;

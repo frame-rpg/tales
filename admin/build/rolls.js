@@ -6,5 +6,6 @@ export const rolls = [
         target: 10,
         campaign: 'c1',
         state: 'requested',
+        modifier: 0,
     },
 ];
