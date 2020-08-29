@@ -1,62 +1,23 @@
 import { AttributeNames } from './attribute';
 
-export interface SkillDescription {
-  name: string;
-  description: string;
-  attributes: AttributeNames[];
-  levelName?: string;
-  level?: number;
+export enum Levels {
+  inept = -2,
+  unskilled = -1,
+  proficient = 0,
+  trained = 1,
+  expert = 2,
 }
 
-type SkillDetails = Record<SkillNames, SkillDescription>;
+export type LevelNames = keyof typeof Levels;
 
-export interface SkillLevels {
-  [key: string]: string;
-}
-
-export interface DisplaySkill {
+export interface Skill {
   id: string;
   name: string;
-  levelName: string;
-  level: number;
   description: string;
   attributes: AttributeNames[];
+  type: 'initiative' | 'attack' | 'defense' | 'noncombat';
 }
 
-export type SkillNames =
-  | 'advancedsecurity'
-  | 'commandanimal'
-  | 'convictiondefense'
-  | 'convictionmeleeattack'
-  | 'convictionrangedattack'
-  | 'dryscienceknowledge'
-  | 'drysciencetinker'
-  | 'focusdefense'
-  | 'focusmeleeattack'
-  | 'focusrangedattack'
-  | 'hacking'
-  | 'healthdefense'
-  | 'initiative'
-  | 'intimidate'
-  | 'legerdemain'
-  | 'lie'
-  | 'medicine'
-  | 'mightdefense'
-  | 'mightmeleeattack'
-  | 'mightrangedattack'
-  | 'movement'
-  | 'otherknowledge'
-  | 'perception'
-  | 'persuade'
-  | 'picklocks'
-  | 'piloting'
-  | 'riding'
-  | 'sensemotive'
-  | 'sneaking'
-  | 'speeddefense'
-  | 'speedmeleeattack'
-  | 'speedrangedattack'
-  | 'swimming'
-  | 'wetscienceknowledge'
-  | 'wetsciencetinker'
-  | 'wildernesslore';
+export interface CharacterSkill extends Skill {
+  level: LevelNames;
+}

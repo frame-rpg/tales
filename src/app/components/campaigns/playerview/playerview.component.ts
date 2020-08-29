@@ -52,6 +52,16 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
     );
   }
 
+  hasRolls(character: Character, rolls: Roll[]) {
+    return (
+      rolls &&
+      rolls.length &&
+      rolls.filter(
+        (roll) => roll.roller === character.id && roll.state === 'requested'
+      ).length
+    );
+  }
+
   trackById(_: number, item: { id: string }) {
     return item.id;
   }

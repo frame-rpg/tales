@@ -1,5 +1,5 @@
-import { DisplaySkill } from './skill';
-import { DisplayAttribute } from './attribute';
+import { Skill } from './skill';
+import { Attribute } from './attribute';
 
 type RollState = 'requested' | 'rolled' | 'canceled' | 'finalized';
 
@@ -7,8 +7,9 @@ export interface BaseRoll {
   campaign: string;
   requester: string;
   roller: string;
-  skills: string[];
-  target: number | 'open';
+  skills?: string[];
+  type: 'initiative' | 'attack' | 'defend' | 'noncombat';
+  target?: number;
   modifier: number;
   state: RollState;
 }
@@ -18,35 +19,22 @@ export interface RequestedRoll extends BaseRoll {
   id: string;
 }
 
-export interface RolledRoll extends BaseRoll {
+interface InflatedRoll extends BaseRoll {
   id: string;
-  attribute: DisplayAttribute;
-  campaign: string;
+  attribute: Attribute;
   dice: number[];
   die: number;
-  requester: string;
-  roller: string;
-  skill: DisplaySkill;
-  skills: string[];
+  skill: Skill;
   effort: number;
-  target: number | 'open';
+}
+
+export interface RolledRoll extends InflatedRoll {
   state: 'rolled';
 }
 
-export interface FinalizedRoll extends BaseRoll {
-  id: string;
-  attribute: DisplayAttribute;
-  campaign: string;
-  dice: number[];
-  die: number;
-  requester: string;
-  roller: string;
-  skill: DisplaySkill;
-  skills: string[];
-  effort: number;
-  target: number | 'open';
-  result: string;
+export interface FinalizedRoll extends InflatedRoll {
   state: 'finalized';
+  result?: string;
 }
 
 export type Roll = RequestedRoll | RolledRoll | FinalizedRoll;

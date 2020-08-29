@@ -29,8 +29,7 @@ export class InitiativeService {
             modifier: rollRequest.modifier,
             roller: character,
             requester: gm,
-            skills: ['initiative'],
-            target: 'open',
+            type: 'initiative',
           });
         })
       );

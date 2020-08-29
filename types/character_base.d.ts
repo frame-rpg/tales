@@ -1,5 +1,4 @@
 import { Acl } from './acl';
-import { AttributeNames } from './attribute';
 
 export type CharacterTypes = 'player' | 'nonplayer' | 'companion';
 
@@ -9,18 +8,7 @@ export interface NewCharacterBase {
   acl: Acl;
   type: CharacterTypes;
   campaign?: string;
-  status: Status;
-}
-
-export interface Status {
-  experience?: number;
-  initiative?: number;
-  pools?: {
-    [k in AttributeNames]?: {
-      current: number;
-      wound: boolean;
-    };
-  };
+  initiative: number;
 }
 
 export interface CharacterBase extends NewCharacterBase {

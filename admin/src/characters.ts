@@ -1,6 +1,29 @@
+import { CharacterSkill, LevelNames } from '../../types/skill';
 import { Companion, PlayerCharacter } from '../../types/character';
 
+import { AttributeNames } from '../../types/attribute';
+import { campaign } from './campaign.js';
 import { playerTemplate } from './characterTemplates.js';
+import { skillSeed } from './skills.js';
+
+function skill(s: string, l: LevelNames): CharacterSkill {
+  return { ...skillSeed[s], level: l };
+}
+
+const baseSkills: Record<string, CharacterSkill> = campaign.skills.reduce(
+  (acc, curr) => ({ ...acc, [curr]: skill(curr, 'unskilled') }),
+  {}
+);
+
+function attr<T extends AttributeNames>(v: number, e: number, n: T) {
+  return {
+    name: n,
+    edge: e,
+    current: v,
+    pool: v,
+    wound: false,
+  };
+}
 
 export const players: PlayerCharacter[] = [
   {
@@ -14,75 +37,36 @@ export const players: PlayerCharacter[] = [
     description: '',
     type: 'player',
     attributes: {
-      health: {
-        edge: 0,
-        pool: 10,
-      },
-      speed: {
-        edge: 0,
-        pool: 5,
-      },
-      might: {
-        edge: 0,
-        pool: 5,
-      },
-      focus: {
-        edge: 1,
-        pool: 10,
-      },
-      conviction: {
-        edge: 0,
-        pool: 7,
-      },
+      health: attr(10, 0, 'health'),
+      might: attr(5, 0, 'might'),
+      speed: attr(5, 0, 'speed'),
+      focus: attr(10, 1, 'focus'),
+      conviction: attr(7, 0, 'conviction'),
     },
     skills: {
-      ...playerTemplate.skills,
-      advancedsecurity: 1,
-      commandanimal: 0,
-      convictiondefense: 0,
-      dryscienceknowledge: 0,
-      drysciencetinker: 0,
-      focusdefense: 0,
-      hacking: 0,
-      healthdefense: 0,
-      initiative: 0,
-      legerdemain: 0,
-      mightdefense: 0,
-      movement: 0,
-      perception: 0,
-      persuade: 0,
-      picklocks: 0,
-      piloting: 0,
-      sensemotive: 0,
-      sneaking: 0,
-      speeddefense: 0,
+      ...baseSkills,
+      advancedsecurity: skill('advancedsecurity', 'trained'),
+      commandanimal: skill('commandanimal', 'proficient'),
+      convictiondefense: skill('convictiondefense', 'proficient'),
+      dryscienceknowledge: skill('dryscienceknowledge', 'proficient'),
+      drysciencetinker: skill('drysciencetinker', 'proficient'),
+      focusdefense: skill('focusdefense', 'proficient'),
+      hacking: skill('hacking', 'proficient'),
+      healthdefense: skill('healthdefense', 'proficient'),
+      initiative: skill('initiative', 'proficient'),
+      legerdemain: skill('legerdemain', 'proficient'),
+      mightdefense: skill('mightdefense', 'proficient'),
+      movement: skill('movement', 'proficient'),
+      perception: skill('perception', 'proficient'),
+      persuade: skill('persuade', 'proficient'),
+      picklocks: skill('picklocks', 'proficient'),
+      piloting: skill('piloting', 'proficient'),
+      sensemotive: skill('sensemotive', 'proficient'),
+      sneaking: skill('sneaking', 'proficient'),
+      speeddefense: skill('speeddefense', 'proficient'),
     },
-    status: {
-      experience: 27,
-      initiative: 0,
-      pools: {
-        might: {
-          current: 5,
-          wound: false,
-        },
-        speed: {
-          current: 5,
-          wound: false,
-        },
-        conviction: {
-          current: 7,
-          wound: false,
-        },
-        focus: {
-          current: 10,
-          wound: false,
-        },
-        health: {
-          current: 10,
-          wound: false,
-        },
-      },
-    },
+    experience: 27,
+    initiative: 0,
   },
   {
     id: 'connie',
@@ -94,70 +78,31 @@ export const players: PlayerCharacter[] = [
     description: '',
     type: 'player',
     attributes: {
-      health: {
-        edge: 0,
-        pool: 10,
-      },
-      speed: {
-        edge: 0,
-        pool: 5,
-      },
-      might: {
-        edge: 0,
-        pool: 5,
-      },
-      focus: {
-        edge: 0,
-        pool: 7,
-      },
-      conviction: {
-        edge: 2,
-        pool: 10,
-      },
+      health: attr(10, 0, 'health'),
+      might: attr(5, 0, 'might'),
+      speed: attr(5, 0, 'speed'),
+      focus: attr(7, 0, 'focus'),
+      conviction: attr(10, 2, 'conviction'),
     },
     skills: {
       ...playerTemplate.skills,
-      dryscienceknowledge: -2,
-      drysciencetinker: -2,
-      healthdefense: 0,
-      legerdemain: 0,
-      lie: 0,
-      medicine: 0,
-      mightdefense: 0,
-      otherknowledge: -2,
-      perception: 0,
-      persuade: 0,
-      sneaking: 0,
-      wetscienceknowledge: -2,
-      wetsciencetinker: -2,
-      wildernesslore: 0,
+      dryscienceknowledge: skill('dryscienceknowledge', 'inept'),
+      drysciencetinker: skill('drysciencetinker', 'inept'),
+      healthdefense: skill('healthdefense', 'proficient'),
+      legerdemain: skill('legerdemain', 'proficient'),
+      lie: skill('lie', 'proficient'),
+      medicine: skill('medicine', 'proficient'),
+      mightdefense: skill('mightdefense', 'proficient'),
+      otherknowledge: skill('otherknowledge', 'inept'),
+      perception: skill('perception', 'proficient'),
+      persuade: skill('persuade', 'proficient'),
+      sneaking: skill('sneaking', 'proficient'),
+      wetscienceknowledge: skill('wetscienceknowledge', 'inept'),
+      wetsciencetinker: skill('wetsciencetinker', 'inept'),
+      wildernesslore: skill('wildernesslore', 'proficient'),
     },
-    status: {
-      experience: 34,
-      initiative: 0,
-      pools: {
-        might: {
-          current: 5,
-          wound: false,
-        },
-        speed: {
-          current: 5,
-          wound: false,
-        },
-        conviction: {
-          current: 10,
-          wound: false,
-        },
-        focus: {
-          current: 7,
-          wound: false,
-        },
-        health: {
-          current: 10,
-          wound: false,
-        },
-      },
-    },
+    experience: 34,
+    initiative: 0,
   },
   {
     id: 'momentusUndergrave',
@@ -169,69 +114,30 @@ export const players: PlayerCharacter[] = [
     description: '',
     type: 'player',
     attributes: {
-      health: {
-        edge: 0,
-        pool: 10,
-      },
-      speed: {
-        edge: 0,
-        pool: 7,
-      },
-      might: {
-        edge: 0,
-        pool: 5,
-      },
-      focus: {
-        edge: 1,
-        pool: 10,
-      },
-      conviction: {
-        edge: 0,
-        pool: 5,
-      },
+      health: attr(10, 0, 'health'),
+      might: attr(5, 0, 'might'),
+      speed: attr(7, 0, 'speed'),
+      focus: attr(10, 1, 'focus'),
+      conviction: attr(5, 0, 'conviction'),
     },
     skills: {
       ...playerTemplate.skills,
-      commandanimal: 1,
-      healthdefense: 0,
-      initiative: 0,
-      intimidate: -2,
-      lie: -2,
-      medicine: 0,
-      mightdefense: 0,
-      perception: 0,
-      persuade: -2,
-      sensemotive: -2,
-      wetscienceknowledge: 0,
-      wetsciencetinker: 0,
-      wildernesslore: 0,
+      commandanimal: skill('commandanimal', 'trained'),
+      healthdefense: skill('healthdefense', 'proficient'),
+      initiative: skill('initiative', 'proficient'),
+      intimidate: skill('intimidate', 'inept'),
+      lie: skill('lie', 'inept'),
+      medicine: skill('medicine', 'proficient'),
+      mightdefense: skill('mightdefense', 'proficient'),
+      perception: skill('perception', 'proficient'),
+      persuade: skill('persuade', 'inept'),
+      sensemotive: skill('sensemotive', 'inept'),
+      wetscienceknowledge: skill('wetscienceknowledge', 'proficient'),
+      wetsciencetinker: skill('wetsciencetinker', 'proficient'),
+      wildernesslore: skill('wildernesslore', 'proficient'),
     },
-    status: {
-      experience: 22,
-      initiative: 0,
-      pools: {
-        might: {
-          current: 5,
-          wound: false,
-        },
-        speed: {
-          current: 4,
-          wound: false,
-        },
-        conviction: {
-          current: 5,
-          wound: false,
-        },
-        focus: {
-          current: 10,
-          wound: false,
-        },
-        health: {
-          current: 10,
-          wound: false,
-        },
-      },
-    },
+    experience: 22,
+    initiative: 0,
   },
   {
     id: 'chad',
@@ -243,67 +149,28 @@ export const players: PlayerCharacter[] = [
     description: '',
     type: 'player',
     attributes: {
-      health: {
-        edge: 0,
-        pool: 10,
-      },
-      speed: {
-        edge: 1,
-        pool: 6,
-      },
-      might: {
-        edge: 2,
-        pool: 10,
-      },
-      focus: {
-        edge: 0,
-        pool: 5,
-      },
-      conviction: {
-        edge: 0,
-        pool: 7,
-      },
+      health: attr(10, 0, 'health'),
+      might: attr(10, 2, 'might'),
+      speed: attr(6, 1, 'speed'),
+      focus: attr(5, 0, 'focus'),
+      conviction: attr(7, 0, 'conviction'),
     },
     skills: {
       ...playerTemplate.skills,
-      convictiondefense: 0,
-      dryscienceknowledge: -2,
-      drysciencetinker: -2,
-      focusdefense: 0,
-      healthdefense: 0,
-      initiative: 0,
-      medicine: 0,
-      mightdefense: 0,
-      otherknowledge: -2,
-      wetscienceknowledge: -2,
-      wetsciencetinker: -2,
+      convictiondefense: skill('convictiondefense', 'proficient'),
+      dryscienceknowledge: skill('dryscienceknowledge', 'inept'),
+      drysciencetinker: skill('drysciencetinker', 'inept'),
+      focusdefense: skill('focusdefense', 'proficient'),
+      healthdefense: skill('healthdefense', 'proficient'),
+      initiative: skill('initiative', 'proficient'),
+      medicine: skill('medicine', 'proficient'),
+      mightdefense: skill('mightdefense', 'proficient'),
+      otherknowledge: skill('otherknowledge', 'inept'),
+      wetscienceknowledge: skill('wetscienceknowledge', 'inept'),
+      wetsciencetinker: skill('wetsciencetinker', 'inept'),
     },
-    status: {
-      experience: 18,
-      initiative: 0,
-      pools: {
-        might: {
-          current: 10,
-          wound: false,
-        },
-        speed: {
-          current: 6,
-          wound: false,
-        },
-        conviction: {
-          current: 7,
-          wound: false,
-        },
-        focus: {
-          current: 5,
-          wound: false,
-        },
-        health: {
-          current: 10,
-          wound: false,
-        },
-      },
-    },
+    experience: 18,
+    initiative: 0,
   },
   {
     id: 'thomson',
@@ -315,76 +182,37 @@ export const players: PlayerCharacter[] = [
     description: '',
     type: 'player',
     attributes: {
-      health: {
-        edge: 0,
-        pool: 10,
-      },
-      speed: {
-        edge: 1,
-        pool: 10,
-      },
-      might: {
-        edge: 0,
-        pool: 5,
-      },
-      focus: {
-        edge: 1,
-        pool: 7,
-      },
-      conviction: {
-        edge: 0,
-        pool: 5,
-      },
+      health: attr(10, 0, 'health'),
+      might: attr(5, 0, 'might'),
+      speed: attr(10, 1, 'speed'),
+      focus: attr(7, 1, 'focus'),
+      conviction: attr(5, 0, 'conviction'),
     },
     skills: {
       ...playerTemplate.skills,
-      movement: 0,
-      riding: 0,
-      piloting: 0,
-      swimming: 0,
-      sneaking: 0,
-      speeddefense: 0,
-      healthdefense: 0,
-      initiative: 0,
-      wildernesslore: 0,
-      medicine: 0,
-      commandanimal: 0,
-      perception: 0,
-      persuade: 0,
-      lie: 0,
-      intimidate: 0,
-      sensemotive: 0,
-      legerdemain: -2,
-      hacking: -2,
-      picklocks: -2,
-      advancedsecurity: -2,
+      movement: skill('movement', 'proficient'),
+      riding: skill('riding', 'proficient'),
+      piloting: skill('piloting', 'proficient'),
+      swimming: skill('swimming', 'proficient'),
+      sneaking: skill('sneaking', 'proficient'),
+      speeddefense: skill('speeddefense', 'proficient'),
+      healthdefense: skill('healthdefense', 'proficient'),
+      initiative: skill('initiative', 'proficient'),
+      wildernesslore: skill('wildernesslore', 'proficient'),
+      medicine: skill('medicine', 'proficient'),
+      commandanimal: skill('commandanimal', 'proficient'),
+      perception: skill('perception', 'proficient'),
+      persuade: skill('persuade', 'proficient'),
+      lie: skill('lie', 'proficient'),
+      intimidate: skill('intimidate', 'proficient'),
+      sensemotive: skill('sensemotive', 'proficient'),
+      legerdemain: skill('legerdemain', 'inept'),
+      hacking: skill('hacking', 'inept'),
+      picklocks: skill('picklocks', 'inept'),
+      advancedsecurity: skill('advancedsecurity', 'inept'),
     },
-    status: {
-      experience: 16,
-      initiative: 0,
-      pools: {
-        might: {
-          current: 5,
-          wound: false,
-        },
-        speed: {
-          current: 10,
-          wound: false,
-        },
-        conviction: {
-          current: 5,
-          wound: false,
-        },
-        focus: {
-          current: 7,
-          wound: false,
-        },
-        health: {
-          current: 10,
-          wound: false,
-        },
-      },
-    },
+    experience: 16,
+    initiative: 0,
   },
 ];
 
@@ -396,37 +224,19 @@ export const companions: Companion[] = [
     description: 'Ornithomimid',
     acl: {
       'cljacobs1975@gmail.com': 'admin',
+      'eric.eslinger+tales@gmail.com': 'admin',
     },
     type: 'companion',
     attack: 2,
     defend: 2,
     armor: 0,
     attributes: {
-      health: {
-        edge: 0,
-        pool: 12,
-      },
-      loyalty: {
-        edge: 0,
-        pool: 8,
-      },
+      health: attr(12, 0, 'health'),
+      loyalty: attr(8, 0, 'loyalty'),
     },
-    skills: {
-      initiative: 0,
-    },
-    status: {
-      initiative: 0,
-      pools: {
-        health: {
-          current: 1,
-          wound: false,
-        },
-        loyalty: {
-          current: 5,
-          wound: false,
-        },
-      },
-    },
+    initiative: 0,
+    baseInitiative: 4,
+    skills: {},
     abilities: ['hands', 'birdseye'],
   },
   {
@@ -435,7 +245,6 @@ export const companions: Companion[] = [
     name: 'Biscuit',
     description: 'Ankylosaur',
     acl: {
-      'eric.eslinger+tales@gmail.com': 'admin',
       'megan@albertelli.com': 'admin',
     },
     type: 'companion',
@@ -443,31 +252,12 @@ export const companions: Companion[] = [
     defend: 2,
     armor: 6,
     attributes: {
-      health: {
-        edge: 0,
-        pool: 12,
-      },
-      loyalty: {
-        edge: 0,
-        pool: 6,
-      },
+      health: attr(12, 0, 'health'),
+      loyalty: attr(6, 0, 'loyalty'),
     },
-    skills: {
-      initiative: 0,
-    },
-    status: {
-      initiative: 0,
-      pools: {
-        health: {
-          current: 1,
-          wound: false,
-        },
-        loyalty: {
-          current: 5,
-          wound: false,
-        },
-      },
-    },
+    initiative: 0,
+    baseInitiative: 4,
+    skills: {},
     abilities: [
       'temporalHunter',
       'boneBreaker',
@@ -488,31 +278,12 @@ export const companions: Companion[] = [
     defend: 6,
     armor: 10,
     attributes: {
-      health: {
-        edge: 0,
-        pool: 14,
-      },
-      loyalty: {
-        edge: 0,
-        pool: 6,
-      },
+      health: attr(14, 0, 'health'),
+      loyalty: attr(6, 0, 'loyalty'),
     },
-    skills: {
-      initiative: 0,
-    },
-    status: {
-      initiative: 0,
-      pools: {
-        health: {
-          current: 1,
-          wound: false,
-        },
-        loyalty: {
-          current: 5,
-          wound: false,
-        },
-      },
-    },
+    initiative: 0,
+    baseInitiative: 4,
+    skills: {},
     abilities: ['terrify', 'sturdyMount', 'mountedWeapon'],
   },
   {
@@ -528,31 +299,12 @@ export const companions: Companion[] = [
     defend: 3,
     armor: 0,
     attributes: {
-      health: {
-        edge: 0,
-        pool: 8,
-      },
-      loyalty: {
-        edge: 0,
-        pool: 4,
-      },
+      health: attr(8, 0, 'health'),
+      loyalty: attr(4, 0, 'loyalty'),
     },
-    skills: {
-      initiative: 0,
-    },
-    status: {
-      initiative: 0,
-      pools: {
-        health: {
-          current: 1,
-          wound: false,
-        },
-        loyalty: {
-          current: 5,
-          wound: false,
-        },
-      },
-    },
+    initiative: 0,
+    baseInitiative: 4,
+    skills: {},
     abilities: ['hands', 'makingTheGMRegretHisLifeChoices'],
   },
   {
@@ -568,31 +320,12 @@ export const companions: Companion[] = [
     defend: 1,
     armor: 2,
     attributes: {
-      health: {
-        edge: 0,
-        pool: 15,
-      },
-      loyalty: {
-        edge: 0,
-        pool: 5,
-      },
+      health: attr(15, 0, 'health'),
+      loyalty: attr(5, 0, 'loyalty'),
     },
-    skills: {
-      initiative: 0,
-    },
-    status: {
-      initiative: 0,
-      pools: {
-        health: {
-          current: 1,
-          wound: false,
-        },
-        loyalty: {
-          current: 5,
-          wound: false,
-        },
-      },
-    },
+    initiative: 0,
+    baseInitiative: 4,
+    skills: {},
     abilities: [],
   },
 ];

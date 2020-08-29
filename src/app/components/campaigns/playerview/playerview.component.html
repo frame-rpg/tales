@@ -1,9 +1,19 @@
 <div class="main">
   <div class="left">
-    <character-card [expanded]="true"
-        *ngFor="let character of myCharacters | async; trackBy:trackById"
-        [character]="character" [campaign]="campaign">
-    </character-card>
+    <mat-tab-group>
+      <mat-tab
+          *ngFor="let character of myCharacters | async; trackBy:trackById">
+        <ng-template mat-tab-label>
+          {{ character.name }}
+          <mat-icon *ngIf="hasRolls(character, rolls|async)">casino</mat-icon>
+        </ng-template>
+        <roll-panel *ngFor="let roll of rolls | async" [roll]="roll"
+            [campaign]="campaign"></roll-panel>
+        <character-card [expanded]="true" [character]="character"
+            [campaign]="campaign">
+        </character-card>
+      </mat-tab>
+    </mat-tab-group>
   </div>
   <div class="right">
   </div>

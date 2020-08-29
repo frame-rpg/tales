@@ -8,7 +8,6 @@ import { companions, players } from './characters.js';
 import { skillLevelSeed, skillSeed } from './skills.js';
 
 import admin from 'firebase-admin';
-import { rolls } from './rolls.js';
 import { users } from './users.js';
 
 const app = admin.initializeApp({
@@ -34,9 +33,6 @@ await Promise.all([
   ),
   Promise.all(
     players.map((p) => app.firestore().doc(`/characters/${p.id}`).set(p))
-  ),
-  Promise.all(
-    rolls.map((roll) => app.firestore().collection(`/rolls`).add(roll))
   ),
   Promise.all(
     companions.map((p) => app.firestore().doc(`/characters/${p.id}`).set(p))

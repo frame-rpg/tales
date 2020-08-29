@@ -6,6 +6,7 @@ export interface NewNonplayerCharacter extends NewCharacterBase {
   defend: number;
   health: number;
   armor: number;
+  baseInitiative: number;
 }
 
 export interface NonplayerCharacter extends NewNonplayerCharacter {
