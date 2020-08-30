@@ -1,8 +1,10 @@
-import { Campaign } from 'types/campaign';
-import { CampaignService } from 'src/app/data/campaign.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Character } from 'types/character';
 import { InitiativeComponent } from './initiative.component';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MessageService } from 'src/app/data/message.service';
+import { RollRequest } from 'types/message';
 import { take } from 'rxjs/operators';
 
 @Injectable({
@@ -11,29 +13,47 @@ import { take } from 'rxjs/operators';
 export class InitiativeService {
   constructor(
     private dialogService: MatDialog,
-    private campaignService: CampaignService
+    private messageService: MessageService,
+    private firestore: AngularFirestore
   ) {}
 
-  async trigger(c: Campaign, gm: string) {
-    const rollRequest = await this.dialogService
+  async trigger(characters: Character[], campaignId: string) {
+    const result = await this.dialogService
       .open(InitiativeComponent)
       .afterClosed()
       .pipe(take(1))
       .toPromise();
-    if (rollRequest) {
+    if (result) {
       await Promise.all(
-        c.characters.map((character) => {
-          this.campaignService.requestRoll({
-            campaign: c.id,
-            state: 'requested',
-            modifier: rollRequest.modifier,
-            roller: character,
-            requester: gm,
-            type: 'initiative',
-          });
+        characters.map(async (character) => {
+          if (
+            character.type === 'nonplayer' ||
+            character.type === 'companion'
+          ) {
+            await this.firestore.doc(`/characters/${character.id}`).update({
+              initiative: character.baseInitiative,
+            });
+          } else {
+            const rollRequest: RollRequest = {
+              messageType: 'rollRequest',
+              type: 'initiative',
+              state: 'new',
+              from: {
+                type: 'campaign',
+                id: campaignId,
+              },
+              to: {
+                type: 'character',
+                id: character.id,
+              },
+            };
+            if (result.modifier) {
+              rollRequest.skillModifier = result.modifier;
+            }
+            await this.messageService.send(rollRequest);
+          }
         })
       );
     }
-    return rollRequest;
   }
 }

@@ -13,15 +13,26 @@ import {
   map,
   publishReplay,
   refCount,
+  startWith,
   switchMap,
   takeUntil,
+  tap,
 } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Campaign } from 'types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
+import { CharacterService } from 'src/app/data/character.service';
+import { DefendService } from 'src/app/actions/defend/defend.service';
 import { InitiativeService } from 'src/app/actions/initiative/initiative.service';
 import { Roll } from 'types/event';
+
+type ActionType = 'initiative' | 'defend' | 'zoom';
+interface UiEvent {
+  type: ActionType;
+  character?: Character;
+  event: MouseEvent;
+}
 
 @Component({
   selector: 'campaign-gmview',
@@ -30,10 +41,11 @@ import { Roll } from 'types/event';
 })
 export class GmviewComponent implements OnInit, OnDestroy {
   campaign: Observable<Campaign>;
-  openCharacter: Character;
+  openCharacter: Observable<Character>;
   allCharacters: Observable<Character[]>;
   rolls: Observable<Roll[]>;
-  triggerInitiative = new Subject<MouseEvent>();
+  actionTrigger = new Subject<UiEvent>();
+  action = this.actionTrigger.asObservable();
   destroyingSubject = new Subject<boolean>();
   destroying = this.destroyingSubject
     .asObservable()
@@ -42,6 +54,8 @@ export class GmviewComponent implements OnInit, OnDestroy {
   constructor(
     private campaignService: CampaignService,
     private initiativeService: InitiativeService,
+    private characterService: CharacterService,
+    private defendService: DefendService,
     private route: ActivatedRoute,
     private auth: AngularFireAuth
   ) {}
@@ -64,12 +78,8 @@ export class GmviewComponent implements OnInit, OnDestroy {
       ),
       map((characters) =>
         characters.sort((a, b) => {
-          if (a.status?.initiative >= 0 && b.status?.initiative >= 0) {
-            return a.status.initiative - b.status.initiative;
-          } else if (a.status?.initiative) {
-            return -1;
-          } else if (b.status?.initiative) {
-            return 1;
+          if (a.initiative >= 0 && b.initiative >= 0) {
+            return a.initiative - b.initiative;
           } else {
             return a.name.localeCompare(b.name);
           }
@@ -83,18 +93,24 @@ export class GmviewComponent implements OnInit, OnDestroy {
       publishReplay(1),
       refCount()
     );
+    this.openCharacter = this.action.pipe(
+      filter((a) => a.type === 'zoom'),
+      distinctUntilChanged(),
+      switchMap(({ character }) => this.characterService.get(character.id)),
+      tap((v) => console.log(v))
+    );
 
-    combineLatest([
-      this.campaign,
-      this.auth.user,
-      this.triggerInitiative.asObservable(),
-    ])
+    combineLatest([this.campaign, this.allCharacters, this.action])
       .pipe(
         distinctUntilChanged((a, b) => a[2] === b[2]),
         takeUntil(this.destroying)
       )
-      .subscribe(([campaign, user]) => {
-        this.initiativeService.trigger(campaign, user.email);
+      .subscribe(([campaign, characters, event]) => {
+        if (event.type === 'initiative') {
+          this.initiativeService.trigger(characters, campaign.id);
+        } else if (event.type === 'defend') {
+          this.defendService.trigger(event.character, campaign.id);
+        }
       });
   }
 
@@ -103,6 +119,14 @@ export class GmviewComponent implements OnInit, OnDestroy {
   }
 
   initiative(event: MouseEvent) {
-    this.triggerInitiative.next(event);
+    this.actionTrigger.next({ event, type: 'initiative' });
+  }
+
+  defend(event: MouseEvent, character: Character) {
+    this.actionTrigger.next({ event, character, type: 'defend' });
+  }
+
+  zoom(event: MouseEvent, character: Character) {
+    this.actionTrigger.next({ event, character, type: 'zoom' });
   }
 }

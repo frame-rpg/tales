@@ -57,6 +57,11 @@
   align-items: center;
 }
 
+.skillInfo {
+  display: flex;
+  flex-direction: row;
+}
+
 .rollers {
   display: flex;
   flex-direction: row;

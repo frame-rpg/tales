@@ -14,7 +14,6 @@ import { firestore } from 'firebase/app';
   providedIn: 'root',
 })
 export class CampaignService {
-  public current: Observable<Campaign>;
   constructor(
     private firestore: AngularFirestore,
     private auth: AngularFireAuth,

@@ -1,3 +1,4 @@
+import { ActionsModule } from 'src/app/actions/actions.module';
 import { CardComponent } from './card/card.component';
 import { CommonModule } from '@angular/common';
 import { CreateComponent } from './create/create.component';
@@ -8,7 +9,13 @@ import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [CardComponent, CreateComponent],
-  imports: [CommonModule, FormsModule, RouterModule, MaterialModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    MaterialModule,
+    ActionsModule,
+  ],
   exports: [CardComponent, CreateComponent],
 })
 export class CharactersModule {}

@@ -1,23 +1,23 @@
-import { AttributeNames } from './attribute';
+import { AttributeName } from './attribute';
 
-export enum Levels {
+declare enum Level {
   inept = -2,
   unskilled = -1,
   proficient = 0,
   trained = 1,
   expert = 2,
 }
-
-export type LevelNames = keyof typeof Levels;
+export type LevelName = keyof typeof Level;
+export type SkillType = 'initiative' | 'attack' | 'defense' | 'noncombat';
 
 export interface Skill {
   id: string;
   name: string;
   description: string;
-  attributes: AttributeNames[];
-  type: 'initiative' | 'attack' | 'defense' | 'noncombat';
+  attributes: AttributeName[];
+  type: SkillType;
 }
 
 export interface CharacterSkill extends Skill {
-  level: LevelNames;
+  level: LevelName;
 }

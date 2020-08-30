@@ -5,10 +5,8 @@
           *ngFor="let character of myCharacters | async; trackBy:trackById">
         <ng-template mat-tab-label>
           {{ character.name }}
-          <mat-icon *ngIf="hasRolls(character, rolls|async)">casino</mat-icon>
+          <mat-icon *ngIf="(haveRolls | async)[character.id]">casino</mat-icon>
         </ng-template>
-        <roll-panel *ngFor="let roll of rolls | async" [roll]="roll"
-            [campaign]="campaign"></roll-panel>
         <character-card [expanded]="true" [character]="character"
             [campaign]="campaign">
         </character-card>

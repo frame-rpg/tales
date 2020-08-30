@@ -8,7 +8,6 @@ import { ListComponent } from './list/list.component';
 import { MaterialModule } from '../../core/material/material.module';
 import { NgModule } from '@angular/core';
 import { PlayerviewComponent } from './playerview/playerview.component';
-import { RollModule } from '../roll/roll.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +22,6 @@ import { RollModule } from '../roll/roll.module';
     CommonModule,
     FormsModule,
     MaterialModule,
-    RollModule,
   ],
   exports: [CreateComponent, ListComponent],
 })

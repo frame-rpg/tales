@@ -1,13 +1,22 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, combineLatest, of } from 'rxjs';
-import { filter, publishReplay, refCount, switchMap } from 'rxjs/operators';
+import {
+  filter,
+  map,
+  publishReplay,
+  refCount,
+  startWith,
+  switchMap,
+} from 'rxjs/operators';
 
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Campaign } from 'types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
 import { Character } from 'types/character';
+import { Message } from 'types/message';
+import { MessageService } from 'src/app/data/message.service';
 import { Roll } from 'types/event';
+import { RollService } from 'src/app/actions/roll/roll.service';
 
 @Component({
   selector: 'player',
@@ -17,7 +26,11 @@ import { Roll } from 'types/event';
 export class PlayerviewComponent implements OnInit, OnDestroy {
   campaign: Observable<Campaign>;
   myCharacters: Observable<Character[]>;
-  rolls: Observable<Roll[]>;
+  messages: Observable<{
+    campaign: Message[];
+    characters: Record<string, Message[]>;
+  }>;
+  haveRolls: Observable<Record<string, boolean>>;
   destroyingSubject = new Subject<boolean>();
   destroying = this.destroyingSubject
     .asObservable()
@@ -25,6 +38,7 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
 
   constructor(
     private campaignService: CampaignService,
+    private messageService: MessageService,
     private route: ActivatedRoute
   ) {}
 
@@ -41,24 +55,39 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
       refCount()
     );
     this.myCharacters = this.campaign.pipe(
-      switchMap((campagin) => this.campaignService.usersCharacters(campagin.id))
-    );
-    this.rolls = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.campaignService.listRolls(params.get('id'))
+      switchMap((campagin) =>
+        this.campaignService.usersCharacters(campagin.id)
       ),
       publishReplay(1),
       refCount()
     );
-  }
-
-  hasRolls(character: Character, rolls: Roll[]) {
-    return (
-      rolls &&
-      rolls.length &&
-      rolls.filter(
-        (roll) => roll.roller === character.id && roll.state === 'requested'
-      ).length
+    this.messages = combineLatest([this.myCharacters, this.campaign]).pipe(
+      switchMap(([characters, campaign]) =>
+        this.messageService.fetchAll([
+          { type: 'campaign', id: campaign.id },
+          ...characters.map((c) => ({
+            type: 'character' as 'character',
+            id: c.id,
+          })),
+        ])
+      ),
+      publishReplay(1),
+      refCount()
+    );
+    this.haveRolls = this.messages.pipe(
+      map((mailbox) =>
+        Object.entries(mailbox.characters).reduce(
+          (acc, [characterId, messageList]) => ({
+            ...acc,
+            [characterId]: messageList.some(
+              (message) =>
+                message.state === 'new' && message.messageType === 'rollRequest'
+            ),
+          }),
+          {}
+        )
+      ),
+      startWith({})
     );
   }
 

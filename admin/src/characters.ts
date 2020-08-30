@@ -1,21 +1,32 @@
-import { CharacterSkill, LevelNames } from '../../types/skill';
+import { CharacterSkill, LevelName } from '../../types/skill';
 import { Companion, PlayerCharacter } from '../../types/character';
 
-import { AttributeNames } from '../../types/attribute';
+import { AttributeName } from '../../types/attribute';
 import { campaign } from './campaign.js';
 import { playerTemplate } from './characterTemplates.js';
 import { skillSeed } from './skills.js';
 
-function skill(s: string, l: LevelNames): CharacterSkill {
+function skill(s: string, l: LevelName): CharacterSkill {
   return { ...skillSeed[s], level: l };
 }
 
-const baseSkills: Record<string, CharacterSkill> = campaign.skills.reduce(
-  (acc, curr) => ({ ...acc, [curr.id]: skill(curr.id, 'unskilled') }),
-  {}
-);
+function massageCharacter(character: PlayerCharacter): PlayerCharacter {
+  return {
+    ...character,
+    skills: character.skills.filter(
+      (s, idx, ary) =>
+        ary.filter((ss) => ss.id === s.id).length === 1 ||
+        s.level !== 'unskilled'
+    ),
+  };
+}
 
-function attr<T extends AttributeNames>(v: number, e: number, n: T) {
+const baseSkills: CharacterSkill[] = campaign.skills.map((sk) => ({
+  ...sk,
+  level: 'unskilled',
+}));
+
+function attr<T extends AttributeName>(v: number, e: number, n: T) {
   return {
     name: n,
     edge: e,
@@ -25,7 +36,7 @@ function attr<T extends AttributeNames>(v: number, e: number, n: T) {
   };
 }
 
-export const players: PlayerCharacter[] = [
+const prePlayers: PlayerCharacter[] = [
   {
     id: 'ry',
     campaign: 'c1',
@@ -43,28 +54,28 @@ export const players: PlayerCharacter[] = [
       focus: attr(10, 1, 'focus'),
       conviction: attr(7, 0, 'conviction'),
     },
-    skills: {
+    skills: [
       ...baseSkills,
-      advancedsecurity: skill('advancedsecurity', 'trained'),
-      commandanimal: skill('commandanimal', 'proficient'),
-      convictiondefense: skill('convictiondefense', 'proficient'),
-      dryscienceknowledge: skill('dryscienceknowledge', 'proficient'),
-      drysciencetinker: skill('drysciencetinker', 'proficient'),
-      focusdefense: skill('focusdefense', 'proficient'),
-      hacking: skill('hacking', 'proficient'),
-      healthdefense: skill('healthdefense', 'proficient'),
-      initiative: skill('initiative', 'proficient'),
-      legerdemain: skill('legerdemain', 'proficient'),
-      mightdefense: skill('mightdefense', 'proficient'),
-      movement: skill('movement', 'proficient'),
-      perception: skill('perception', 'proficient'),
-      persuade: skill('persuade', 'proficient'),
-      picklocks: skill('picklocks', 'proficient'),
-      piloting: skill('piloting', 'proficient'),
-      sensemotive: skill('sensemotive', 'proficient'),
-      sneaking: skill('sneaking', 'proficient'),
-      speeddefense: skill('speeddefense', 'proficient'),
-    },
+      skill('advancedsecurity', 'trained'),
+      skill('commandanimal', 'proficient'),
+      skill('convictiondefense', 'proficient'),
+      skill('dryscienceknowledge', 'proficient'),
+      skill('drysciencetinker', 'proficient'),
+      skill('focusdefense', 'proficient'),
+      skill('hacking', 'proficient'),
+      skill('healthdefense', 'proficient'),
+      skill('initiative', 'proficient'),
+      skill('legerdemain', 'proficient'),
+      skill('mightdefense', 'proficient'),
+      skill('movement', 'proficient'),
+      skill('perception', 'proficient'),
+      skill('persuade', 'proficient'),
+      skill('picklocks', 'proficient'),
+      skill('piloting', 'proficient'),
+      skill('sensemotive', 'proficient'),
+      skill('sneaking', 'proficient'),
+      skill('speeddefense', 'proficient'),
+    ],
     experience: 27,
     initiative: 0,
   },
@@ -84,23 +95,23 @@ export const players: PlayerCharacter[] = [
       focus: attr(7, 0, 'focus'),
       conviction: attr(10, 2, 'conviction'),
     },
-    skills: {
-      ...playerTemplate.skills,
-      dryscienceknowledge: skill('dryscienceknowledge', 'inept'),
-      drysciencetinker: skill('drysciencetinker', 'inept'),
-      healthdefense: skill('healthdefense', 'proficient'),
-      legerdemain: skill('legerdemain', 'proficient'),
-      lie: skill('lie', 'proficient'),
-      medicine: skill('medicine', 'proficient'),
-      mightdefense: skill('mightdefense', 'proficient'),
-      otherknowledge: skill('otherknowledge', 'inept'),
-      perception: skill('perception', 'proficient'),
-      persuade: skill('persuade', 'proficient'),
-      sneaking: skill('sneaking', 'proficient'),
-      wetscienceknowledge: skill('wetscienceknowledge', 'inept'),
-      wetsciencetinker: skill('wetsciencetinker', 'inept'),
-      wildernesslore: skill('wildernesslore', 'proficient'),
-    },
+    skills: [
+      ...baseSkills,
+      skill('dryscienceknowledge', 'inept'),
+      skill('drysciencetinker', 'inept'),
+      skill('healthdefense', 'proficient'),
+      skill('legerdemain', 'proficient'),
+      skill('lie', 'proficient'),
+      skill('medicine', 'proficient'),
+      skill('mightdefense', 'proficient'),
+      skill('otherknowledge', 'inept'),
+      skill('perception', 'proficient'),
+      skill('persuade', 'proficient'),
+      skill('sneaking', 'proficient'),
+      skill('wetscienceknowledge', 'inept'),
+      skill('wetsciencetinker', 'inept'),
+      skill('wildernesslore', 'proficient'),
+    ],
     experience: 34,
     initiative: 0,
   },
@@ -120,22 +131,22 @@ export const players: PlayerCharacter[] = [
       focus: attr(10, 1, 'focus'),
       conviction: attr(5, 0, 'conviction'),
     },
-    skills: {
-      ...playerTemplate.skills,
-      commandanimal: skill('commandanimal', 'trained'),
-      healthdefense: skill('healthdefense', 'proficient'),
-      initiative: skill('initiative', 'proficient'),
-      intimidate: skill('intimidate', 'inept'),
-      lie: skill('lie', 'inept'),
-      medicine: skill('medicine', 'proficient'),
-      mightdefense: skill('mightdefense', 'proficient'),
-      perception: skill('perception', 'proficient'),
-      persuade: skill('persuade', 'inept'),
-      sensemotive: skill('sensemotive', 'inept'),
-      wetscienceknowledge: skill('wetscienceknowledge', 'proficient'),
-      wetsciencetinker: skill('wetsciencetinker', 'proficient'),
-      wildernesslore: skill('wildernesslore', 'proficient'),
-    },
+    skills: [
+      ...baseSkills,
+      skill('commandanimal', 'trained'),
+      skill('healthdefense', 'proficient'),
+      skill('initiative', 'proficient'),
+      skill('intimidate', 'inept'),
+      skill('lie', 'inept'),
+      skill('medicine', 'proficient'),
+      skill('mightdefense', 'proficient'),
+      skill('perception', 'proficient'),
+      skill('persuade', 'inept'),
+      skill('sensemotive', 'inept'),
+      skill('wetscienceknowledge', 'proficient'),
+      skill('wetsciencetinker', 'proficient'),
+      skill('wildernesslore', 'proficient'),
+    ],
     experience: 22,
     initiative: 0,
   },
@@ -155,20 +166,20 @@ export const players: PlayerCharacter[] = [
       focus: attr(5, 0, 'focus'),
       conviction: attr(7, 0, 'conviction'),
     },
-    skills: {
-      ...playerTemplate.skills,
-      convictiondefense: skill('convictiondefense', 'proficient'),
-      dryscienceknowledge: skill('dryscienceknowledge', 'inept'),
-      drysciencetinker: skill('drysciencetinker', 'inept'),
-      focusdefense: skill('focusdefense', 'proficient'),
-      healthdefense: skill('healthdefense', 'proficient'),
-      initiative: skill('initiative', 'proficient'),
-      medicine: skill('medicine', 'proficient'),
-      mightdefense: skill('mightdefense', 'proficient'),
-      otherknowledge: skill('otherknowledge', 'inept'),
-      wetscienceknowledge: skill('wetscienceknowledge', 'inept'),
-      wetsciencetinker: skill('wetsciencetinker', 'inept'),
-    },
+    skills: [
+      ...baseSkills,
+      skill('convictiondefense', 'proficient'),
+      skill('dryscienceknowledge', 'inept'),
+      skill('drysciencetinker', 'inept'),
+      skill('focusdefense', 'proficient'),
+      skill('healthdefense', 'proficient'),
+      skill('initiative', 'proficient'),
+      skill('medicine', 'proficient'),
+      skill('mightdefense', 'proficient'),
+      skill('otherknowledge', 'inept'),
+      skill('wetscienceknowledge', 'inept'),
+      skill('wetsciencetinker', 'inept'),
+    ],
     experience: 18,
     initiative: 0,
   },
@@ -188,33 +199,37 @@ export const players: PlayerCharacter[] = [
       focus: attr(7, 1, 'focus'),
       conviction: attr(5, 0, 'conviction'),
     },
-    skills: {
-      ...playerTemplate.skills,
-      movement: skill('movement', 'proficient'),
-      riding: skill('riding', 'proficient'),
-      piloting: skill('piloting', 'proficient'),
-      swimming: skill('swimming', 'proficient'),
-      sneaking: skill('sneaking', 'proficient'),
-      speeddefense: skill('speeddefense', 'proficient'),
-      healthdefense: skill('healthdefense', 'proficient'),
-      initiative: skill('initiative', 'proficient'),
-      wildernesslore: skill('wildernesslore', 'proficient'),
-      medicine: skill('medicine', 'proficient'),
-      commandanimal: skill('commandanimal', 'proficient'),
-      perception: skill('perception', 'proficient'),
-      persuade: skill('persuade', 'proficient'),
-      lie: skill('lie', 'proficient'),
-      intimidate: skill('intimidate', 'proficient'),
-      sensemotive: skill('sensemotive', 'proficient'),
-      legerdemain: skill('legerdemain', 'inept'),
-      hacking: skill('hacking', 'inept'),
-      picklocks: skill('picklocks', 'inept'),
-      advancedsecurity: skill('advancedsecurity', 'inept'),
-    },
+    skills: [
+      ...baseSkills,
+      skill('movement', 'proficient'),
+      skill('riding', 'proficient'),
+      skill('piloting', 'proficient'),
+      skill('swimming', 'proficient'),
+      skill('sneaking', 'proficient'),
+      skill('speeddefense', 'proficient'),
+      skill('healthdefense', 'proficient'),
+      skill('initiative', 'proficient'),
+      skill('wildernesslore', 'proficient'),
+      skill('medicine', 'proficient'),
+      skill('commandanimal', 'proficient'),
+      skill('perception', 'proficient'),
+      skill('persuade', 'proficient'),
+      skill('lie', 'proficient'),
+      skill('intimidate', 'proficient'),
+      skill('sensemotive', 'proficient'),
+      skill('legerdemain', 'inept'),
+      skill('hacking', 'inept'),
+      skill('picklocks', 'inept'),
+      skill('advancedsecurity', 'inept'),
+    ],
     experience: 16,
     initiative: 0,
   },
 ];
+
+export const players: PlayerCharacter[] = prePlayers.map((v) => {
+  return massageCharacter(v);
+});
 
 export const companions: Companion[] = [
   {
@@ -236,7 +251,6 @@ export const companions: Companion[] = [
     },
     initiative: 0,
     baseInitiative: 4,
-    skills: {},
     abilities: ['hands', 'birdseye'],
   },
   {
@@ -257,7 +271,6 @@ export const companions: Companion[] = [
     },
     initiative: 0,
     baseInitiative: 4,
-    skills: {},
     abilities: [
       'temporalHunter',
       'boneBreaker',
@@ -283,7 +296,6 @@ export const companions: Companion[] = [
     },
     initiative: 0,
     baseInitiative: 4,
-    skills: {},
     abilities: ['terrify', 'sturdyMount', 'mountedWeapon'],
   },
   {
@@ -304,7 +316,6 @@ export const companions: Companion[] = [
     },
     initiative: 0,
     baseInitiative: 4,
-    skills: {},
     abilities: ['hands', 'makingTheGMRegretHisLifeChoices'],
   },
   {
@@ -325,7 +336,6 @@ export const companions: Companion[] = [
     },
     initiative: 0,
     baseInitiative: 4,
-    skills: {},
     abilities: [],
   },
 ];

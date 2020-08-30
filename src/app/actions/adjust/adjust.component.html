@@ -1,0 +1,6 @@
+<button mat-icon-button (click)="fire()" [color]="color"
+    (mouseover)="color='accent'" (mouseout)="color='primary'">
+  <mat-icon *ngIf="increment > 0">add_circle_outline</mat-icon>
+  <mat-icon *ngIf="increment < 0">remove_circle_outline</mat-icon>
+  <mat-icon *ngIf="increment === 0">clear</mat-icon>
+</button>

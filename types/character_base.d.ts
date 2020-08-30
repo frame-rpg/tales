@@ -1,12 +1,12 @@
 import { Acl } from './acl';
 
-export type CharacterTypes = 'player' | 'nonplayer' | 'companion';
+export type CharacterType = 'player' | 'nonplayer' | 'companion';
 
 export interface NewCharacterBase {
   name: string;
   description: string;
   acl: Acl;
-  type: CharacterTypes;
+  type: CharacterType;
   campaign?: string;
   initiative: number;
 }

@@ -19,12 +19,8 @@ service cloud.firestore {
       return isSignedIn() && getRole(rsc) != null && (getRole(rsc) in array);
     }
 
-    function preservesRoles(rsc) {
-      return  request.resource.data.acl == rsc.data.acl;
-    }
-
     function writeAclZ(rsc) {
-      return (isOneOfRoles(rsc, ['write']) && preservesRoles(rsc)) || isOneOfRoles(rsc, ['admin']);
+      return isOneOfRoles(rsc, ['write', 'admin']);
     }
 
     function readAclZ(rsc) {
@@ -35,27 +31,18 @@ service cloud.firestore {
       return readAclZ(get(/databases/$(database)/documents/campaigns/$(rsc.data.campaign)));
     }
 
-    function createAclCheck() {
-      return request.resource.data.acl[request.auth.token.email] == 'admin' && request.resource.data.acl.size() == 1;
-    }
-
-    match /users/{userId} {
-      allow read: if isSignedIn()
-      allow write: if request.auth.token.email == request.resource.data.email
-      match /messages/{messageId} {
-        allow read: if writeAclZ(getData('users', userId))
-        allow write: if readAclZ(getData('users', userId))
-      }
+    function campaignWriter(rsc) {
+      return readAclZ(get(/databases/$(database)/documents/campaigns/$(rsc.data.campaign)));
     }
 
     match /characters/{characterId} {
       allow read: if readAclZ(resource) || campaignReader(resource)
-      allow update: if writeAclZ(resource)
-      allow create: if isSignedIn() && createAclCheck()
+      allow update: if writeAclZ(resource) || campaignWriter(resource)
+      allow create: if isSignedIn()
 
       match /messages/{messageId} {
-        allow read: if writeAclZ(getData('characters', characterId))
-        allow write: if readAclZ(getData('characters', characterId))
+        allow read: if writeAclZ(getData('characters', characterId)) || campaignWriter(getData('characters', characterId))
+        allow write: if readAclZ(getData('characters', characterId)) || campaignReader(getData('characters', characterId))
       }
     }
 
@@ -70,7 +57,13 @@ service cloud.firestore {
     match /campaigns/{campaignId} {
       allow read: if readAclZ(resource)
       allow update: if writeAclZ(resource)
-      allow create: if isSignedIn() && createAclCheck()
+      allow create: if isSignedIn()
+      match /messages/{messageId} {
+        allow read: if readAclZ(getData('campaigns', campaignId))
+        allow create: if readAclZ(getData('campaigns', campaignId))
+        allow update: if writeAclZ(getData('campaigns', campaignId))
+        allow delete: if writeAclZ(getData('campaigns', campaignId))
+      }
     }
 
     match /rules/{document=**} {

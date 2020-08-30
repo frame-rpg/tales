@@ -1,6 +1,6 @@
 import { Campaign, NewCampaign } from '../../types/campaign';
 
-import { skillSeed } from './skills';
+import { skillSeed } from './skills.js';
 
 export const campaignTemplate: NewCampaign = {
   name: '',

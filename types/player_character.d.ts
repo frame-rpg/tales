@@ -11,7 +11,7 @@ export interface NewPlayerCharacter extends NewCharacterBase {
     conviction: Attribute & { name: 'conviction' };
     health: Attribute & { name: 'health' };
   };
-  skills: Record<string, CharacterSkill>;
+  skills: CharacterSkill[];
   experience?: number;
 }
 

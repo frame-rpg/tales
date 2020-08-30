@@ -5,51 +5,52 @@
     </div>
   </div>
   <div class="characterBody">
-    <div *ngFor="let player of activePlayers | async">
-      {{ player.name }}
-    </div>
-    <div class="attributes">
-      <div *ngFor="let attribute of attributes | async" class="attribute">
+    <div class="attributes" *ngIf="character.type !== 'nonplayer'">
+      <div *ngFor="let attribute of character.attributes | keyvalue"
+          class="attribute">
         <div class="attributeName">
-          {{attribute.name}}:
+          {{attribute.value.name}}:
         </div>
-        <div class="wound" *ngIf="attribute.wound; else unwounded">
+        <div class="wound" *ngIf="attribute.value.wound; else unwounded">
           <mat-icon>sentiment_very_dissatisfied</mat-icon>
         </div>
         <ng-template #unwounded>
+          <adjust-character min="0" [max]="attribute.value.pool"
+              [increment]="-1" [character]="character"
+              [path]="'attributes.'+attribute.key+'.current'">
+          </adjust-character>
           <div class="currentPool"
-              [ngClass]="attribute.current < 2 ? 'dangerPool' : 'okayPool'">
-            {{ attribute.current }}
+              [ngClass]="attribute.value.current < 2 ? 'dangerPool' : 'okayPool'">
+            {{ attribute.value.current }}
           </div>
           <div class="maxPool">
-            / {{attribute.pool}}
+            / {{attribute.value.pool}}
           </div>
+          <adjust-character min="0" [max]="attribute.value.pool" [increment]="1"
+              [character]="character"
+              [path]="'attributes.'+attribute.key+'.current'">
+          </adjust-character>
         </ng-template>
       </div>
-      <div class="attribute" *ngIf="character.status?.initiative >= 0">
+      <div class="attribute" *ngIf="character.initiative >= 0">
         <div class="attributeName">Initiative:</div>
-        <div class="currentPool">{{character.status.initiative}}</div>
+        <adjust-character min="0" [max]="1000" [increment]="0"
+            [character]="character" [path]="'initiative'">
+        </adjust-character>
+        <div class="currentPool">{{character.initiative}}</div>
+        <adjust-character min="0" [max]="1000" [increment]="1"
+            [character]="character" [path]="'initiative'">
+        </adjust-character>
       </div>
     </div>
     <div
-        *ngIf="expanded && character.type !== 'nonplayer' && (character.skills | keyvalue)?.length > 0">
+        *ngIf="expanded && character.type !== 'nonplayer' && character.skills?.length > 0">
       <div>Skills</div>
       <div class="skills">
-        <div *ngFor="let skill of skills | async" class="skill">
+        <div *ngFor="let skill of character.skills" class="skill">
           <div class="skillInfo">
-            {{skill.name}}: {{skill.levelName}}
-          </div>
-          <div *ngIf="(viewerIsGM | async) || (viewerIsActivePlayer | async)">
-            <button mat-icon-button [matMenuTriggerFor]="menu"
-                aria-label="Example icon-button with a menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item>
-                <mat-icon>casino</mat-icon>
-                <span>Roll</span>
-              </button>
-            </mat-menu>
+            <div>{{skill.name}}:&nbsp;</div>
+            <div style="text-transform: capitalize;">{{skill.level}}</div>
           </div>
         </div>
       </div>

@@ -9,7 +9,7 @@ export const playerTemplate: NewPlayerCharacter = {
   type: 'player',
   initiative: 0,
   experience: 0,
-  skills: {},
+  skills: [],
   attributes: {
     health: {
       name: 'health',
@@ -75,7 +75,7 @@ export const companionTemplate: NewCompanion = {
       current: 5,
     },
   },
-  skills: {},
+  skills: [],
   abilities: [],
 };
 

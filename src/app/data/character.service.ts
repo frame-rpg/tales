@@ -1,10 +1,10 @@
 import { Character, NewCharacter, SkilledCharacter } from 'types/character';
+import { publishReplay, refCount, switchMap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { RulesService } from './rules.service';
-import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +29,10 @@ export class CharacterService {
   }
 
   get(id: string) {
-    return this.firestore.doc<Character>(`/characters/${id}`).valueChanges();
+    return this.firestore
+      .doc<Character>(`/characters/${id}`)
+      .valueChanges()
+      .pipe(publishReplay(1), refCount());
   }
 
   update(character: Partial<Character> & { id: string }) {

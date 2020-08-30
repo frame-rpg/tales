@@ -1,11 +1,11 @@
-export type PlayerAttributeNames = 'might' | 'speed' | 'focus' | 'conviction';
-export type CompanionAttributeNames = 'loyalty' | 'health';
-export type AttributeNames = PlayerAttributeNames | CompanionAttributeNames;
+export type PlayerAttributeName = 'might' | 'speed' | 'focus' | 'conviction';
+export type CompanionAttributeName = 'loyalty' | 'health';
+export type AttributeName = PlayerAttributeName | CompanionAttributeName;
 
 export interface Attribute {
   pool: number;
   edge: number;
   current: number;
   wound: boolean;
-  name: AttributeNames;
+  name: AttributeName;
 }

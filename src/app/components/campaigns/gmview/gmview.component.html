@@ -1,9 +1,12 @@
 <div class="main">
   <div class="left">
-    <character-card (click)="openCharacter = character"
-        *ngFor="let character of allCharacters | async; trackBy:trackById"
-        [character]="character" [campaign]="campaign">
-    </character-card>
+    <div *ngFor="let character of allCharacters | async; trackBy:trackById">
+      <character-card (click)="zoom($event, character)" [character]="character"
+          [campaign]="campaign">
+      </character-card>
+      <button mat-raised-button (click)="defend($event, character)"
+          color="accent">Defend</button>
+    </div>
   </div>
   <div class="right">
     <div class="actions">
@@ -11,9 +14,8 @@
           color="accent">Initiative</button>
     </div>
     <div class="right">
-      <character-card *ngIf="openCharacter" [expanded]="true"
-          class="openCharacter" [character]="openCharacter"
-          [campaign]="campaign">
+      <character-card *ngIf="openCharacter | async as open" [expanded]="true"
+          class="openCharacter" [character]="open" [campaign]="campaign">
       </character-card>
     </div>
   </div>

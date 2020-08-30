@@ -1,9 +1,7 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DisplaySkill } from 'types/skill';
 import { SkilledCharacter } from 'types/character';
-import { DisplayAttribute } from 'types/attribute';
 import {
   FormControl,
   Validators,
@@ -12,29 +10,23 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { Roll, RolledRoll, RequestedRoll } from 'types/event';
-import { CampaignService } from 'src/app/data/campaign.service';
+import { CharacterSkill } from 'types/skill';
+import { Level } from 'types/enums';
+import { Attribute } from 'types/attribute';
 
 export interface InjectedData {
-  skills: DisplaySkill[];
-  attributes: DisplayAttribute[];
+  skills: CharacterSkill[];
+  attributes: Attribute[];
   character: SkilledCharacter;
   roll: Roll;
 }
 
-function skillDirection(skill: DisplaySkill) {
-  if (skill.id !== 'initiative') {
-    return 1;
-  } else {
-    return -1;
-  }
-}
-
 @Component({
-  selector: 'app-resolve',
-  templateUrl: './resolve.component.html',
-  styleUrls: ['./resolve.component.scss'],
+  selector: 'roll-dialog',
+  templateUrl: './roll.component.html',
+  styleUrls: ['./roll.component.scss'],
 })
-export class ResolveComponent implements OnInit, OnDestroy {
+export class RollComponent implements OnInit, OnDestroy {
   rollState = new FormGroup(
     {
       target: new FormControl('open'),
@@ -48,12 +40,11 @@ export class ResolveComponent implements OnInit, OnDestroy {
     () => this.validate()
   );
   manuallyRolling = false;
-  skill: DisplaySkill;
-  attribute: DisplayAttribute;
+  skill: CharacterSkill;
+  attribute: Attribute;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: InjectedData,
-    private campaignService: CampaignService,
-    public matDialogRef: MatDialogRef<ResolveComponent>
+    public matDialogRef: MatDialogRef<RollComponent>
   ) {
     if (data.skills.length === 1) {
       this.skill = data.skills[0];
@@ -133,7 +124,7 @@ export class ResolveComponent implements OnInit, OnDestroy {
   get die() {
     if (this.dice.length === 0) {
       return 0;
-    } else if (this.skill.level < 0 || this.direction < 0) {
+    } else if (Level[this.skill.level] < 0 || this.direction < 0) {
       return Math.min(...this.dice.value);
     } else {
       return Math.max(...this.dice.value);
@@ -141,7 +132,7 @@ export class ResolveComponent implements OnInit, OnDestroy {
   }
 
   get direction() {
-    if (this.skill && this.skill.id === 'initiative') {
+    if (this.skill && this.skill.type === 'initiative') {
       return -1;
     } else {
       return 1;
@@ -164,11 +155,11 @@ export class ResolveComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectAttribute(attribute: DisplayAttribute) {
+  selectAttribute(attribute: Attribute) {
     this.attribute = attribute;
   }
 
-  selectSkill(skill: DisplaySkill) {
+  selectSkill(skill: CharacterSkill) {
     this.skill = skill;
     if (this.attributes.length === 1) {
       this.attribute = this.attributes[0];
@@ -176,7 +167,7 @@ export class ResolveComponent implements OnInit, OnDestroy {
   }
 
   autoRoll() {
-    const diceCount = Math.abs(this.skill.level) + 1;
+    const diceCount = Math.abs(Level[this.skill.level]) + 1;
     const dice = new Array(diceCount)
       .fill(0)
       .map((v) => Math.floor(Math.random() * 12) + 1);
@@ -184,7 +175,7 @@ export class ResolveComponent implements OnInit, OnDestroy {
   }
 
   manualRoll() {
-    const diceCount = Math.abs(this.skill.level) + 1;
+    const diceCount = Math.abs(Level[this.skill.level]) + 1;
     const dice = new Array(diceCount).fill(0);
     this.manuallyRolling = true;
     this.roll(dice);

@@ -1,6 +1,6 @@
 import { NewCharacterBase } from './character_base';
 import { Attribute } from './attribute';
-import { LevelNames } from './skill';
+import { CharacterSkill } from './skill';
 
 export interface NewCompanion extends NewCharacterBase {
   type: 'companion';
@@ -12,10 +12,8 @@ export interface NewCompanion extends NewCharacterBase {
     loyalty: Attribute & { name: 'loyalty' };
   };
   armor: number;
-  skills: {
-    [name: string]: LevelNames;
-  };
-  abilities: string[];
+  skills?: CharacterSkill[];
+  abilities?: string[];
 }
 
 export interface Companion extends NewCompanion {

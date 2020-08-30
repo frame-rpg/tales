@@ -7,7 +7,6 @@ import {
 import { companions, players } from './characters.js';
 
 import admin from 'firebase-admin';
-import { users } from './users.js';
 
 const app = admin.initializeApp({
   credential: admin.credential.applicationDefault(),
@@ -25,9 +24,6 @@ await app.firestore().doc('/rules/templates').set({
 await app.firestore().doc(`/campaigns/${campaign.id}`).set(campaign);
 
 await Promise.all([
-  Promise.all(
-    users.map((user) => app.firestore().doc(`/users/${user.id}`).set(user))
-  ),
   Promise.all(
     players.map((p) => app.firestore().doc(`/characters/${p.id}`).set(p))
   ),
