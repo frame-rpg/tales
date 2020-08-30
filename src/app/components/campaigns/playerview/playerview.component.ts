@@ -1,5 +1,6 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Message, RollRequest } from 'types/message';
 import { Observable, Subject, combineLatest, of } from 'rxjs';
 import {
   filter,
@@ -13,7 +14,6 @@ import {
 import { Campaign } from 'types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
 import { Character } from 'types/character';
-import { Message } from 'types/message';
 import { MessageService } from 'src/app/data/message.service';
 import { Roll } from 'types/event';
 import { RollService } from 'src/app/actions/roll/roll.service';
@@ -26,10 +26,12 @@ import { RollService } from 'src/app/actions/roll/roll.service';
 export class PlayerviewComponent implements OnInit, OnDestroy {
   campaign: Observable<Campaign>;
   myCharacters: Observable<Character[]>;
+  mappedCharacters: Observable<Record<string, Character>>;
   messages: Observable<{
     campaign: Message[];
     characters: Record<string, Message[]>;
   }>;
+  requiredRolls: Observable<RollRequest[]>;
   haveRolls: Observable<Record<string, boolean>>;
   destroyingSubject = new Subject<boolean>();
   destroying = this.destroyingSubject
@@ -61,6 +63,9 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
       publishReplay(1),
       refCount()
     );
+    this.mappedCharacters = this.myCharacters.pipe(
+      map((ary) => ary.reduce((acc, cur) => ({ ...acc, [cur.id]: cur }), {}))
+    );
     this.messages = combineLatest([this.myCharacters, this.campaign]).pipe(
       switchMap(([characters, campaign]) =>
         this.messageService.fetchAll([
@@ -74,6 +79,17 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
       publishReplay(1),
       refCount()
     );
+    this.requiredRolls = this.messages.pipe(
+      map((mailbox) =>
+        Object.values(mailbox.characters).reduce(
+          (acc, curr) => [
+            ...acc,
+            ...curr.filter((m) => m.messageType === 'rollRequest'),
+          ],
+          []
+        )
+      )
+    ) as Observable<RollRequest[]>;
     this.haveRolls = this.messages.pipe(
       map((mailbox) =>
         Object.entries(mailbox.characters).reduce(

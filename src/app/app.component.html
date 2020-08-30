@@ -41,7 +41,8 @@
         <mat-form-field *ngIf="action !== 'reset'">
           <input matInput placeholder="Password"
               [type]="hidePassword ? 'password' : 'text'"
-              formControlName="password" required>
+              formControlName="password" required
+              (keyup.enter)="loginWithPassword()">
           <mat-icon matSuffix (click)="hidePassword = !hidePassword">
             {{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
         </mat-form-field>

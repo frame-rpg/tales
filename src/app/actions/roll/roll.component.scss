@@ -16,20 +16,25 @@
 
 .dieInput {
   max-width: 60px;
+  border: 1px solid var(--text-accent-color);
   margin: 4px;
   padding: 4px;
+  border-radius: 3px;
 }
 
 .wound {
   color: var(--warn-color);
 }
 
-.chosenDie {
-  background-color: var(--lightblue);
+.chosen {
+  background-color: var(--accent-lighter-color);
 }
 
-.dangerPool {
-  color: var(--warn-color);
+.rollChooser {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  align-items: stretch;
 }
 
 .roll {

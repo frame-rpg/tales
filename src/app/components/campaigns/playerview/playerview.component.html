@@ -14,5 +14,10 @@
     </mat-tab-group>
   </div>
   <div class="right">
+    <div class="requiredRoll" *ngFor="let roll of requiredRolls | async">
+      <initiative-request [roll]="roll"
+          [character]="(mappedCharacters | async)[roll.to.id]">
+      </initiative-request>
+    </div>
   </div>
 </div>

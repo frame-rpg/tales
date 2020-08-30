@@ -11,36 +11,34 @@
         <div class="attributeName">
           {{attribute.value.name}}:
         </div>
-        <div class="wound" *ngIf="attribute.value.wound; else unwounded">
-          <mat-icon>sentiment_very_dissatisfied</mat-icon>
+        <div *ngIf="attribute.value.wound">
+          <mat-icon color="warn">sentiment_very_dissatisfied</mat-icon>
         </div>
-        <ng-template #unwounded>
+        <div class="attributeContent" *ngIf="!attribute.value.wound">
           <adjust-character min="0" [max]="attribute.value.pool"
               [increment]="-1" [character]="character"
               [path]="'attributes.'+attribute.key+'.current'">
           </adjust-character>
-          <div class="currentPool"
-              [ngClass]="attribute.value.current < 2 ? 'dangerPool' : 'okayPool'">
-            {{ attribute.value.current }}
-          </div>
-          <div class="maxPool">
-            / {{attribute.value.pool}}
+          <div class="pool">
+            {{ attribute.value.current }} / {{attribute.value.pool}}
           </div>
           <adjust-character min="0" [max]="attribute.value.pool" [increment]="1"
               [character]="character"
               [path]="'attributes.'+attribute.key+'.current'">
           </adjust-character>
-        </ng-template>
+        </div>
       </div>
       <div class="attribute" *ngIf="character.initiative >= 0">
         <div class="attributeName">Initiative:</div>
-        <adjust-character min="0" [max]="1000" [increment]="0"
-            [character]="character" [path]="'initiative'">
-        </adjust-character>
-        <div class="currentPool">{{character.initiative}}</div>
-        <adjust-character min="0" [max]="1000" [increment]="1"
-            [character]="character" [path]="'initiative'">
-        </adjust-character>
+        <div class="attributeContent">
+          <adjust-character min="0" [max]="1000" [increment]="0"
+              [character]="character" [path]="'initiative'">
+          </adjust-character>
+          <div class="pool">{{character.initiative}}</div>
+          <adjust-character min="0" [max]="1000" [increment]="1"
+              [character]="character" [path]="'initiative'">
+          </adjust-character>
+        </div>
       </div>
     </div>
     <div

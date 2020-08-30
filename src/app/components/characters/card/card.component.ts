@@ -22,6 +22,14 @@ export class CardComponent {
     expert: 3,
   };
 
+  linearGradient(current: number, max: number) {
+    const percentage = Math.floor((current * 100) / max);
+    return `
+    linear-gradient(90deg, var(--fairy-dark) ${percentage}%, transparent ${
+      100 - percentage
+    }%)`;
+  }
+
   characterAttributeNames = {
     player: ['might', 'speed', 'conviction', 'focus', 'health'],
     companion: ['loyalty', 'health'],

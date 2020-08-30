@@ -9,16 +9,16 @@ import {
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
-import { Roll, RolledRoll, RequestedRoll } from 'types/event';
+import { RolledRoll, RequestedRoll } from 'types/event';
 import { CharacterSkill } from 'types/skill';
 import { Level } from 'types/enums';
-import { Attribute } from 'types/attribute';
+import { Attribute, AttributeName } from 'types/attribute';
+import { RollRequest } from 'types/message';
+import { MatSelectChange } from '@angular/material/select';
 
 export interface InjectedData {
-  skills: CharacterSkill[];
-  attributes: Attribute[];
   character: SkilledCharacter;
-  roll: Roll;
+  roll: RollRequest;
 }
 
 @Component({
@@ -27,32 +27,25 @@ export interface InjectedData {
   styleUrls: ['./roll.component.scss'],
 })
 export class RollComponent implements OnInit, OnDestroy {
-  rollState = new FormGroup(
-    {
-      target: new FormControl('open'),
-      dice: new FormArray([]),
-      baseInitiative: new FormControl(0),
-      effort: new FormControl(0, [
-        Validators.min(0),
-        (e) => this.validateEffort(e),
-      ]),
-    },
-    () => this.validate()
-  );
+  rollState: FormGroup;
   manuallyRolling = false;
-  skill: CharacterSkill;
   attribute: Attribute;
+  private _chosenSkill: CharacterSkill;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: InjectedData,
     public matDialogRef: MatDialogRef<RollComponent>
   ) {
-    if (data.skills.length === 1) {
-      this.skill = data.skills[0];
-      if (this.attributes.length === 1) {
-        this.attribute = this.attributes[0];
-      }
-    }
-    this.rollState.get('target').setValue(data.roll.target);
+    this.rollState = new FormGroup(
+      {
+        dice: new FormArray([]),
+        effort: new FormControl(0, [
+          Validators.min(0),
+          (e) => this.validateEffort(e),
+        ]),
+      },
+      () => this.validate()
+    );
+    console.log(this.roll);
   }
 
   ngOnInit(): void {}
@@ -97,8 +90,12 @@ export class RollComponent implements OnInit, OnDestroy {
     return this.rollState.get('dice') as FormArray;
   }
 
+  get direction() {
+    return this.data.roll.type === 'initiative' ? -1 : 1;
+  }
+
   get target() {
-    return this.rollState.get('target').value as string;
+    return this.data.roll.target;
   }
 
   get chosenDieIndex() {
@@ -109,16 +106,40 @@ export class RollComponent implements OnInit, OnDestroy {
     }
   }
 
-  get attributes() {
-    if (this.data.character.type === 'player') {
-      return this.data.attributes.filter((attribute) =>
-        this.skill?.attributes.includes(attribute.name)
+  get roll() {
+    return this.data.roll;
+  }
+
+  get skills() {
+    if (this.roll.skills?.length > 0) {
+      return this.data.character.skills.filter((skill) =>
+        this.roll.skills.includes(skill.id)
       );
     } else {
-      return this.data.attributes.filter(
-        (attribute) => attribute.name === 'loyalty'
+      return this.data.character.skills.filter(
+        (skill) => skill.type === this.roll.type
       );
     }
+  }
+
+  get skill() {
+    if (this.skills.length === 1) {
+      return this.skills[0];
+    } else if (this._chosenSkill) {
+      return this._chosenSkill;
+    } else {
+      return null;
+    }
+  }
+
+  get attributes() {
+    return Object.entries(this.data.character.attributes)
+      .filter(
+        ([key]) =>
+          key === 'loyalty' ||
+          this.skill?.attributes.includes(key as AttributeName)
+      )
+      .map(([, value]) => value);
   }
 
   get die() {
@@ -128,14 +149,6 @@ export class RollComponent implements OnInit, OnDestroy {
       return Math.min(...this.dice.value);
     } else {
       return Math.max(...this.dice.value);
-    }
-  }
-
-  get direction() {
-    if (this.skill && this.skill.type === 'initiative') {
-      return -1;
-    } else {
-      return 1;
     }
   }
 
@@ -155,34 +168,65 @@ export class RollComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectAttribute(attribute: Attribute) {
-    this.attribute = attribute;
+  get skillLevel(): number {
+    if (!this.skill) {
+      return null;
+    }
+    return Level[this.skill?.level] + (this.roll.skillModifier || 0);
+  }
+
+  get skillModifierDescription() {
+    if (this.roll.skillModifier >= 0) {
+      return `${this.roll.skillModifier} assets`;
+    } else {
+      return `${this.roll.skillModifier} hindrances`;
+    }
+  }
+
+  selectAttribute(event: MatSelectChange) {
+    this.attribute = this.data.character.attributes[event.value];
   }
 
   selectSkill(skill: CharacterSkill) {
-    this.skill = skill;
+    this._chosenSkill = skill;
     if (this.attributes.length === 1) {
       this.attribute = this.attributes[0];
     }
   }
 
   autoRoll() {
-    const diceCount = Math.abs(Level[this.skill.level]) + 1;
+    const diceCount = Math.abs(this.skillLevel) + 1;
     const dice = new Array(diceCount)
       .fill(0)
       .map((v) => Math.floor(Math.random() * 12) + 1);
-    this.roll(dice);
+    this.rollDice(dice);
+  }
+
+  incrementEffort() {
+    this.rollState
+      .get('effort')
+      .patchValue(
+        Math.min(this.attribute.current, this.rollState.get('effort').value + 1)
+      );
+    this.rollState.markAsTouched();
+  }
+
+  decrementEffort() {
+    this.rollState
+      .get('effort')
+      .patchValue(Math.max(0, this.rollState.get('effort').value - 1));
+    this.rollState.markAsTouched();
   }
 
   manualRoll() {
-    const diceCount = Math.abs(Level[this.skill.level]) + 1;
+    const diceCount = Math.abs(this.skillLevel) + 1;
     const dice = new Array(diceCount).fill(0);
     this.manuallyRolling = true;
-    this.roll(dice);
+    this.rollDice(dice);
     this.dice.markAllAsTouched();
   }
 
-  roll(dice: number[]) {
+  rollDice(dice: number[]) {
     dice.forEach((die) =>
       (this.rollState.get('dice') as FormArray).push(
         new FormControl(die, [
@@ -199,9 +243,8 @@ export class RollComponent implements OnInit, OnDestroy {
   setRoll() {}
 
   finalize() {
-    const result: RolledRoll = {
-      ...(this.data.roll as RequestedRoll),
-      id: this.data.roll.id,
+    const result = {
+      ...this.data.roll,
       dice: this.dice.value,
       die: this.die,
       skill: this.skill,

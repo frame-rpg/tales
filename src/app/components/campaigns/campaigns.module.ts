@@ -1,3 +1,4 @@
+import { ActionsModule } from 'src/app/actions/actions.module';
 import { CampaignsRoutingModule } from './campaigns-routing.module';
 import { CharactersModule } from '../characters/characters.module';
 import { CommonModule } from '@angular/common';
@@ -22,6 +23,7 @@ import { PlayerviewComponent } from './playerview/playerview.component';
     CommonModule,
     FormsModule,
     MaterialModule,
+    ActionsModule,
   ],
   exports: [CreateComponent, ListComponent],
 })

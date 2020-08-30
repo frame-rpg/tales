@@ -23,6 +23,7 @@ export interface RollRequest extends BaseMessage {
   skillModifier?: number;
   conditionalEdge?: number;
   skills?: string[];
+  target?: number;
   attributes?: AttributeName[];
 }
 

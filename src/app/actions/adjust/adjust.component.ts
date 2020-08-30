@@ -14,7 +14,7 @@ export class AdjustComponent {
   @Input() max: number;
   @Input() min: number = 0;
   @Input() increment: number;
-  color = 'primary';
+  color = 'accent';
 
   constructor(private characterService: CharacterService) {}
 

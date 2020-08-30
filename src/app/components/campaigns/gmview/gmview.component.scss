@@ -1,5 +1,3 @@
-@import '../../../../variables.scss';
-
 .main {
   height: 100%;
   display: flex;
@@ -20,5 +18,4 @@
 }
 
 .openCharacter {
-  background-color: lighten($accent, 65%);
 }
