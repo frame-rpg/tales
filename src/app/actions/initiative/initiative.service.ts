@@ -37,6 +37,7 @@ export class InitiativeService {
             const rollRequest: RollRequest = {
               messageType: 'rollRequest',
               type: 'initiative',
+              description: 'Initiative Check',
               state: 'new',
               from: {
                 type: 'campaign',

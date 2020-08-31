@@ -19,6 +19,7 @@ export interface BaseMessage {
 
 export interface RollRequest extends BaseMessage {
   messageType: 'rollRequest';
+  description: string;
   type: SkillType;
   skillModifier?: number;
   conditionalEdge?: number;

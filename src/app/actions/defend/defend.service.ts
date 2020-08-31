@@ -27,6 +27,7 @@ export class DefendService {
       const rollRequest: RollRequest = {
         messageType: 'rollRequest',
         type: 'defense',
+        description: 'Defense Check',
         state: 'new',
         from: {
           type: 'campaign',

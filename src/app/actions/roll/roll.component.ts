@@ -9,12 +9,12 @@ import {
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
-import { RolledRoll, RequestedRoll } from 'types/event';
 import { CharacterSkill } from 'types/skill';
 import { Level } from 'types/enums';
 import { Attribute, AttributeName } from 'types/attribute';
 import { RollRequest } from 'types/message';
 import { MatSelectChange } from '@angular/material/select';
+import { UserService } from 'src/app/data/user.service';
 
 export interface InjectedData {
   character: SkilledCharacter;
@@ -26,14 +26,15 @@ export interface InjectedData {
   templateUrl: './roll.component.html',
   styleUrls: ['./roll.component.scss'],
 })
-export class RollComponent implements OnInit, OnDestroy {
+export class RollComponent implements OnDestroy {
   rollState: FormGroup;
   manuallyRolling = false;
   attribute: Attribute;
   private _chosenSkill: CharacterSkill;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: InjectedData,
-    public matDialogRef: MatDialogRef<RollComponent>
+    public matDialogRef: MatDialogRef<RollComponent>,
+    private userService: UserService
   ) {
     this.rollState = new FormGroup(
       {
@@ -45,10 +46,7 @@ export class RollComponent implements OnInit, OnDestroy {
       },
       () => this.validate()
     );
-    console.log(this.roll);
   }
-
-  ngOnInit(): void {}
 
   ngOnDestroy(): void {}
 
@@ -163,6 +161,8 @@ export class RollComponent implements OnInit, OnDestroy {
       return 'pickAttribute';
     } else if (this.dice.length === 0) {
       return 'chooseRollType';
+    } else if (this.manuallyRolling) {
+      return 'manuallyRolling';
     } else {
       return 'finalizing';
     }
@@ -177,29 +177,33 @@ export class RollComponent implements OnInit, OnDestroy {
 
   get skillModifierDescription() {
     if (this.roll.skillModifier >= 0) {
-      return `${this.roll.skillModifier} assets`;
+      return `${this.roll.skillModifier} asset${
+        this.roll.skillModifier === 1 ? '' : 's'
+      }`;
     } else {
-      return `${this.roll.skillModifier} hindrances`;
+      return `${this.roll.skillModifier} hindrance${
+        this.roll.skillModifier === -1 ? '' : 's'
+      }`;
     }
   }
 
-  selectAttribute(event: MatSelectChange) {
+  async selectAttribute(event: MatSelectChange) {
     this.attribute = this.data.character.attributes[event.value];
-  }
-
-  selectSkill(skill: CharacterSkill) {
-    this._chosenSkill = skill;
-    if (this.attributes.length === 1) {
-      this.attribute = this.attributes[0];
+    const rollPreference = await this.userService.getRollPreference();
+    if (rollPreference === 'manual') {
+      this.manualRoll();
+    } else if (rollPreference === 'automatic') {
+      this.autoRoll();
     }
   }
 
-  autoRoll() {
-    const diceCount = Math.abs(this.skillLevel) + 1;
-    const dice = new Array(diceCount)
-      .fill(0)
-      .map((v) => Math.floor(Math.random() * 12) + 1);
-    this.rollDice(dice);
+  async selectSkill(event: MatSelectChange) {
+    this._chosenSkill = this.data.character.skills.filter(
+      (skill) => skill.id === event.value
+    )[0];
+    if (this.attributes.length === 1) {
+      this.selectAttribute({ ...event, value: this.attributes[0].name });
+    }
   }
 
   incrementEffort() {
@@ -209,6 +213,7 @@ export class RollComponent implements OnInit, OnDestroy {
         Math.min(this.attribute.current, this.rollState.get('effort').value + 1)
       );
     this.rollState.markAsTouched();
+    this.rollState.markAsDirty();
   }
 
   decrementEffort() {
@@ -216,17 +221,26 @@ export class RollComponent implements OnInit, OnDestroy {
       .get('effort')
       .patchValue(Math.max(0, this.rollState.get('effort').value - 1));
     this.rollState.markAsTouched();
+    this.rollState.markAsDirty();
+  }
+
+  autoRoll() {
+    const diceCount = Math.abs(this.skillLevel) + 1;
+    const dice = new Array(diceCount)
+      .fill(0)
+      .map((v) => Math.floor(Math.random() * 12) + 1);
+    this.setDice(dice);
   }
 
   manualRoll() {
     const diceCount = Math.abs(this.skillLevel) + 1;
     const dice = new Array(diceCount).fill(0);
     this.manuallyRolling = true;
-    this.rollDice(dice);
+    this.setDice(dice);
     this.dice.markAllAsTouched();
   }
 
-  rollDice(dice: number[]) {
+  setDice(dice: number[]) {
     dice.forEach((die) =>
       (this.rollState.get('dice') as FormArray).push(
         new FormControl(die, [
@@ -236,9 +250,12 @@ export class RollComponent implements OnInit, OnDestroy {
         ])
       )
     );
+    this.dice.markAllAsTouched();
   }
 
-  acceptRoll() {}
+  acceptManualRoll() {
+    this.manuallyRolling = false;
+  }
 
   setRoll() {}
 

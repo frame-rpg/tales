@@ -40,6 +40,21 @@ export class UserService {
       .valueChanges({ idField: 'id' });
   }
 
+  async setRollPreference(rollPreference: 'automatic' | 'manual' | 'ask') {
+    const { uid } = await this.auth.currentUser;
+    return this.firestore.doc(`/users/${uid}`).update({ rollPreference });
+  }
+
+  async getRollPreference() {
+    const { uid } = await this.auth.currentUser;
+    const user = await this.firestore
+      .doc<User>(`/users/${uid}`)
+      .get()
+      .pipe(take(1))
+      .toPromise();
+    return user.data().rollPreference || 'ask';
+  }
+
   async postLogin() {
     const user = await this.auth.user.pipe(take(1)).toPromise();
     const userDoc = await this.firestore

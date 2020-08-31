@@ -71,6 +71,11 @@ service cloud.firestore {
       allow write: if false
     }
 
+    match /users/{userId} {
+      allow read: if isSignedIn()
+      allow write: if userId == auth.uid
+    }
+
     match /{document=**} {
       allow read, write: if false
     }
