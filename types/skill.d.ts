@@ -8,7 +8,12 @@ declare enum Level {
   expert = 2,
 }
 export type LevelName = keyof typeof Level;
-export type SkillType = 'initiative' | 'attack' | 'defense' | 'noncombat';
+export type SkillType =
+  | 'initiative'
+  | 'attack'
+  | 'defense'
+  | 'noncombat'
+  | 'health';
 
 export interface Skill {
   id: string;

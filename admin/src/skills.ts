@@ -15,25 +15,25 @@ export const skillSeed: Record<string, Skill> = {
     name: 'Command Animal',
     attributes: ['conviction', 'focus'],
   },
-  convictiondefense: {
-    id: 'convictiondefense',
+  faith: {
+    id: 'faith',
     type: 'defense',
     description: '',
-    name: 'Conviction Defense',
+    name: 'Faith',
     attributes: ['conviction'],
   },
-  convictionmeleeattack: {
-    id: 'convictionmeleeattack',
+  righteousfury: {
+    id: 'righteousfury',
     type: 'attack',
     description: '',
-    name: 'Conviction Melee Attack',
+    name: 'Righteous Fury',
     attributes: ['conviction'],
   },
-  convictionrangedattack: {
-    id: 'convictionrangedattack',
+  hipshot: {
+    id: 'hipshot',
     type: 'attack',
     description: '',
-    name: 'Conviction Ranged Attack',
+    name: 'Hip Shot',
     attributes: ['conviction'],
   },
   dryscienceknowledge: {
@@ -50,25 +50,25 @@ export const skillSeed: Record<string, Skill> = {
     name: 'Dry Science Tinker',
     attributes: ['conviction', 'focus'],
   },
-  focusdefense: {
-    id: 'focusdefense',
+  combatprediction: {
+    id: 'combatprediction',
     type: 'defense',
     description: '',
-    name: 'Focus Defense',
+    name: 'Combat Prediction',
     attributes: ['focus'],
   },
-  focusmeleeattack: {
-    id: 'focusmeleeattack',
+  pinpointstrike: {
+    id: 'pinpointstrike',
     type: 'attack',
     description: '',
-    name: 'Focus Melee Attack',
+    name: 'Pinpoint Strike',
     attributes: ['focus'],
   },
-  focusrangedattack: {
-    id: 'focusrangedattack',
+  sniper: {
+    id: 'sniper',
     type: 'attack',
     description: '',
-    name: 'Focus Ranged Attack',
+    name: 'Sniper',
     attributes: ['focus'],
   },
   hacking: {
@@ -78,19 +78,33 @@ export const skillSeed: Record<string, Skill> = {
     name: 'Hacking',
     attributes: ['conviction', 'focus'],
   },
-  healthdefense: {
-    id: 'healthdefense',
-    type: 'defense',
+  health: {
+    id: 'health',
+    type: 'health',
     description: '',
-    name: 'Health Defense',
+    name: 'Health Check',
     attributes: ['health'],
   },
-  initiative: {
-    id: 'initiative',
+  jumpy: {
+    id: 'jumpy',
     type: 'initiative',
     description: '',
-    name: 'Initiative',
-    attributes: ['conviction', 'speed', 'focus', 'might'],
+    name: 'jumpy',
+    attributes: ['speed'],
+  },
+  tactics: {
+    id: 'tactics',
+    type: 'initiative',
+    description: '',
+    name: 'Tactics',
+    attributes: ['focus'],
+  },
+  providence: {
+    id: 'providence',
+    type: 'initiative',
+    description: '',
+    name: 'Providence',
+    attributes: ['conviction'],
   },
   intimidate: {
     id: 'intimidate',
@@ -120,25 +134,25 @@ export const skillSeed: Record<string, Skill> = {
     name: 'Medicine',
     attributes: ['conviction', 'focus'],
   },
-  mightdefense: {
-    id: 'mightdefense',
+  toughness: {
+    id: 'toughness',
     type: 'defense',
     description: '',
-    name: 'Might Defense',
+    name: 'Toughness',
     attributes: ['might'],
   },
-  mightmeleeattack: {
-    id: 'mightmeleeattack',
+  bash: {
+    id: 'bash',
     type: 'attack',
     description: '',
-    name: 'Might Melee Attack',
+    name: 'Bashing',
     attributes: ['might'],
   },
-  mightrangedattack: {
-    id: 'mightrangedattack',
+  hurl: {
+    id: 'hurl',
     type: 'attack',
     description: '',
-    name: 'Might Ranged Attack',
+    name: 'Hurl',
     attributes: ['might'],
   },
   movement: {
@@ -205,25 +219,25 @@ export const skillSeed: Record<string, Skill> = {
     name: 'Sneaking',
     attributes: ['speed', 'focus'],
   },
-  speeddefense: {
-    id: 'speeddefense',
+  dodge: {
+    id: 'dodge',
     type: 'defense',
     description: '',
-    name: 'Speed Defense',
+    name: 'Dodge',
     attributes: ['speed'],
   },
-  speedmeleeattack: {
-    id: 'speedmeleeattack',
+  fencing: {
+    id: 'fencing',
     type: 'attack',
     description: '',
-    name: 'Speed Melee Attack',
+    name: 'Fencing',
     attributes: ['speed'],
   },
-  speedrangedattack: {
-    id: 'speedrangedattack',
+  quickdraw: {
+    id: 'quickdraw',
     type: 'attack',
     description: '',
-    name: 'Speed Ranged Attack',
+    name: 'Quick Draw',
     attributes: ['speed'],
   },
   swimming: {

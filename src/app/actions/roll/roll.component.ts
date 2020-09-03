@@ -39,10 +39,10 @@ export class RollComponent implements OnDestroy {
     this.rollState = new FormGroup(
       {
         dice: new FormArray([]),
-        effort: new FormControl(0, [
-          Validators.min(0),
-          (e) => this.validateEffort(e),
-        ]),
+        effort: new FormControl(0, {
+          validators: [Validators.min(0), (e) => this.validateEffort(e)],
+          updateOn: 'change',
+        }),
       },
       () => this.validate()
     );
@@ -70,15 +70,18 @@ export class RollComponent implements OnDestroy {
   }
 
   validateEffort(e: AbstractControl) {
+    console.log(e);
     if (
       this.attribute &&
       this.die &&
       this.die + this.direction * (e.value + this.attribute.edge) < 1 &&
       e.value > 0
     ) {
+      console.log('a');
       return { tooHigh: 'Result cannot be below 1' };
     }
     if (this.attribute && e.value > this.attribute.current) {
+      console.log('a');
       return { tooHigh: 'You cannot spend that much effort' };
     }
     return null;
@@ -180,10 +183,12 @@ export class RollComponent implements OnDestroy {
       return `${this.roll.skillModifier} asset${
         this.roll.skillModifier === 1 ? '' : 's'
       }`;
-    } else {
+    } else if (this.roll.skillModifier < 0) {
       return `${this.roll.skillModifier} hindrance${
         this.roll.skillModifier === -1 ? '' : 's'
       }`;
+    } else {
+      return '';
     }
   }
 
@@ -198,6 +203,7 @@ export class RollComponent implements OnDestroy {
   }
 
   async selectSkill(event: MatSelectChange) {
+    console.log(event);
     this._chosenSkill = this.data.character.skills.filter(
       (skill) => skill.id === event.value
     )[0];
@@ -209,19 +215,17 @@ export class RollComponent implements OnDestroy {
   incrementEffort() {
     this.rollState
       .get('effort')
-      .patchValue(
+      .setValue(
         Math.min(this.attribute.current, this.rollState.get('effort').value + 1)
       );
     this.rollState.markAsTouched();
-    this.rollState.markAsDirty();
   }
 
   decrementEffort() {
     this.rollState
       .get('effort')
-      .patchValue(Math.max(0, this.rollState.get('effort').value - 1));
+      .setValue(Math.max(0, this.rollState.get('effort').value - 1));
     this.rollState.markAsTouched();
-    this.rollState.markAsDirty();
   }
 
   autoRoll() {
@@ -255,6 +259,13 @@ export class RollComponent implements OnDestroy {
 
   acceptManualRoll() {
     this.manuallyRolling = false;
+  }
+
+  get total() {
+    return Math.max(
+      this.die + (this.effort.value + this.attribute.edge) * this.direction,
+      0
+    );
   }
 
   setRoll() {}

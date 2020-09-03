@@ -52,7 +52,11 @@ export class UserService {
       .get()
       .pipe(take(1))
       .toPromise();
-    return user.data().rollPreference || 'ask';
+    if (user.data()) {
+      return user.data().rollPreference || 'ask';
+    } else {
+      return 'ask';
+    }
   }
 
   async postLogin() {

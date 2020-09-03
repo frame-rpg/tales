@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>{{ data.roll.description }}</h2>
 <mat-dialog-content class="dialog" [formGroup]="rollState">
   <div *ngIf="target">Target: {{target}} with {{skillModifierDescription}}</div>
-  <div *ngIf="!target">With {{skillModifierDescription}}</div>
+  <div *ngIf="skillModifierDescription">With {{skillModifierDescription}}</div>
   <div *ngIf="skill" class="attribute">
     Rolling {{ skill.name }}: {{ skill.level }}
   </div>
@@ -25,7 +25,7 @@
       <mat-label>Select Skill</mat-label>
       <mat-select (selectionChange)="selectSkill($event)">
         <mat-option *ngFor="let skill of skills" class="skillSelectOption"
-            [value]="skill.name">
+            [value]="skill.id">
           {{skill.name}}: {{skill.level}}
         </mat-option>
       </mat-select>
@@ -86,7 +86,7 @@
     </button>
     <div>Total:</div>
     <div>
-      {{die + direction * (effort.value + attribute.edge)}}
+      {{total}}
     </div>
     <button mat-button (click)="finalize()" [disabled]="rollState.invalid">
       Accept
