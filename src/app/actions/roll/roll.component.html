@@ -55,7 +55,8 @@
         formArrayName="dice" class="dieInput"
         [class.chosen]="dice.valid && i === chosenDieIndex">
       <mat-label>d12</mat-label>
-      <input matInput min="1" max="12" [formControlName]="i" type="number">
+      <input matInput min="1" max="12" autocomplete="off" [formControlName]="i"
+          type="number">
       <mat-error *ngIf="d.invalid">1 - 12</mat-error>
     </mat-form-field>
     <button mat-icon-button (click)="acceptManualRoll()"
@@ -64,9 +65,11 @@
     </button>
   </div>
   <div *ngIf="step === 'finalizing'">
-    <div *ngFor="let d of dice.controls; index as i" formArrayName="dice"
-        [class.chosen]="dice.valid && i === chosenDieIndex">
-      {{d.value}}
+    <div class="dice">
+      <div *ngFor="let d of dice.controls; index as i" formArrayName="dice"
+          class="lockedDie" [class.chosen]="dice.valid && i === chosenDieIndex">
+        {{d.value}}
+      </div>
     </div>
     <button mat-icon-button (click)="decrementEffort()" color="primary"
         class="spinner">

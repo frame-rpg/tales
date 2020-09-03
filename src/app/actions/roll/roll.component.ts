@@ -70,18 +70,15 @@ export class RollComponent implements OnDestroy {
   }
 
   validateEffort(e: AbstractControl) {
-    console.log(e);
     if (
       this.attribute &&
       this.die &&
       this.die + this.direction * (e.value + this.attribute.edge) < 1 &&
       e.value > 0
     ) {
-      console.log('a');
       return { tooHigh: 'Result cannot be below 1' };
     }
     if (this.attribute && e.value > this.attribute.current) {
-      console.log('a');
       return { tooHigh: 'You cannot spend that much effort' };
     }
     return null;
@@ -203,7 +200,6 @@ export class RollComponent implements OnDestroy {
   }
 
   async selectSkill(event: MatSelectChange) {
-    console.log(event);
     this._chosenSkill = this.data.character.skills.filter(
       (skill) => skill.id === event.value
     )[0];
@@ -215,17 +211,17 @@ export class RollComponent implements OnDestroy {
   incrementEffort() {
     this.rollState
       .get('effort')
-      .setValue(
+      .patchValue(
         Math.min(this.attribute.current, this.rollState.get('effort').value + 1)
       );
-    this.rollState.markAsTouched();
+    this.rollState.get('effort').markAsDirty();
   }
 
   decrementEffort() {
     this.rollState
       .get('effort')
-      .setValue(Math.max(0, this.rollState.get('effort').value - 1));
-    this.rollState.markAsTouched();
+      .patchValue(Math.max(0, this.rollState.get('effort').value - 1));
+    this.rollState.get('effort').markAsDirty();
   }
 
   autoRoll() {
@@ -241,7 +237,7 @@ export class RollComponent implements OnDestroy {
     const dice = new Array(diceCount).fill(0);
     this.manuallyRolling = true;
     this.setDice(dice);
-    this.dice.markAllAsTouched();
+    this.dice.controls.forEach((d) => d.markAsDirty());
   }
 
   setDice(dice: number[]) {
@@ -264,7 +260,7 @@ export class RollComponent implements OnDestroy {
   get total() {
     return Math.max(
       this.die + (this.effort.value + this.attribute.edge) * this.direction,
-      0
+      1
     );
   }
 

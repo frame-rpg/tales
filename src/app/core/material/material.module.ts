@@ -1,3 +1,8 @@
+import {
+  ErrorStateMatcher,
+  ShowOnDirtyErrorStateMatcher,
+} from '@angular/material/core';
+
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -16,6 +21,9 @@ import { NgModule } from '@angular/core';
 
 @NgModule({
   declarations: [],
+  providers: [
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+  ],
   imports: [
     CommonModule,
     MatButtonModule,
