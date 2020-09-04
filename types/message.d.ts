@@ -1,3 +1,5 @@
+import { Timestamp } from '@firebase/firestore-types';
+
 import { SkillType, CharacterSkill } from './skill';
 import { AttributeName } from './attribute';
 
@@ -15,14 +17,15 @@ export interface BaseMessage {
   state: MessageState;
   to: MessageAddress;
   from: MessageAddress;
+  description: string;
+  at: Date | Timestamp;
 }
 
 export interface RollRequest extends BaseMessage {
   messageType: 'rollRequest';
-  description: string;
   type: SkillType;
-  skillModifier?: number;
-  conditionalEdge?: number;
+  skillModifier: number;
+  conditionalEdge: number;
   skills?: string[];
   target?: number;
   attributes?: AttributeName[];
@@ -31,9 +34,10 @@ export interface RollRequest extends BaseMessage {
 export interface RollComplete extends BaseMessage {
   messageType: 'rollComplete';
   skill: CharacterSkill;
-  pool?: number;
+  attribute: string;
+  result: number;
+  effort: number;
   success?: boolean;
-  description: string;
 }
 
 export interface Say extends BaseMessage {

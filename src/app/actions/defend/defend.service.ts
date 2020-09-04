@@ -13,8 +13,7 @@ import { take } from 'rxjs/operators';
 export class DefendService {
   constructor(
     private dialogService: MatDialog,
-    private messageService: MessageService,
-    private firestore: AngularFirestore
+    private messageService: MessageService
   ) {}
 
   async trigger(character: Character, campaignId: string) {
@@ -26,8 +25,11 @@ export class DefendService {
     if (result) {
       const rollRequest: RollRequest = {
         messageType: 'rollRequest',
+        at: new Date(),
         type: 'defense',
         description: 'Defense Check',
+        skillModifier: 0,
+        conditionalEdge: 0,
         state: 'new',
         from: {
           type: 'campaign',

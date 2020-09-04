@@ -29,7 +29,7 @@ export class MessageService {
   async mark(message: SentMessage, state: MessageState) {
     await this.firestore
       .doc(`/${message.to.type}s/${message.to.id}/messages/${message.id}`)
-      .set({ state });
+      .update({ state });
   }
 
   list(address: MessageAddress) {

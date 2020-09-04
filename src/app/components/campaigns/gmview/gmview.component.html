@@ -14,9 +14,9 @@
           color="accent">Initiative</button>
     </div>
     <div class="right">
-      <character-card *ngIf="openCharacter | async as open" [expanded]="true"
-          class="openCharacter" [character]="open" [campaign]="campaign">
-      </character-card>
+      <div *ngFor="let roll of rolls | async">
+        {{ roll | json }}
+      </div>
     </div>
   </div>
 </div>

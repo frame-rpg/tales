@@ -17,6 +17,7 @@ import { Character } from 'types/character';
 import { MessageService } from 'src/app/data/message.service';
 import { Roll } from 'types/event';
 import { RollService } from 'src/app/actions/roll/roll.service';
+import { coerceToDate } from 'src/app/data/dates';
 
 @Component({
   selector: 'player',
@@ -31,6 +32,7 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
     campaign: Message[];
     characters: Record<string, Message[]>;
   }>;
+  eventLog: Observable<Message[]>;
   requiredRolls: Observable<RollRequest[]>;
   haveRolls: Observable<Record<string, boolean>>;
   destroyingSubject = new Subject<boolean>();
@@ -90,6 +92,24 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
         )
       )
     ) as Observable<RollRequest[]>;
+    this.eventLog = this.messages.pipe(
+      map((mailbox) =>
+        Object.values(mailbox.characters)
+          .reduce(
+            (acc, curr) => [
+              ...acc,
+              ...curr.filter((m) => m.messageType === 'rollRequest'),
+            ],
+            mailbox.campaign
+          )
+          .filter((v) => v.messageType !== 'rollRequest')
+          .sort(
+            (a, b) =>
+              coerceToDate(a.at).valueOf() - coerceToDate(b.at).valueOf()
+          )
+      )
+    );
+
     this.haveRolls = this.messages.pipe(
       map((mailbox) =>
         Object.entries(mailbox.characters).reduce(

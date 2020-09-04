@@ -34,10 +34,16 @@ export class InitiativeService {
               initiative: character.baseInitiative,
             });
           } else {
+            await this.firestore.doc(`/characters/${character.id}`).update({
+              initiative: 0,
+            });
             const rollRequest: RollRequest = {
               messageType: 'rollRequest',
               type: 'initiative',
+              at: new Date(),
               description: 'Initiative Check',
+              skillModifier: 0,
+              conditionalEdge: 0,
               state: 'new',
               from: {
                 type: 'campaign',

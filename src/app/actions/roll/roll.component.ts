@@ -12,7 +12,7 @@ import {
 import { CharacterSkill } from 'types/skill';
 import { Level } from 'types/enums';
 import { Attribute, AttributeName } from 'types/attribute';
-import { RollRequest } from 'types/message';
+import { RollRequest, RollComplete } from 'types/message';
 import { MatSelectChange } from '@angular/material/select';
 import { UserService } from 'src/app/data/user.service';
 
@@ -267,15 +267,30 @@ export class RollComponent implements OnDestroy {
   setRoll() {}
 
   finalize() {
-    const result = {
-      ...this.data.roll,
-      dice: this.dice.value,
-      die: this.die,
+    const result: RollComplete = {
+      messageType: 'rollComplete',
+      attribute: this.attribute.name,
+      result: this.total,
+      at: new Date(),
+      to: this.data.roll.from,
+      from: this.data.roll.to,
+      state: 'new',
       skill: this.skill,
-      attribute: this.attribute,
       effort: this.effort.value,
-      state: 'rolled',
+      description: `${this.data.character.name} rolled ${this.total} on ${this.skill.name}`,
     };
+    if (this.data.roll.target >= 0) {
+      result.success = this.total >= this.data.roll.target;
+      if (result.success) {
+        result.description = `${result.description}, succeeding by ${
+          this.total - this.data.roll.target
+        }`;
+      } else {
+        result.description = `${result.description}, failing by ${
+          this.data.roll.target - this.total
+        }`;
+      }
+    }
     this.matDialogRef.close(result);
   }
 }

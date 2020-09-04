@@ -35,8 +35,8 @@ export class CharacterService {
       .pipe(publishReplay(1), refCount());
   }
 
-  update(character: Partial<Character> & { id: string }) {
-    return this.firestore.doc(`/characters/${character.id}`).update(character);
+  update(id: string, character: Partial<Character>) {
+    return this.firestore.doc(`/characters/${id}`).update(character);
   }
 
   async create(character: NewCharacter, options: { inCampaign?: string } = {}) {
