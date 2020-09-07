@@ -25,6 +25,8 @@ import { CampaignService } from 'src/app/data/campaign.service';
 import { CharacterService } from 'src/app/data/character.service';
 import { DefendService } from 'src/app/actions/defend/defend.service';
 import { InitiativeService } from 'src/app/actions/initiative/initiative.service';
+import { Message } from 'types/message';
+import { MessageService } from 'src/app/data/message.service';
 import { Roll } from 'types/event';
 
 type ActionType = 'initiative' | 'defend' | 'zoom';
@@ -43,7 +45,7 @@ export class GmviewComponent implements OnInit, OnDestroy {
   campaign: Observable<Campaign>;
   openCharacter: Observable<Character>;
   allCharacters: Observable<Character[]>;
-  rolls: Observable<Roll[]>;
+  messages: Observable<Message[]>;
   actionTrigger = new Subject<UiEvent>();
   action = this.actionTrigger.asObservable();
   destroyingSubject = new Subject<boolean>();
@@ -56,6 +58,7 @@ export class GmviewComponent implements OnInit, OnDestroy {
     private initiativeService: InitiativeService,
     private characterService: CharacterService,
     private defendService: DefendService,
+    private messageService: MessageService,
     private route: ActivatedRoute,
     private auth: AngularFireAuth
   ) {}
@@ -86,9 +89,9 @@ export class GmviewComponent implements OnInit, OnDestroy {
         })
       )
     );
-    this.rolls = this.route.paramMap.pipe(
+    this.messages = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.campaignService.listRolls(params.get('id'))
+        this.messageService.list({ id: params.get('id'), type: 'campaign' })
       ),
       publishReplay(1),
       refCount()

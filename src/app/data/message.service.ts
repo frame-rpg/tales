@@ -4,12 +4,12 @@ import {
   MessageState,
   SentMessage,
 } from '../../../types/message';
+import { Observable, combineLatest } from 'rxjs';
 import { map, publishReplay, refCount } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
-import { combineLatest } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -35,30 +35,12 @@ export class MessageService {
   list(address: MessageAddress) {
     return this.firestore
       .collection<Message>(`/${address.type}s/${address.id}/messages`)
-      .valueChanges({ idField: 'id' });
+      .valueChanges({ idField: 'id' }) as Observable<Message[]>;
   }
 
   fetchAll(addresses: MessageAddress[]) {
-    return combineLatest(
-      addresses.map((address) =>
-        this.list(address).pipe(map((list) => ({ address, list })))
-      )
-    ).pipe(
-      map((vals) =>
-        vals.reduce(
-          (acc, curr) => {
-            if (curr.address.type === 'campaign') {
-              return { characters: acc.characters, campaign: curr.list };
-            } else {
-              return {
-                campaign: acc.campaign,
-                characters: { ...acc.characters, [curr.address.id]: curr.list },
-              };
-            }
-          },
-          { characters: {}, campaign: [] }
-        )
-      ),
+    return combineLatest(addresses.map((address) => this.list(address))).pipe(
+      map((mailboxes) => mailboxes.flat()),
       publishReplay(1),
       refCount()
     );

@@ -13,6 +13,7 @@ export interface MessageAddress {
 }
 
 export interface BaseMessage {
+  id?: string;
   messageType: MessageType;
   state: MessageState;
   to: MessageAddress;

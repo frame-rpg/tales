@@ -14,9 +14,8 @@
           color="accent">Initiative</button>
     </div>
     <div class="right">
-      <div *ngFor="let roll of rolls | async">
-        {{ roll | json }}
-      </div>
+      <message *ngFor="let message of messages | async" [message]="message">
+      </message>
     </div>
   </div>
 </div>

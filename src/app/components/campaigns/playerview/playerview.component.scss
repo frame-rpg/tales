@@ -8,11 +8,13 @@
 .left {
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
   flex: 0 0 500px;
 }
 
 .right {
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
   flex: 1 1 auto;
 }

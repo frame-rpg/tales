@@ -19,8 +19,8 @@
           [character]="(mappedCharacters | async)[roll.to.id]">
       </initiative-request>
     </div>
-    <div *ngFor="let message of eventLog | async">
-      {{ message.description }}
-    </div>
+    <message *ngFor="let message of campaignMessages | async"
+        [message]="message">
+    </message>
   </div>
 </div>

@@ -3,6 +3,14 @@
     <div class="name">
       {{ character.name }}
     </div>
+    <div class="lock">
+      <button mat-icon-button (click)="unlocked = !unlocked">
+        <mat-icon *ngIf="!unlocked" inline="true" class="lockIcon">lock
+        </mat-icon>
+        <mat-icon *ngIf="unlocked" inline="true" class="lockIcon">lock_open
+        </mat-icon>
+      </button>
+    </div>
   </div>
   <div class="characterBody">
     <div class="attributes" *ngIf="character.type !== 'nonplayer'">
@@ -15,14 +23,16 @@
           <mat-icon color="warn">sentiment_very_dissatisfied</mat-icon>
         </div>
         <div class="attributeContent" *ngIf="!attribute.value.wound">
-          <adjust-character min="0" [max]="attribute.value.pool"
-              [increment]="-1" [character]="character"
+          <adjust-character *ngIf="unlocked" min="0"
+              [max]="attribute.value.pool" [increment]="-1"
+              [character]="character"
               [path]="'attributes.'+attribute.key+'.current'">
           </adjust-character>
           <div class="pool">
             {{ attribute.value.current }} / {{attribute.value.pool}}
           </div>
-          <adjust-character min="0" [max]="attribute.value.pool" [increment]="1"
+          <adjust-character *ngIf="unlocked" min="0"
+              [max]="attribute.value.pool" [increment]="1"
               [character]="character"
               [path]="'attributes.'+attribute.key+'.current'">
           </adjust-character>
@@ -31,12 +41,12 @@
       <div class="attribute" *ngIf="character.initiative >= 0">
         <div class="attributeName">Initiative:</div>
         <div class="attributeContent">
-          <adjust-character min="0" [max]="1000" [increment]="0"
-              [character]="character" [path]="'initiative'">
+          <adjust-character *ngIf="unlocked" min="0" [max]="1000"
+              [increment]="0" [character]="character" [path]="'initiative'">
           </adjust-character>
           <div class="pool">{{character.initiative}}</div>
-          <adjust-character min="0" [max]="1000" [increment]="1"
-              [character]="character" [path]="'initiative'">
+          <adjust-character *ngIf="unlocked" min="0" [max]="1000"
+              [increment]="1" [character]="character" [path]="'initiative'">
           </adjust-character>
         </div>
       </div>

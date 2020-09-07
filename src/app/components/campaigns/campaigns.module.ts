@@ -9,6 +9,7 @@ import { ListComponent } from './list/list.component';
 import { MaterialModule } from '../../core/material/material.module';
 import { NgModule } from '@angular/core';
 import { PlayerviewComponent } from './playerview/playerview.component';
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { PlayerviewComponent } from './playerview/playerview.component';
     ListComponent,
     PlayerviewComponent,
     GmviewComponent,
+    MessageComponent,
   ],
   imports: [
     CampaignsRoutingModule,

@@ -28,11 +28,8 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
   campaign: Observable<Campaign>;
   myCharacters: Observable<Character[]>;
   mappedCharacters: Observable<Record<string, Character>>;
-  messages: Observable<{
-    campaign: Message[];
-    characters: Record<string, Message[]>;
-  }>;
-  eventLog: Observable<Message[]>;
+  messages: Observable<Message[]>;
+  campaignMessages: Observable<Message[]>;
   requiredRolls: Observable<RollRequest[]>;
   haveRolls: Observable<Record<string, boolean>>;
   destroyingSubject = new Subject<boolean>();
@@ -81,46 +78,29 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
       publishReplay(1),
       refCount()
     );
-    this.requiredRolls = this.messages.pipe(
-      map((mailbox) =>
-        Object.values(mailbox.characters).reduce(
-          (acc, curr) => [
-            ...acc,
-            ...curr.filter((m) => m.messageType === 'rollRequest'),
-          ],
-          []
+    this.requiredRolls = combineLatest([this.myCharacters, this.messages]).pipe(
+      map(([characters, messages]) =>
+        messages.filter(
+          (m) =>
+            m.messageType === 'rollRequest' &&
+            m.state === 'new' &&
+            m.to.type === 'character' &&
+            characters.map((c) => c.id).includes(m.to.id)
         )
       )
     ) as Observable<RollRequest[]>;
-    this.eventLog = this.messages.pipe(
-      map((mailbox) =>
-        Object.values(mailbox.characters)
-          .reduce(
-            (acc, curr) => [
-              ...acc,
-              ...curr.filter((m) => m.messageType === 'rollRequest'),
-            ],
-            mailbox.campaign
-          )
-          .filter((v) => v.messageType !== 'rollRequest')
-          .sort(
-            (a, b) =>
-              coerceToDate(a.at).valueOf() - coerceToDate(b.at).valueOf()
-          )
-      )
+    this.campaignMessages = this.messages.pipe(
+      map((messages) => messages.filter((m) => m.to.type === 'campaign'))
     );
 
-    this.haveRolls = this.messages.pipe(
-      map((mailbox) =>
-        Object.entries(mailbox.characters).reduce(
-          (acc, [characterId, messageList]) => ({
-            ...acc,
-            [characterId]: messageList.some(
-              (message) =>
-                message.state === 'new' && message.messageType === 'rollRequest'
-            ),
-          }),
-          {}
+    this.haveRolls = combineLatest([
+      this.myCharacters,
+      this.requiredRolls,
+    ]).pipe(
+      map(([characters, messages]) =>
+        messages.reduce(
+          (acc, curr) => ({ ...acc, [curr.to.id]: true }),
+          characters.reduce((acc, curr) => ({ ...acc, [curr.id]: false }), {})
         )
       ),
       startWith({})

@@ -14,6 +14,7 @@ export class CardComponent {
   @Input() character: Character;
   @Input() campaign: Campaign;
   @Input() expanded = false;
+  unlocked = false;
   levels = {
     inept: 3,
     unskilled: 2,
