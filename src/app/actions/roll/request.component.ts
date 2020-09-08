@@ -26,17 +26,21 @@ export class RequestComponent implements OnInit {
   async trigger(e: MouseEvent) {
     const result = await this.rollService.trigger(this.roll, this.character);
     await this.messageService.mark(this.roll, 'viewed');
-    const patch: Partial<PlayerCharacter> = {
-      initiative: result.result,
-    };
+    const patch: Partial<PlayerCharacter> = {};
+    if (result.skill.type === 'initiative') {
+      patch.initiative = result.result;
+    }
     if (result.effort > 0) {
       patch[`attributes.${result.attribute}.current`] = Math.max(
         0,
         this.character.attributes[result.attribute].current - result.effort
       );
+      if (result.skill.type === 'attack' || result.skill.type === 'noncombat') {
+        patch.initiative = this.character.initiative + result.effort;
+      }
     }
     await this.characterService.update(this.character.id, patch);
-    result.description = `${this.character.name} rolled ${result.result} for initiative.`;
+    result.description = `${this.character.name} rolled ${result.result} for  ${result.skill.type}.`;
     await this.messageService.send(result);
   }
 }

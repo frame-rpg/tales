@@ -7,7 +7,7 @@ import { DefendComponent } from './defend/defend.component';
 import { InitiativeComponent } from './initiative/initiative.component';
 import { MaterialModule } from '../core/material/material.module';
 import { NgModule } from '@angular/core';
-import { RequestComponent } from './initiative/request.component';
+import { RequestComponent } from './roll/request.component';
 import { RollComponent } from './roll/roll.component';
 
 @NgModule({
