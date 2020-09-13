@@ -1,6 +1,9 @@
 <div *ngIf="auth.user | async as user; else showLogin" class="root">
   <mat-toolbar color="primary">
     <h1>Tales</h1>
+    <button mat-icon-button class="pushRight" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
   </mat-toolbar>
   <div *ngIf="user.emailVerified">
     <router-outlet></router-outlet>

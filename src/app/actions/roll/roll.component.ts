@@ -47,7 +47,9 @@ export class RollComponent implements OnDestroy {
       () => this.validate()
     );
     if (this.skill && this.skill.attributes.length === 1) {
-      this.attribute = this.data.character.attributes[this.skill.attributes[0]];
+      this.selectAttribute(
+        this.data.character.attributes[this.skill.attributes[0]]
+      );
     }
   }
 

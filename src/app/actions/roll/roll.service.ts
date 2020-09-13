@@ -2,7 +2,6 @@ import { RollComplete, RollRequest } from 'types/message';
 
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MessageService } from 'src/app/data/message.service';
 import { RollComponent } from './roll.component';
 import { SkilledCharacter } from 'types/character';
 import { take } from 'rxjs/operators';
@@ -16,10 +15,7 @@ interface DialogInput {
   providedIn: 'root',
 })
 export class RollService {
-  constructor(
-    private messageService: MessageService,
-    private dialogService: MatDialog
-  ) {}
+  constructor(private dialogService: MatDialog) {}
 
   async trigger(
     roll: RollRequest,
