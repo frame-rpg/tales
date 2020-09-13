@@ -11,6 +11,7 @@ import {
   switchMap,
 } from 'rxjs/operators';
 
+import { AttackService } from 'src/app/actions/attack/attack.service';
 import { Campaign } from 'types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
 import { Character } from 'types/character';
@@ -41,6 +42,7 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
     private campaignService: CampaignService,
     private characterService: CharacterService,
     private messageService: MessageService,
+    private attackService: AttackService,
     private route: ActivatedRoute
   ) {}
 
@@ -91,5 +93,9 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
     this.campaignMessages = this.messages.pipe(
       map((messages) => messages.filter((m) => m.to.type === 'campaign'))
     );
+  }
+
+  async attack(character: Character, campaign: Campaign) {
+    const attack = await this.attackService.trigger(character, campaign);
   }
 }

@@ -6,6 +6,11 @@
         <ng-template mat-tab-label>
           {{ character.name }}
         </ng-template>
+        <div class="actionRow" *ngIf="campaign | async as campaignScalar">
+          <button mat-raised-button (click)="attack(character, campaignScalar)">
+            Attack with {{character.name}}
+          </button>
+        </div>
         <character-card [expanded]="true" [character]="character"
             [campaign]="campaign">
         </character-card>

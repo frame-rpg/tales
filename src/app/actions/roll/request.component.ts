@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import { AttackService } from '../attack/attack.service';
 import { CharacterService } from 'src/app/data/character.service';
 import { DefendService } from '../defend/defend.service';
 import { HealthService } from '../health/health.service';
@@ -24,6 +25,7 @@ export class RequestComponent implements OnInit {
     private characterService: CharacterService,
     private defendService: DefendService,
     private healthService: HealthService,
+    private attackService: AttackService,
     private initiativeService: InitiativeService
   ) {}
 
@@ -31,12 +33,6 @@ export class RequestComponent implements OnInit {
 
   async trigger(e: MouseEvent) {
     const result = await this.rollService.trigger(this.roll, this.character);
-    await this.characterService.update(this.character, {
-      [`attributes.${result.attribute}.current`]: Math.max(
-        0,
-        this.character.attributes[result.attribute].current - result.effort
-      ),
-    });
     if (result) {
       if (result.skill.type === 'defense') {
         await this.defendService.handle(this.character, this.roll, result);
@@ -44,12 +40,18 @@ export class RequestComponent implements OnInit {
         await this.initiativeService.handle(this.character, this.roll, result);
       } else if (result.skill.type === 'health') {
         await this.healthService.handle(this.character, this.roll, result);
+      } else if (result.skill.type === 'attack') {
+        await this.attackService.handle(this.character, this.roll, result);
       } else {
         if (result.effort > 0) {
-          if (
-            result.skill.type === 'attack' ||
-            result.skill.type === 'noncombat'
-          ) {
+          await this.characterService.update(this.character, {
+            [`attributes.${result.attribute}.current`]: Math.max(
+              0,
+              this.character.attributes[result.attribute].current -
+                result.effort
+            ),
+          });
+          if (result.skill.type === 'noncombat') {
             await this.characterService.update(this.character, {
               initiative: this.character.initiative + result.effort,
             });

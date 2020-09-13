@@ -2,31 +2,30 @@ import { Character, SkilledCharacter } from 'types/character';
 import { RollComplete, RollRequest } from 'types/message';
 
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AttackComponent } from './attack.component';
 import { CampaignId } from 'types/idtypes';
 import { CharacterService } from 'src/app/data/character.service';
-import { DefendComponent } from './defend.component';
-import { HealthService } from '../health/health.service';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { MessageService } from 'src/app/data/message.service';
+import { RollService } from '../roll/roll.service';
 import { idPluck } from 'src/app/data/util';
 import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DefendService {
+export class AttackService {
   constructor(
     private dialogService: MatDialog,
     private messageService: MessageService,
     private characterService: CharacterService,
-    private healthService: HealthService
+    private rollService: RollService
   ) {}
 
   async trigger(character: Character, campaign: CampaignId) {
     const result = await this.dialogService
-      .open(DefendComponent)
+      .open(AttackComponent)
       .afterClosed()
       .pipe(take(1))
       .toPromise();
@@ -34,10 +33,11 @@ export class DefendService {
       const rollRequest: Omit<RollRequest, 'messageId'> = {
         messageType: 'rollRequest',
         at: new Date(),
-        type: 'defense',
-        description: 'Defense Check',
+        type: 'attack',
+        description: 'Attack Check',
         skillModifier: 0,
         target: result.target,
+        initiative: result.initiative,
         damage: result.damage,
         conditionalEdge: 0,
         state: 'new',
@@ -47,13 +47,17 @@ export class DefendService {
       if (result.modifier) {
         rollRequest.skillModifier = result.modifier;
       }
-      await this.messageService.send(rollRequest);
+      const rollResult = await this.rollService.trigger(
+        rollRequest,
+        character as SkilledCharacter
+      );
+      await this.handle(character as SkilledCharacter, rollRequest, rollResult);
     }
   }
 
   async handle(
     character: SkilledCharacter,
-    request: RollRequest,
+    request: Omit<RollRequest, 'messageId'>,
     result: Omit<RollComplete, 'messageId'>
   ) {
     await this.messageService.send({
@@ -61,25 +65,20 @@ export class DefendService {
       description: `${character.name} rolled ${result.result} for ${
         result.skill.type
       } (target: ${request.target}). ${
-        result.success ? 'Success!' : 'Failure.'
+        result.success
+          ? result.result - request.target + request.damage + ' damage.'
+          : 'Failure.'
       }`,
     });
+    const patch = {
+      initiative: character.initiative + request.initiative + result.effort,
+    };
     if (result.effort) {
-      const patch: any = {};
       patch[`attributes.${result.attribute}.current`] = Math.max(
         0,
         character.attributes[result.attribute].current - result.effort
       );
-      patch.initiative = character.initiative + result.effort;
-      await this.characterService.update(character, patch);
     }
-
-    if (!result.success) {
-      await this.healthService.trigger(
-        character,
-        request.from as CampaignId,
-        request.damage + request.target - result.result
-      );
-    }
+    await this.characterService.update(character, patch);
   }
 }

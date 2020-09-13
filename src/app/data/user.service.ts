@@ -1,4 +1,4 @@
-import { map, take } from 'rxjs/operators';
+import { filter, map, switchMap, take } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -10,10 +10,19 @@ import { firestore } from 'firebase';
   providedIn: 'root',
 })
 export class UserService {
+  currentUser: User;
+
   constructor(
     private firestore: AngularFirestore,
     private auth: AngularFireAuth
-  ) {}
+  ) {
+    this.auth.user
+      .pipe(
+        filter((v) => !!v),
+        switchMap((user) => this.get(user.uid))
+      )
+      .subscribe((user) => (this.currentUser = user));
+  }
 
   list() {
     return this.firestore

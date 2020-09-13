@@ -26,6 +26,7 @@ export interface RollRequest extends BaseMessage {
   skills?: string[];
   target?: number;
   damage?: number;
+  initiative?: number;
   attributes?: AttributeName[];
 }
 

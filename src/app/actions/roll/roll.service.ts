@@ -7,7 +7,7 @@ import { SkilledCharacter } from 'types/character';
 import { take } from 'rxjs/operators';
 
 interface DialogInput {
-  roll: RollRequest;
+  roll: Omit<RollRequest, 'messageId'>;
   character: SkilledCharacter;
 }
 
@@ -18,7 +18,7 @@ export class RollService {
   constructor(private dialogService: MatDialog) {}
 
   async trigger(
-    roll: RollRequest,
+    roll: Omit<RollRequest, 'messageId'>,
     character: SkilledCharacter
   ): Promise<Omit<RollComplete, 'messageId'>> {
     const result = await this.dialogService

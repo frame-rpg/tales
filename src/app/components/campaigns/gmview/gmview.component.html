@@ -1,6 +1,6 @@
 <div class="main">
   <div class="left">
-    <div
+    <div class="characterBox mat-elevation-z2"
         *ngFor="let character of allCharacters | async; trackBy:('characterId' | trackByProperty)">
       <character-card (click)="zoom($event, character)" [character]="character"
           [campaign]="campaign">

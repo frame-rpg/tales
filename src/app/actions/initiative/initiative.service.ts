@@ -67,9 +67,17 @@ export class InitiativeService {
     request: RollRequest,
     result: Omit<RollComplete, 'messageId'>
   ) {
-    await this.characterService.update(character, {
+    const patch: any = {
       initiative: result.result,
-    });
+    };
+    if (result.effort) {
+      patch[`attributes.${result.attribute}.current`] = Math.max(
+        0,
+        character.attributes[result.attribute].current - result.effort
+      );
+    }
+    await this.characterService.update(character, patch);
+
     result.description = `${character.name} rolled ${result.result} for initiative`;
     await this.messageService.send(result);
   }
