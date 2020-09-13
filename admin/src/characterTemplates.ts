@@ -75,7 +75,32 @@ export const companionTemplate: NewCompanion = {
       current: 5,
     },
   },
-  skills: [],
+  skills: [
+    {
+      id: 'attack',
+      name: 'Attack',
+      description: 'Companion Attack Skill',
+      attributes: ['loyalty'],
+      type: 'attack',
+      level: 'proficient',
+    },
+    {
+      id: 'defense',
+      name: 'Defense',
+      description: 'Companion Defense Skill',
+      attributes: ['loyalty'],
+      type: 'defense',
+      level: 'proficient',
+    },
+    {
+      id: 'health',
+      name: 'Health',
+      description: 'Companion Health Check',
+      attributes: ['health'],
+      type: 'health',
+      level: 'proficient',
+    },
+  ],
   abilities: [],
 };
 

@@ -1,13 +1,15 @@
-import { BaseRoll, Roll } from 'types/event';
-import { Campaign, NewCampaign } from 'types/campaign';
 import { filter, map, switchMap } from 'rxjs/operators';
 
+import { AclType } from 'types/acl';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Campaign } from 'types/campaign';
+import { CampaignId } from 'types/idtypes';
 import { Character } from 'types/character';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserService } from './user.service';
+import { addId } from './rxutil';
 import { firestore } from 'firebase/app';
 
 @Injectable({
@@ -20,47 +22,27 @@ export class CampaignService {
     private userService: UserService
   ) {}
 
-  list() {
+  list(acls: AclType[] = ['read', 'write', 'admin']) {
     return this.auth.user.pipe(
       switchMap((user) =>
         this.firestore
           .collection<Campaign>('campaigns', (ref) =>
-            ref.where(`acl.${user.email}`, 'in', ['read', 'write', 'admin'])
+            ref.where(`acl.${user.email}`, 'in', acls)
           )
-          .valueChanges({ idField: 'id' })
+          .valueChanges({ idField: 'campaignId' })
       )
     );
   }
 
-  gm(campaign: Observable<Campaign>) {
-    return campaign.pipe(
-      map(({ acl }) =>
-        Object.entries(acl)
-          .filter(([, level]) => level === 'admin')
-          .map(([id]) => id)
-      ),
-      filter((gms) => gms.length > 0),
-      map((gms) => gms[0]),
-      switchMap((gm) => this.userService.get(gm))
-    );
-  }
-
-  get(id: string) {
-    return this.firestore.doc<Campaign>(`/campaigns/${id}`).valueChanges();
-  }
-
-  update(campaign: Partial<Campaign> & { id: string }) {
-    return this.firestore.doc(`/campaigns/${campaign.id}`).update(campaign);
-  }
-
-  characters({ id, characters }: { id: string; characters: string[] }) {
+  get(id: CampaignId) {
     return this.firestore
-      .collection<Character>(`/characters`, (query) =>
-        query
-          .where(firestore.FieldPath.documentId(), 'in', characters)
-          .where('campaign', '==', id)
-      )
-      .valueChanges({ idField: 'id' });
+      .doc<Campaign>(`/campaigns/${id.campaignId}`)
+      .snapshotChanges()
+      .pipe(addId('campaignId'));
+  }
+
+  update(id: CampaignId, patch: Partial<Campaign>) {
+    return this.firestore.doc(`/campaigns/${id.campaignId}`).update(patch);
   }
 
   usersCharacters(campaignId: string): Observable<Character[]> {
@@ -75,26 +57,5 @@ export class CampaignService {
           .valueChanges({ idField: 'id' })
       )
     );
-  }
-
-  doRoll(roll: Roll) {
-    return this.firestore.doc<Roll>(`/rolls/${roll.id}`).set(roll);
-  }
-
-  requestRoll(roll: BaseRoll) {
-    return this.firestore.collection('/rolls').add(roll);
-  }
-
-  listRolls(id: string) {
-    return this.firestore
-      .collection<Roll>(`/rolls`, (query) => query.where('campaign', '==', id))
-      .valueChanges({ idField: 'id' });
-  }
-
-  async create(campaign: NewCampaign) {
-    const user = await this.auth.currentUser;
-    const toAdd = { ...campaign };
-    toAdd.acl[user.email] = 'admin';
-    return this.firestore.collection('/campaigns').add(toAdd);
   }
 }

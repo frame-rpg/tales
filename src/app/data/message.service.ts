@@ -1,9 +1,5 @@
-import {
-  Message,
-  MessageAddress,
-  MessageState,
-  SentMessage,
-} from '../../../types/message';
+import { CharacterCampaignId, Id, OwnedCharacterId } from 'types/idtypes';
+import { Message, MessageState } from '../../../types/message';
 import { Observable, combineLatest } from 'rxjs';
 import { map, publishReplay, refCount } from 'rxjs/operators';
 
@@ -21,25 +17,37 @@ export class MessageService {
     private auth: AngularFireAuth
   ) {}
 
+  private addressString(address: Id): string {
+    if (address.type === 'campaign') {
+      return `/campaigns/${address.campaignId}/messages`;
+    } else if (address.type === 'user') {
+      return `/users/${address.userId}/messages`;
+    } else if (address.type === 'character' && address.parent === 'campaign') {
+      return `/campaigns/${address.campaignId}/characters/${address.characterId}/messages`;
+    } else {
+      return `/users/${address.userId}/characters/${address.characterId}/messages`;
+    }
+  }
+
   async send(message: Message) {
     await this.firestore
-      .collection(`/${message.to.type}s/${message.to.id}/messages`)
+      .collection(this.addressString(message.to))
       .add(message);
   }
 
-  async mark(message: SentMessage, state: MessageState) {
+  async mark(message: Message, state: MessageState) {
     await this.firestore
-      .doc(`/${message.to.type}s/${message.to.id}/messages/${message.id}`)
+      .doc(`${this.addressString(message.to)}/${message.messageId}`)
       .update({ state });
   }
 
-  list(address: MessageAddress) {
+  list(address: Id) {
     return this.firestore
-      .collection<Message>(`/${address.type}s/${address.id}/messages`)
-      .valueChanges({ idField: 'id' }) as Observable<Message[]>;
+      .collection<Message>(`${this.addressString(address)}`)
+      .valueChanges({ idField: 'messageId' }) as Observable<Message[]>;
   }
 
-  fetchAll(addresses: MessageAddress[]) {
+  fetchAll(addresses: Id[]) {
     return combineLatest(addresses.map((address) => this.list(address))).pipe(
       map((mailboxes) => mailboxes.flat()),
       map((mailbox) =>

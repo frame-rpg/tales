@@ -12,7 +12,7 @@ service cloud.firestore {
     }
 
     function getRole(rsc) {
-      return rsc.data.acl[request.auth.token.email];
+      return rsc.data.acl[request.auth.uid];
     }
 
     function isOneOfRoles(rsc, array) {

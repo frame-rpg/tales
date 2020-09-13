@@ -1,14 +1,12 @@
-import { NewCharacterBase } from './character_base';
+import { CharacterBase } from './character_base';
 
-export interface NewNonplayerCharacter extends NewCharacterBase {
-  type: 'nonplayer';
+export interface NonplayerCharacter extends CharacterBase {
+  subtype: 'nonplayer';
   attack: number;
   defend: number;
   health: number;
   armor: number;
   baseInitiative: number;
-}
-
-export interface NonplayerCharacter extends NewNonplayerCharacter {
-  id: string;
+  campaignId: string;
+  parent: 'campaign';
 }

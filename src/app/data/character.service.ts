@@ -1,10 +1,12 @@
-import { Character, NewCharacter, SkilledCharacter } from 'types/character';
+import { CampaignId, CharacterId, UserId } from 'types/idtypes';
 import { publishReplay, refCount, switchMap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Character } from 'types/character';
 import { Injectable } from '@angular/core';
-import { RulesService } from './rules.service';
+import { Observable } from 'rxjs';
+import { addId } from './rxutil';
 
 @Injectable({
   providedIn: 'root',
@@ -12,43 +14,39 @@ import { RulesService } from './rules.service';
 export class CharacterService {
   constructor(
     private firestore: AngularFirestore,
-    private auth: AngularFireAuth,
-    private rulesService: RulesService
+    private auth: AngularFireAuth
   ) {}
 
-  list() {
-    return this.auth.user.pipe(
-      switchMap((user) =>
-        this.firestore
-          .collection<Character>('characters', (ref) =>
-            ref.where(`acl.${user.email}`, 'in', ['read', 'write', 'admin'])
-          )
-          .valueChanges({ idField: 'id' })
-      )
-    );
-  }
-
-  get(id: string) {
-    return this.firestore
-      .doc<Character>(`/characters/${id}`)
-      .valueChanges()
-      .pipe(publishReplay(1), refCount());
-  }
-
-  update(id: string, character: Partial<Character>) {
-    return this.firestore.doc(`/characters/${id}`).update(character);
-  }
-
-  async create(character: NewCharacter, options: { inCampaign?: string } = {}) {
-    const user = await this.auth.currentUser;
-    const toAdd = { ...character };
-    toAdd.acl[user.email] = 'admin';
-    if (options?.inCampaign) {
-      return this.firestore
-        .collection(`/campaigns/${options.inCampaign}/characters`)
-        .add(toAdd);
+  private containerAddress(id: UserId | CampaignId): string {
+    if (id.type === 'user') {
+      return `/users/${id.userId}/characters`;
     } else {
-      return this.firestore.collection('/characters').add(toAdd);
+      return `/campaigns/${id.campaignId}/characters`;
     }
+  }
+
+  private characterAddress(id: CharacterId): string {
+    if (id.parent === 'campaign') {
+      return `/campaigns/${id.campaignId}/characters/${id.characterId}`;
+    } else {
+      return `/users/${id.userId}/characters/${id.characterId}`;
+    }
+  }
+
+  list(id: UserId | CampaignId) {
+    return this.firestore
+      .collection<Character>(this.containerAddress(id))
+      .valueChanges({ idField: 'characterId' });
+  }
+
+  get(id: CharacterId): Observable<Character> {
+    return this.firestore
+      .doc<Character>(this.characterAddress(id))
+      .snapshotChanges()
+      .pipe(addId('characterId'), publishReplay(1), refCount());
+  }
+
+  update(id: CharacterId, character: Partial<Character>) {
+    return this.firestore.doc(this.characterAddress(id)).update(character);
   }
 }

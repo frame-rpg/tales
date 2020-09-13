@@ -2,22 +2,18 @@ import { Timestamp } from '@firebase/firestore-types';
 
 import { SkillType, CharacterSkill } from './skill';
 import { AttributeName } from './attribute';
+import { Id } from './idtypes';
 
 export type MessageType = 'rollRequest' | 'rollComplete' | 'say';
 export type MessageTarget = 'campaign' | 'character';
 export type MessageState = 'new' | 'viewed' | 'archived';
 
-export interface MessageAddress {
-  type: 'campaign' | 'character';
-  id: string;
-}
-
 export interface BaseMessage {
-  id?: string;
+  messageId: string;
   messageType: MessageType;
   state: MessageState;
-  to: MessageAddress;
-  from: MessageAddress;
+  to: Id;
+  from: Id;
   description: string;
   at: Date | Timestamp;
 }
@@ -47,5 +43,3 @@ export interface Say extends BaseMessage {
 }
 
 export type Message = RollRequest | RollComplete | Say;
-
-export type SentMessage = Message & { id: string };

@@ -1,21 +1,17 @@
-import { NewCharacterBase } from './character_base';
-import { Attribute } from './attribute';
+import { CharacterBase } from './character_base';
+import { Attribute, Health, Loyalty } from './attribute';
 import { CharacterSkill } from './skill';
 
-export interface NewCompanion extends NewCharacterBase {
-  type: 'companion';
+export interface Companion extends CharacterBase {
+  subtype: 'companion';
   attack: number;
   defend: number;
   baseInitiative: number;
   attributes: {
-    health: Attribute & { name: 'health' };
-    loyalty: Attribute & { name: 'loyalty' };
+    health: Health;
+    loyalty: Loyalty;
   };
   armor: number;
   skills?: CharacterSkill[];
   abilities?: string[];
-}
-
-export interface Companion extends NewCompanion {
-  id: string;
 }

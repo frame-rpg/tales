@@ -17,7 +17,7 @@ import { Character } from 'types/character';
 import { MessageService } from 'src/app/data/message.service';
 import { Roll } from 'types/event';
 import { RollService } from 'src/app/actions/roll/roll.service';
-import { coerceToDate } from 'src/app/data/dates';
+import { coerceToDate } from 'src/app/data/util';
 
 @Component({
   selector: 'player',

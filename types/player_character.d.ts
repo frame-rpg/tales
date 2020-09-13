@@ -1,20 +1,16 @@
-import { NewCharacterBase } from './character_base';
-import { Attribute } from './attribute';
+import { CharacterBase } from './character_base';
+import { Speed, Might, Focus, Conviction, Health } from './attribute';
 import { CharacterSkill } from './skill';
 
-export interface NewPlayerCharacter extends NewCharacterBase {
-  type: 'player';
+export interface PlayerCharacter extends CharacterBase {
+  subtype: 'player';
   attributes: {
-    speed: Attribute & { name: 'speed' };
-    might: Attribute & { name: 'might' };
-    focus: Attribute & { name: 'focus' };
-    conviction: Attribute & { name: 'conviction' };
-    health: Attribute & { name: 'health' };
+    speed: Speed;
+    might: Might;
+    focus: Focus;
+    conviction: Conviction;
+    health: Health;
   };
   skills: CharacterSkill[];
   experience?: number;
-}
-
-export interface PlayerCharacter extends NewPlayerCharacter {
-  id: string;
 }

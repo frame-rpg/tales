@@ -16,7 +16,7 @@ export type SkillType =
   | 'health';
 
 export interface Skill {
-  id: string;
+  skillId: string;
   name: string;
   description: string;
   attributes: AttributeName[];

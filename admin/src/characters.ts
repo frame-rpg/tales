@@ -71,9 +71,8 @@ const prePlayers: PlayerCharacter[] = [
     campaign: 'c1',
     name: 'Ry McGinnis',
     acl: {
-      'cljacobs1975@gmail.com': 'admin',
-      'eric.eslinger+tales@gmail.com': 'admin',
-      'eric.eslinger@manyminds.org': 'admin',
+      UJxxtQzaOzWEFT2vtniCaDQdk2u2: 'admin',
+      RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
     },
     description: '',
     type: 'player',
@@ -115,9 +114,7 @@ const prePlayers: PlayerCharacter[] = [
     id: 'connie',
     campaign: 'c1',
     name: 'Connecticut (Connie) Butler',
-    acl: {
-      'megan@albertelli.com': 'admin',
-    },
+    acl: {},
     description: '',
     type: 'player',
     attributes: {
@@ -151,9 +148,7 @@ const prePlayers: PlayerCharacter[] = [
     id: 'momentusUndergrave',
     campaign: 'c1',
     name: 'Momentus Undergrave',
-    acl: {
-      'llahwehttam@gmail.com': 'admin',
-    },
+    acl: {},
     description: '',
     type: 'player',
     attributes: {
@@ -223,9 +218,7 @@ const prePlayers: PlayerCharacter[] = [
     id: 'thomson',
     campaign: 'c1',
     name: 'Thomson Anning',
-    acl: {
-      'phil.bowen@gmail.com': 'admin',
-    },
+    acl: {},
     description: '',
     type: 'player',
     attributes: {
@@ -276,9 +269,8 @@ export const companions: Companion[] = [
     name: 'Sparks',
     description: 'Ornithomimid',
     acl: {
-      'cljacobs1975@gmail.com': 'admin',
-      'eric.eslinger+tales@gmail.com': 'admin',
-      'eric.eslinger@manyminds.org': 'admin',
+      UJxxtQzaOzWEFT2vtniCaDQdk2u2: 'admin',
+      RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
     },
     type: 'companion',
     attack: 2,
@@ -324,9 +316,7 @@ export const companions: Companion[] = [
     campaign: 'c1',
     name: 'Dr. Fantabulous',
     description: 'Centrosaurus',
-    acl: {
-      'llahwehttam@gmail.com': 'admin',
-    },
+    acl: {},
     type: 'companion',
     attack: 1,
     defend: 6,
@@ -345,9 +335,7 @@ export const companions: Companion[] = [
     campaign: 'c1',
     name: 'Smammal',
     description: 'Small Mammal and Occasional Plot Device',
-    acl: {
-      'guy@albertelli.com': 'admin',
-    },
+    acl: {},
     type: 'companion',
     attack: 1,
     defend: 3,
@@ -366,9 +354,7 @@ export const companions: Companion[] = [
     campaign: 'c1',
     name: 'Nugget 2.0',
     description: 'Raptor',
-    acl: {
-      'phil.bowen@gmail.com': 'admin',
-    },
+    acl: {},
     type: 'companion',
     skills: companionBaseSkills(),
     attack: 4,

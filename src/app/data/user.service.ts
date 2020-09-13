@@ -28,8 +28,12 @@ export class UserService {
       .pipe(map((v) => ({ id: v.payload.id, ...v.payload.data() } as User)));
   }
 
-  update(id: String, user: User) {
+  update(id: String, user: Partial<User>) {
     return this.firestore.doc(`users/${id}`).update(user);
+  }
+
+  create(id: String, user: Partial<User>) {
+    return this.firestore.doc(`users/${id}`).set(user);
   }
 
   getAll(users: string[]) {
@@ -70,8 +74,17 @@ export class UserService {
       return this.update(user.uid, {
         name: user.displayName,
         email: user.email,
-        id: user.uid,
+        userId: user.uid,
         avatar: user.photoURL,
+      });
+    } else {
+      return this.create(user.uid, {
+        name: user.displayName,
+        email: user.email,
+        userId: user.uid,
+        rollPreference: 'ask',
+        avatar: user.photoURL,
+        premium: false,
       });
     }
   }
