@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { Character } from 'types/character';
+import { CharacterId } from 'types/idtypes';
 import { CharacterService } from 'src/app/data/character.service';
 import { Message } from 'types/message';
 import { Observable } from 'rxjs';
@@ -18,6 +19,6 @@ export class MessageComponent implements OnInit {
   constructor(private characterService: CharacterService) {}
 
   ngOnInit() {
-    this.character = this.characterService.get(this.message.to.id);
+    this.character = this.characterService.get(this.message.to as CharacterId);
   }
 }

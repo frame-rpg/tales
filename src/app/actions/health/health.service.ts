@@ -53,7 +53,7 @@ export class HealthService {
   async handle(
     character: SkilledCharacter,
     request: RollRequest,
-    result: RollComplete
+    result: Omit<RollComplete, 'messageId'>
   ) {
     const patch: Partial<SkilledCharacter> = {};
     if (result.effort > 0) {

@@ -56,4 +56,8 @@ export class CharacterService {
   update(id: CharacterId, character: Partial<Character>) {
     return this.firestore.doc(this.characterAddress(id)).update(character);
   }
+
+  setInitiative(id: CharacterId, initiative: number) {
+    return this.update(id, { initiative });
+  }
 }

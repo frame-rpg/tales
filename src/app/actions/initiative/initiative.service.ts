@@ -36,17 +36,12 @@ export class InitiativeService {
             character.subtype === 'nonplayer' ||
             character.subtype === 'companion'
           ) {
-            await this.firestore
-              .doc(`/characters/${character.characterId}`)
-              .update({
-                initiative: character.baseInitiative,
-              });
+            await this.characterService.setInitiative(
+              character,
+              character.baseInitiative
+            );
           } else {
-            await this.firestore
-              .doc(`/characters/${character.characterId}`)
-              .update({
-                initiative: 0,
-              });
+            await this.characterService.setInitiative(character, 0);
             const rollRequest: Omit<RollRequest, 'messageId'> = {
               messageType: 'rollRequest',
               type: 'initiative',
@@ -70,7 +65,7 @@ export class InitiativeService {
   async handle(
     character: PlayerCharacter,
     request: RollRequest,
-    result: RollComplete
+    result: Omit<RollComplete, 'messageId'>
   ) {
     const patch: Partial<PlayerCharacter> = {};
     if (result.effort > 0) {

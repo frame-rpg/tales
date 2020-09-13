@@ -10,7 +10,7 @@ import { RollRequest } from 'types/message';
 import { RollService } from '../roll/roll.service';
 
 @Component({
-  selector: 'initiative-request',
+  selector: 'tales-roll-request',
   templateUrl: './request.component.html',
   styleUrls: ['./request.component.scss'],
 })
@@ -31,7 +31,7 @@ export class RequestComponent implements OnInit {
 
   async trigger(e: MouseEvent) {
     const result = await this.rollService.trigger(this.roll, this.character);
-    await this.characterService.update(this.character.id, {
+    await this.characterService.update(this.character, {
       [`attributes.${result.attribute}.current`]: Math.max(
         0,
         this.character.attributes[result.attribute].current - result.effort
@@ -50,7 +50,7 @@ export class RequestComponent implements OnInit {
             result.skill.type === 'attack' ||
             result.skill.type === 'noncombat'
           ) {
-            await this.characterService.update(this.character.id, {
+            await this.characterService.update(this.character, {
               initiative: this.character.initiative + result.effort,
             });
             await this.messageService.send({

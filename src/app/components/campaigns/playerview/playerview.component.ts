@@ -32,7 +32,6 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
   messages: Observable<Message[]>;
   campaignMessages: Observable<Message[]>;
   requiredRolls: Observable<RollRequest[]>;
-  haveRolls: Observable<Record<string, boolean>>;
   destroyingSubject = new Subject<boolean>();
   destroying = this.destroyingSubject
     .asObservable()
@@ -53,7 +52,7 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
     this.campaign = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.campaignService.get({
-          campaignId: params.get('id'),
+          campaignId: params.get('campaignId'),
           type: 'campaign',
         })
       ),
@@ -91,25 +90,6 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
     ) as Observable<RollRequest[]>;
     this.campaignMessages = this.messages.pipe(
       map((messages) => messages.filter((m) => m.to.type === 'campaign'))
-    );
-
-    this.haveRolls = combineLatest([
-      this.myCharacters,
-      this.requiredRolls,
-    ]).pipe(
-      map(([characters, messages]) =>
-        messages.reduce(
-          (acc, curr) => ({
-            ...acc,
-            [(curr.to as CharacterId).characterId]: true,
-          }),
-          characters.reduce(
-            (acc, curr) => ({ ...acc, [curr.characterId]: false }),
-            {}
-          )
-        )
-      ),
-      startWith({})
     );
   }
 }

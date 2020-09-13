@@ -118,7 +118,7 @@ export class RollComponent implements OnDestroy {
   get skills() {
     if (this.roll.skills?.length > 0) {
       return this.data.character.skills.filter((skill) =>
-        this.roll.skills.includes(skill.id)
+        this.roll.skills.includes(skill.skillId)
       );
     } else {
       return this.data.character.skills.filter(
@@ -208,7 +208,7 @@ export class RollComponent implements OnDestroy {
 
   async selectSkill(event: MatSelectChange) {
     this._chosenSkill = this.data.character.skills.filter(
-      (skill) => skill.id === event.value
+      (skill) => skill.skillId === event.value
     )[0];
     if (this.attributes.length === 1) {
       this.selectAttribute({ ...event, value: this.attributes[0].name });
@@ -274,7 +274,7 @@ export class RollComponent implements OnDestroy {
   setRoll() {}
 
   finalize() {
-    const result: RollComplete = {
+    const result: Omit<RollComplete, 'messageId'> = {
       messageType: 'rollComplete',
       attribute: this.attribute.name,
       result: this.total,

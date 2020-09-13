@@ -7,16 +7,8 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    function getData(table, id) {
-      return get(/databases/$(database)/documents/$(table)/$(id))
-    }
-
     function getRole(rsc) {
       return rsc.data.acl[request.auth.uid];
-    }
-
-    function premium() {
-      return isSignedIn() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.premium == true;
     }
 
     function isOneOfRoles(rsc, array) {
@@ -33,17 +25,20 @@ service cloud.firestore {
 
     match /campaigns/{campaignId} {
 
+      function campaignDoc() {
+        return get(/databases/$(database)/documents/campaigns/$(campaignId));
+      }
       function campaignReader() {
-        return readAclZ(get(/databases/$(database)/documents/campaigns/$(campaignId)));
+        return readAclZ(campaignDoc());
       }
-
       function campaignWriter() {
-        return writeAclZ(get(/databases/$(database)/documents/campaigns/$(campaignId)));
+        return writeAclZ(campaignDoc());
       }
 
-      allow read: if campaignReader()
-      allow update: if campaignWriter()
-      allow create: if isSignedIn()
+      allow read: if readAclZ(resource)
+      allow update: if writeAclZ(resource)
+      allow create: if false
+      allow delete: if false
       match /messages/{messageId} {
         allow read: if campaignReader()
         allow create: if campaignReader()
@@ -55,8 +50,8 @@ service cloud.firestore {
           return get(/databases/$(database)/documents/campaigns/$(campaignId)/characters/$(characterId));
         }
         allow read: if campaignReader()
-        allow update: if campaignWriter() || readAclZ(resource)
-        allow create: if campaignWriter()
+        allow update: if campaignWriter() || writeAclZ(characterDoc())
+        allow create: if false
         allow delete: if false
         match /messages/{messageId} {
           allow read, write: if campaignWriter() || writeAclZ(characterDoc())
@@ -71,13 +66,13 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow read: if isSignedIn()
-      allow write: if userId == auth.uid && request.resource.data.premium === resource.data.premium
+      allow write: if userId == request.auth.uid && request.resource.data.premium == resource.data.premium
       match /messages/{messageId} {
-        allow read: if userId == auth.id
+        allow read: if userId == request.auth.id
         allow write: if isSignedIn()
       }
       match /characters/{characterId} {
-        allow read, write: if userId == auth.id
+        allow read, write: if userId == request.auth.id
       }
     }
 

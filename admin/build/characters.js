@@ -6,14 +6,14 @@ function skill(s, l) {
 function massageCharacter(character) {
     return {
         ...character,
-        skills: character.skills.filter((s, idx, ary) => ary.filter((ss) => ss.id === s.id).length === 1 ||
+        skills: character.skills?.filter((s, idx, ary) => ary.filter((ss) => ss.skillId === s.skillId).length === 1 ||
             s.level !== 'unskilled'),
     };
 }
 function companionBaseSkills() {
     return [
         {
-            id: 'attack',
+            skillId: 'attack',
             name: 'Attack',
             description: 'Companion Attack Skill',
             attributes: ['loyalty'],
@@ -21,7 +21,7 @@ function companionBaseSkills() {
             level: 'proficient',
         },
         {
-            id: 'defense',
+            skillId: 'defense',
             name: 'Defense',
             description: 'Companion Defense Skill',
             attributes: ['loyalty'],
@@ -29,7 +29,7 @@ function companionBaseSkills() {
             level: 'proficient',
         },
         {
-            id: 'health',
+            skillId: 'health',
             name: 'Health',
             description: 'Companion Health Check',
             attributes: ['health'],
@@ -53,16 +53,14 @@ function attr(v, e, n) {
 }
 const prePlayers = [
     {
-        id: 'ry',
-        campaign: 'c1',
         name: 'Ry McGinnis',
         acl: {
-            'cljacobs1975@gmail.com': 'admin',
-            'eric.eslinger+tales@gmail.com': 'admin',
-            'eric.eslinger@manyminds.org': 'admin',
+            UJxxtQzaOzWEFT2vtniCaDQdk2u2: 'admin',
+            RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
         },
         description: '',
-        type: 'player',
+        type: 'character',
+        subtype: 'player',
         attributes: {
             health: attr(10, 0, 'health'),
             might: attr(5, 0, 'might'),
@@ -98,14 +96,11 @@ const prePlayers = [
         initiative: 0,
     },
     {
-        id: 'connie',
-        campaign: 'c1',
         name: 'Connecticut (Connie) Butler',
-        acl: {
-            'megan@albertelli.com': 'admin',
-        },
+        acl: {},
         description: '',
-        type: 'player',
+        type: 'character',
+        subtype: 'player',
         attributes: {
             health: attr(10, 0, 'health'),
             might: attr(5, 0, 'might'),
@@ -134,14 +129,11 @@ const prePlayers = [
         initiative: 0,
     },
     {
-        id: 'momentusUndergrave',
-        campaign: 'c1',
         name: 'Momentus Undergrave',
-        acl: {
-            'llahwehttam@gmail.com': 'admin',
-        },
+        acl: {},
         description: '',
-        type: 'player',
+        type: 'character',
+        subtype: 'player',
         attributes: {
             health: attr(10, 0, 'health'),
             might: attr(5, 0, 'might'),
@@ -171,14 +163,13 @@ const prePlayers = [
         initiative: 0,
     },
     {
-        id: 'chad',
-        campaign: 'c1',
         name: 'Chad',
         acl: {
             'guy@albertelli.com': 'admin',
         },
         description: '',
-        type: 'player',
+        type: 'character',
+        subtype: 'player',
         attributes: {
             health: attr(10, 0, 'health'),
             might: attr(10, 2, 'might'),
@@ -206,14 +197,11 @@ const prePlayers = [
         initiative: 0,
     },
     {
-        id: 'thomson',
-        campaign: 'c1',
         name: 'Thomson Anning',
-        acl: {
-            'phil.bowen@gmail.com': 'admin',
-        },
+        acl: {},
         description: '',
-        type: 'player',
+        type: 'character',
+        subtype: 'player',
         attributes: {
             health: attr(10, 0, 'health'),
             might: attr(5, 0, 'might'),
@@ -255,16 +243,14 @@ export const players = prePlayers.map((v) => {
 });
 export const companions = [
     {
-        id: 'sparks',
-        campaign: 'c1',
         name: 'Sparks',
         description: 'Ornithomimid',
         acl: {
-            'cljacobs1975@gmail.com': 'admin',
-            'eric.eslinger+tales@gmail.com': 'admin',
-            'eric.eslinger@manyminds.org': 'admin',
+            UJxxtQzaOzWEFT2vtniCaDQdk2u2: 'admin',
+            RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
         },
-        type: 'companion',
+        type: 'character',
+        subtype: 'companion',
         attack: 2,
         defend: 2,
         armor: 0,
@@ -278,14 +264,13 @@ export const companions = [
         abilities: ['hands', 'birdseye'],
     },
     {
-        id: 'biscuit',
-        campaign: 'c1',
         name: 'Biscuit',
         description: 'Ankylosaur',
         acl: {
             'megan@albertelli.com': 'admin',
         },
-        type: 'companion',
+        type: 'character',
+        subtype: 'companion',
         attack: 2,
         defend: 2,
         armor: 6,
@@ -304,14 +289,11 @@ export const companions = [
         ],
     },
     {
-        id: 'drFanta',
-        campaign: 'c1',
         name: 'Dr. Fantabulous',
         description: 'Centrosaurus',
-        acl: {
-            'llahwehttam@gmail.com': 'admin',
-        },
-        type: 'companion',
+        acl: {},
+        type: 'character',
+        subtype: 'companion',
         attack: 1,
         defend: 6,
         armor: 10,
@@ -325,14 +307,11 @@ export const companions = [
         abilities: ['terrify', 'sturdyMount', 'mountedWeapon'],
     },
     {
-        id: 'smammal',
-        campaign: 'c1',
         name: 'Smammal',
         description: 'Small Mammal and Occasional Plot Device',
-        acl: {
-            'guy@albertelli.com': 'admin',
-        },
-        type: 'companion',
+        acl: {},
+        type: 'character',
+        subtype: 'companion',
         attack: 1,
         defend: 3,
         armor: 0,
@@ -346,14 +325,11 @@ export const companions = [
         abilities: ['hands', 'makingTheGMRegretHisLifeChoices'],
     },
     {
-        id: 'nugget',
-        campaign: 'c1',
         name: 'Nugget 2.0',
         description: 'Raptor',
-        acl: {
-            'phil.bowen@gmail.com': 'admin',
-        },
-        type: 'companion',
+        acl: {},
+        type: 'character',
+        subtype: 'companion',
         skills: companionBaseSkills(),
         attack: 4,
         defend: 1,

@@ -54,7 +54,7 @@ export class DefendService {
   async handle(
     character: SkilledCharacter,
     request: RollRequest,
-    result: RollComplete
+    result: Omit<RollComplete, 'messageId'>
   ) {
     await this.messageService.send({
       ...result,

@@ -5,7 +5,6 @@
           *ngFor="let character of myCharacters | async; trackBy:('characterId' | trackByProperty)">
         <ng-template mat-tab-label>
           {{ character.name }}
-          <mat-icon *ngIf="(haveRolls | async)[character.id]">casino</mat-icon>
         </ng-template>
         <character-card [expanded]="true" [character]="character"
             [campaign]="campaign">
@@ -15,9 +14,9 @@
   </div>
   <div class="right">
     <div class="requiredRoll" *ngFor="let roll of requiredRolls | async">
-      <initiative-request [roll]="roll"
-          [character]="(mappedCharacters | async)[roll.to.id]">
-      </initiative-request>
+      <tales-roll-request [roll]="roll"
+          [character]="(mappedCharacters | async)[roll.to.characterId]">
+      </tales-roll-request>
     </div>
     <message *ngFor="let message of campaignMessages | async"
         [message]="message">

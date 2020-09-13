@@ -1,13 +1,6 @@
 import { skillSeed } from './skills.js';
-export const campaignTemplate = {
-    name: '',
-    description: '',
-    acl: {},
-    skills: [],
-    characters: [],
-};
 export const campaign = {
-    id: 'c1',
+    type: 'campaign',
     name: 'Tales of Dinosaurs and Stuff',
     description: 'also Time Travel and Alien Spaceships',
     characters: [
@@ -23,14 +16,9 @@ export const campaign = {
         'nugget',
     ],
     acl: {
-        'eric.eslinger@gmail.com': 'admin',
-        'eric.eslinger+tales@gmail.com': 'read',
-        'eric.eslinger@manyminds.org': 'read',
-        'llahwehttam@gmail.com': 'read',
-        'guy@albertelli.com': 'read',
-        'megan@albertelli.com': 'read',
-        'cljacobs1975@gmail.com': 'read',
-        'phil.bowen@gmail.com': 'read',
+        E1gXs41G1mgiM441XXf14ac7ypb2: 'admin',
+        UJxxtQzaOzWEFT2vtniCaDQdk2u2: 'read',
+        RUEOViYBeHPUBClCUTQCmIhfrlT2: 'read',
     },
     skills: Object.values(skillSeed),
 };

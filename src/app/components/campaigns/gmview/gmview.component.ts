@@ -71,7 +71,7 @@ export class GmviewComponent implements OnInit, OnDestroy {
       switchMap((params: ParamMap) =>
         this.campaignService.get({
           type: 'campaign',
-          campaignId: params.get('id'),
+          campaignId: params.get('campaignId'),
         })
       ),
       publishReplay(1),

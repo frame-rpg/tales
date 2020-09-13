@@ -1,4 +1,4 @@
-import { RollComplete, RollRequest, SentMessage } from 'types/message';
+import { RollComplete, RollRequest } from 'types/message';
 
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,7 +24,7 @@ export class RollService {
   async trigger(
     roll: RollRequest,
     character: SkilledCharacter
-  ): Promise<RollComplete> {
+  ): Promise<Omit<RollComplete, 'messageId'>> {
     const result = await this.dialogService
       .open<RollComponent, DialogInput, RollComplete>(RollComponent, {
         data: { roll, character },

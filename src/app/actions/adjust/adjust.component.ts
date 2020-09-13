@@ -19,7 +19,7 @@ export class AdjustComponent {
   constructor(private characterService: CharacterService) {}
 
   fire() {
-    this.characterService.update(this.character.id, {
+    this.characterService.update(this.character, {
       [this.path]:
         this.increment === 0
           ? 0

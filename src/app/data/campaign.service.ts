@@ -3,11 +3,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Campaign } from 'types/campaign';
 import { CampaignId } from 'types/idtypes';
-import { Character } from 'types/character';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { addId } from './rxutil';
-import { firestore } from 'firebase/app';
 import { switchMap } from 'rxjs/operators';
 
 @Injectable({
