@@ -64,6 +64,11 @@ export class DefendService {
         result.success ? 'Success!' : 'Failure.'
       }`,
     });
+    if (result.effort) {
+      await this.characterService.update(character, {
+        initiative: character.initiative + result.effort,
+      });
+    }
     if (!result.success) {
       await this.healthService.trigger(
         character,
