@@ -39,7 +39,7 @@ export function pick<T, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> {
   );
 }
 
-export function idPluck<T extends Id>(id: T): Id {
+export function idPluck<T extends Id>(id: T): Id & Pick<T, 'type'> {
   if (id.type === 'campaign') {
     return pick(id as CampaignId, 'type', 'campaignId');
   } else if (id.type === 'character') {
