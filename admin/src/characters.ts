@@ -10,12 +10,14 @@ function skill(s: string, l: LevelName): CharacterSkill {
   return { ...skillSeed[s], level: l };
 }
 
-function massageCharacter(character: PlayerCharacter): PlayerCharacter {
+function massageCharacter(
+  character: Partial<PlayerCharacter>
+): Partial<PlayerCharacter> {
   return {
     ...character,
-    skills: character.skills.filter(
+    skills: character.skills?.filter(
       (s, idx, ary) =>
-        ary.filter((ss) => ss.id === s.id).length === 1 ||
+        ary.filter((ss) => ss.skillId === s.skillId).length === 1 ||
         s.level !== 'unskilled'
     ),
   };
@@ -24,7 +26,7 @@ function massageCharacter(character: PlayerCharacter): PlayerCharacter {
 function companionBaseSkills(): CharacterSkill[] {
   return [
     {
-      id: 'attack',
+      skillId: 'attack',
       name: 'Attack',
       description: 'Companion Attack Skill',
       attributes: ['loyalty'],
@@ -32,7 +34,7 @@ function companionBaseSkills(): CharacterSkill[] {
       level: 'proficient',
     },
     {
-      id: 'defense',
+      skillId: 'defense',
       name: 'Defense',
       description: 'Companion Defense Skill',
       attributes: ['loyalty'],
@@ -40,7 +42,7 @@ function companionBaseSkills(): CharacterSkill[] {
       level: 'proficient',
     },
     {
-      id: 'health',
+      skillId: 'health',
       name: 'Health',
       description: 'Companion Health Check',
       attributes: ['health'],
@@ -65,17 +67,16 @@ function attr<T extends AttributeName>(v: number, e: number, n: T) {
   };
 }
 
-const prePlayers: PlayerCharacter[] = [
+const prePlayers: Omit<PlayerCharacter, 'characterId' | 'campaignId'>[] = [
   {
-    id: 'ry',
-    campaign: 'c1',
     name: 'Ry McGinnis',
     acl: {
       UJxxtQzaOzWEFT2vtniCaDQdk2u2: 'admin',
       RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
     },
     description: '',
-    type: 'player',
+    type: 'character',
+    subtype: 'player',
     attributes: {
       health: attr(10, 0, 'health'),
       might: attr(5, 0, 'might'),
@@ -111,12 +112,11 @@ const prePlayers: PlayerCharacter[] = [
     initiative: 0,
   },
   {
-    id: 'connie',
-    campaign: 'c1',
     name: 'Connecticut (Connie) Butler',
     acl: {},
     description: '',
-    type: 'player',
+    type: 'character',
+    subtype: 'player',
     attributes: {
       health: attr(10, 0, 'health'),
       might: attr(5, 0, 'might'),
@@ -145,12 +145,11 @@ const prePlayers: PlayerCharacter[] = [
     initiative: 0,
   },
   {
-    id: 'momentusUndergrave',
-    campaign: 'c1',
     name: 'Momentus Undergrave',
     acl: {},
     description: '',
-    type: 'player',
+    type: 'character',
+    subtype: 'player',
     attributes: {
       health: attr(10, 0, 'health'),
       might: attr(5, 0, 'might'),
@@ -180,14 +179,13 @@ const prePlayers: PlayerCharacter[] = [
     initiative: 0,
   },
   {
-    id: 'chad',
-    campaign: 'c1',
     name: 'Chad',
     acl: {
       'guy@albertelli.com': 'admin',
     },
     description: '',
-    type: 'player',
+    type: 'character',
+    subtype: 'player',
     attributes: {
       health: attr(10, 0, 'health'),
       might: attr(10, 2, 'might'),
@@ -215,12 +213,11 @@ const prePlayers: PlayerCharacter[] = [
     initiative: 0,
   },
   {
-    id: 'thomson',
-    campaign: 'c1',
     name: 'Thomson Anning',
     acl: {},
     description: '',
-    type: 'player',
+    type: 'character',
+    subtype: 'player',
     attributes: {
       health: attr(10, 0, 'health'),
       might: attr(5, 0, 'might'),
@@ -258,21 +255,20 @@ const prePlayers: PlayerCharacter[] = [
   },
 ];
 
-export const players: PlayerCharacter[] = prePlayers.map((v) => {
+export const players = prePlayers.map((v) => {
   return massageCharacter(v);
 });
 
-export const companions: Companion[] = [
+export const companions: Omit<Companion, 'characterId' | 'campaignId'>[] = [
   {
-    id: 'sparks',
-    campaign: 'c1',
     name: 'Sparks',
     description: 'Ornithomimid',
     acl: {
       UJxxtQzaOzWEFT2vtniCaDQdk2u2: 'admin',
       RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
     },
-    type: 'companion',
+    type: 'character',
+    subtype: 'companion',
     attack: 2,
     defend: 2,
     armor: 0,
@@ -286,14 +282,13 @@ export const companions: Companion[] = [
     abilities: ['hands', 'birdseye'],
   },
   {
-    id: 'biscuit',
-    campaign: 'c1',
     name: 'Biscuit',
     description: 'Ankylosaur',
     acl: {
       'megan@albertelli.com': 'admin',
     },
-    type: 'companion',
+    type: 'character',
+    subtype: 'companion',
     attack: 2,
     defend: 2,
     armor: 6,
@@ -312,12 +307,11 @@ export const companions: Companion[] = [
     ],
   },
   {
-    id: 'drFanta',
-    campaign: 'c1',
     name: 'Dr. Fantabulous',
     description: 'Centrosaurus',
     acl: {},
-    type: 'companion',
+    type: 'character',
+    subtype: 'companion',
     attack: 1,
     defend: 6,
     armor: 10,
@@ -331,12 +325,11 @@ export const companions: Companion[] = [
     abilities: ['terrify', 'sturdyMount', 'mountedWeapon'],
   },
   {
-    id: 'smammal',
-    campaign: 'c1',
     name: 'Smammal',
     description: 'Small Mammal and Occasional Plot Device',
     acl: {},
-    type: 'companion',
+    type: 'character',
+    subtype: 'companion',
     attack: 1,
     defend: 3,
     armor: 0,
@@ -350,12 +343,11 @@ export const companions: Companion[] = [
     abilities: ['hands', 'makingTheGMRegretHisLifeChoices'],
   },
   {
-    id: 'nugget',
-    campaign: 'c1',
     name: 'Nugget 2.0',
     description: 'Raptor',
     acl: {},
-    type: 'companion',
+    type: 'character',
+    subtype: 'companion',
     skills: companionBaseSkills(),
     attack: 4,
     defend: 1,

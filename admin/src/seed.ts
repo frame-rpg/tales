@@ -1,12 +1,7 @@
-import { campaign, campaignTemplate } from './campaign.js';
-import {
-  companionTemplate,
-  nonplayerTemplate,
-  playerTemplate,
-} from './characterTemplates.js';
 import { companions, players } from './characters.js';
 
 import admin from 'firebase-admin';
+import { campaign } from './campaign.js';
 
 const app = admin.initializeApp({
   credential: admin.credential.applicationDefault(),
@@ -14,20 +9,23 @@ const app = admin.initializeApp({
   projectId: 'tales-280319',
 });
 
-await app.firestore().doc('/rules/templates').set({
-  player: playerTemplate,
-  nonplayer: nonplayerTemplate,
-  companion: companionTemplate,
-  campaign: campaignTemplate,
-});
-
-await app.firestore().doc(`/campaigns/${campaign.id}`).set(campaign);
+const c1 = await app.firestore().collection(`/campaigns`).add(campaign);
 
 await Promise.all([
   Promise.all(
-    players.map((p) => app.firestore().doc(`/characters/${p.id}`).set(p))
+    players.map((p) =>
+      app
+        .firestore()
+        .collection(`/campaigns/${c1.id}/characters`)
+        .add({ ...p, campaignId: c1.id })
+    )
   ),
   Promise.all(
-    companions.map((p) => app.firestore().doc(`/characters/${p.id}`).set(p))
+    companions.map((p) =>
+      app
+        .firestore()
+        .collection(`/campaigns/${c1.id}/characters`)
+        .add({ ...p, campaignId: c1.id })
+    )
   ),
 ]);

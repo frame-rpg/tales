@@ -1,12 +1,16 @@
-import { NewCompanion } from '../../types/companion';
-import { NewNonplayerCharacter } from '../../types/nonplayer_character';
-import { NewPlayerCharacter } from '../../types/player_character';
+import { Companion } from '../../types/companion';
+import { NonplayerCharacter } from '../../types/nonplayer_character';
+import { PlayerCharacter } from '../../types/player_character';
 
-export const playerTemplate: NewPlayerCharacter = {
+export const playerTemplate: Omit<
+  PlayerCharacter,
+  'characterId' | 'campaignId'
+> = {
   name: '',
   acl: {},
   description: '',
-  type: 'player',
+  type: 'character',
+  subtype: 'player',
   initiative: 0,
   experience: 0,
   skills: [],
@@ -49,14 +53,18 @@ export const playerTemplate: NewPlayerCharacter = {
   },
 };
 
-export const companionTemplate: NewCompanion = {
+export const companionTemplate: Omit<
+  Companion,
+  'characterId' | 'campaignId'
+> = {
   name: '',
   description: '',
   acl: {},
-  type: 'companion',
   attack: 0,
   defend: 0,
   armor: 0,
+  type: 'character',
+  subtype: 'companion',
   baseInitiative: 0,
   initiative: 0,
   attributes: {
@@ -77,7 +85,7 @@ export const companionTemplate: NewCompanion = {
   },
   skills: [
     {
-      id: 'attack',
+      skillId: 'attack',
       name: 'Attack',
       description: 'Companion Attack Skill',
       attributes: ['loyalty'],
@@ -85,7 +93,7 @@ export const companionTemplate: NewCompanion = {
       level: 'proficient',
     },
     {
-      id: 'defense',
+      skillId: 'defense',
       name: 'Defense',
       description: 'Companion Defense Skill',
       attributes: ['loyalty'],
@@ -93,7 +101,7 @@ export const companionTemplate: NewCompanion = {
       level: 'proficient',
     },
     {
-      id: 'health',
+      skillId: 'health',
       name: 'Health',
       description: 'Companion Health Check',
       attributes: ['health'],
@@ -104,10 +112,14 @@ export const companionTemplate: NewCompanion = {
   abilities: [],
 };
 
-export const nonplayerTemplate: NewNonplayerCharacter = {
+export const nonplayerTemplate: Omit<
+  NonplayerCharacter,
+  'characterId' | 'campaignId'
+> = {
   name: '',
   description: '',
-  type: 'nonplayer',
+  type: 'character',
+  subtype: 'nonplayer',
   armor: 0,
   attack: 0,
   defend: 0,

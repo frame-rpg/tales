@@ -1,10 +1,10 @@
-import { CharacterCampaignId, Id, OwnedCharacterId } from 'types/idtypes';
 import { Message, MessageState } from '../../../types/message';
 import { Observable, combineLatest } from 'rxjs';
 import { map, publishReplay, refCount } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Id } from 'types/idtypes';
 import { Injectable } from '@angular/core';
 import { Timestamp } from '@firebase/firestore-types';
 
@@ -22,14 +22,12 @@ export class MessageService {
       return `/campaigns/${address.campaignId}/messages`;
     } else if (address.type === 'user') {
       return `/users/${address.userId}/messages`;
-    } else if (address.type === 'character' && address.parent === 'campaign') {
+    } else if (address.type === 'character') {
       return `/campaigns/${address.campaignId}/characters/${address.characterId}/messages`;
-    } else {
-      return `/users/${address.userId}/characters/${address.characterId}/messages`;
     }
   }
 
-  async send(message: Message) {
+  async send(message: Omit<Message, 'messageId'>) {
     await this.firestore
       .collection(this.addressString(message.to))
       .add(message);

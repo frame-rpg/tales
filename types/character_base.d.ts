@@ -1,17 +1,12 @@
 import { Acl } from './acl';
+import { CampaignId, CharacterId } from './idtypes';
 
 export type CharacterType = 'player' | 'nonplayer' | 'companion';
 
-export interface CharacterBase {
-  type: 'character';
-  characterId: string;
-  userId?: string;
-  campaignId?: string;
+export interface CharacterBase extends CharacterId {
   name: string;
   description: string;
   acl: Acl;
   subtype: CharacterType;
-  campaign?: string;
   initiative: number;
-  parent: 'user' | 'campaign';
 }

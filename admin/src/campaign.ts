@@ -1,17 +1,8 @@
-import { Campaign, NewCampaign } from '../../types/campaign';
-
+import { Campaign } from '../../types/campaign';
 import { skillSeed } from './skills.js';
 
-export const campaignTemplate: NewCampaign = {
-  name: '',
-  description: '',
-  acl: {},
-  skills: [],
-  characters: [],
-};
-
-export const campaign: Campaign = {
-  id: 'c1',
+export const campaign: Omit<Campaign, 'campaignId'> = {
+  type: 'campaign',
   name: 'Tales of Dinosaurs and Stuff',
   description: 'also Time Travel and Alien Spaceships',
   characters: [

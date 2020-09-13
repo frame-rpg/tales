@@ -2,7 +2,7 @@
   <div class="left">
     <mat-tab-group>
       <mat-tab
-          *ngFor="let character of myCharacters | async; trackBy:trackById">
+          *ngFor="let character of myCharacters | async; trackBy:('characterId' | trackByProperty)">
         <ng-template mat-tab-label>
           {{ character.name }}
           <mat-icon *ngIf="(haveRolls | async)[character.id]">casino</mat-icon>

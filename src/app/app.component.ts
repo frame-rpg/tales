@@ -5,6 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from './data/user.service';
 import { auth } from 'firebase/app';
 
 @Component({
@@ -22,9 +23,14 @@ export class AppComponent {
     username: new FormControl('', [Validators.email, Validators.required]),
   });
   @ViewChild('sidenav') sidenav: MatSidenav;
-  constructor(public auth: AngularFireAuth, private snackBar: MatSnackBar) {}
+  constructor(
+    public auth: AngularFireAuth,
+    private snackBar: MatSnackBar,
+    private userService: UserService
+  ) {}
   async loginWithGoogle() {
     await this.auth.signInWithPopup(new auth.GoogleAuthProvider());
+    await this.userService.postLogin();
   }
   logout() {
     this.auth.signOut();
@@ -77,6 +83,7 @@ export class AppComponent {
         this.snackBar.open('Log in error. Try again.');
         this.passwordForm.patchValue({ username: '', password: '' });
       });
+    await this.userService.postLogin();
   }
 
   async verify() {

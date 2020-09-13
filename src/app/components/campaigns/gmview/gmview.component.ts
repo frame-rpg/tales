@@ -27,7 +27,6 @@ import { DefendService } from 'src/app/actions/defend/defend.service';
 import { InitiativeService } from 'src/app/actions/initiative/initiative.service';
 import { Message } from 'types/message';
 import { MessageService } from 'src/app/data/message.service';
-import { Roll } from 'types/event';
 
 type ActionType = 'initiative' | 'defend' | 'zoom';
 interface UiEvent {
@@ -70,15 +69,16 @@ export class GmviewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.campaign = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.campaignService.get(params.get('id'))
+        this.campaignService.get({
+          type: 'campaign',
+          campaignId: params.get('id'),
+        })
       ),
       publishReplay(1),
       refCount()
     );
     this.allCharacters = this.campaign.pipe(
-      switchMap(({ id, characters }) =>
-        this.campaignService.characters({ id, characters })
-      ),
+      switchMap((campaign) => this.characterService.list(campaign)),
       map((characters) =>
         characters.sort((a, b) => {
           if (a.initiative >= 0 && b.initiative >= 0) {
@@ -89,17 +89,16 @@ export class GmviewComponent implements OnInit, OnDestroy {
         })
       )
     );
-    this.messages = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.messageService.list({ id: params.get('id'), type: 'campaign' })
-      ),
+    this.messages = this.campaign.pipe(
+      switchMap((campaign) => this.messageService.list(campaign)),
       publishReplay(1),
       refCount()
     );
+
     this.openCharacter = this.action.pipe(
       filter((a) => a.type === 'zoom'),
       distinctUntilChanged(),
-      switchMap(({ character }) => this.characterService.get(character.id)),
+      switchMap(({ character }) => this.characterService.get(character)),
       tap((v) => console.log(v))
     );
 
@@ -110,15 +109,11 @@ export class GmviewComponent implements OnInit, OnDestroy {
       )
       .subscribe(([campaign, characters, event]) => {
         if (event.type === 'initiative') {
-          this.initiativeService.trigger(characters, campaign.id);
+          this.initiativeService.trigger(characters, campaign);
         } else if (event.type === 'defend') {
-          this.defendService.trigger(event.character, campaign.id);
+          this.defendService.trigger(event.character, campaign);
         }
       });
-  }
-
-  trackById(_: number, item: { id: string }) {
-    return item.id;
   }
 
   initiative(event: MouseEvent) {

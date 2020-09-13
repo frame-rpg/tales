@@ -15,6 +15,10 @@ service cloud.firestore {
       return rsc.data.acl[request.auth.uid];
     }
 
+    function premium() {
+      return isSignedIn() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.premium == true;
+    }
+
     function isOneOfRoles(rsc, array) {
       return isSignedIn() && getRole(rsc) != null && (getRole(rsc) in array);
     }
@@ -27,42 +31,36 @@ service cloud.firestore {
       return isOneOfRoles(rsc, ['read', 'write', 'admin']);
     }
 
-    function campaignReader(rsc) {
-      return readAclZ(get(/databases/$(database)/documents/campaigns/$(rsc.data.campaign)));
-    }
-
-    function campaignWriter(rsc) {
-      return readAclZ(get(/databases/$(database)/documents/campaigns/$(rsc.data.campaign)));
-    }
-
-    match /characters/{characterId} {
-      allow read: if readAclZ(resource) || campaignReader(resource)
-      allow update: if writeAclZ(resource) || campaignWriter(resource)
-      allow create: if isSignedIn()
-
-      match /messages/{messageId} {
-        allow read: if writeAclZ(getData('characters', characterId)) || campaignWriter(getData('characters', characterId))
-        allow write: if readAclZ(getData('characters', characterId)) || campaignReader(getData('characters', characterId))
-      }
-    }
-
-    match /rolls/{rollId} {
-      allow create: if writeAclZ(getData('campaigns', request.resource.data.campaign))
-      allow update: if writeAclZ(getData('campaigns', request.resource.data.campaign)) 
-        || writeAclZ(getData('characters', request.resource.data.roller))
-      allow read: if campaignReader(resource)
-      allow delete: if false;
-    }
-
     match /campaigns/{campaignId} {
-      allow read: if readAclZ(resource)
-      allow update: if writeAclZ(resource)
+
+      function campaignReader() {
+        return readAclZ(get(/databases/$(database)/documents/campaigns/$(campaignId)));
+      }
+
+      function campaignWriter() {
+        return writeAclZ(get(/databases/$(database)/documents/campaigns/$(campaignId)));
+      }
+
+      allow read: if campaignReader()
+      allow update: if campaignWriter()
       allow create: if isSignedIn()
       match /messages/{messageId} {
-        allow read: if readAclZ(getData('campaigns', campaignId))
-        allow create: if readAclZ(getData('campaigns', campaignId))
-        allow update: if writeAclZ(getData('campaigns', campaignId))
-        allow delete: if writeAclZ(getData('campaigns', campaignId))
+        allow read: if campaignReader()
+        allow create: if campaignReader()
+        allow update: if campaignWriter()
+        allow delete: if campaignWriter()
+      }
+      match /characters/{characterId} {
+        function characterDoc() {
+          return get(/databases/$(database)/documents/campaigns/$(campaignId)/characters/$(characterId));
+        }
+        allow read: if campaignReader()
+        allow update: if campaignWriter() || readAclZ(resource)
+        allow create: if campaignWriter()
+        allow delete: if false
+        match /messages/{messageId} {
+          allow read, write: if campaignWriter() || writeAclZ(characterDoc())
+        }
       }
     }
 
@@ -73,7 +71,14 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow read: if isSignedIn()
-      allow write: if userId == auth.uid
+      allow write: if userId == auth.uid && request.resource.data.premium === resource.data.premium
+      match /messages/{messageId} {
+        allow read: if userId == auth.id
+        allow write: if isSignedIn()
+      }
+      match /characters/{characterId} {
+        allow read, write: if userId == auth.id
+      }
     }
 
     match /{document=**} {

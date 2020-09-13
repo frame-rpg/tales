@@ -1,12 +1,14 @@
 import { Character, SkilledCharacter } from 'types/character';
-import { RollComplete, RollRequest, SentMessage } from 'types/message';
+import { RollComplete, RollRequest } from 'types/message';
 
+import { CampaignId } from 'types/idtypes';
 import { CharacterService } from 'src/app/data/character.service';
 import { HealthComponent } from './health.component';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageService } from 'src/app/data/message.service';
 import { campaign } from 'admin/src/campaign';
+import { idPluck } from 'src/app/data/util';
 import { take } from 'rxjs/operators';
 
 @Injectable({
@@ -19,8 +21,8 @@ export class HealthService {
     private characterService: CharacterService
   ) {}
 
-  async trigger(character: Character, campaignId: string, target: number) {
-    const rollRequest: RollRequest = {
+  async trigger(character: Character, campaignId: CampaignId, target: number) {
+    const rollRequest: Omit<RollRequest, 'messageId'> = {
       messageType: 'rollRequest',
       at: new Date(),
       type: 'health',
@@ -29,14 +31,8 @@ export class HealthService {
       target: target,
       conditionalEdge: 0,
       state: 'new',
-      from: {
-        type: 'campaign',
-        id: campaignId,
-      },
-      to: {
-        type: 'character',
-        id: character.id,
-      },
+      from: idPluck(campaignId),
+      to: idPluck(character),
     };
     await this.messageService.send(rollRequest);
   }
@@ -50,7 +46,7 @@ export class HealthService {
     const patch = {};
     patch[`attributes.${result.attribute}.wound`] = true;
     patch[`attributes.${result.attribute}.current`] = 0;
-    await this.characterService.update(character.id, patch);
+    await this.characterService.update(character, patch);
     return result.attribute;
   }
 

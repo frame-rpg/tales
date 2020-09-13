@@ -14,10 +14,11 @@ import {
 import { Campaign } from 'types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
 import { Character } from 'types/character';
+import { CharacterId } from 'types/idtypes';
+import { CharacterService } from 'src/app/data/character.service';
 import { MessageService } from 'src/app/data/message.service';
-import { Roll } from 'types/event';
-import { RollService } from 'src/app/actions/roll/roll.service';
 import { coerceToDate } from 'src/app/data/util';
+import { mapById } from 'src/app/data/rxutil';
 
 @Component({
   selector: 'player',
@@ -39,6 +40,7 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
 
   constructor(
     private campaignService: CampaignService,
+    private characterService: CharacterService,
     private messageService: MessageService,
     private route: ActivatedRoute
   ) {}
@@ -50,29 +52,27 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.campaign = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.campaignService.get(params.get('id'))
+        this.campaignService.get({
+          campaignId: params.get('id'),
+          type: 'campaign',
+        })
       ),
       publishReplay(1),
       refCount()
     );
     this.myCharacters = this.campaign.pipe(
       switchMap((campagin) =>
-        this.campaignService.usersCharacters(campagin.id)
+        this.characterService.list(campagin, ['admin', 'write'])
       ),
       publishReplay(1),
       refCount()
     );
-    this.mappedCharacters = this.myCharacters.pipe(
-      map((ary) => ary.reduce((acc, cur) => ({ ...acc, [cur.id]: cur }), {}))
-    );
+    this.mappedCharacters = this.myCharacters.pipe(mapById('characterId'));
     this.messages = combineLatest([this.myCharacters, this.campaign]).pipe(
       switchMap(([characters, campaign]) =>
         this.messageService.fetchAll([
-          { type: 'campaign', id: campaign.id },
-          ...characters.map((c) => ({
-            type: 'character' as 'character',
-            id: c.id,
-          })),
+          campaign,
+          ...(characters as CharacterId[]),
         ])
       ),
       publishReplay(1),
@@ -85,7 +85,7 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
             m.messageType === 'rollRequest' &&
             m.state === 'new' &&
             m.to.type === 'character' &&
-            characters.map((c) => c.id).includes(m.to.id)
+            characters.map((c) => c.characterId).includes(m.to.characterId)
         )
       )
     ) as Observable<RollRequest[]>;
@@ -99,15 +99,17 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
     ]).pipe(
       map(([characters, messages]) =>
         messages.reduce(
-          (acc, curr) => ({ ...acc, [curr.to.id]: true }),
-          characters.reduce((acc, curr) => ({ ...acc, [curr.id]: false }), {})
+          (acc, curr) => ({
+            ...acc,
+            [(curr.to as CharacterId).characterId]: true,
+          }),
+          characters.reduce(
+            (acc, curr) => ({ ...acc, [curr.characterId]: false }),
+            {}
+          )
         )
       ),
       startWith({})
     );
-  }
-
-  trackById(_: number, item: { id: string }) {
-    return item.id;
   }
 }

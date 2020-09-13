@@ -7,6 +7,4 @@ export interface NonplayerCharacter extends CharacterBase {
   health: number;
   armor: number;
   baseInitiative: number;
-  campaignId: string;
-  parent: 'campaign';
 }

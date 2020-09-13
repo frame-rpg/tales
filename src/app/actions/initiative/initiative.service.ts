@@ -1,12 +1,15 @@
 import { Character, PlayerCharacter } from 'types/character';
-import { RollComplete, RollRequest, SentMessage } from 'types/message';
+import { RollComplete, RollRequest } from 'types/message';
 
 import { AngularFirestore } from '@angular/fire/firestore';
+import { CampaignId } from 'types/idtypes';
 import { CharacterService } from 'src/app/data/character.service';
 import { InitiativeComponent } from './initiative.component';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageService } from 'src/app/data/message.service';
+import { campaign } from 'admin/src/campaign';
+import { idPluck } from 'src/app/data/util';
 import { take } from 'rxjs/operators';
 
 @Injectable({
@@ -20,7 +23,7 @@ export class InitiativeService {
     private characterService: CharacterService
   ) {}
 
-  async trigger(characters: Character[], campaignId: string) {
+  async trigger(characters: Character[], campaignId: CampaignId) {
     const result = await this.dialogService
       .open(InitiativeComponent)
       .afterClosed()
@@ -30,17 +33,21 @@ export class InitiativeService {
       await Promise.all(
         characters.map(async (character) => {
           if (
-            character.type === 'nonplayer' ||
-            character.type === 'companion'
+            character.subtype === 'nonplayer' ||
+            character.subtype === 'companion'
           ) {
-            await this.firestore.doc(`/characters/${character.id}`).update({
-              initiative: character.baseInitiative,
-            });
+            await this.firestore
+              .doc(`/characters/${character.characterId}`)
+              .update({
+                initiative: character.baseInitiative,
+              });
           } else {
-            await this.firestore.doc(`/characters/${character.id}`).update({
-              initiative: 0,
-            });
-            const rollRequest: RollRequest = {
+            await this.firestore
+              .doc(`/characters/${character.characterId}`)
+              .update({
+                initiative: 0,
+              });
+            const rollRequest: Omit<RollRequest, 'messageId'> = {
               messageType: 'rollRequest',
               type: 'initiative',
               at: new Date(),
@@ -48,14 +55,8 @@ export class InitiativeService {
               skillModifier: 0,
               conditionalEdge: 0,
               state: 'new',
-              from: {
-                type: 'campaign',
-                id: campaignId,
-              },
-              to: {
-                type: 'character',
-                id: character.id,
-              },
+              from: idPluck(campaignId),
+              to: idPluck(character),
             };
             if (result.modifier) {
               rollRequest.skillModifier = result.modifier;
@@ -79,7 +80,7 @@ export class InitiativeService {
       );
       patch.initiative = result.effort;
     }
-    await this.characterService.update(character.id, patch);
+    await this.characterService.update(character, patch);
     result.description = `${character.name} rolled ${result.result} for initiative`;
     await this.messageService.send(result);
   }

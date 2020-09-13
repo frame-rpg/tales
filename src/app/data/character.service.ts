@@ -1,6 +1,7 @@
 import { CampaignId, CharacterId, UserId } from 'types/idtypes';
 import { publishReplay, refCount, switchMap } from 'rxjs/operators';
 
+import { AclType } from 'types/acl';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Character } from 'types/character';
@@ -26,17 +27,23 @@ export class CharacterService {
   }
 
   private characterAddress(id: CharacterId): string {
-    if (id.parent === 'campaign') {
-      return `/campaigns/${id.campaignId}/characters/${id.characterId}`;
-    } else {
-      return `/users/${id.userId}/characters/${id.characterId}`;
-    }
+    return `/campaigns/${id.campaignId}/characters/${id.characterId}`;
   }
 
-  list(id: UserId | CampaignId) {
-    return this.firestore
-      .collection<Character>(this.containerAddress(id))
-      .valueChanges({ idField: 'characterId' });
+  list(id: CampaignId): Observable<Character[]>;
+  list(id: CampaignId, acl: AclType[]): Observable<Character[]>;
+  list(id: CampaignId, acl?: AclType[]): Observable<Character[]> {
+    return this.auth.user.pipe(
+      switchMap((user) =>
+        this.firestore
+          .collection<Character>(this.containerAddress(id), (query) =>
+            acl && acl.length > 0
+              ? query.where(`acl.${user.uid}`, 'in', acl)
+              : query
+          )
+          .valueChanges({ idField: 'characterId' })
+      )
+    );
   }
 
   get(id: CharacterId): Observable<Character> {
