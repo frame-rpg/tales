@@ -29,6 +29,7 @@ export interface RollRequest extends BaseMessage {
   conditionalEdge: number;
   skills?: string[];
   target?: number;
+  damage?: number;
   attributes?: AttributeName[];
 }
 

@@ -10,6 +10,7 @@ import { map, publishReplay, refCount } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
+import { Timestamp } from '@firebase/firestore-types';
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +42,12 @@ export class MessageService {
   fetchAll(addresses: MessageAddress[]) {
     return combineLatest(addresses.map((address) => this.list(address))).pipe(
       map((mailboxes) => mailboxes.flat()),
+      map((mailbox) =>
+        mailbox.sort(
+          (a, b) =>
+            (a.at as Timestamp).toMillis() - (b.at as Timestamp).toMillis()
+        )
+      ),
       publishReplay(1),
       refCount()
     );

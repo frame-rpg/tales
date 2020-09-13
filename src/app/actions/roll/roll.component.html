@@ -1,7 +1,9 @@
 <h2 mat-dialog-title>{{ data.roll.description }}</h2>
 <mat-dialog-content class="dialog" [formGroup]="rollState">
   <div *ngIf="target">Target: {{target}} with {{skillModifierDescription}}</div>
-  <div *ngIf="skillModifierDescription">With {{skillModifierDescription}}</div>
+  <div *ngIf="!target && skillModifierDescription">
+    With {{skillModifierDescription}}
+  </div>
   <div *ngIf="skill" class="attribute">
     Rolling {{ skill.name }}: {{ skill.level }}
   </div>
@@ -55,8 +57,8 @@
         formArrayName="dice" class="dieInput"
         [class.chosen]="dice.valid && i === chosenDieIndex">
       <mat-label>d12</mat-label>
-      <input matInput min="1" max="12" autocomplete="off" [formControlName]="i"
-          type="number">
+      <input matInput autocomplete="off" [formControlName]="i"
+          inputmode="numeric" type="text" pattern="[0-9]*">
       <mat-error *ngIf="d.invalid">1 - 12</mat-error>
     </mat-form-field>
     <button mat-icon-button (click)="acceptManualRoll()"
@@ -79,8 +81,8 @@
       <mat-label>
         Effort
       </mat-label>
-      <input #effortInput matInput type="number" min="0"
-          formControlName="effort">
+      <input #effortInput matInput type="text" inputmode="numeric" min="0"
+          pattern="[0-9]*" formControlName="effort">
       <mat-error *ngIf="effort.invalid">Effort too high</mat-error>
     </mat-form-field>
     <button mat-icon-button (click)="incrementEffort()" color="primary"

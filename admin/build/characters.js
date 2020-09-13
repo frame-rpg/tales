@@ -10,6 +10,34 @@ function massageCharacter(character) {
             s.level !== 'unskilled'),
     };
 }
+function companionBaseSkills() {
+    return [
+        {
+            id: 'attack',
+            name: 'Attack',
+            description: 'Companion Attack Skill',
+            attributes: ['loyalty'],
+            type: 'attack',
+            level: 'proficient',
+        },
+        {
+            id: 'defense',
+            name: 'Defense',
+            description: 'Companion Defense Skill',
+            attributes: ['loyalty'],
+            type: 'defense',
+            level: 'proficient',
+        },
+        {
+            id: 'health',
+            name: 'Health',
+            description: 'Companion Health Check',
+            attributes: ['health'],
+            type: 'health',
+            level: 'proficient',
+        },
+    ];
+}
 const baseSkills = campaign.skills.map((sk) => ({
     ...sk,
     level: 'unskilled',
@@ -31,6 +59,7 @@ const prePlayers = [
         acl: {
             'cljacobs1975@gmail.com': 'admin',
             'eric.eslinger+tales@gmail.com': 'admin',
+            'eric.eslinger@manyminds.org': 'admin',
         },
         description: '',
         type: 'player',
@@ -233,6 +262,7 @@ export const companions = [
         acl: {
             'cljacobs1975@gmail.com': 'admin',
             'eric.eslinger+tales@gmail.com': 'admin',
+            'eric.eslinger@manyminds.org': 'admin',
         },
         type: 'companion',
         attack: 2,
@@ -242,6 +272,7 @@ export const companions = [
             health: attr(12, 0, 'health'),
             loyalty: attr(8, 0, 'loyalty'),
         },
+        skills: companionBaseSkills(),
         initiative: 0,
         baseInitiative: 4,
         abilities: ['hands', 'birdseye'],
@@ -258,6 +289,7 @@ export const companions = [
         attack: 2,
         defend: 2,
         armor: 6,
+        skills: companionBaseSkills(),
         attributes: {
             health: attr(12, 0, 'health'),
             loyalty: attr(6, 0, 'loyalty'),
@@ -287,6 +319,7 @@ export const companions = [
             health: attr(14, 0, 'health'),
             loyalty: attr(6, 0, 'loyalty'),
         },
+        skills: companionBaseSkills(),
         initiative: 0,
         baseInitiative: 4,
         abilities: ['terrify', 'sturdyMount', 'mountedWeapon'],
@@ -307,6 +340,7 @@ export const companions = [
             health: attr(8, 0, 'health'),
             loyalty: attr(4, 0, 'loyalty'),
         },
+        skills: companionBaseSkills(),
         initiative: 0,
         baseInitiative: 4,
         abilities: ['hands', 'makingTheGMRegretHisLifeChoices'],
@@ -320,6 +354,7 @@ export const companions = [
             'phil.bowen@gmail.com': 'admin',
         },
         type: 'companion',
+        skills: companionBaseSkills(),
         attack: 4,
         defend: 1,
         armor: 2,

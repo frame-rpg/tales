@@ -1,10 +1,12 @@
+import { Character, PlayerCharacter } from 'types/character';
+import { RollComplete, RollRequest, SentMessage } from 'types/message';
+
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Character } from 'types/character';
+import { CharacterService } from 'src/app/data/character.service';
 import { InitiativeComponent } from './initiative.component';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageService } from 'src/app/data/message.service';
-import { RollRequest } from 'types/message';
 import { take } from 'rxjs/operators';
 
 @Injectable({
@@ -14,7 +16,8 @@ export class InitiativeService {
   constructor(
     private dialogService: MatDialog,
     private messageService: MessageService,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private characterService: CharacterService
   ) {}
 
   async trigger(characters: Character[], campaignId: string) {
@@ -62,5 +65,22 @@ export class InitiativeService {
         })
       );
     }
+  }
+  async handle(
+    character: PlayerCharacter,
+    request: RollRequest,
+    result: RollComplete
+  ) {
+    const patch: Partial<PlayerCharacter> = {};
+    if (result.effort > 0) {
+      patch[`attributes.${result.attribute}.current`] = Math.max(
+        0,
+        character.attributes[result.attribute].current - result.effort
+      );
+      patch.initiative = result.effort;
+    }
+    await this.characterService.update(character.id, patch);
+    result.description = `${character.name} rolled ${result.result} for initiative`;
+    await this.messageService.send(result);
   }
 }

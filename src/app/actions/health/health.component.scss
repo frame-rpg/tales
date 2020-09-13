@@ -1,0 +1,21 @@
+.dialogContent {
+  display: flex;
+  flex-direction: column;
+  min-width: 40vw;
+}
+
+.dialogBody {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.radios {
+  display: flex;
+  flex-direction: column;
+}

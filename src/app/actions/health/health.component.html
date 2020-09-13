@@ -1,0 +1,16 @@
+<div class="dialogContent">
+  <h1 mat-dialog-title>Wound an Attribute</h1>
+  <div class="dialogBody" mat-dialog-content>
+    <mat-radio-group [formControl]="attributeSelector" class="radios">
+      <mat-radio-button *ngFor="let attribute of attributes" color="primary"
+          [disabled]="attribute.wound" [value]="attribute.name">
+        {{ attribute.name }}: {{ attribute.current }} / {{ attribute.pool }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div mat-dialog-actions class="buttonRow">
+    <button mat-raised-button color="primary" (click)="ok()" cdkFocusInitial>
+      Ok
+    </button>
+  </div>
+</div>

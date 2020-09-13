@@ -9,6 +9,7 @@ import { MaterialModule } from '../core/material/material.module';
 import { NgModule } from '@angular/core';
 import { RequestComponent } from './roll/request.component';
 import { RollComponent } from './roll/roll.component';
+import { HealthComponent } from './health/health.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { RollComponent } from './roll/roll.component';
     RollComponent,
     AdjustComponent,
     RequestComponent,
+    HealthComponent,
   ],
   imports: [CommonModule, FormsModule, MaterialModule, ReactiveFormsModule],
   exports: [AdjustComponent, RequestComponent],

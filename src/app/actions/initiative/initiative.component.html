@@ -3,14 +3,13 @@
   <div class="dialogBody" mat-dialog-content>
     <mat-form-field appearance="outline">
       <mat-label>Modifier: Assets / Hindrances</mat-label>
-      <input matInput [(ngModel)]="modifier" type="number" max="5" min="-5"
-          autocomplete="disabled" />
+      <input matInput [formControl]="modifier" type="text"
+          autocomplete="disabled" inputmode="numeric" />
     </mat-form-field>
   </div>
   <div mat-dialog-actions class="buttonRow">
     <button mat-raised-button [matDialogClose]="false">Cancel</button>
-    <button mat-raised-button color="primary"
-        [matDialogClose]="{ modifier: modifier }" cdkFocusInitial>
+    <button mat-raised-button color="primary" (click)="ok()" cdkFocusInitial>
       Ok
     </button>
   </div>

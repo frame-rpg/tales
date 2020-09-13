@@ -46,6 +46,9 @@ export class RollComponent implements OnDestroy {
       },
       () => this.validate()
     );
+    if (this.skill && this.skill.attributes.length === 1) {
+      this.attribute = this.data.character.attributes[this.skill.attributes[0]];
+    }
   }
 
   ngOnDestroy(): void {}
@@ -88,6 +91,10 @@ export class RollComponent implements OnDestroy {
     return this.rollState.get('dice') as FormArray;
   }
 
+  get diceNumbers() {
+    return this.dice.value.map((v) => parseInt(v, 10));
+  }
+
   get direction() {
     return this.data.roll.type === 'initiative' ? -1 : 1;
   }
@@ -98,7 +105,7 @@ export class RollComponent implements OnDestroy {
 
   get chosenDieIndex() {
     if (this.die) {
-      return (this.dice.value as number[]).indexOf(this.die);
+      return (this.diceNumbers as number[]).indexOf(this.die);
     } else {
       return -1;
     }
@@ -143,10 +150,10 @@ export class RollComponent implements OnDestroy {
   get die() {
     if (this.dice.length === 0) {
       return 0;
-    } else if (Level[this.skill.level] < 0 || this.direction < 0) {
-      return Math.min(...this.dice.value);
+    } else if (this.skillLevel * this.direction < 0) {
+      return Math.min(...this.diceNumbers);
     } else {
-      return Math.max(...this.dice.value);
+      return Math.max(...this.diceNumbers);
     }
   }
 
