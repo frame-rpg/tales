@@ -1,24 +1,23 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Character, SkilledCharacter } from 'types/character';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Message, RollRequest } from 'types/message';
-import { Observable, Subject, combineLatest, of } from 'rxjs';
+import { Observable, Subject, combineLatest } from 'rxjs';
 import {
   filter,
   map,
   publishReplay,
   refCount,
-  startWith,
   switchMap,
 } from 'rxjs/operators';
 
 import { AttackService } from 'src/app/actions/attack/attack.service';
 import { Campaign } from 'types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
-import { Character } from 'types/character';
 import { CharacterId } from 'types/idtypes';
 import { CharacterService } from 'src/app/data/character.service';
 import { MessageService } from 'src/app/data/message.service';
-import { coerceToDate } from 'src/app/data/util';
+import { NoncombatService } from 'src/app/actions/noncombat/noncombat.service';
 import { mapById } from 'src/app/data/rxutil';
 
 @Component({
@@ -43,6 +42,7 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
     private characterService: CharacterService,
     private messageService: MessageService,
     private attackService: AttackService,
+    private noncombatService: NoncombatService,
     private route: ActivatedRoute
   ) {}
 
@@ -96,6 +96,10 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
   }
 
   async attack(character: Character, campaign: Campaign) {
-    const attack = await this.attackService.trigger(character, campaign);
+    const attack = await this.attackService.triggerSelf(character, campaign);
+  }
+
+  async noncombat(character: SkilledCharacter, campaign: Campaign) {
+    const noncombat = await this.noncombatService.triggerSelf(character);
   }
 }

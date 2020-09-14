@@ -6,7 +6,13 @@
           [campaign]="campaign">
       </character-card>
       <button mat-raised-button (click)="defend($event, character)"
-          color="accent">Defend</button>
+          color="accent">
+        Defend
+      </button>
+      <button mat-raised-button (click)="noncombat($event, character)"
+          color="accent">
+        Noncombat
+      </button>
     </div>
   </div>
   <div class="right">

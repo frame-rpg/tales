@@ -119,9 +119,9 @@ export class RollComponent implements OnDestroy {
 
   get skills() {
     if (this.roll.skills?.length > 0) {
-      return this.data.character.skills.filter((skill) =>
-        this.roll.skills.includes(skill.skillId)
-      );
+      return this.data.character.skills
+        .filter((skill) => this.roll.skills.includes(skill.skillId))
+        .sort((a, b) => a.name.localeCompare(b.name));
     } else {
       return this.data.character.skills.filter(
         (skill) => skill.type === this.roll.type

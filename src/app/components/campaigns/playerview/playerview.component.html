@@ -1,21 +1,19 @@
 <div class="main">
   <div class="left">
-    <mat-tab-group>
-      <mat-tab
-          *ngFor="let character of myCharacters | async; trackBy:('characterId' | trackByProperty)">
-        <ng-template mat-tab-label>
-          {{ character.name }}
-        </ng-template>
-        <div class="actionRow" *ngIf="campaign | async as campaignScalar">
-          <button mat-raised-button (click)="attack(character, campaignScalar)">
-            Attack with {{character.name}}
-          </button>
-        </div>
-        <character-card [expanded]="true" [character]="character"
-            [campaign]="campaign">
-        </character-card>
-      </mat-tab>
-    </mat-tab-group>
+    <div class="characterBox mat-elevation-z2" *ngFor="let character of myCharacters | async; trackBy:('characterId' |
+        trackByProperty)">
+      <character-card [character]="character" [campaign]="campaign">
+      </character-card>
+      <div class="actionRow" *ngIf="campaign | async as campaignScalar">
+        <button mat-raised-button (click)="attack(character, campaignScalar)">
+          Attack
+        </button>
+        <button mat-raised-button
+            (click)="noncombat(character, campaignScalar)">
+          Noncombat
+        </button>
+      </div>
+    </div>
   </div>
   <div class="right">
     <div class="requiredRoll" *ngFor="let roll of requiredRolls | async">

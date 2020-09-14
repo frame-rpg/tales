@@ -51,9 +51,10 @@
         </div>
       </div>
     </div>
-    <div
-        *ngIf="expanded && character.subtype !== 'nonplayer' && character.skills?.length > 0">
-      <div>Skills</div>
+    <mat-expansion-panel *ngIf="character.subtype !== 'nonplayer'">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Skills</mat-panel-title>
+      </mat-expansion-panel-header>
       <div class="skills">
         <div *ngFor="let skill of character.skills" class="skill">
           <div class="skillInfo">
@@ -62,6 +63,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </mat-expansion-panel>
   </div>
 </div>

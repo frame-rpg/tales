@@ -10,6 +10,7 @@ import { NgModule } from '@angular/core';
 import { RequestComponent } from './roll/request.component';
 import { RollComponent } from './roll/roll.component';
 import { HealthComponent } from './health/health.component';
+import { NoncombatComponent } from './noncombat/noncombat.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HealthComponent } from './health/health.component';
     AdjustComponent,
     RequestComponent,
     HealthComponent,
+    NoncombatComponent,
   ],
   imports: [CommonModule, FormsModule, MaterialModule, ReactiveFormsModule],
   exports: [AdjustComponent, RequestComponent],

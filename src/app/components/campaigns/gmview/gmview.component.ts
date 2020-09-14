@@ -1,10 +1,4 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import {
-  Character,
-  Companion,
-  NonplayerCharacter,
-  PlayerCharacter,
-} from 'types/character';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, combineLatest, of } from 'rxjs';
 import {
@@ -13,22 +7,22 @@ import {
   map,
   publishReplay,
   refCount,
-  startWith,
   switchMap,
   takeUntil,
   tap,
 } from 'rxjs/operators';
 
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Campaign } from 'types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
+import { Character } from 'types/character';
 import { CharacterService } from 'src/app/data/character.service';
 import { DefendService } from 'src/app/actions/defend/defend.service';
 import { InitiativeService } from 'src/app/actions/initiative/initiative.service';
 import { Message } from 'types/message';
 import { MessageService } from 'src/app/data/message.service';
+import { NoncombatService } from 'src/app/actions/noncombat/noncombat.service';
 
-type ActionType = 'initiative' | 'defend' | 'zoom';
+type ActionType = 'initiative' | 'defend' | 'zoom' | 'noncombat';
 interface UiEvent {
   type: ActionType;
   character?: Character;
@@ -58,8 +52,8 @@ export class GmviewComponent implements OnInit, OnDestroy {
     private characterService: CharacterService,
     private defendService: DefendService,
     private messageService: MessageService,
-    private route: ActivatedRoute,
-    private auth: AngularFireAuth
+    private noncombatService: NoncombatService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnDestroy(): void {
@@ -112,6 +106,8 @@ export class GmviewComponent implements OnInit, OnDestroy {
           this.initiativeService.trigger(characters, campaign);
         } else if (event.type === 'defend') {
           this.defendService.trigger(event.character, campaign);
+        } else if (event.type === 'noncombat') {
+          this.noncombatService.trigger(event.character, campaign);
         }
       });
   }
@@ -126,5 +122,9 @@ export class GmviewComponent implements OnInit, OnDestroy {
 
   zoom(event: MouseEvent, character: Character) {
     this.actionTrigger.next({ event, character, type: 'zoom' });
+  }
+
+  noncombat(event: MouseEvent, character: Character) {
+    this.actionTrigger.next({ event, character, type: 'noncombat' });
   }
 }
