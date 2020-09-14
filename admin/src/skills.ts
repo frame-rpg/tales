@@ -1,6 +1,6 @@
 import { Skill } from '../../types/skill';
 
-export const skillSeed: Record<string, Skill> = [
+export const dinoSkillSeed: Record<string, Skill> = [
   {
     skillId: 'advancedsecurity',
     type: 'noncombat',
@@ -58,10 +58,10 @@ export const skillSeed: Record<string, Skill> = [
     attributes: ['focus'],
   },
   {
-    skillId: 'pinpointstrike',
+    skillId: 'combatinsight',
     type: 'attack',
     description: '',
-    name: 'Pinpoint Strike',
+    name: 'Combat Insight',
     attributes: ['focus'],
   },
   {
@@ -86,10 +86,10 @@ export const skillSeed: Record<string, Skill> = [
     attributes: ['health'],
   },
   {
-    skillId: 'jumpy',
+    skillId: 'reflexes',
     type: 'initiative',
     description: '',
-    name: 'jumpy',
+    name: 'reflexes',
     attributes: ['speed'],
   },
   {

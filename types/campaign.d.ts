@@ -7,5 +7,4 @@ export interface Campaign extends CampaignId {
   description: string;
   name: string;
   skills: Skill[];
-  characters: string[];
 }
