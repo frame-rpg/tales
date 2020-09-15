@@ -28,6 +28,10 @@
   grid-template-columns: 1fr 1fr;
 }
 
+.categoryTitle {
+  text-transform: capitalize;
+}
+
 .initiative {
   margin-right: 8px;
 }
@@ -70,6 +74,8 @@
 .skillInfo {
   display: flex;
   flex-direction: row;
+  flex: 1 0 auto;
+  justify-content: space-between;
 }
 
 .rollers {

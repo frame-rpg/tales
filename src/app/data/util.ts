@@ -1,6 +1,6 @@
-import { CampaignId, CharacterId, Id, UserId } from 'types/idtypes';
-
-import { campaign } from 'admin/src/campaign';
+import { CharacterSkill } from 'types/skill';
+import { Id } from 'types/idtypes';
+import { Level } from 'types/enums';
 
 export function coerceToDate(input: any): Date {
   if (input instanceof Date) {
@@ -22,6 +22,21 @@ export function arrayToRecord<T, K extends keyof T>(
   );
 }
 
+export function arrayToRecordArray<T, K extends keyof T>(
+  list: T[],
+  key: K
+): Record<string, T[]> {
+  return list.reduce(
+    (acc: Record<string, T[]>, curr: T) => ({
+      ...acc,
+      [(curr[key] as unknown) as string]: (
+        (acc[(curr[key] as unknown) as string] as T[]) || []
+      ).concat(curr),
+    }),
+    {}
+  );
+}
+
 export function picker<T, K extends keyof T>(
   ...keys: K[]
 ): (obj: T) => Pick<T, K> {
@@ -39,12 +54,22 @@ export function pick<T, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> {
   );
 }
 
-export function idPluck<T extends Id>(id: T): Id {
+export function idPluck(id: Id): Id {
   if (id.type === 'campaign') {
-    return pick(id as CampaignId, 'type', 'campaignId');
+    return pick(id, 'type', 'campaignId');
   } else if (id.type === 'character') {
-    return pick(id as CharacterId, 'type', 'characterId', 'campaignId');
+    return pick(id, 'type', 'characterId', 'campaignId');
   } else if (id.type === 'user') {
-    return pick(id as UserId, 'type', 'userId');
+    return pick(id, 'type', 'userId');
+  }
+}
+
+export function skillSort(a: CharacterSkill, b: CharacterSkill): number {
+  if (a.category !== b.category) {
+    return a.category.localeCompare(b.category);
+  } else if (a.level !== b.level) {
+    return Level[b.level] - Level[a.level];
+  } else {
+    return a.name.localeCompare(b.name);
   }
 }

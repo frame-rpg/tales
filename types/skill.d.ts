@@ -15,12 +15,24 @@ export type SkillType =
   | 'noncombat'
   | 'health';
 
+export type SkillCategory =
+  | 'melee'
+  | 'ranged'
+  | 'defense'
+  | 'initiative'
+  | 'movement'
+  | 'deception'
+  | 'adventuring'
+  | 'magic'
+  | 'knowledge';
+
 export interface Skill {
   skillId: string;
   name: string;
   description: string;
   attributes: AttributeName[];
   type: SkillType;
+  category: SkillCategory;
 }
 
 export interface CharacterSkill extends Skill {

@@ -26,8 +26,8 @@
     <mat-form-field>
       <mat-label>Select Skill</mat-label>
       <mat-select (selectionChange)="selectSkill($event)">
-        <mat-option *ngFor="let skill of skills" class="skillSelectOption"
-            [value]="skill.skillId">
+        <mat-option *ngFor="let skill of skills | skillsort"
+            class="skillSelectOption" [value]="skill.skillId">
           {{skill.name}}: {{skill.level}}
         </mat-option>
       </mat-select>

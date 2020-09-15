@@ -1,8 +1,4 @@
-import { Skill } from '../../types/skill';
-
-function collect(skills: Skill[]): Record<string, Skill> {
-  return skills.reduce((acc, curr) => ({ ...acc, [curr.skillId]: curr }), {});
-}
+import { CharacterSkill, Skill } from '../../types/skill';
 
 export const commonSkills: Skill[] = [
   {
@@ -11,10 +7,12 @@ export const commonSkills: Skill[] = [
     description: '',
     name: 'Command Animal',
     attributes: ['conviction', 'focus'],
+    category: 'adventuring',
   },
   {
     skillId: 'faith',
     type: 'defense',
+    category: 'defense',
     description: '',
     name: 'Faith',
     attributes: ['conviction'],
@@ -22,6 +20,7 @@ export const commonSkills: Skill[] = [
   {
     skillId: 'righteousfury',
     type: 'attack',
+    category: 'melee',
     description: '',
     name: 'Righteous Fury',
     attributes: ['conviction'],
@@ -29,6 +28,7 @@ export const commonSkills: Skill[] = [
   {
     skillId: 'hipshot',
     type: 'attack',
+    category: 'ranged',
     description: '',
     name: 'Hip Shot',
     attributes: ['conviction'],
@@ -36,6 +36,7 @@ export const commonSkills: Skill[] = [
   {
     skillId: 'combatprediction',
     type: 'defense',
+    category: 'defense',
     description: '',
     name: 'Combat Prediction',
     attributes: ['focus'],
@@ -43,6 +44,7 @@ export const commonSkills: Skill[] = [
   {
     skillId: 'combatinsight',
     type: 'attack',
+    category: 'melee',
     description: '',
     name: 'Combat Insight',
     attributes: ['focus'],
@@ -50,6 +52,7 @@ export const commonSkills: Skill[] = [
   {
     skillId: 'sniper',
     type: 'attack',
+    category: 'ranged',
     description: '',
     name: 'Sniper',
     attributes: ['focus'],
@@ -58,19 +61,22 @@ export const commonSkills: Skill[] = [
     skillId: 'health',
     type: 'health',
     description: '',
+    category: 'defense',
     name: 'Health Check',
     attributes: ['health'],
   },
   {
     skillId: 'reflexes',
     type: 'initiative',
+    category: 'initiative',
     description: '',
-    name: 'reflexes',
+    name: 'Reflexes',
     attributes: ['speed'],
   },
   {
     skillId: 'tactics',
     type: 'initiative',
+    category: 'initiative',
     description: '',
     name: 'Tactics',
     attributes: ['focus'],
@@ -78,6 +84,7 @@ export const commonSkills: Skill[] = [
   {
     skillId: 'providence',
     type: 'initiative',
+    category: 'initiative',
     description: '',
     name: 'Providence',
     attributes: ['conviction'],
@@ -85,6 +92,7 @@ export const commonSkills: Skill[] = [
   {
     skillId: 'intimidate',
     type: 'noncombat',
+    category: 'defense',
     description: '',
     name: 'Intimidate',
     attributes: ['conviction', 'might'],
@@ -92,6 +100,7 @@ export const commonSkills: Skill[] = [
   {
     skillId: 'legerdemain',
     type: 'noncombat',
+    category: 'movement',
     description: '',
     name: 'Legerdemain',
     attributes: ['speed'],
@@ -99,12 +108,14 @@ export const commonSkills: Skill[] = [
   {
     skillId: 'lie',
     type: 'noncombat',
+    category: 'deception',
     description: '',
     name: 'Lie',
     attributes: ['conviction'],
   },
   {
     skillId: 'medicine',
+    category: 'adventuring',
     type: 'noncombat',
     description: '',
     name: 'Medicine',
@@ -113,12 +124,14 @@ export const commonSkills: Skill[] = [
   {
     skillId: 'toughness',
     type: 'defense',
+    category: 'defense',
     description: '',
     name: 'Toughness',
     attributes: ['might'],
   },
   {
     skillId: 'bash',
+    category: 'melee',
     type: 'attack',
     description: '',
     name: 'Bashing',
@@ -127,6 +140,7 @@ export const commonSkills: Skill[] = [
   {
     skillId: 'hurl',
     type: 'attack',
+    category: 'ranged',
     description: '',
     name: 'Hurl',
     attributes: ['might'],
@@ -134,6 +148,7 @@ export const commonSkills: Skill[] = [
   {
     skillId: 'movement',
     type: 'noncombat',
+    category: 'movement',
     description: '',
     name: 'Movement',
     attributes: ['might', 'speed'],
@@ -142,12 +157,14 @@ export const commonSkills: Skill[] = [
     skillId: 'otherknowledge',
     type: 'noncombat',
     description: '',
+    category: 'knowledge',
     name: 'Knowledge',
     attributes: ['focus', 'conviction'],
   },
   {
     skillId: 'perception',
     type: 'noncombat',
+    category: 'adventuring',
     description: '',
     name: 'Perception',
     attributes: ['conviction', 'focus'],
@@ -155,6 +172,7 @@ export const commonSkills: Skill[] = [
   {
     skillId: 'persuade',
     type: 'noncombat',
+    category: 'deception',
     description: '',
     name: 'Persuade',
     attributes: ['focus'],
@@ -162,6 +180,7 @@ export const commonSkills: Skill[] = [
   {
     skillId: 'picklocks',
     type: 'noncombat',
+    category: 'adventuring',
     description: '',
     name: 'Pick Locks',
     attributes: ['speed', 'focus', 'conviction'],
@@ -171,6 +190,7 @@ export const commonSkills: Skill[] = [
     type: 'noncombat',
     description: '',
     name: 'Riding',
+    category: 'movement',
     attributes: ['speed', 'conviction'],
   },
   {
@@ -178,6 +198,7 @@ export const commonSkills: Skill[] = [
     type: 'noncombat',
     description: '',
     name: 'Sense Motive',
+    category: 'deception',
     attributes: ['focus'],
   },
   {
@@ -185,11 +206,13 @@ export const commonSkills: Skill[] = [
     type: 'noncombat',
     description: '',
     name: 'Sneaking',
+    category: 'movement',
     attributes: ['speed', 'focus'],
   },
   {
     skillId: 'dodge',
     type: 'defense',
+    category: 'defense',
     description: '',
     name: 'Dodge',
     attributes: ['speed'],
@@ -198,6 +221,7 @@ export const commonSkills: Skill[] = [
     skillId: 'fencing',
     type: 'attack',
     description: '',
+    category: 'melee',
     name: 'Fencing',
     attributes: ['speed'],
   },
@@ -205,6 +229,7 @@ export const commonSkills: Skill[] = [
     skillId: 'quickdraw',
     type: 'attack',
     description: '',
+    category: 'ranged',
     name: 'Quick Draw',
     attributes: ['speed'],
   },
@@ -212,125 +237,40 @@ export const commonSkills: Skill[] = [
     skillId: 'wildernesslore',
     type: 'noncombat',
     description: '',
+    category: 'adventuring',
     name: 'Wilderness Lore',
     attributes: ['conviction', 'focus'],
   },
 ];
 
-export const dinoSpecific = [
-  {
-    skillId: 'advancedsecurity',
-    type: 'noncombat',
-    description: '',
-    name: 'Advanced Security',
-    attributes: ['focus', 'conviction'],
-  },
-  {
-    skillId: 'dryscienceknowledge',
-    type: 'noncombat',
-    description: '',
-    name: 'Dry Science Knowledge',
-    attributes: ['conviction', 'focus'],
-  },
-  {
-    skillId: 'drysciencetinker',
-    type: 'noncombat',
-    description: '',
-    name: 'Dry Science Tinker',
-    attributes: ['conviction', 'focus'],
-  },
-  {
-    skillId: 'hacking',
-    type: 'noncombat',
-    description: '',
-    name: 'Hacking',
-    attributes: ['conviction', 'focus'],
-  },
-  {
-    skillId: 'piloting',
-    type: 'noncombat',
-    description: '',
-    name: 'Piloting',
-    attributes: ['speed', 'conviction', 'focus'],
-  },
-  {
-    skillId: 'wetscienceknowledge',
-    type: 'noncombat',
-    description: '',
-    name: 'Wet Science Knowledge',
-    attributes: ['conviction', 'focus'],
-  },
-  {
-    skillId: 'wetsciencetinker',
-    type: 'noncombat',
-    description: '',
-    name: 'Wet Science Tinker',
-    attributes: ['conviction', 'focus'],
-  },
-];
-
-const ffSpecific: Skill[] = [
-  {
-    skillId: 'arcaneknowledge',
-    type: 'noncombat',
-    description: '',
-    name: 'Arcane Knowledge',
-    attributes: ['conviction'],
-  },
-  {
-    skillId: 'arcanetinker',
-    type: 'noncombat',
-    description: '',
-    name: 'Arcane Tinker',
-    attributes: ['conviction'],
-  },
-  {
-    skillId: 'alchemyknowledge',
-    type: 'noncombat',
-    description: '',
-    name: 'Alchemy Knowledge',
-    attributes: ['conviction', 'focus'],
-  },
-  {
-    skillId: 'alchemytinker',
-    type: 'noncombat',
-    description: '',
-    name: 'Alchemy Tinker',
-    attributes: ['conviction', 'focus'],
-  },
-  {
-    skillId: 'divineknowledge',
-    type: 'noncombat',
-    description: '',
-    name: 'Divine Knowledge',
-    attributes: ['conviction'],
-  },
-  {
-    skillId: 'divinetinker',
-    type: 'noncombat',
-    description: '',
-    name: 'Divine Tinker',
-    attributes: ['conviction'],
-  },
-  {
-    skillId: 'psionicknowledge',
-    type: 'noncombat',
-    description: '',
-    name: 'Psionic Knowledge',
-    attributes: ['conviction', 'focus'],
-  },
-  {
-    skillId: 'psionictinker',
-    type: 'noncombat',
-    description: '',
-    name: 'Psionic Tinker',
-    attributes: ['conviction', 'focus'],
-  },
-  {
-    skillId: 'traps',
-    type: 'noncombat',
-    description: '',
-    name: 'Traps',
-    attributes: ['conviction', 'focus'],
-  },
-];
+export function companionBaseSkills(): CharacterSkill[] {
+  return [
+    {
+      skillId: 'attack',
+      name: 'Attack',
+      description: 'Companion Attack Skill',
+      category: 'melee',
+      attributes: ['loyalty'],
+      type: 'attack',
+      level: 'proficient',
+    },
+    {
+      skillId: 'defense',
+      name: 'Defense',
+      description: 'Companion Defense Skill',
+      attributes: ['loyalty'],
+      type: 'defense',
+      category: 'defense',
+      level: 'proficient',
+    },
+    {
+      skillId: 'health',
+      name: 'Health',
+      description: 'Companion Health Check',
+      category: 'defense',
+      attributes: ['health'],
+      type: 'health',
+      level: 'proficient',
+    },
+  ];
+}

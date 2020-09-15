@@ -90,6 +90,7 @@ export const companionTemplate: Omit<
       description: 'Companion Attack Skill',
       attributes: ['loyalty'],
       type: 'attack',
+      category: 'melee',
       level: 'proficient',
     },
     {
@@ -98,6 +99,7 @@ export const companionTemplate: Omit<
       description: 'Companion Defense Skill',
       attributes: ['loyalty'],
       type: 'defense',
+      category: 'defense',
       level: 'proficient',
     },
     {
@@ -105,6 +107,7 @@ export const companionTemplate: Omit<
       name: 'Health',
       description: 'Companion Health Check',
       attributes: ['health'],
+      category: 'defense',
       type: 'health',
       level: 'proficient',
     },

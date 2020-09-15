@@ -8,7 +8,6 @@ import { InitiativeComponent } from './initiative.component';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageService } from 'src/app/data/message.service';
-import { campaign } from 'admin/src/campaign';
 import { idPluck } from 'src/app/data/util';
 import { take } from 'rxjs/operators';
 

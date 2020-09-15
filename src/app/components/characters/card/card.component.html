@@ -56,10 +56,14 @@
         <mat-panel-title>Skills</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="skills">
-        <div *ngFor="let skill of character.skills" class="skill">
-          <div class="skillInfo">
-            <div>{{skill.name}}:&nbsp;</div>
-            <div style="text-transform: capitalize;">{{skill.level}}</div>
+        <div *ngFor="let category of skillCategories">
+          <div class="categoryTitle">{{category}}</div>
+          <div *ngFor="let skill of skillsByCategory[category] | skillsort"
+              class="skill">
+            <div class="skillInfo">
+              <div>{{skill.name}}</div>
+              <div style="text-transform: capitalize;">{{skill.level}}</div>
+            </div>
           </div>
         </div>
       </div>

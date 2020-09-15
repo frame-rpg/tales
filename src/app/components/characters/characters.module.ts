@@ -5,6 +5,7 @@ import { CreateComponent } from './create/create.component';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../../core/material/material.module';
 import { NgModule } from '@angular/core';
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
@@ -14,6 +15,7 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     RouterModule,
     MaterialModule,
+    PipesModule,
     ActionsModule,
   ],
   exports: [CardComponent, CreateComponent],
