@@ -1,13 +1,10 @@
 import { Skill } from '../../types/skill';
 
-export const dinoSkillSeed: Record<string, Skill> = [
-  {
-    skillId: 'advancedsecurity',
-    type: 'noncombat',
-    description: '',
-    name: 'Advanced Security',
-    attributes: ['focus', 'conviction'],
-  },
+function collect(skills: Skill[]): Record<string, Skill> {
+  return skills.reduce((acc, curr) => ({ ...acc, [curr.skillId]: curr }), {});
+}
+
+export const commonSkills: Skill[] = [
   {
     skillId: 'commandanimal',
     type: 'noncombat',
@@ -37,20 +34,6 @@ export const dinoSkillSeed: Record<string, Skill> = [
     attributes: ['conviction'],
   },
   {
-    skillId: 'dryscienceknowledge',
-    type: 'noncombat',
-    description: '',
-    name: 'Dry Science Knowledge',
-    attributes: ['conviction', 'focus'],
-  },
-  {
-    skillId: 'drysciencetinker',
-    type: 'noncombat',
-    description: '',
-    name: 'Dry Science Tinker',
-    attributes: ['conviction', 'focus'],
-  },
-  {
     skillId: 'combatprediction',
     type: 'defense',
     description: '',
@@ -70,13 +53,6 @@ export const dinoSkillSeed: Record<string, Skill> = [
     description: '',
     name: 'Sniper',
     attributes: ['focus'],
-  },
-  {
-    skillId: 'hacking',
-    type: 'noncombat',
-    description: '',
-    name: 'Hacking',
-    attributes: ['conviction', 'focus'],
   },
   {
     skillId: 'health',
@@ -165,8 +141,7 @@ export const dinoSkillSeed: Record<string, Skill> = [
   {
     skillId: 'otherknowledge',
     type: 'noncombat',
-    description:
-      'Any knowledge that does not fall under Wet Science or Dry Science',
+    description: '',
     name: 'Knowledge',
     attributes: ['focus', 'conviction'],
   },
@@ -190,13 +165,6 @@ export const dinoSkillSeed: Record<string, Skill> = [
     description: '',
     name: 'Pick Locks',
     attributes: ['speed', 'focus', 'conviction'],
-  },
-  {
-    skillId: 'piloting',
-    type: 'noncombat',
-    description: '',
-    name: 'Piloting',
-    attributes: ['speed', 'conviction', 'focus'],
   },
   {
     skillId: 'riding',
@@ -241,11 +209,49 @@ export const dinoSkillSeed: Record<string, Skill> = [
     attributes: ['speed'],
   },
   {
-    skillId: 'swimming',
+    skillId: 'wildernesslore',
     type: 'noncombat',
     description: '',
-    name: 'Swimming',
-    attributes: ['might'],
+    name: 'Wilderness Lore',
+    attributes: ['conviction', 'focus'],
+  },
+];
+
+export const dinoSpecific = [
+  {
+    skillId: 'advancedsecurity',
+    type: 'noncombat',
+    description: '',
+    name: 'Advanced Security',
+    attributes: ['focus', 'conviction'],
+  },
+  {
+    skillId: 'dryscienceknowledge',
+    type: 'noncombat',
+    description: '',
+    name: 'Dry Science Knowledge',
+    attributes: ['conviction', 'focus'],
+  },
+  {
+    skillId: 'drysciencetinker',
+    type: 'noncombat',
+    description: '',
+    name: 'Dry Science Tinker',
+    attributes: ['conviction', 'focus'],
+  },
+  {
+    skillId: 'hacking',
+    type: 'noncombat',
+    description: '',
+    name: 'Hacking',
+    attributes: ['conviction', 'focus'],
+  },
+  {
+    skillId: 'piloting',
+    type: 'noncombat',
+    description: '',
+    name: 'Piloting',
+    attributes: ['speed', 'conviction', 'focus'],
   },
   {
     skillId: 'wetscienceknowledge',
@@ -261,11 +267,70 @@ export const dinoSkillSeed: Record<string, Skill> = [
     name: 'Wet Science Tinker',
     attributes: ['conviction', 'focus'],
   },
+];
+
+const ffSpecific: Skill[] = [
   {
-    skillId: 'wildernesslore',
+    skillId: 'arcaneknowledge',
     type: 'noncombat',
     description: '',
-    name: 'Wilderness Lore',
+    name: 'Arcane Knowledge',
+    attributes: ['conviction'],
+  },
+  {
+    skillId: 'arcanetinker',
+    type: 'noncombat',
+    description: '',
+    name: 'Arcane Tinker',
+    attributes: ['conviction'],
+  },
+  {
+    skillId: 'alchemyknowledge',
+    type: 'noncombat',
+    description: '',
+    name: 'Alchemy Knowledge',
     attributes: ['conviction', 'focus'],
   },
-].reduce((acc, curr) => ({ ...acc, [curr.skillId]: curr }), {});
+  {
+    skillId: 'alchemytinker',
+    type: 'noncombat',
+    description: '',
+    name: 'Alchemy Tinker',
+    attributes: ['conviction', 'focus'],
+  },
+  {
+    skillId: 'divineknowledge',
+    type: 'noncombat',
+    description: '',
+    name: 'Divine Knowledge',
+    attributes: ['conviction'],
+  },
+  {
+    skillId: 'divinetinker',
+    type: 'noncombat',
+    description: '',
+    name: 'Divine Tinker',
+    attributes: ['conviction'],
+  },
+  {
+    skillId: 'psionicknowledge',
+    type: 'noncombat',
+    description: '',
+    name: 'Psionic Knowledge',
+    attributes: ['conviction', 'focus'],
+  },
+  {
+    skillId: 'psionictinker',
+    type: 'noncombat',
+    description: '',
+    name: 'Psionic Tinker',
+    attributes: ['conviction', 'focus'],
+  },
+  {
+    skillId: 'traps',
+    type: 'noncombat',
+    description: '',
+    name: 'Traps',
+    attributes: ['conviction', 'focus'],
+  },
+];
