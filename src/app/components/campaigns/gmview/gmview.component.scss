@@ -20,3 +20,13 @@
 .characterBox {
   padding: 12px;
 }
+
+.lastButton {
+  margin-left: auto;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}

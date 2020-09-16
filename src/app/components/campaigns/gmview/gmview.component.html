@@ -17,8 +17,16 @@
   </div>
   <div class="right">
     <div class="actions">
-      <button mat-raised-button (click)="initiative($event)"
-          color="accent">Initiative</button>
+      <button mat-raised-button (click)="initiative($event)" color="accent">
+        Initiative
+      </button>
+      <button mat-raised-button (click)="rest($event)" color="accent">
+        Rest
+      </button>
+      <button mat-raised-button (click)="reset($event)" color="warn"
+          class="lastButton">
+        Reset
+      </button>
     </div>
     <div class="right">
       <message *ngFor="let message of messages | async" [message]="message">

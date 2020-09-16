@@ -2,6 +2,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, combineLatest, of } from 'rxjs';
 import {
+  bufferTime,
   distinctUntilChanged,
   filter,
   map,
@@ -22,7 +23,13 @@ import { Message } from 'types/message';
 import { MessageService } from 'src/app/data/message.service';
 import { NoncombatService } from 'src/app/actions/noncombat/noncombat.service';
 
-type ActionType = 'initiative' | 'defend' | 'zoom' | 'noncombat';
+type ActionType =
+  | 'initiative'
+  | 'defend'
+  | 'zoom'
+  | 'noncombat'
+  | 'reset'
+  | 'rest';
 interface UiEvent {
   type: ActionType;
   character?: Character;
@@ -101,13 +108,18 @@ export class GmviewComponent implements OnInit, OnDestroy {
         distinctUntilChanged((a, b) => a[2] === b[2]),
         takeUntil(this.destroying)
       )
-      .subscribe(([campaign, characters, event]) => {
+      .subscribe(async ([campaign, characters, event]) => {
         if (event.type === 'initiative') {
-          this.initiativeService.trigger(characters, campaign);
+          await this.initiativeService.trigger(characters, campaign);
         } else if (event.type === 'defend') {
-          this.defendService.trigger(event.character, campaign);
+          await this.defendService.trigger(event.character, campaign);
         } else if (event.type === 'noncombat') {
-          this.noncombatService.trigger(event.character, campaign);
+          await this.noncombatService.trigger(event.character, campaign);
+        } else if (event.type === 'rest') {
+          await this.characterService.rest(characters);
+          await this.messageService.scene(campaign, characters);
+        } else if (event.type === 'reset') {
+          await this.characterService.reset(characters);
         }
       });
   }
@@ -126,5 +138,13 @@ export class GmviewComponent implements OnInit, OnDestroy {
 
   noncombat(event: MouseEvent, character: Character) {
     this.actionTrigger.next({ event, character, type: 'noncombat' });
+  }
+
+  rest(event: MouseEvent) {
+    this.actionTrigger.next({ event, type: 'rest' });
+  }
+
+  reset(event: MouseEvent) {
+    this.actionTrigger.next({ event, type: 'reset' });
   }
 }

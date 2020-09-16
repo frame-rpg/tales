@@ -1,10 +1,10 @@
 import { CampaignId, CharacterId, UserId } from 'types/idtypes';
+import { Character, SkilledCharacter } from 'types/character';
 import { publishReplay, refCount, switchMap } from 'rxjs/operators';
 
 import { AclType } from 'types/acl';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Character } from 'types/character';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { addId } from './rxutil';
@@ -13,6 +13,51 @@ import { addId } from './rxutil';
   providedIn: 'root',
 })
 export class CharacterService {
+  async resetOne(character: SkilledCharacter) {
+    const patch = Object.entries(character.attributes).reduce(
+      (acc, [attrName, attrVal]) => ({
+        ...acc,
+        [`attributes.${attrName}.current`]: attrVal.pool,
+        [`attributes.${attrName}.wound`]: false,
+      }),
+      {
+        initiative: 0,
+      }
+    );
+    await this.update(character, patch);
+  }
+
+  async reset(characters: Character[]) {
+    await Promise.all(
+      characters
+        .filter((c) => c.subtype !== 'nonplayer')
+        .map((character: SkilledCharacter) => this.resetOne(character))
+    );
+  }
+
+  async restOne(character: SkilledCharacter) {
+    const patch = Object.entries(character.attributes).reduce(
+      (acc, [attrName, attrVal]) => ({
+        ...acc,
+        [`attributes.${attrName}.current`]: Math.min(
+          attrVal.pool,
+          attrVal.current + Math.ceil(attrVal.pool / 5)
+        ),
+      }),
+      {
+        initiative: 0,
+      }
+    );
+    await this.update(character, patch);
+  }
+
+  async rest(characters: Character[]) {
+    await Promise.all(
+      characters
+        .filter((c) => c.subtype !== 'nonplayer')
+        .map((character: SkilledCharacter) => this.restOne(character))
+    );
+  }
   constructor(
     private firestore: AngularFirestore,
     private auth: AngularFireAuth

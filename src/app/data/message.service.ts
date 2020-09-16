@@ -1,9 +1,11 @@
 import { Message, MessageState } from '../../../types/message';
 import { Observable, combineLatest } from 'rxjs';
-import { map, publishReplay, refCount } from 'rxjs/operators';
+import { map, publishReplay, refCount, take } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Campaign } from 'types/campaign';
+import { Character } from 'types/character';
 import { Id } from 'types/idtypes';
 import { Injectable } from '@angular/core';
 import { Timestamp } from '@firebase/firestore-types';
@@ -12,6 +14,36 @@ import { Timestamp } from '@firebase/firestore-types';
   providedIn: 'root',
 })
 export class MessageService {
+  async scene(campaign: Campaign, characters: Character[]) {
+    const mailboxes = [
+      this.addressString(campaign),
+      ...characters.map((c) => this.addressString(c)),
+    ];
+    await Promise.all(
+      mailboxes.map((mailbox) =>
+        this.firestore
+          .collection<Message>(mailbox, (query) =>
+            query.where('state', 'in', ['viewed', 'new'])
+          )
+          .get()
+          .pipe(take(1))
+          .toPromise()
+          .then((msgs) =>
+            msgs.docs
+              .filter((doc) => doc.data().messageType !== 'say')
+              .map((msg) => `${mailbox}/${msg.id}`)
+          )
+          .then((ids) =>
+            Promise.all(
+              ids.map((id) =>
+                this.firestore.doc(id).update({ state: 'archived' })
+              )
+            )
+          )
+      )
+    );
+  }
+
   constructor(
     private firestore: AngularFirestore,
     private auth: AngularFireAuth
@@ -42,7 +74,12 @@ export class MessageService {
   list(address: Id) {
     return this.firestore
       .collection<Message>(`${this.addressString(address)}`)
-      .valueChanges({ idField: 'messageId' }) as Observable<Message[]>;
+      .valueChanges({ idField: 'messageId' })
+      .pipe(
+        map((messages: Message[]) =>
+          messages.filter((message) => message.state !== 'archived')
+        )
+      );
   }
 
   fetchAll(addresses: Id[]) {
