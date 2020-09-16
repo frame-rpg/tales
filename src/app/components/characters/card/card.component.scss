@@ -97,3 +97,9 @@
 .unusual {
   background-color: var(--honeydew);
 }
+
+.item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

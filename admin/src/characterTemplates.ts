@@ -8,6 +8,7 @@ export const playerTemplate: Omit<
 > = {
   name: '',
   acl: {},
+  equipment: [],
   description: '',
   type: 'character',
   subtype: 'player',
@@ -59,6 +60,7 @@ export const companionTemplate: Omit<
 > = {
   name: '',
   description: '',
+  equipment: [],
   acl: {},
   attack: 0,
   defend: 0,
@@ -122,6 +124,7 @@ export const nonplayerTemplate: Omit<
   name: '',
   description: '',
   type: 'character',
+  equipment: [],
   subtype: 'nonplayer',
   armor: 0,
   attack: 0,

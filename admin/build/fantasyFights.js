@@ -1,3 +1,4 @@
+import { antimagicBlast, crossbow, dagger, feet, lightMace, longbow, magicRapier, nonproficiencyPenalty, rapidStrike, shield, sonicBlast, staff, stoneCloak, } from './equipment.js';
 import { attr, skillBlock } from './util.js';
 import { commonSkills } from './skills.js';
 const localSkills = [
@@ -90,6 +91,7 @@ export const characters = [
         name: 'Stu Roid',
         acl: {
             d1: 'admin',
+            RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
         },
         description: '',
         type: 'character',
@@ -117,11 +119,21 @@ export const characters = [
         }),
         experience: 1,
         initiative: 0,
+        equipment: [
+            stoneCloak,
+            crossbow,
+            dagger,
+            shield,
+            nonproficiencyPenalty,
+            staff,
+            antimagicBlast,
+        ],
     },
     {
         name: 'Kewulf Trannyth',
         acl: {
             b1: 'admin',
+            RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
         },
         description: '',
         type: 'character',
@@ -146,11 +158,13 @@ export const characters = [
         }),
         experience: 5,
         initiative: 0,
+        equipment: [longbow, stoneCloak, sonicBlast, dagger],
     },
     {
         name: 'Malven Stonecutter',
         acl: {
             j1: 'admin',
+            RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
         },
         description: '',
         type: 'character',
@@ -182,6 +196,7 @@ export const characters = [
         }),
         experience: 5,
         initiative: 0,
+        equipment: [lightMace, stoneCloak, dagger],
     },
     {
         name: 'Jordiz Shirodz',
@@ -223,6 +238,7 @@ export const characters = [
         ]),
         experience: 5,
         initiative: 0,
+        equipment: [feet, stoneCloak],
     },
     {
         name: 'Cantaloupe "Loupe" Pantaloons',
@@ -248,5 +264,6 @@ export const characters = [
         }),
         experience: 5,
         initiative: 0,
+        equipment: [magicRapier, stoneCloak, rapidStrike, crossbow],
     },
 ];

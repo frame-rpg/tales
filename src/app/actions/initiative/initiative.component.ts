@@ -9,11 +9,11 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./initiative.component.scss'],
 })
 export class InitiativeComponent {
-  modifier = new FormControl(0, [Validators.pattern(/\-?[0-9]/)]);
+  assets = new FormControl(0, [Validators.pattern(/\-?[0-9]/)]);
 
   constructor(public matDialogRef: MatDialogRef<InitiativeComponent>) {}
 
   ok() {
-    this.matDialogRef.close({ modifier: parseInt(this.modifier.value, 10) });
+    this.matDialogRef.close({ modifier: parseInt(this.assets.value, 10) });
   }
 }

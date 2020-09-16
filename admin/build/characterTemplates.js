@@ -1,6 +1,7 @@
 export const playerTemplate = {
     name: '',
     acl: {},
+    equipment: [],
     description: '',
     type: 'character',
     subtype: 'player',
@@ -48,6 +49,7 @@ export const playerTemplate = {
 export const companionTemplate = {
     name: '',
     description: '',
+    equipment: [],
     acl: {},
     attack: 0,
     defend: 0,
@@ -107,6 +109,7 @@ export const nonplayerTemplate = {
     name: '',
     description: '',
     type: 'character',
+    equipment: [],
     subtype: 'nonplayer',
     armor: 0,
     attack: 0,

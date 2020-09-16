@@ -25,7 +25,7 @@ export class AttackService {
 
   async triggerSelf(character: Character, campaign: CampaignId) {
     const result = await this.dialogService
-      .open(AttackComponent)
+      .open(AttackComponent, { data: character })
       .afterClosed()
       .pipe(take(1))
       .toPromise();
@@ -35,18 +35,17 @@ export class AttackService {
         at: new Date(),
         type: 'attack',
         description: 'Attack Check',
-        skillModifier: 0,
+        assets: result.assets || 0,
         target: result.target,
         initiative: result.initiative,
         damage: result.damage,
-        conditionalEdge: 0,
+        skills: result.weapon.skills.concat(),
+        edge: 0,
         state: 'new',
         from: idPluck(campaign),
         to: idPluck(character),
+        items: [result.weapon, ...result.otherItems],
       };
-      if (result.modifier) {
-        rollRequest.skillModifier = result.modifier;
-      }
       const rollResult = await this.rollService.trigger(
         rollRequest,
         character as SkilledCharacter

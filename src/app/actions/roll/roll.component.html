@@ -4,6 +4,7 @@
   <div *ngIf="!target && skillModifierDescription">
     With {{skillModifierDescription}}
   </div>
+  <div *ngFor="let item of data.roll.items">Using {{item.name}}</div>
   <div *ngIf="skill" class="attribute">
     Rolling {{ skill.name }}: {{ skill.level }}
   </div>

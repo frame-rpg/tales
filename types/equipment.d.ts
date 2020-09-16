@@ -1,8 +1,20 @@
+export interface CategoricalModifier {
+  category: string;
+  value: number;
+}
+export interface Effect {
+  assets?: CategoricalModifier[];
+  edge?: CategoricalModifier[];
+  initiative?: number;
+}
+
 export interface EquipmentBase {
   type: 'weapon' | 'armor' | 'other';
   name: string;
   slot: 'hand' | 'body' | 'other';
   size: number;
+  equipped: boolean;
+  effect: Effect;
 }
 
 export interface Weapon extends EquipmentBase {
@@ -11,14 +23,10 @@ export interface Weapon extends EquipmentBase {
   skills: string[];
   damage: number;
   initiative: number;
-  assets: number;
-  edge: number;
 }
 
 export interface Armor extends EquipmentBase {
   type: 'armor';
-  edge: number;
-  assets: number;
 }
 
 export interface OtherItem extends EquipmentBase {

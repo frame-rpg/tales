@@ -68,5 +68,16 @@
         </div>
       </div>
     </mat-expansion-panel>
+    <mat-expansion-panel *ngIf="character.equipment.length > 0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Equipment</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div *ngFor="let item of character.equipment" class="item">
+        <div>
+          {{item.name}}
+        </div>
+        <mat-icon [matTooltip]="item|json">info</mat-icon>
+      </div>
+    </mat-expansion-panel>
   </div>
 </div>

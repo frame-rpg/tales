@@ -3,6 +3,7 @@ import { Timestamp } from '@firebase/firestore-types';
 import { SkillType, CharacterSkill } from './skill';
 import { AttributeName } from './attribute';
 import { Id } from './idtypes';
+import { Equipment } from './equipment';
 
 export type MessageType = 'rollRequest' | 'rollComplete' | 'say';
 export type MessageTarget = 'campaign' | 'character';
@@ -21,13 +22,14 @@ export interface BaseMessage {
 export interface RollRequest extends BaseMessage {
   messageType: 'rollRequest';
   type: SkillType;
-  skillModifier: number;
-  conditionalEdge: number;
+  assets: number;
+  edge: number;
   skills?: string[];
   target?: number;
   damage?: number;
   initiative?: number;
   attributes?: AttributeName[];
+  items?: Equipment[];
 }
 
 export interface RollComplete extends BaseMessage {

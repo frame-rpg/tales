@@ -181,17 +181,15 @@ export class RollComponent implements OnDestroy {
     if (!this.skill) {
       return null;
     }
-    return Level[this.skill?.level] + (this.roll.skillModifier || 0);
+    return Level[this.skill?.level] + (this.roll.assets || 0);
   }
 
   get skillModifierDescription() {
-    if (this.roll.skillModifier >= 0) {
-      return `${this.roll.skillModifier} asset${
-        this.roll.skillModifier === 1 ? '' : 's'
-      }`;
-    } else if (this.roll.skillModifier < 0) {
-      return `${this.roll.skillModifier} hindrance${
-        this.roll.skillModifier === -1 ? '' : 's'
+    if (this.roll.assets >= 0) {
+      return `${this.roll.assets} asset${this.roll.assets === 1 ? '' : 's'}`;
+    } else if (this.roll.assets < 0) {
+      return `${this.roll.assets} hindrance${
+        this.roll.assets === -1 ? '' : 's'
       }`;
     } else {
       return '';

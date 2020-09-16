@@ -28,13 +28,13 @@ export class NoncombatService {
       at: new Date(),
       type: 'noncombat',
       description: 'General Check',
-      skillModifier: 0,
+      assets: 0,
       skills: character.skills
         .filter((skill) => skill.type === 'noncombat')
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((skill) => skill.skillId),
       initiative: 10,
-      conditionalEdge: 0,
+      edge: 0,
       state: 'new',
       from: { type: 'campaign', campaignId: character.campaignId },
       to: idPluck(character),
@@ -61,9 +61,9 @@ export class NoncombatService {
         at: new Date(),
         type: 'noncombat',
         description: 'General Check',
-        skillModifier: result.modifier || 0,
+        assets: result.modifier || 0,
         skills: result.skills,
-        conditionalEdge: 0,
+        edge: 0,
         state: 'new',
         from: idPluck(campaign),
         to: idPluck(character),

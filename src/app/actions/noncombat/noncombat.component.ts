@@ -11,7 +11,7 @@ import { SkilledCharacter } from 'types/character';
 })
 export class NoncombatComponent implements OnInit {
   req = new FormGroup({
-    modifier: new FormControl(0, [Validators.pattern(/\-?[0-9]*/)]),
+    assets: new FormControl(0, [Validators.pattern(/\-?[0-9]*/)]),
     target: new FormControl(0, [Validators.pattern(/[0-9]*/)]),
     initiative: new FormControl(10, [Validators.pattern(/[0-9]*/)]),
     skills: new FormControl([]),
@@ -32,7 +32,7 @@ export class NoncombatComponent implements OnInit {
 
   ok() {
     const response = {
-      modifier: parseInt(this.req.value.modifier, 10),
+      assets: parseInt(this.req.value.assets, 10),
       initiative: parseInt(this.req.value.initiative, 10),
       skills: this.req.value.skills,
     };

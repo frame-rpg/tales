@@ -46,14 +46,14 @@ export class InitiativeService {
               type: 'initiative',
               at: new Date(),
               description: 'Initiative Check',
-              skillModifier: 0,
-              conditionalEdge: 0,
+              assets: 0,
+              edge: 0,
               state: 'new',
               from: idPluck(campaignId),
               to: idPluck(character),
             };
             if (result.modifier) {
-              rollRequest.skillModifier = result.modifier;
+              rollRequest.assets = result.modifier;
             }
             await this.messageService.send(rollRequest);
           }

@@ -10,10 +10,7 @@ import { Attribute } from 'types/attribute';
   styleUrls: ['./health.component.scss'],
 })
 export class HealthComponent implements OnInit {
-  attributeSelector = new FormControl('', [
-    Validators.required,
-    // () => this.validate(),
-  ]);
+  attributeSelector = new FormControl('', [Validators.required]);
   attributes: Attribute[];
   constructor(
     @Inject(MAT_DIALOG_DATA) public character: SkilledCharacter,
@@ -23,7 +20,6 @@ export class HealthComponent implements OnInit {
     this.attributes = Object.values(this.character.attributes).sort((a, b) =>
       (a.name as String).localeCompare(b.name)
     );
-    console.log({ a: this.attributes, f: this.attributeSelector });
   }
 
   validate() {

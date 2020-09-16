@@ -10,7 +10,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class DefendComponent {
   req = new FormGroup({
-    modifier: new FormControl(0, [Validators.pattern(/\-?[0-9]*/)]),
+    assets: new FormControl(0, [Validators.pattern(/\-?[0-9]*/)]),
+    edge: new FormControl(0, [Validators.pattern(/\-?[0-9]*/)]),
     target: new FormControl(0, [
       Validators.pattern(/[0-9]*/),
       Validators.required,
@@ -21,9 +22,10 @@ export class DefendComponent {
   constructor(public matDialogRef: MatDialogRef<DefendComponent>) {}
   ok() {
     this.matDialogRef.close({
-      modifier: parseInt(this.req.value.modifier, 10),
+      assets: parseInt(this.req.value.assets, 10),
       damage: parseInt(this.req.value.damage, 10),
       target: parseInt(this.req.value.target, 10),
+      edge: parseInt(this.req.value.edge, 10),
     });
   }
 }

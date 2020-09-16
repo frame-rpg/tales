@@ -1,3 +1,18 @@
+import {
+  antimagicBlast,
+  crossbow,
+  dagger,
+  feet,
+  lightMace,
+  longbow,
+  magicRapier,
+  nonproficiencyPenalty,
+  rapidStrike,
+  shield,
+  sonicBlast,
+  staff,
+  stoneCloak,
+} from './equipment.js';
 import { attr, skillBlock } from './util.js';
 
 import { Campaign } from '../../types/campaign';
@@ -101,6 +116,7 @@ export const characters: Omit<
     name: 'Stu Roid',
     acl: {
       d1: 'admin',
+      RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
     },
     description: '',
     type: 'character',
@@ -128,11 +144,21 @@ export const characters: Omit<
     }),
     experience: 1,
     initiative: 0,
+    equipment: [
+      stoneCloak,
+      crossbow,
+      dagger,
+      shield,
+      nonproficiencyPenalty,
+      staff,
+      antimagicBlast,
+    ],
   },
   {
     name: 'Kewulf Trannyth',
     acl: {
       b1: 'admin',
+      RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
     },
     description: '',
     type: 'character',
@@ -157,11 +183,13 @@ export const characters: Omit<
     }),
     experience: 5,
     initiative: 0,
+    equipment: [longbow, stoneCloak, sonicBlast, dagger],
   },
   {
     name: 'Malven Stonecutter',
     acl: {
       j1: 'admin',
+      RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
     },
     description: '',
     type: 'character',
@@ -193,6 +221,7 @@ export const characters: Omit<
     }),
     experience: 5,
     initiative: 0,
+    equipment: [lightMace, stoneCloak, dagger],
   },
   {
     name: 'Jordiz Shirodz',
@@ -234,6 +263,7 @@ export const characters: Omit<
     ]),
     experience: 5,
     initiative: 0,
+    equipment: [feet, stoneCloak],
   },
   {
     name: 'Cantaloupe "Loupe" Pantaloons',
@@ -259,5 +289,6 @@ export const characters: Omit<
     }),
     experience: 5,
     initiative: 0,
+    equipment: [magicRapier, stoneCloak, rapidStrike, crossbow],
   },
 ];
