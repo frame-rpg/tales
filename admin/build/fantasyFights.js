@@ -79,11 +79,7 @@ export const campaign = {
     type: 'campaign',
     name: 'Tales of Fantasy and Fighting',
     description: 'also Underground Caverns and Chaos',
-    acl: {
-        E1gXs41G1mgiM441XXf14ac7ypb2: 'admin',
-        UJxxtQzaOzWEFT2vtniCaDQdk2u2: 'read',
-        RUEOViYBeHPUBClCUTQCmIhfrlT2: 'read',
-    },
+    acl: {},
     skills: commonSkills.concat(localSkills),
 };
 export const characters = [
@@ -91,7 +87,6 @@ export const characters = [
         name: 'Stu Roid',
         acl: {
             d1: 'admin',
-            RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
         },
         description: '',
         type: 'character',
@@ -133,7 +128,6 @@ export const characters = [
         name: 'Kewulf Trannyth',
         acl: {
             b1: 'admin',
-            RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
         },
         description: '',
         type: 'character',
@@ -164,7 +158,6 @@ export const characters = [
         name: 'Malven Stonecutter',
         acl: {
             j1: 'admin',
-            RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
         },
         description: '',
         type: 'character',
@@ -202,7 +195,6 @@ export const characters = [
         name: 'Jordiz Shirodz',
         acl: {
             e1: 'admin',
-            RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
         },
         description: '',
         type: 'character',
@@ -244,7 +236,6 @@ export const characters = [
         name: 'Cantaloupe "Loupe" Pantaloons',
         acl: {
             a1: 'admin',
-            RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
         },
         description: '',
         type: 'character',
