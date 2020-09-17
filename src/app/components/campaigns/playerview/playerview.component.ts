@@ -63,7 +63,7 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
     );
     this.myCharacters = this.campaign.pipe(
       switchMap((campagin) =>
-        this.characterService.list(campagin, ['admin', 'write'])
+        this.characterService.list(campagin, ['player', 'gm'])
       ),
       publishReplay(1),
       refCount()
@@ -99,7 +99,5 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
     const attack = await this.attackService.triggerSelf(character, campaign);
   }
 
-  async noncombat(character: SkilledCharacter, campaign: Campaign) {
-    const noncombat = await this.noncombatService.triggerSelf(character);
-  }
+  async noncombat(character: SkilledCharacter, campaign: Campaign) {}
 }

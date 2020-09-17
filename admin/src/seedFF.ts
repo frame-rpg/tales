@@ -19,9 +19,9 @@ import admin from 'firebase-admin';
     projectId: 'tales-280319',
   });
 
-  const acl = { [flagArgs.gm]: 'admin' };
+  const acl = { [flagArgs.gm]: 'gm' };
   if (flagArgs.player) {
-    acl[flagArgs.player] = 'read';
+    acl[flagArgs.player] = 'player';
   }
 
   const ffc = await app
@@ -34,7 +34,7 @@ import admin from 'firebase-admin';
       characters
         .map((c) => {
           if (flagArgs.player) {
-            return { ...c, acl: { [flagArgs.player]: 'admin' } };
+            return { ...c, acl };
           } else {
             return c;
           }

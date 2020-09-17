@@ -85,9 +85,7 @@ export const campaign = {
 export const characters = [
     {
         name: 'Stu Roid',
-        acl: {
-            d1: 'admin',
-        },
+        acl: {},
         description: '',
         type: 'character',
         subtype: 'player',
@@ -126,9 +124,7 @@ export const characters = [
     },
     {
         name: 'Kewulf Trannyth',
-        acl: {
-            b1: 'admin',
-        },
+        acl: {},
         description: '',
         type: 'character',
         subtype: 'player',
@@ -156,9 +152,7 @@ export const characters = [
     },
     {
         name: 'Malven Stonecutter',
-        acl: {
-            j1: 'admin',
-        },
+        acl: {},
         description: '',
         type: 'character',
         subtype: 'player',
@@ -193,9 +187,7 @@ export const characters = [
     },
     {
         name: 'Jordiz Shirodz',
-        acl: {
-            e1: 'admin',
-        },
+        acl: {},
         description: '',
         type: 'character',
         subtype: 'player',
@@ -234,9 +226,7 @@ export const characters = [
     },
     {
         name: 'Cantaloupe "Loupe" Pantaloons',
-        acl: {
-            a1: 'admin',
-        },
+        acl: {},
         description: '',
         type: 'character',
         subtype: 'player',

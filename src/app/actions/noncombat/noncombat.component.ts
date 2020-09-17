@@ -14,7 +14,7 @@ export class NoncombatComponent implements OnInit {
     assets: new FormControl(0, [Validators.pattern(/\-?[0-9]*/)]),
     target: new FormControl(0, [Validators.pattern(/[0-9]*/)]),
     initiative: new FormControl(10, [Validators.pattern(/[0-9]*/)]),
-    skills: new FormControl([]),
+    edge: new FormControl(0, [Validators.pattern(/[0-9]*/)]),
   });
 
   constructor(
@@ -34,11 +34,9 @@ export class NoncombatComponent implements OnInit {
     const response = {
       assets: parseInt(this.req.value.assets, 10),
       initiative: parseInt(this.req.value.initiative, 10),
-      skills: this.req.value.skills,
+      edge: parseInt(this.req.value.edge, 10),
+      target: parseInt(this.req.value.target, 10),
     };
-    if (parseInt(this.req.value.target, 10)) {
-      response['target'] = parseInt(this.req.value.target, 10);
-    }
     this.matDialogRef.close(response);
   }
 }

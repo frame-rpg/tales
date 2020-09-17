@@ -62,20 +62,13 @@ export const campaign = {
     type: 'campaign',
     name: 'Tales of Dinosaurs and Stuff',
     description: 'also Time Travel and Alien Spaceships',
-    acl: {
-        E1gXs41G1mgiM441XXf14ac7ypb2: 'admin',
-        UJxxtQzaOzWEFT2vtniCaDQdk2u2: 'read',
-        RUEOViYBeHPUBClCUTQCmIhfrlT2: 'read',
-    },
+    acl: {},
     skills: commonSkills.concat(localSkills),
 };
 const players = [
     {
         name: 'Ry McGinnis',
-        acl: {
-            UJxxtQzaOzWEFT2vtniCaDQdk2u2: 'admin',
-            RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
-        },
+        acl: {},
         description: '',
         type: 'character',
         subtype: 'player',
@@ -197,9 +190,7 @@ const players = [
     },
     {
         name: 'Chad',
-        acl: {
-            'guy@albertelli.com': 'admin',
-        },
+        acl: {},
         description: '',
         type: 'character',
         subtype: 'player',
@@ -280,10 +271,7 @@ export const companions = [
     {
         name: 'Sparks',
         description: 'Ornithomimid',
-        acl: {
-            UJxxtQzaOzWEFT2vtniCaDQdk2u2: 'admin',
-            RUEOViYBeHPUBClCUTQCmIhfrlT2: 'admin',
-        },
+        acl: {},
         type: 'character',
         subtype: 'companion',
         attack: 2,
@@ -302,9 +290,7 @@ export const companions = [
     {
         name: 'Biscuit',
         description: 'Ankylosaur',
-        acl: {
-            'megan@albertelli.com': 'admin',
-        },
+        acl: {},
         type: 'character',
         subtype: 'companion',
         attack: 2,

@@ -2,7 +2,7 @@
   <div class="left">
     <div class="characterBox mat-elevation-z2" *ngFor="let character of myCharacters | async; trackBy:('characterId' |
         trackByProperty)">
-      <character-card [character]="character" [campaign]="campaign">
+      <character-card [character]="character">
       </character-card>
       <div class="actionRow" *ngIf="campaign | async as campaignScalar">
         <button mat-raised-button (click)="attack(character, campaignScalar)">

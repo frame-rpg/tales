@@ -1,20 +1,19 @@
-<div class="playerCard">
+<div class="playerCard" *ngIf="character | async as characterScalar">
   <div class="nameRow">
     <div class="name">
-      {{ character.name }}
+      {{ characterScalar.name }}
     </div>
     <div class="lock">
-      <button mat-icon-button (click)="unlocked = !unlocked">
-        <mat-icon *ngIf="!unlocked" inline="true" class="lockIcon">lock
-        </mat-icon>
-        <mat-icon *ngIf="unlocked" inline="true" class="lockIcon">lock_open
+      <button mat-icon-button (click)="toggleLock($event)">
+        <mat-icon inline="true" class="lockIcon">
+          {{ (locked | async) ? 'lock' : 'lock_open'}}
         </mat-icon>
       </button>
     </div>
   </div>
   <div class="characterBody">
-    <div class="attributes" *ngIf="character.subtype !== 'nonplayer'">
-      <div *ngFor="let attribute of character.attributes | keyvalue"
+    <div class="attributes" *ngIf="characterScalar.subtype !== 'nonplayer'">
+      <div *ngFor="let attribute of characterScalar.attributes | keyvalue"
           class="attribute">
         <div class="attributeName">
           {{attribute.value.name}}:
@@ -23,7 +22,7 @@
           <mat-icon color="warn">sentiment_very_dissatisfied</mat-icon>
         </div>
         <div class="attributeContent" *ngIf="!attribute.value.wound">
-          <adjust-character *ngIf="unlocked" min="0"
+          <adjust-character *ngIf="!(locked|async)" min="0"
               [max]="attribute.value.pool" [increment]="-1"
               [character]="character"
               [path]="'attributes.'+attribute.key+'.current'">
@@ -31,48 +30,50 @@
           <div class="pool">
             {{ attribute.value.current }} / {{attribute.value.pool}}
           </div>
-          <adjust-character *ngIf="unlocked" min="0"
+          <adjust-character *ngIf="!(locked|async)" min="0"
               [max]="attribute.value.pool" [increment]="1"
               [character]="character"
               [path]="'attributes.'+attribute.key+'.current'">
           </adjust-character>
         </div>
       </div>
-      <div class="attribute" *ngIf="character.initiative >= 0">
+      <div class="attribute" *ngIf="characterScalar.initiative >= 0">
         <div class="attributeName">Initiative:</div>
         <div class="attributeContent">
-          <adjust-character *ngIf="unlocked" min="0" [max]="1000"
+          <adjust-character *ngIf="!(locked|async)" min="0" [max]="1000"
               [increment]="0" [character]="character" [path]="'initiative'">
           </adjust-character>
-          <div class="pool">{{character.initiative}}</div>
-          <adjust-character *ngIf="unlocked" min="0" [max]="1000"
+          <div class="pool">{{characterScalar.initiative}}</div>
+          <adjust-character *ngIf="!(locked|async)" min="0" [max]="1000"
               [increment]="1" [character]="character" [path]="'initiative'">
           </adjust-character>
         </div>
       </div>
     </div>
-    <mat-expansion-panel *ngIf="character.subtype !== 'nonplayer'">
+    <mat-expansion-panel *ngIf="characterScalar.subtype !== 'nonplayer'">
       <mat-expansion-panel-header>
         <mat-panel-title>Skills</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="skills">
-        <div *ngFor="let category of skillCategories">
-          <div class="categoryTitle">{{category}}</div>
-          <div *ngFor="let skill of skillsByCategory[category] | skillsort"
-              class="skill">
+        <div *ngFor="let category of skillsByCategory | async | keyvalue">
+          <div class="categoryTitle">{{category.key}}</div>
+          <div *ngFor="let skill of category.value" class="skill">
             <div class="skillInfo">
               <div>{{skill.name}}</div>
               <div style="text-transform: capitalize;">{{skill.level}}</div>
+              <button mat-icon-button (click)="check($event, skill)">
+                <mat-icon>casino</mat-icon>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="character.equipment.length > 0">
+    <mat-expansion-panel *ngIf="characterScalar.equipment.length > 0">
       <mat-expansion-panel-header>
         <mat-panel-title>Equipment</mat-panel-title>
       </mat-expansion-panel-header>
-      <div *ngFor="let item of character.equipment" class="item">
+      <div *ngFor="let item of characterScalar.equipment" class="item">
         <div>
           {{item.name}}
         </div>

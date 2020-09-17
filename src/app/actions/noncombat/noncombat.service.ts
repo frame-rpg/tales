@@ -3,6 +3,7 @@ import { RollComplete, RollRequest } from 'types/message';
 
 import { CampaignId } from 'types/idtypes';
 import { CharacterService } from 'src/app/data/character.service';
+import { CharacterSkill } from 'types/skill';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageService } from 'src/app/data/message.service';
@@ -22,56 +23,47 @@ export class NoncombatService {
     private rollService: RollService
   ) {}
 
-  async triggerSelf(character: SkilledCharacter) {
-    const rollRequest: Omit<RollRequest, 'messageId'> = {
-      messageType: 'rollRequest',
-      at: new Date(),
-      type: 'noncombat',
-      description: 'General Check',
-      assets: 0,
-      skills: character.skills
-        .filter((skill) => skill.type === 'noncombat')
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .map((skill) => skill.skillId),
-      initiative: 10,
-      edge: 0,
-      state: 'new',
-      from: { type: 'campaign', campaignId: character.campaignId },
-      to: idPluck(character),
-    };
-    console.log(rollRequest);
-    const rollResult = await this.rollService.trigger(
-      rollRequest,
-      character as SkilledCharacter
-    );
-    if (rollResult) {
-      await this.handle(character as SkilledCharacter, rollRequest, rollResult);
-    }
-  }
-
-  async trigger(character: Character, campaign: CampaignId) {
+  async trigger(
+    character: SkilledCharacter,
+    skillId: string,
+    immediate = false
+  ) {
     const result = await this.dialogService
       .open(NoncombatComponent, { data: character })
       .afterClosed()
       .pipe(take(1))
       .toPromise();
+
     if (result) {
       const rollRequest: Omit<RollRequest, 'messageId'> = {
         messageType: 'rollRequest',
         at: new Date(),
         type: 'noncombat',
         description: 'General Check',
-        assets: result.modifier || 0,
-        skills: result.skills,
-        edge: 0,
+        assets: result.assets || 0,
+        initiative: result.initiative,
+        skills: [skillId],
+        edge: result.edge || 0,
+        target: result.target || null,
         state: 'new',
-        from: idPluck(campaign),
+        from: { type: 'campaign', campaignId: character.campaignId },
         to: idPluck(character),
       };
-      if (result.target) {
-        rollRequest.target = result.target;
+      if (immediate) {
+        const rollResult = await this.rollService.trigger(
+          rollRequest,
+          character as SkilledCharacter
+        );
+        if (rollResult) {
+          await this.handle(
+            character as SkilledCharacter,
+            rollRequest,
+            rollResult
+          );
+        }
+      } else {
+        await this.messageService.send(rollRequest);
       }
-      await this.messageService.send(rollRequest);
     }
   }
 
@@ -82,7 +74,15 @@ export class NoncombatService {
   ) {
     await this.messageService.send({
       ...result,
-      description: `${character.name} rolled ${result.result} for ${result.skill.name}.`,
+      description: `${character.name} rolled ${result.result} for ${
+        result.skill.name
+      }. ${
+        request.target
+          ? `Target: ${request.target}, ${
+              result.success ? 'Success!' : 'Failure.'
+            }`
+          : ''
+      }.`,
     });
     const patch = {
       initiative: character.initiative + request.initiative + result.effort,

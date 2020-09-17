@@ -20,10 +20,10 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {}
 
   linkToCampaign(campaign: Campaign) {
-    if (campaign.acl[this.presentation.userId] === 'read') {
-      return ['campaigns', campaign.campaignId, 'player'];
-    } else {
-      return ['campaigns', campaign.campaignId, 'gm'];
-    }
+    return [
+      'campaigns',
+      campaign.campaignId,
+      campaign.acl[this.presentation.userId],
+    ];
   }
 }

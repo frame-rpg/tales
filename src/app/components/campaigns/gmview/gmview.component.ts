@@ -113,8 +113,6 @@ export class GmviewComponent implements OnInit, OnDestroy {
           await this.initiativeService.trigger(characters, campaign);
         } else if (event.type === 'defend') {
           await this.defendService.trigger(event.character, campaign);
-        } else if (event.type === 'noncombat') {
-          await this.noncombatService.trigger(event.character, campaign);
         } else if (event.type === 'rest') {
           await this.characterService.rest(characters);
           await this.messageService.scene(campaign, characters);

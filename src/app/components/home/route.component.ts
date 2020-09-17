@@ -22,7 +22,7 @@ export class RouteComponent implements OnInit {
   ngOnInit(): void {
     this.presentation = combineLatest([
       this.auth.user.pipe(map((user) => user.uid)),
-      this.campaignService.list(['read', 'write', 'admin']),
+      this.campaignService.list(['player', 'gm', 'viewer']),
     ]).pipe(
       map(([userId, campaigns]) => ({ userId, campaigns })),
       publishReplay(1),

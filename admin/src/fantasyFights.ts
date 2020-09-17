@@ -109,9 +109,7 @@ export const characters: Omit<
 >[] = [
   {
     name: 'Stu Roid',
-    acl: {
-      d1: 'admin',
-    },
+    acl: {},
     description: '',
     type: 'character',
     subtype: 'player',
@@ -150,9 +148,7 @@ export const characters: Omit<
   },
   {
     name: 'Kewulf Trannyth',
-    acl: {
-      b1: 'admin',
-    },
+    acl: {},
     description: '',
     type: 'character',
     subtype: 'player',
@@ -180,9 +176,7 @@ export const characters: Omit<
   },
   {
     name: 'Malven Stonecutter',
-    acl: {
-      j1: 'admin',
-    },
+    acl: {},
     description: '',
     type: 'character',
     subtype: 'player',
@@ -217,9 +211,7 @@ export const characters: Omit<
   },
   {
     name: 'Jordiz Shirodz',
-    acl: {
-      e1: 'admin',
-    },
+    acl: {},
     description: '',
     type: 'character',
     subtype: 'player',
@@ -258,9 +250,7 @@ export const characters: Omit<
   },
   {
     name: 'Cantaloupe "Loupe" Pantaloons',
-    acl: {
-      a1: 'admin',
-    },
+    acl: {},
     description: '',
     type: 'character',
     subtype: 'player',

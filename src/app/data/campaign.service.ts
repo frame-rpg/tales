@@ -16,7 +16,7 @@ export class CampaignService {
     private auth: AngularFireAuth
   ) {}
 
-  list(acls: AclType[] = ['read', 'write', 'admin']) {
+  list(acls: AclType[] = ['player', 'gm', 'viewer']) {
     return this.auth.user.pipe(
       switchMap((user) =>
         this.firestore
