@@ -108,7 +108,6 @@ export class AttackComponent implements OnInit {
         this.chosenWeapon.initiative + countInitiative(this.character),
       damage: this.chosenWeapon.damage,
     });
-    console.log(this.req.value);
   }
 
   ngOnInit(): void {}
