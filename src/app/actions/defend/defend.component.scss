@@ -1,16 +1,13 @@
+@import '../../core/material/dialog';
+
 .dialogContent {
-  display: flex;
-  flex-direction: column;
-  min-width: 40vw;
+  @include dialogContent
 }
 
 .dialogBody {
-  display: flex;
-  flex-direction: column;
+  @include dialogBody
 }
 
 .buttonRow {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  @include buttonRow
 }

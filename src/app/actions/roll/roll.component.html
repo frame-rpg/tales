@@ -13,8 +13,8 @@
       <div class="value">{{ edge }}</div>
     </div>
     <div class="modifier">
-      <div class="label">Effecitve Skill Level:</div>
-      <div class="value">{{ skillLevel }}</div>
+      <div class="label">Effective Skill Level:</div>
+      <div class="value">{{ skillLevel }}{{ effectiveLevel }}</div>
     </div>
     <div class="modifier" *ngFor="let item of data.roll.items; let i = index">
       <div class="label">{{ i === 0 ? 'Items:' : '' }}</div>

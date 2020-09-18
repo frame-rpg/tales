@@ -1,16 +1,24 @@
+@import '../../core/material/dialog';
+
 .dialogContent {
-  display: flex;
-  flex-direction: column;
-  min-width: 40vw;
+  @include dialogContent
 }
 
 .dialogBody {
-  display: flex;
-  flex-direction: column;
+  @include dialogBody
 }
 
 .buttonRow {
+  @include buttonRow
+}
+
+.adjusters {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.adjuster {
+  max-width: 80px;
+  padding: 0 9px;
 }

@@ -22,19 +22,19 @@ export class AttackComponent implements OnInit {
   otherEquipment: Equipment[];
   chosenWeapon: Weapon;
   req = new FormGroup({
-    assets: new FormControl(0, [Validators.pattern(/\-?[0-9]*/)]),
-    target: new FormControl(0, [
+    assets: new FormControl(null, [Validators.pattern(/\-?[0-9]*/)]),
+    target: new FormControl(null, [
       Validators.pattern(/[0-9]*/),
       Validators.required,
       Validators.min(1),
     ]),
-    initiative: new FormControl(0, [
+    initiative: new FormControl(null, [
       Validators.pattern(/[0-9]*/),
       Validators.required,
       Validators.min(1),
     ]),
-    damage: new FormControl(0),
-    edge: new FormControl(0),
+    damage: new FormControl(null),
+    edge: new FormControl(null),
   });
 
   constructor(
@@ -51,10 +51,10 @@ export class AttackComponent implements OnInit {
 
   ok() {
     const response = {
-      modifier: parseInt(this.req.value.modifier, 10),
-      damage: parseInt(this.req.value.damage, 10),
-      target: parseInt(this.req.value.target, 10),
-      initiative: parseInt(this.req.value.initiative, 10),
+      assets: parseInt(this.req.value.assets, 10) || 0,
+      damage: parseInt(this.req.value.damage, 10) || 0,
+      target: parseInt(this.req.value.target, 10) || 0,
+      initiative: parseInt(this.req.value.initiative, 10) || 0,
       weapon: this.chosenWeapon,
       otherItems: countCharacter(this.character, 'attack').relevant.filter(
         (e) => e.type !== 'weapon'
@@ -108,6 +108,7 @@ export class AttackComponent implements OnInit {
         this.chosenWeapon.initiative + countInitiative(this.character),
       damage: this.chosenWeapon.damage,
     });
+    console.log(this.req.value);
   }
 
   ngOnInit(): void {}

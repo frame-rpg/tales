@@ -179,9 +179,30 @@ export class RollComponent implements OnDestroy {
 
   get skillLevel(): number {
     if (!this.skill) {
-      return null;
+      return this.roll.assets || 0;
     }
     return Level[this.skill?.level] + (this.roll.assets || 0);
+  }
+
+  get effectiveLevel(): string {
+    const l = this.skillLevel;
+    if (l < -2) {
+      return 'Bad' + new Array(Math.abs(l) - 2).fill('-').join('');
+    } else if (l === -2) {
+      return 'Inept';
+    } else if (l === -1) {
+      return 'Unskilled';
+    } else if (l === 0) {
+      return 'Proficient';
+    } else if (l === 1) {
+      return 'Trained';
+    } else if (l === 2) {
+      return 'Expert';
+    } else if (l > 2) {
+      return 'Great' + new Array(Math.abs(l) - 2).fill('+').join('');
+    } else {
+      return 'Mysterious';
+    }
   }
 
   get skillModifierDescription() {
