@@ -61,3 +61,14 @@
 .roll {
   margin-left: auto;
 }
+
+.modifiers {
+  display: flex;
+  flex-direction: column;
+}
+
+.modifier {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

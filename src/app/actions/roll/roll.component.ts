@@ -264,6 +264,10 @@ export class RollComponent implements OnDestroy {
     this.manuallyRolling = false;
   }
 
+  get edge() {
+    return (this.attribute?.edge || 0) + this.data.roll.edge;
+  }
+
   get total() {
     return Math.max(
       this.die + (this.effort.value + this.attribute.edge) * this.direction,

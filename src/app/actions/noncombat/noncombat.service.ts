@@ -49,6 +49,7 @@ export class NoncombatService {
         from: { type: 'campaign', campaignId: character.campaignId },
         to: idPluck(character),
       };
+      console.log(rollRequest);
       if (immediate) {
         const rollResult = await this.rollService.trigger(
           rollRequest,

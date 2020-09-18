@@ -115,7 +115,7 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.character.currentValue) {
+    if (changes.character?.currentValue) {
       this.characterSubject.next(changes.character.currentValue);
     }
   }

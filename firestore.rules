@@ -47,9 +47,10 @@ service cloud.firestore {
       }
       match /characters/{characterId} {
         function characterDoc() {
-          return get(/databases/$(database)/documents/campaigns/$(campaignId)/characters/$(characterId));
+          return get(/databases/$(debug(database))/documents/campaigns/$(campaignId)/characters/$(characterId));
         }
         allow read: if readAclZ(characterDoc())
+        allow list: if campaignReader()
         allow update: if writeAclZ(characterDoc())
         allow create: if false
         allow delete: if false

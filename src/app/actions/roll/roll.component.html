@@ -1,27 +1,44 @@
 <h2 mat-dialog-title>{{ data.roll.description }}</h2>
 <mat-dialog-content class="dialog" [formGroup]="rollState">
-  <div *ngIf="target">Target: {{target}} with {{skillModifierDescription}}</div>
-  <div *ngIf="!target && skillModifierDescription">
-    With {{skillModifierDescription}}
-  </div>
-  <div *ngFor="let item of data.roll.items">Using {{item.name}}</div>
-  <div *ngIf="skill" class="attribute">
-    Rolling {{ skill.name }}: {{ skill.level }}
-  </div>
-  <div *ngIf="attribute" class="attribute">
-    <div class="attributeName">
-      Using {{attribute.name}}:
+  <div class="modifiers">
+    <div class="modifier">
+      <div class="label">Target:</div>
+      <div *ngIf="target; else notarget" class="value">{{ target }}</div>
+      <ng-template #notarget>
+        <div class="value">Open</div>
+      </ng-template>
     </div>
-    <div class="wound" *ngIf="attribute.wound; else unwounded">
-      <mat-icon>sentiment_very_dissatisfied</mat-icon>
+    <div class="modifier">
+      <div class="label">Edge:</div>
+      <div class="value">{{ edge }}</div>
     </div>
-    <ng-template #unwounded>
-      <div class="currentPool">
-        {{attribute.edge ? '+'+attribute.edge+' ' : ''}}{{ attribute.current }}
-        /
-        {{attribute.pool}}
+    <div class="modifier">
+      <div class="label">Effecitve Skill Level:</div>
+      <div class="value">{{ skillLevel }}</div>
+    </div>
+    <div class="modifier" *ngFor="let item of data.roll.items; let i = index">
+      <div class="label">{{ i === 0 ? 'Items:' : '' }}</div>
+      <div class="value">{{ item.name }}</div>
+    </div>
+    <div *ngIf="attribute" class="modifier">
+      <div class="label">
+        {{ attribute.name }}:
       </div>
-    </ng-template>
+      <div class="wound value" *ngIf="attribute.wound; else unwounded">
+        <mat-icon>sentiment_very_dissatisfied</mat-icon>
+      </div>
+      <ng-template #unwounded>
+        <div class="value">
+          {{ attribute.edge ? '+'+attribute.edge+' ' : '' }}{{ attribute.current }}
+          /
+          {{ attribute.pool }}
+        </div>
+      </ng-template>
+    </div>
+    <div class="modifier" *ngIf="skill">
+      <div class="label">{{ skill.name }}:</div>
+      <div class="value">{{ skill.level }}</div>
+    </div>
   </div>
   <div *ngIf="step === 'pickSkill'">
     <mat-form-field>
@@ -29,7 +46,7 @@
       <mat-select (selectionChange)="selectSkill($event)">
         <mat-option *ngFor="let skill of skills | skillsort"
             class="skillSelectOption" [value]="skill.skillId">
-          {{skill.name}}: {{skill.level}}
+          {{ skill.name }}: {{ skill.level }}
         </mat-option>
       </mat-select>
     </mat-form-field>
