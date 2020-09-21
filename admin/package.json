@@ -6,9 +6,7 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf build/",
-    "build": "npx tsc",
-    "seed": "env FIRESTORE_EMULATOR_HOST=localhost:8080 node build/seed.js",
-    "seedprod": "node build/seed.js"
+    "build": "npx tsc"
   },
   "author": "",
   "license": "ISC",
