@@ -1,9 +1,10 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Observable, Subject, merge } from 'rxjs';
-import { distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Page } from 'types/page';
+import { PageId } from 'types/idtypes';
 
 @Component({
   selector: 'tales-page-view',
@@ -11,16 +12,15 @@ import { Page } from 'types/page';
   styleUrls: ['./view.component.scss'],
 })
 export class ViewComponent implements OnChanges {
-  @Input('pageId') _pageId?: string;
+  @Input('pageId') _pageId?: PageId;
   @Input('page') _page?: Page;
-  @Input() cat?: boolean;
 
-  idSubject = new Subject<string>();
-  pageSubject = new Subject<Page[]>();
-  pages: Observable<Page[]>;
+  idSubject = new Subject<PageId>();
+  pageSubject = new Subject<Page>();
+  page: Observable<Page>;
 
   constructor(private firestore: AngularFirestore) {
-    this.pages = merge(
+    this.page = merge(
       this.pageSubject
         .asObservable()
         .pipe(distinctUntilChanged((a, b) => a[0] === b[0])),
@@ -28,10 +28,9 @@ export class ViewComponent implements OnChanges {
         distinctUntilChanged(),
         switchMap((id) =>
           this.firestore
-            .collection<Page>(`/pages/${id}/pages`, (query) =>
-              query.where('published', '==', true)
-            )
-            .valueChanges({ idField: 'pageId' })
+            .doc<Page>(`/pages/${id.collectionId}/pages/${id.pageId}`)
+            .valueChanges()
+            .pipe(map((v) => ({ ...v, ...id })))
         )
       )
     );
@@ -39,7 +38,7 @@ export class ViewComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (this._page) {
-      this.pageSubject.next([this._page]);
+      this.pageSubject.next(this._page);
     } else if (this._pageId) {
       this.idSubject.next(this._pageId);
     }

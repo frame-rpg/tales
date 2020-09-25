@@ -1,21 +1,27 @@
-// export interface BasicId {
-//   type: 'character' | 'campaign' | 'user';
-// }
+export interface BasicId {
+  type: 'character' | 'campaign' | 'user' | 'page';
+}
 
-export interface UserId {
+export interface UserId extends BasicId {
   type: 'user';
   userId: string;
 }
 
-export interface CampaignId {
+export interface CampaignId extends BasicId {
   type: 'campaign';
   campaignId: string;
 }
 
-export interface CharacterId {
+export interface CharacterId extends BasicId {
   type: 'character';
   campaignId: string;
   characterId: string;
 }
 
-export type Id = CharacterId | CampaignId | UserId;
+export interface PageId extends BasicId {
+  type: 'page';
+  pageId: string;
+  collectionId: string;
+}
+
+export type Id = CharacterId | CampaignId | UserId | PageId;
