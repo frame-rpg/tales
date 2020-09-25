@@ -1,1 +1,30 @@
-<p>view works!</p>
+<button mat-mini-fab (click)="navDrawer.toggle()" color="accent" class="fab">
+  <mat-icon>menu</mat-icon>
+</button>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #navDrawer [mode]="(narrow | async) ? 'over' : 'side'"
+      [opened]="!(narrow | async)">
+    <div class="sidenav" *ngIf="inView | async as visible">
+      <div *ngFor="let header of headers | async" class="item"
+          [style.marginLeft]=" 5*header.level + 'px'"
+          [class.active]="visible[header.id]" (click)="pleaseView(header.id)">
+        {{header.text}}
+      </div>
+      <div class="license">
+        &copy; 2020 Eric Eslinger. Some rights reserved.
+      </div>
+      <div>
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/legalcode">
+          <img alt="Creative Commons License" src="assets/cc-by-nc.png">
+        </a>
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div markdown class="content" #rootContainer>
+      <ng-container markdown [data]="item.content"
+          *ngFor="let item of pages | async"></ng-container>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

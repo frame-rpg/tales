@@ -2,9 +2,10 @@
 
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+@import url("https://fonts.googleapis.com/css?family=Abril+Fatface:300,400,500");
+@import url("https://fonts.googleapis.com/css?family=Merriweather:300,400,500,600,700");
 
-$fontConfig: (
-  display-4: mat-typography-level(112px, 112px, 300, 'Roboto', -0.0134em),
+$fontConfig: (display-4: mat-typography-level(112px, 112px, 300, 'Roboto', -0.0134em),
   display-3: mat-typography-level(56px, 56px, 400, 'Roboto', -0.0089em),
   display-2: mat-typography-level(45px, 48px, 400, 'Roboto', 0em),
   display-1: mat-typography-level(34px, 40px, 400, 'Roboto', 0.0074em),
@@ -19,18 +20,15 @@ $fontConfig: (
   input: mat-typography-level(inherit, 1.125, 400, 'Roboto', 1.5px),
 );
 
-// Foreground Elements
-
 // Light Theme Text
-$dark-text: #262626;
+$dark-text: #000000;
 $dark-primary-text: rgba($dark-text, 0.87);
 $dark-accent-text: rgba($dark-primary-text, 0.54);
 $dark-disabled-text: rgba($dark-primary-text, 0.38);
 $dark-dividers: rgba($dark-primary-text, 0.12);
 $dark-focused: rgba($dark-primary-text, 0.12);
 
-$mat-light-theme-foreground: (
-  base: black,
+$mat-light-theme-foreground: (base: black,
   divider: $dark-dividers,
   dividers: $dark-dividers,
   disabled: $dark-disabled-text,
@@ -56,8 +54,7 @@ $light-disabled-text: rgba($light-primary-text, 0.5);
 $light-dividers: rgba($light-primary-text, 0.12);
 $light-focused: rgba($light-primary-text, 0.12);
 
-$mat-dark-theme-foreground: (
-  base: $light-text,
+$mat-dark-theme-foreground: (base: $light-text,
   divider: $light-dividers,
   dividers: $light-dividers,
   disabled: $light-disabled-text,
@@ -87,8 +84,7 @@ $dark-bg-tooltip: lighten(#2c2c2c, 20%);
 $dark-bg-alpha-4: rgba(#2c2c2c, 0.04);
 $dark-bg-alpha-12: rgba(#2c2c2c, 0.12);
 
-$mat-light-theme-background: (
-  background: $light-background,
+$mat-light-theme-background: (background: $light-background,
   status-bar: $light-bg-darker-20,
   app-bar: $light-bg-darker-5,
   hover: $dark-bg-alpha-4,
@@ -115,8 +111,7 @@ $light-bg-alpha-4: rgba(#fafafa, 0.04);
 $light-bg-alpha-12: rgba(#fafafa, 0.12);
 
 // Background palette for dark themes.
-$mat-dark-theme-background: (
-  background: $dark-background,
+$mat-dark-theme-background: (background: $dark-background,
   status-bar: $dark-bg-lighter-20,
   app-bar: $dark-bg-lighter-5,
   hover: $light-bg-alpha-4,
@@ -139,74 +134,65 @@ $mat-dark-theme-background: (
 // Theme Config
 
 body {
-  --primary-color: #6279b8;
-  --primary-lighter-color: #d0d7ea;
-  --primary-darker-color: #465ca0;
+  --primary-color: #795548;
+  --primary-lighter-color: #a98274;
+  --primary-darker-color: #4b2c20;
   --text-primary-color: #{$light-primary-text};
   --text-primary-lighter-color: #{$dark-primary-text};
   --text-primary-darker-color: #{$light-primary-text};
 }
 
-$mat-primary: (
-  main: #6279b8,
-  lighter: #d0d7ea,
-  darker: #465ca0,
-  200: #6279b8,
+$mat-primary: (main: #795548,
+  lighter: #a98274,
+  darker: #4b2c20,
+  200: #795548,
   // For slide toggle,
-  contrast:
-    (
-      main: $light-primary-text,
-      lighter: $dark-primary-text,
-      darker: $light-primary-text,
-    ),
+  contrast: (main: $light-primary-text,
+    lighter: $dark-primary-text,
+    darker: $light-primary-text,
+  ),
 );
 $theme-primary: mat-palette($mat-primary, main, lighter, darker);
 
 body {
-  --accent-color: #bee3db;
-  --accent-lighter-color: #ecf7f4;
-  --accent-darker-color: #a7d8cd;
+  --accent-color: #aed581;
+  --accent-lighter-color: #e1ffb1;
+  --accent-darker-color: #7da453;
   --text-accent-color: #{$dark-primary-text};
   --text-accent-lighter-color: #{$dark-primary-text};
   --text-accent-darker-color: #{$dark-primary-text};
 }
 
-$mat-accent: (
-  main: #bee3db,
-  lighter: #ecf7f4,
-  darker: #a7d8cd,
-  200: #bee3db,
+$mat-accent: (main: #aed581,
+  lighter: #e1ffb1,
+  darker: #7da453,
+  200: #aed581,
   // For slide toggle,
-  contrast:
-    (
-      main: $dark-primary-text,
-      lighter: $dark-primary-text,
-      darker: $dark-primary-text,
-    ),
+  contrast: (main: $dark-primary-text,
+    lighter: $dark-primary-text,
+    darker: $dark-primary-text,
+  ),
 );
 $theme-accent: mat-palette($mat-accent, main, lighter, darker);
 
 body {
-  --warn-color: #df2935;
-  --warn-lighter-color: #f5bfc2;
-  --warn-darker-color: #d21922;
+  --warn-color: #ff0000;
+  --warn-lighter-color: #ffb3b3;
+  --warn-darker-color: #ff0000;
   --text-warn-color: #{$light-primary-text};
   --text-warn-lighter-color: #{$dark-primary-text};
   --text-warn-darker-color: #{$light-primary-text};
 }
 
-$mat-warn: (
-  main: #df2935,
-  lighter: #f5bfc2,
-  darker: #d21922,
-  200: #df2935,
+$mat-warn: (main: #ff0000,
+  lighter: #ffb3b3,
+  darker: #ff0000,
+  200: #ff0000,
   // For slide toggle,
-  contrast:
-    (
-      main: $light-primary-text,
-      lighter: $dark-primary-text,
-      darker: $light-primary-text,
-    ),
+  contrast: (main: $light-primary-text,
+    lighter: $dark-primary-text,
+    darker: $light-primary-text,
+  ),
 );
 $theme-warn: mat-palette($mat-warn, main, lighter, darker);
 
@@ -229,7 +215,7 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
   padding: 0 1.15em;
   margin: 0 0.65em;
   min-width: 3em;
-  line-height: 36.4px;
+  line-height: 41.6px;
 }
 
 .mat-standard-chip {
@@ -240,6 +226,7 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 .material-icons {
   font-size: 24px;
   font-family: 'Material Icons Round', 'Material Icons';
+
   .mat-badge-content {
     font-family: 'Roboto';
   }

@@ -1,6 +1,7 @@
 import { campaign, characters } from './fantasyFights.js';
 
 import admin from 'firebase-admin';
+import { rules } from './basicRules.js';
 
 (async () => {
   const flagArgs: Record<string, string> = {};
@@ -28,6 +29,19 @@ import admin from 'firebase-admin';
     .firestore()
     .collection(`/campaigns`)
     .add({ ...campaign, acl });
+
+  await app
+    .firestore()
+    .doc('/pages/rules')
+    .set({
+      authors: [flagArgs.gm],
+    });
+
+  await app.firestore().collection('/pages/rules/pages').add({
+    published: true,
+    updated: new Date(),
+    content: rules,
+  });
 
   await Promise.all([
     Promise.all(
