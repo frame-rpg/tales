@@ -1,11 +1,15 @@
-export const variables = {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.powers = exports.template = exports.variables = void 0;
+exports.variables = {
     attribute: ['might', 'speed', 'focus', 'conviction'],
     range: ['melee', 'ranged'],
 };
-export function template(tpl, args) {
-    return tpl.replace(/\${(\w+)}/g, (_, v) => args[v]);
+function template(tpl, args) {
+    return tpl.replace(/\${(\w+)}/g, function (_, v) { return args[v]; });
 }
-export const powers = [
+exports.template = template;
+exports.powers = [
     {
         name: 'Two-Weapon Fighting',
         id: 'twoweaponfighting',

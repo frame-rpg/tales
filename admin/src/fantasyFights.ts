@@ -12,13 +12,13 @@ import {
   sonicBlast,
   staff,
   stoneCloak,
-} from './equipment.js';
-import { attr, skillBlock } from './util.js';
+} from './equipment';
+import { attr, skillBlock } from './util';
 
 import { Campaign } from '../../types/campaign';
 import { PlayerCharacter } from '../../types/character';
 import { Skill } from '../../types/skill';
-import { commonSkills } from './skills.js';
+import { commonSkills } from './skills';
 
 const localSkills: Skill[] = [
   {

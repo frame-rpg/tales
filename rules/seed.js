@@ -6,8 +6,8 @@ async function seed() {
 
   const app = admin.initializeApp({
     credential: admin.credential.applicationDefault(),
-    databaseURL: 'https://tales-280319.firebaseio.com',
-    projectId: 'tales-280319',
+    databaseURL: 'https://framesystem-rpg.firebaseio.com',
+    projectId: 'framesystem-rpg',
   });
 
   await app
@@ -21,6 +21,8 @@ async function seed() {
     published: true,
     sequence: 1,
     updated: new Date(),
+    pageId: 'basic',
+    collectionId: 'rules',
     content: basic.toString(),
   });
 }

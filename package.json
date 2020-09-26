@@ -7,7 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "buildSeed": "tsc --project admin/tsconfig.json",
+    "seedEmulators": "npm run-script buildSeed && env FIRESTORE_EMULATOR_HOST=localhost:8080  node admin/build/seedFF.js --gm E1gXs41G1mgiM441XXf14ac7ypb2 --player RUEOViYBeHPUBClCUTQCmIhfrlT2"
   },
   "private": true,
   "dependencies": {

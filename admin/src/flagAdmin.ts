@@ -4,8 +4,8 @@ import admin from 'firebase-admin';
   const args = process.argv.slice(2);
   const app = admin.initializeApp({
     credential: admin.credential.applicationDefault(),
-    databaseURL: 'https://tales-280319.firebaseio.com',
-    projectId: 'tales-280319',
+    databaseURL: 'https://framesystem-rpg.firebaseio.com',
+    projectId: 'framesystem-rpg',
   });
   await Promise.all(
     args.map((arg) =>
