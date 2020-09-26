@@ -22,14 +22,12 @@ import { environment } from '../../../environments/environment';
   imports: [
     AngularFireAuthModule,
     AngularFireModule.initializeApp({
-      apiKey: 'AIzaSyCPMpyIIJ5kEz6baDWs8FlGN9zZ-DhttEU',
+      apiKey: 'AIzaSyDUOWopxmEK8n3r4wSOXzKsZJg_78D_OF8',
       authDomain: 'framesystem-rpg.firebaseapp.com',
       databaseURL: 'https://framesystem-rpg.firebaseio.com',
       projectId: 'framesystem-rpg',
       storageBucket: 'framesystem-rpg.appspot.com',
-      messagingSenderId: '566075741185',
-      appId: '1:566075741185:web:5ab6e5b64399c8165edc00',
-      measurementId: 'G-Q6Z05NHF7L',
+      messagingSenderId: '414765217858',
     }),
     CommonModule,
   ],

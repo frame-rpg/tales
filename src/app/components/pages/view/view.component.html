@@ -4,12 +4,7 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #navDrawer [mode]="(narrow | async) ? 'over' : 'side'"
       [opened]="!(narrow | async)">
-    <div class="sidenav" *ngIf="inView | async as visible">
-      <div *ngFor="let header of headers | async" class="item"
-          [style.marginLeft]=" 5*header.level + 'px'"
-          [class.active]="visible[header.id]" (click)="pleaseView(header.id)">
-        {{header.text}}
-      </div>
+    <div class="sidenav">
       <div class="license">
         &copy; 2020 Eric Eslinger. Some rights reserved.
       </div>
@@ -22,9 +17,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <div markdown class="content" #rootContainer>
-      <ng-container markdown [data]="item.content"
-          *ngFor="let item of pages | async"></ng-container>
+    <div markdown class="content" #rootContainer [data]="markdown | async">
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

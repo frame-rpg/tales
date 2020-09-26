@@ -1,8 +1,15 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Observable, Subject, merge } from 'rxjs';
-import { distinctUntilChanged, map, switchMap } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  map,
+  publishReplay,
+  refCount,
+  switchMap,
+} from 'rxjs/operators';
 
 import { AngularFirestore } from '@angular/fire/firestore';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Page } from 'types/page';
 import { PageId } from 'types/idtypes';
 
@@ -18,6 +25,9 @@ export class ViewComponent implements OnChanges {
   idSubject = new Subject<PageId>();
   pageSubject = new Subject<Page>();
   page: Observable<Page>;
+  markdown: Observable<string>;
+  narrow: Observable<boolean>;
+  private breakpoint: BreakpointObserver;
 
   constructor(private firestore: AngularFirestore) {
     this.page = merge(
@@ -30,9 +40,19 @@ export class ViewComponent implements OnChanges {
           this.firestore
             .doc<Page>(`/pages/${id.collectionId}/pages/${id.pageId}`)
             .valueChanges()
-            .pipe(map((v) => ({ ...v, ...id })))
+            .pipe(
+              map((v) => ({ ...v, ...id })),
+              publishReplay(1),
+              refCount()
+            )
         )
       )
+    );
+    this.markdown = this.page.pipe(map((p) => p.content));
+    this.narrow = this.breakpoint.observe('(max-width: 660px)').pipe(
+      map(({ matches }) => matches),
+      publishReplay(1),
+      refCount()
     );
   }
 

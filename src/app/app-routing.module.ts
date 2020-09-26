@@ -6,6 +6,7 @@ import {
 import { RouterModule, Routes } from '@angular/router';
 
 import { GmviewComponent } from './components/campaigns/gmview/gmview.component';
+import { LoginComponent } from './components/user/login/login.component';
 import { NgModule } from '@angular/core';
 import { PlayerviewComponent } from './components/campaigns/playerview/playerview.component';
 import { RouteComponent } from './components/home/route.component';
@@ -33,6 +34,10 @@ const routes: Routes = [
     component: RouteComponent,
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
 ];
 
