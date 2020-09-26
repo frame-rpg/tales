@@ -10,6 +10,7 @@ import { LoginComponent } from './components/user/login/login.component';
 import { NgModule } from '@angular/core';
 import { PlayerviewComponent } from './components/campaigns/playerview/playerview.component';
 import { RouteComponent } from './components/home/route.component';
+import { RulesComponent } from './components/pages/static/rules.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
@@ -39,6 +40,7 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
+  { path: 'rules', component: RulesComponent },
 ];
 
 @NgModule({

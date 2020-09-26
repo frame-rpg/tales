@@ -28,6 +28,7 @@ import { environment } from '../../../environments/environment';
       projectId: 'framesystem-rpg',
       storageBucket: 'framesystem-rpg.appspot.com',
       messagingSenderId: '414765217858',
+      appId: '1:414765217858:web:0575368df99009430295db',
     }),
     CommonModule,
   ],

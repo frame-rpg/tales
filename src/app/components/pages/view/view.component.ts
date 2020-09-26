@@ -27,9 +27,11 @@ export class ViewComponent implements OnChanges {
   page: Observable<Page>;
   markdown: Observable<string>;
   narrow: Observable<boolean>;
-  private breakpoint: BreakpointObserver;
 
-  constructor(private firestore: AngularFirestore) {
+  constructor(
+    private firestore: AngularFirestore,
+    private breakpoint: BreakpointObserver
+  ) {
     this.page = merge(
       this.pageSubject
         .asObservable()

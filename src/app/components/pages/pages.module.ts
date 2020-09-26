@@ -6,9 +6,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NgModule } from '@angular/core';
 import { ViewComponent } from './view/view.component';
+import { RulesComponent } from './static/rules.component';
 
 @NgModule({
-  declarations: [ViewComponent, EditComponent],
+  declarations: [ViewComponent, EditComponent, RulesComponent],
   imports: [
     CommonModule,
     MarkdownModule.forRoot(),
