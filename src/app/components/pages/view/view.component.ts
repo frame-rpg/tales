@@ -12,6 +12,7 @@ import {
   ViewChild,
   ViewChildren,
   ViewEncapsulation,
+  ViewRef,
 } from '@angular/core';
 import {
   BehaviorSubject,
@@ -35,6 +36,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CdkScrollable } from '@angular/cdk/overlay';
 import { MarkdownComponent } from 'ngx-markdown';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Page } from 'types/page';
 import { PageId } from 'types/idtypes';
 
@@ -54,7 +56,8 @@ export class ViewComponent
   implements OnChanges, OnInit, AfterViewInit, OnDestroy {
   @Input('pageId') _pageId?: PageId;
   @ViewChild('content') md: MarkdownComponent;
-  @ViewChild('content') scrollRoot: CdkScrollable;
+  @ViewChild('content') scrollRoot: ElementRef;
+  @ViewChild('drawer') drawer: MatSidenav;
 
   idSubject = new BehaviorSubject<PageId>(null);
   page: Observable<Page>;
@@ -67,6 +70,8 @@ export class ViewComponent
   contentsSubject = new BehaviorSubject<ContentsElement[]>([]);
   contents = this.contentsSubject.asObservable();
   currentToc = new BehaviorSubject<HTMLHeadingElement[]>([]);
+
+  zoomSubject = new Subject<{ event: MouseEvent; el: HTMLElement }>();
 
   constructor(
     private firestore: AngularFirestore,
@@ -85,16 +90,26 @@ export class ViewComponent
           .pipe(map((v) => ({ ...v, ...id })))
       )
     );
-    this.narrow = this.breakpoint.observe('(max-width: 660px)').pipe(
+    this.narrow = this.breakpoint.observe('(max-width: 750px)').pipe(
       map(({ matches }) => matches),
       publishReplay(1),
       refCount()
     );
+    combineLatest([this.narrow, this.zoomSubject.asObservable()])
+      .pipe(
+        distinctUntilChanged((a, b) => a[1] == b[1]),
+        takeUntil(this.destroying)
+      )
+      .subscribe(([narrow, { el }]) => {
+        if (narrow) {
+          this.drawer.close();
+        }
+        el.scrollIntoView({ behavior: 'smooth' });
+      });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this._pageId) {
-      console.log('nexting');
       this.idSubject.next(this._pageId);
     }
   }
@@ -105,12 +120,13 @@ export class ViewComponent
 
   calculateContents() {
     const headers: HTMLHeadingElement[] = Array.from(
-      this.md.element.nativeElement.querySelectorAll('h1, h2, h3, h4')
+      this.md.element.nativeElement.querySelectorAll('h1, h2')
     );
     this.contentsSubject.next(
       headers.map((el) => ({
         inView: false,
         text: el.textContent,
+        level: parseInt(el.tagName[1], 10) - 1,
         el: el,
       }))
     );
@@ -123,18 +139,17 @@ export class ViewComponent
         );
       },
       {
-        root: this.scrollRoot.getElementRef().nativeElement,
+        root: this.scrollRoot.nativeElement,
         rootMargin: '0px',
         threshold: 1,
       }
     );
-    console.log(this.scrollRoot.getElementRef().nativeElement);
     headers.forEach((el) => observer.observe(el));
     this.cdr.detectChanges();
   }
 
-  scrollTo(el: HTMLElement) {
-    el.scrollIntoView({ behavior: 'smooth' });
+  scrollTo(el: HTMLElement, event: MouseEvent) {
+    this.zoomSubject.next({ event, el });
   }
 
   ngAfterViewInit() {

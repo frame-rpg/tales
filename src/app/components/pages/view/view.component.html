@@ -1,8 +1,19 @@
-<mat-sidenav-container>
-  <mat-sidenav mode="side" opened="true" [fixedInViewport]="true">
+<mat-sidenav-container (swipeLeft)="drawer.close()">
+  <mat-sidenav class="toc" [mode]="(narrow | async) ? 'over' :'side'"
+      [opened]="!(narrow | async)" [fixedInViewport]="true" #drawer>
+    <div class="toc-head">
+      <button mat-icon-button routerLink="/">
+        <mat-icon>home</mat-icon>
+      </button>
+      <button mat-icon-button (click)="drawer.close()"
+          *ngIf="!(narrow | async)">
+        <mat-icon>push_pin</mat-icon>
+      </button>
+    </div>
     <div *ngFor="let contentsItem of contents | async" class="toc-item"
         [class.toc-active]="contentsItem.el.inView"
-        (click)="scrollTo(contentsItem.el)">
+        [style.marginLeft]="7*contentsItem.level + 'px'"
+        (click)="scrollTo(contentsItem.el, $event)">
       {{ contentsItem.text }}
     </div>
     <div class="license">
@@ -16,8 +27,16 @@
       </div>
     </div>
   </mat-sidenav>
-  <mat-sidenav-content #scrollRoot>
-    <div #content markdown class="content" [data]="(page | async)?.content">
+  <mat-sidenav-content (swipeLeft)="drawer.close()">
+    <div class="centerRoot" #scrollRoot (swipeRight)="drawer.open()"
+        (swipeLeft)="drawer.close()">
+      <div #content markdown class="content" [data]="(page | async)?.content">
+      </div>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+<div class="actions" *ngIf="!(narrow | async) && !drawer.opened">
+  <button mat-mini-fab (click)="drawer.open()">
+    <mat-icon>menu</mat-icon>
+  </button>
+</div>
