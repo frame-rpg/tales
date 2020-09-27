@@ -25,8 +25,8 @@ const firebaseUiAuthConfig: any = {
       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
     },
   ],
-  tosUrl: '<your-tos-link>',
-  privacyPolicyUrl: '<your-privacyPolicyUrl-link>',
+  tosUrl: 'https://framesystem.org/assets/static/tos.html',
+  privacyPolicyUrl: 'https://framesystem.org/assets/static/privacy_policy.html',
   credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM,
 };
 
