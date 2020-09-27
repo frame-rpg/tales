@@ -5,6 +5,7 @@ import {
   HammerGestureConfig,
   HammerModule,
 } from '@angular/platform-browser';
+import { Injectable, NgModule } from '@angular/core';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 
 import { CommonModule } from '@angular/common';
@@ -13,11 +14,11 @@ import { FramesystemRenderer } from './staticRenderer';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { RulesComponent } from './static/rules.component';
 import { ViewComponent } from './view/view.component';
 
+@Injectable()
 export class HammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
     let mc = new Hammer(element, {
