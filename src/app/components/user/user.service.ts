@@ -3,7 +3,7 @@ import { filter, map, switchMap, take } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
-import { User } from '../../../types/user';
+import { User } from '../../../../types/user';
 import { firestore } from 'firebase';
 
 @Injectable({

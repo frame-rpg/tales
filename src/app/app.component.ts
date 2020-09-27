@@ -5,7 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserService } from './data/user.service';
+import { UserService } from './components/user/user.service';
 import { auth } from 'firebase/app';
 
 @Component({

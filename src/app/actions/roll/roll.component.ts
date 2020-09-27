@@ -14,7 +14,7 @@ import { Level } from 'types/enums';
 import { Attribute, AttributeName } from 'types/attribute';
 import { RollRequest, RollComplete } from 'types/message';
 import { MatSelectChange } from '@angular/material/select';
-import { UserService } from 'src/app/data/user.service';
+import { UserService } from 'src/app/components/user/user.service';
 
 export interface InjectedData {
   character: SkilledCharacter;

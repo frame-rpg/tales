@@ -12,7 +12,9 @@ import { PlayerviewComponent } from './components/campaigns/playerview/playervie
 import { RouteComponent } from './components/home/route.component';
 import { RulesComponent } from './components/pages/static/rules.component';
 
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
+function redirectUnauthorizedToLogin(continueUrl: string) {
+  return () => redirectUnauthorizedTo(['login']);
+}
 
 const routes: Routes = [
   {
@@ -20,21 +22,21 @@ const routes: Routes = [
     pathMatch: 'full',
     component: GmviewComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    data: { authGuardPipe: redirectUnauthorizedToLogin('/campaigns') },
   },
   {
     path: 'campaigns/:campaignId/player',
     pathMatch: 'full',
     component: PlayerviewComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    data: { authGuardPipe: redirectUnauthorizedToLogin('/campaigns') },
   },
   {
     path: '',
     pathMatch: 'full',
     component: RouteComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    data: { authGuardPipe: redirectUnauthorizedToLogin('/') },
   },
   {
     path: 'login',
