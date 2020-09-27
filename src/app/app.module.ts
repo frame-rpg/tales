@@ -1,3 +1,4 @@
+import { FirebaseUIModule, firebase, firebaseui } from 'firebaseui-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ActionsModule } from './actions/actions.module';
@@ -11,6 +12,31 @@ import { CoreModule } from './core/core.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MaterialModule } from './core/material/material.module';
 import { NgModule } from '@angular/core';
+
+const firebaseUiAuthConfig: any = {
+  signInFlow: 'popup',
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    {
+      scopes: ['public_profile', 'email'],
+      customParameters: {
+        auth_type: 'reauthenticate',
+      },
+      provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    },
+    firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+    firebase.auth.GithubAuthProvider.PROVIDER_ID,
+    {
+      requireDisplayName: false,
+      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    },
+    firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+    firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
+  ],
+  tosUrl: '<your-tos-link>',
+  privacyPolicyUrl: '<your-privacyPolicyUrl-link>',
+  credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM,
+};
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +52,7 @@ import { NgModule } from '@angular/core';
     CoreModule,
     MaterialModule,
     ActionsModule,
+    FirebaseUIModule.forRoot(firebaseUiAuthConfig),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -35,6 +35,11 @@ export class LoginComponent {
     await this.userService.postLogin();
     this.router.navigateByUrl('/');
   }
+
+  callback(e) {
+    console.log(e);
+  }
+
   logout() {
     this.auth.signOut();
   }

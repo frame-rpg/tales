@@ -1,4 +1,11 @@
-<div class="signup">
+<firebase-ui (signInSuccessWithAuthResult)="callback($event)"
+    (signInFailure)="callback($event)" (uiShown)="callback()">
+</firebase-ui>
+
+<button (click)="logout()">log out</button>
+
+
+<!-- <div class="signup">
   <form [formGroup]="passwordForm" class="loginForm"
       *ngIf="authAction | async as action">
     <div *ngIf="action !== 'create'">Please log in.</div>
@@ -54,4 +61,4 @@
       Log in with Google.
     </button>
   </form>
-</div>
+</div> -->
