@@ -4,7 +4,8 @@
       {{ characterScalar.name }}
     </div>
     <div class="lock">
-      <button mat-icon-button (click)="toggleLock($event)">
+      <button mat-icon-button (click)="toggleLock($event)"
+          *ngIf="(relationship | async) === 'gm'">
         <mat-icon inline="true" class="lockIcon">
           {{ (locked | async) ? 'lock' : 'lock_open'}}
         </mat-icon>
@@ -24,7 +25,7 @@
         <div class="attributeContent" *ngIf="!attribute.value.wound">
           <adjust-character *ngIf="!(locked|async)" min="0"
               [max]="attribute.value.pool" [increment]="-1"
-              [character]="character"
+              [character]="characterScalar"
               [path]="'attributes.'+attribute.key+'.current'">
           </adjust-character>
           <div class="pool">
@@ -32,7 +33,7 @@
           </div>
           <adjust-character *ngIf="!(locked|async)" min="0"
               [max]="attribute.value.pool" [increment]="1"
-              [character]="character"
+              [character]="characterScalar"
               [path]="'attributes.'+attribute.key+'.current'">
           </adjust-character>
         </div>
@@ -55,17 +56,18 @@
         <mat-panel-title>Skills</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="skills">
-        <div *ngFor="let category of skillsByCategory | async | keyvalue">
-          <div class="categoryTitle">{{category.key}}</div>
-          <div *ngFor="let skill of category.value" class="skill">
-            <div class="skillInfo">
-              <div>{{skill.name}}</div>
-              <div style="text-transform: capitalize;">{{skill.level}}</div>
-              <button mat-icon-button (click)="check($event, skill)" *ngIf="(relationship | async) === 'player' ||
-              (relationship | async) === 'gm'">
-                <mat-icon>casino</mat-icon>
-              </button>
-            </div>
+        <div *ngFor="let skill of (character | async)?.skills | sortBy:'name':'asc'"
+            class="skill">
+          <div class="skillInfo">
+            <div>{{skill.name}}</div>
+            <button mat-stroked-button class="skillLevel" color="primary"
+                *ngIf="gmOrPlayer | async; else skillLevelOnly"
+                (click)="check($event, skill)">
+              {{skill.level}}
+            </button>
+            <ng-template #skillLevelOnly>
+              <div class="skillLevel">{{skill.level}}</div>
+            </ng-template>
           </div>
         </div>
       </div>

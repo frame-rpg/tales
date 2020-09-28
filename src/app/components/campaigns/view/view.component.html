@@ -6,6 +6,18 @@
     </div>
   </div>
   <div class="right">
+    <div class="actions" *ngIf="gm | async">
+      <button mat-raised-button (click)="initiative($event)" color="accent">
+        Initiative
+      </button>
+      <button mat-raised-button (click)="rest($event)" color="accent">
+        Rest
+      </button>
+      <button mat-raised-button (click)="reset($event)" color="warn"
+          class="lastButton">
+        Reset
+      </button>
+    </div>
     <div class="requiredRoll" *ngFor="let roll of requiredRolls | async">
       <tales-roll-request [roll]="roll"
           [character]="(mappedCharacters | async)[roll.to.characterId]">

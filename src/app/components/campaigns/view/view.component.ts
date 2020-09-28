@@ -13,6 +13,7 @@ import {
   takeUntil,
 } from 'rxjs/operators';
 
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AttackService } from 'src/app/actions/attack/attack.service';
 import { Campaign } from 'types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
@@ -41,6 +42,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   messages: Observable<Message[]>;
   campaignMessages: Observable<Message[]>;
   requiredRolls: Observable<RollRequest[]>;
+  gm: Observable<boolean>;
   destroyingSubject = new Subject<boolean>();
   destroying = this.destroyingSubject
     .asObservable()
@@ -57,7 +59,8 @@ export class ViewComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private attackService: AttackService,
     private initiativeService: InitiativeService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private auth: AngularFireAuth
   ) {}
 
   ngOnDestroy(): void {
@@ -81,6 +84,9 @@ export class ViewComponent implements OnInit, OnDestroy {
       ),
       publishReplay(1),
       refCount()
+    );
+    this.gm = combineLatest([this.campaign, this.auth.user]).pipe(
+      map(([{ acl }, { uid }]) => acl[uid] === 'gm')
     );
     this.mappedCharacters = this.characters.pipe(mapById('characterId'));
     this.messages = combineLatest([this.characters, this.campaign]).pipe(

@@ -15,15 +15,15 @@ import {
   publishReplay,
   refCount,
   scan,
+  startWith,
   takeUntil,
+  tap,
 } from 'rxjs/operators';
 
 import { AclType } from 'types/acl';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Campaign } from 'types/campaign';
 import { CharacterSkill } from 'types/skill';
 import { NoncombatService } from 'src/app/actions/noncombat/noncombat.service';
-import { arrayToRecordArray } from '../../../data/util';
 
 @Component({
   selector: 'character-card',
@@ -34,19 +34,20 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
   @Input('character') private _character: Character;
   character: Observable<Character>;
   characterSubject: BehaviorSubject<Character>;
-  skillCategories: Observable<string[]>;
-  skillsByCategory: Observable<Record<string, CharacterSkill[]>>;
   locked: Observable<boolean>;
+  gmOrPlayer: Observable<boolean>;
+  player: Observable<boolean>;
   relationship: Observable<AclType>;
   destroyingSubject = new Subject<boolean>();
   destroying = this.destroyingSubject.asObservable();
-  actionSubject = new Subject<{
+  actionSubject = new BehaviorSubject<{
     event: MouseEvent;
     action: 'lock' | 'skill';
     skill?: string;
-  }>();
+  }>(null);
   action = this.actionSubject.asObservable().pipe(
     takeUntil(this.destroying),
+    filter((v) => !!v),
     distinctUntilChanged((a, b) => a === b)
   );
 
@@ -67,28 +68,24 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
   ngOnInit() {
     this.characterSubject = new BehaviorSubject(this._character);
     this.character = this.characterSubject.asObservable();
-    this.skillsByCategory = this.character.pipe(
-      filter((ch) => ch.subtype !== 'nonplayer'),
-      map((character: SkilledCharacter) =>
-        arrayToRecordArray(
-          character.skills.sort((a, b) => a.name.localeCompare(b.name)),
-          'category'
-        )
-      )
-    );
-    this.skillCategories = this.skillsByCategory.pipe(
-      map((cats) =>
-        Object.keys(this.skillsByCategory)
-          .filter((cat) => cat === 'noncombat')
-          .sort((a, b) => a.localeCompare(b))
-      )
-    );
+
     this.relationship = combineLatest([this.auth.user, this.character]).pipe(
       map(([{ uid }, { acl }]) => acl[uid]),
       filter((v) => !!v),
       publishReplay(1),
       refCount()
     );
+
+    this.gmOrPlayer = this.relationship.pipe(
+      map((a) => a === 'gm' || a === 'player')
+    );
+
+    this.locked = this.action.pipe(
+      filter(({ action }) => action === 'lock'),
+      scan<any, boolean>((acc) => !acc, true),
+      startWith(true)
+    );
+
     combineLatest([
       this.character.pipe(filter((c) => c.subtype !== 'nonplayer')),
       this.relationship,
@@ -108,10 +105,6 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
         );
       }
     });
-    this.locked = this.action.pipe(
-      filter(({ action }) => action === 'lock'),
-      scan<any, boolean>((acc) => !acc, true)
-    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
