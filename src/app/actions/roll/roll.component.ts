@@ -217,9 +217,9 @@ export class RollComponent implements OnDestroy {
     }
   }
 
-  selectAttribute(event: MatSelectChange) {
+  async selectAttribute(event: MatSelectChange) {
     this.attribute = this.data.character.attributes[event.value];
-    const rollPreference = this.userService.currentUser.rollPreference;
+    const rollPreference = await this.userService.getRollPreference();
     if (rollPreference === 'manual') {
       this.manualRoll();
     } else if (rollPreference === 'automatic') {

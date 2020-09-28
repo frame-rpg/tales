@@ -66,9 +66,7 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit() {
     this.characterSubject = new BehaviorSubject(this._character);
-    this.character = this.characterSubject
-      .asObservable()
-      .pipe(publishReplay(1), refCount());
+    this.character = this.characterSubject.asObservable();
     this.skillsByCategory = this.character.pipe(
       filter((ch) => ch.subtype !== 'nonplayer'),
       map((character: SkilledCharacter) =>
@@ -87,7 +85,9 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
     );
     this.relationship = combineLatest([this.auth.user, this.character]).pipe(
       map(([{ uid }, { acl }]) => acl[uid]),
-      filter((v) => !!v)
+      filter((v) => !!v),
+      publishReplay(1),
+      refCount()
     );
     combineLatest([
       this.character.pipe(filter((c) => c.subtype !== 'nonplayer')),

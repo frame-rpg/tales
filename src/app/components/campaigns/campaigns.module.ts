@@ -7,10 +7,10 @@ import { MaterialModule } from '../../core/material/material.module';
 import { MessageComponent } from './message/message.component';
 import { NgModule } from '@angular/core';
 import { PipesModule } from 'src/app/core/pipes/pipes.module';
-import { PlayerviewComponent } from './playerview/playerview.component';
+import { ViewComponent } from './view/view.component';
 
 @NgModule({
-  declarations: [PlayerviewComponent, GmviewComponent, MessageComponent],
+  declarations: [GmviewComponent, MessageComponent, ViewComponent],
   imports: [
     CharactersModule,
     CommonModule,

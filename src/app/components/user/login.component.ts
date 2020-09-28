@@ -1,18 +1,18 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { BehaviorSubject, Subject, combineLatest } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, takeUntil, tap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { FirebaseuiAngularLibraryComponent } from 'firebaseui-angular';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserService } from '../user.service';
+import { UserService } from './user.service';
 import { auth } from 'firebase/app';
 
 @Component({
   selector: 'tales-user-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  template: '<firebase-ui #login></firebase-ui>',
+  styles: [],
 })
 export class LoginComponent implements AfterViewInit, OnDestroy {
   @ViewChild('login') login: FirebaseuiAngularLibraryComponent;
@@ -34,15 +34,22 @@ export class LoginComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.login.signInSuccessWithAuthResultCallback
-      .pipe(takeUntil(this.destroyingSubject))
-      .subscribe(async (result) => {
-        await this.userService.postLogin();
+    combineLatest([
+      this.login.signInSuccessWithAuthResultCallback,
+      this.route.paramMap,
+    ])
+      .pipe(takeUntil(this.destroying))
+      .subscribe(async ([result, params]) => {
+        // await this.userService.postLogin();
         this.snackBar.open('Successfully logged in.');
-        this.router.navigateByUrl('/');
+        if (params.get('after')) {
+          this.router.navigate(['home', params.get('after')]);
+        } else {
+          this.router.navigate(['home']);
+        }
       });
     this.login.signInFailureCallback
-      .pipe(takeUntil(this.destroyingSubject))
+      .pipe(takeUntil(this.destroying))
       .subscribe(async (result) => {
         this.snackBar.open('Login error.');
       });

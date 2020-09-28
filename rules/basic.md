@@ -1,4 +1,4 @@
-# Tales of Fantasy and Fighting
+# Framesystem Roleplaying!
 
 This is a pretty general RPG designed to replace Dungeons and Dragons, Pathfinder, Savage Worlds, or any of those other rules sets. The game itself aims to have a streamlined set of rules which are expressive and somewhat realistic, but ultimately a cinematic / four-color style of play with superhuman feats of adventure and excitement.
 
@@ -14,21 +14,21 @@ When you attempt to do something, the GM will set a difficulty threshold (typica
 
 2. Based on the skill for the roll, you will start with some number of twelve-sided dice to roll, and adjust that based on assets and hindrances. Start with:
 
-    1. Three dice, taking the worst roll if you are **inept**
+   1. Three dice, taking the worst roll if you are **inept**
 
-    2. Two dice, taking the worse roll if you are **unskilled**
+   2. Two dice, taking the worse roll if you are **unskilled**
 
-    3. One die if you are **proficient**
+   3. One die if you are **proficient**
 
-    4. Two dice, taking the better if you are **trained**
+   4. Two dice, taking the better if you are **trained**
 
-    5. Three dice, taking the best if you are **expert**
+   5. Three dice, taking the best if you are **expert**
 
 3. You may possess some **assets **to help you in your skill - you may have at most one mental and one physical asset for any given check. Each asset provides one extra die to roll (or removes one of the penalty dice if you are unskilled or inept).
 
 4. The Game Master may apply any number of **hindrances **to your check - reasons why this particular check is more difficult than usual. Each hindrance reduces the number of dice rolled by one - adding to penalty dice if it takes your count below 1.
 
-5. If you possess **edge**** **in the attribute you're rolling, add that to your roll. Edge is free and automatically applies to all rolls on the attribute for which you have edge.
+5. If you possess **edge\*\*** \*\*in the attribute you're rolling, add that to your roll. Edge is free and automatically applies to all rolls on the attribute for which you have edge.
 
 6. If you have access to **situational edge** from some source (usually equipment or an upgrade) for a given skill, add that amount to your roll.
 
@@ -36,9 +36,9 @@ When you attempt to do something, the GM will set a difficulty threshold (typica
 
 8. Compare the total to the difficulty.
 
-    6. If your total is below the difficulty, you failed.
+   6. If your total is below the difficulty, you failed.
 
-    7. If your total is equal to or above the difficulty, you succeeded.
+   7. If your total is equal to or above the difficulty, you succeeded.
 
 9. If you succeeded and your die roll was a 12, you may spend 3 additional pool to convert your success into a critical success. This has some extra benefit- you dodged out of the way so quickly, the animal you freed and subsequently punched became unbalanced and fell over, or you hacked the security so well that you left a back door for future use. Propose the outcome, and the GM will approve it or negotiate.
 
@@ -46,15 +46,15 @@ When you attempt to do something, the GM will set a difficulty threshold (typica
 
 There are five attributes in the Tales system: Might, Speed, Focus, Conviction, and Health. The first four attributes are sometimes referred to as **Core **attributes.
 
-* **Might **represents raw physical strength.
+- **Might **represents raw physical strength.
 
-* **Speed **represents actual speed as well as dexterity and reflexes.
+- **Speed **represents actual speed as well as dexterity and reflexes.
 
-* **Focus **represents how well your character can think about something in the face of distraction or quickly come to some kind of insight.
+- **Focus **represents how well your character can think about something in the face of distraction or quickly come to some kind of insight.
 
-* **Conviction **represents the strength of your character's belief in something. Themselves, a higher power, Science, or any other ideal.
+- **Conviction **represents the strength of your character's belief in something. Themselves, a higher power, Science, or any other ideal.
 
-* **Health **represents your character's overall health, and is only used when your character might become wounded or killed (falling from a great height, being shot, accidentally touching the wrong wire when disabling door security).
+- **Health **represents your character's overall health, and is only used when your character might become wounded or killed (falling from a great height, being shot, accidentally touching the wrong wire when disabling door security).
 
 Your attributes each have three values associated with them: **pool**, **edge**, and **refresh**.
 
@@ -76,7 +76,7 @@ The baseline attribute refresh value for all five attributes is ceiling(max_pool
 
 ## Which Pool to Use?
 
-Each skill your character has is tied to one or more attributes. When the GM asks you to make a skill check, you should choose the attribute at the time you make the roll. The description of how your character approaches using this skill should help justify the choice of attribute. 
+Each skill your character has is tied to one or more attributes. When the GM asks you to make a skill check, you should choose the attribute at the time you make the roll. The description of how your character approaches using this skill should help justify the choice of attribute.
 
 The distinction within physical attributes is usually pretty intuitive - are you dodging nimbly out of the way, or aggressively blocking the attack with a shield? With mental attributes, the guideline is: use Focus if the action is taking place over a relatively long time (minutes or more) and Conviction if it is a quick action. Conviction is more about belief in oneself (or a higher power), whereas Focus is just that - the ability to maintain focus and precision over an extended length of time.
 
@@ -94,9 +94,9 @@ All skills have an **initial rating** indicating the character's proficiency. Ch
 
 Once the base number of dice to roll is set, the player may add up to two **assets** to the roll, if the GM allows it. These assets represent some kind of specific and contextual advantage the character has in the situation. The character may have practice picking a particular brand of locks, impersonating a specific person, or have a tactical advantage flanking their foe with an ally.
 
-The GM may also apply any number of **hindrances** to your check as well, representing reasons why this check is more difficult than usual. The GM also could adjust the difficulty of your roll, but the difficulty of a task is usually fixed (this lock requires a check of 10 to pick, but you have two hindrances because it's raining and there's a fight going on around you and distracting you). 
+The GM may also apply any number of **hindrances** to your check as well, representing reasons why this check is more difficult than usual. The GM also could adjust the difficulty of your roll, but the difficulty of a task is usually fixed (this lock requires a check of 10 to pick, but you have two hindrances because it's raining and there's a fight going on around you and distracting you).
 
-Each asset adds 1 to the skill rating for the roll, and each hindrance subtracts 1. This final value is known as the **adjusted skill rating**, and indicates how many dice you should roll for the check. 
+Each asset adds 1 to the skill rating for the roll, and each hindrance subtracts 1. This final value is known as the **adjusted skill rating**, and indicates how many dice you should roll for the check.
 
 Roll 1d12 plus an additional dice equal to the absolute value of the ASR, taking either the highest (if the ASR is positive), or the lowest (if it is negative) value as the final result.
 
@@ -106,11 +106,11 @@ The result showing on the selected die (all checks only ever end up selecting a 
 
 If the rolled result is a natural 12, the player may opt to spend 3 pool from the rolled attribute in order to upgrade their roll to a **critical success**. A critical success has many possible outcomes - it usually will disable or kill minion-type foes in combat in a single hit, will automatically wound major foes, and will have some kind of highly useful outcome for non-combat skills (not just picking the lock, but gaining a permanent asset on locks in the same dungeon, etc).
 
-Finally, no matter what the result is, the player can spend any amount of remaining pool they have in their attribute to increase the roll result by 1 per pool spent. Thus, if the target was 10 and the rolled result an 8, spending 2 pool after rolling will ensure success. 
+Finally, no matter what the result is, the player can spend any amount of remaining pool they have in their attribute to increase the roll result by 1 per pool spent. Thus, if the target was 10 and the rolled result an 8, spending 2 pool after rolling will ensure success.
 
 ## Non-combat Skills
 
-Non-combat skills are so named because they are not used to resolve combat actions. The Tales system 
+Non-combat skills are so named because they are not used to resolve combat actions. The Tales system
 
 <table>
   <tr>
@@ -240,12 +240,11 @@ Non-combat skills are so named because they are not used to resolve combat actio
   </tr>
 </table>
 
-
 ## Combat Skills
 
 ### Weapon Skills
 
-Unlike non-combat skills, Weapon skills are all tied to a single attribute and advanced separately (melee-speed weapons vs melee-might weapons). These weapon types (greataxe, longbow, etc) are all advisory; if your character has a great reason to use a rapier with their Melee Conviction skill, the GM may allow it. 
+Unlike non-combat skills, Weapon skills are all tied to a single attribute and advanced separately (melee-speed weapons vs melee-might weapons). These weapon types (greataxe, longbow, etc) are all advisory; if your character has a great reason to use a rapier with their Melee Conviction skill, the GM may allow it.
 
 These following basic attack, defense, and initiative skills can be used by anyone (even untrained). Other, more esoteric skills (such as advanced unarmed combat or psionic defense) are only available if the relevant upgrade has been purchased.
 
@@ -295,7 +294,6 @@ Crossbow, Rifle</td>
   </tr>
 </table>
 
-
 SPECIAL: When choosing an initial four skills for a character to be inept in, if you choose a combat skill, you must choose an entire column ("melee skills" for example) as a single choice. Thus, such a character might be inept in all defenses, plus three other noncombat skills to be inept in. This choice is not recommended.
 
 ### Defense Skills
@@ -308,7 +306,7 @@ Finally, health checks are a special case - all characters are proficient in hea
 
 ### Initiative
 
-Initiative is another special skill family, with three skills (there is no might-based initiative skill), but the sense of an initiative roll is reversed. The goal with initiative is to roll as low as possible (lower rolls act sooner), so a character with an ASL of 1 in an initiative skill would roll two dice and take the *lower* of the two values. Similarly, edge and pool lower the rolled result instead of increasing it (to a minimum value of 1). The reasoning for this kind of rolling is described in the [Turns in Combat](#heading=h.sbxi1nlgf8zc) section.
+Initiative is another special skill family, with three skills (there is no might-based initiative skill), but the sense of an initiative roll is reversed. The goal with initiative is to roll as low as possible (lower rolls act sooner), so a character with an ASL of 1 in an initiative skill would roll two dice and take the _lower_ of the two values. Similarly, edge and pool lower the rolled result instead of increasing it (to a minimum value of 1). The reasoning for this kind of rolling is described in the [Turns in Combat](#heading=h.sbxi1nlgf8zc) section.
 
 ## Acquiring Skills
 
@@ -322,13 +320,13 @@ For the most part, Combat is handled like any other scene - players take and res
 
 ## Combat against NPCs
 
-When fighting against an NPC, players make all the rolls. They roll to attack against the NPCs fixed defense score, and they roll to defend against the fixed attack score. 
+When fighting against an NPC, players make all the rolls. They roll to attack against the NPCs fixed defense score, and they roll to defend against the fixed attack score.
 
 ### Attacking an NPC:
 
-1. Use an attack action, either just a regular attack with a weapon or a special skill. 
+1. Use an attack action, either just a regular attack with a weapon or a special skill.
 
-2. The GM will tell you what the difficulty of the attack is - most NPCs have uniform stats, but some are strong / weak to certain attack modes. 
+2. The GM will tell you what the difficulty of the attack is - most NPCs have uniform stats, but some are strong / weak to certain attack modes.
 
 3. Resolve your attack as usual, including effort. If successful, your attack does damage equal to the margin by which you succeeded, plus the damage statistic of your weapon.
 
@@ -342,21 +340,21 @@ When fighting against an NPC, players make all the rolls. They roll to attack ag
 
 2. If you succeeded, the attack failed to meaningfully connect. You dodged, parried, or just stood there and let the foe hit you while not even flinching.
 
-3. If your defense roll failed, the attack has hit you. You now must make a health check with a difficulty equal to the magnitude of your failure, plus the NPCs damage attribute. 
+3. If your defense roll failed, the attack has hit you. You now must make a health check with a difficulty equal to the magnitude of your failure, plus the NPCs damage attribute.
 
 4. If your health check succeeds, the attack does minimal damage to you. You were grazed, took a flesh wound, shook it off, did that thing where you wipe some blood from the corner of your lip with the back of your hand and look determinedly at the camera. The magnitude of this damage is proportional to the amount of Health pool you needed to spend to succeed at the check.
 
 5. If your health check failed, you took a Serious Wound. One of your attributes is wounded, using these prioritization rules:
 
-    1. No attribute can be wounded more than once.
+   1. No attribute can be wounded more than once.
 
-    2. Wound the attribute you were using for avoidance (the roll in step 2)
+   2. Wound the attribute you were using for avoidance (the roll in step 2)
 
-    3. Wound a different attribute that is not health.
+   3. Wound a different attribute that is not health.
 
-    4. Wound health.
+   4. Wound health.
 
-    5. Die (if your character already has wounded all four core attributes and Health and takes another wound, they die).
+   5. Die (if your character already has wounded all four core attributes and Health and takes another wound, they die).
 
 See below for more rules on health, wounds, and healing.
 
@@ -374,7 +372,7 @@ When engaging in ranged combat (gun, crossbow, thrown dagger, etc), there are ad
 
 ## Special rules for Major Foes and PvP combat
 
-A few special GM-run characters are Major Foes. They are the Arch-Nemesis, the Villain, or some other important character in the story, run by the GM, but still using full rules. Those characters should be treated as PCs played by the GM. Additionally, there may be occasional times when players wish to fight against each other (or do other hindering, non-combat, actions like try to hold closed a door another PC is trying to open). In those cases, the GM will designate one character as the *actor* and one as the *hinderer*. In combat, the attacker is the actor and the defender is the hinderer. In other situations it may be more fluid, but in general the actor should be the one trying to accomplish something and the hinderer the person preventing it.
+A few special GM-run characters are Major Foes. They are the Arch-Nemesis, the Villain, or some other important character in the story, run by the GM, but still using full rules. Those characters should be treated as PCs played by the GM. Additionally, there may be occasional times when players wish to fight against each other (or do other hindering, non-combat, actions like try to hold closed a door another PC is trying to open). In those cases, the GM will designate one character as the _actor_ and one as the _hinderer_. In combat, the attacker is the actor and the defender is the hinderer. In other situations it may be more fluid, but in general the actor should be the one trying to accomplish something and the hinderer the person preventing it.
 
 1. The actor declares what they are going to do: "I make a speed attack using my rapier and special Dazzling Attack skill."
 
@@ -408,13 +406,13 @@ Unless otherwise noted, initiative cost can never be reduced below 1. In the eve
 
 Some actions, like actively blocking an attack, or jumping out of the way of an oncoming train, take place before you would normally act. Those actions might be granted directly by the GM (especially in the case of jumping out of the way), or may be part of your character's abilities (active blocking). In any case, you should declare the interrupt at the appropriate time, and add the initiative cost to your current count.
 
-*Example*: Stella the Warrior swings her sword on tick 2, which is a 6 tick action. Normally she would go again on tick 8, but on tick 5 a Bloodbeast attacked her friend with its claws. Stella uses her Shield Wall ability on tick 5 to block that attack, preventing Roger the Sorcerer from being eviscerated. This action has a 4 tick cost to it, so instead of going on tick 8, Stella will act again on tick 12. Before tick 12, Stella could use her Shield Wall ability again if she wanted, further bumping out her next available action into the future, until she ran out of Speed pool to pay for the Shield Wall action.
+_Example_: Stella the Warrior swings her sword on tick 2, which is a 6 tick action. Normally she would go again on tick 8, but on tick 5 a Bloodbeast attacked her friend with its claws. Stella uses her Shield Wall ability on tick 5 to block that attack, preventing Roger the Sorcerer from being eviscerated. This action has a 4 tick cost to it, so instead of going on tick 8, Stella will act again on tick 12. Before tick 12, Stella could use her Shield Wall ability again if she wanted, further bumping out her next available action into the future, until she ran out of Speed pool to pay for the Shield Wall action.
 
 ### Hold Actions
 
 Hold actions are the logical inverse of Interrupt actions. They must be declared on the acting player's turn, but will last an indefinite number of ticks until their prerequisite is satisfied, at which point they take place immediately, interrupting the triggering action. Any player can declare a held attack for certain circumstances, and some abilities provide additional hold actions.
 
-*Example*: After polishing off the last standing Bloodbeast, on Stella's next action she declares a Held Attack - she will swing her sword at the next hostile being to get close enough to hit. After four more ticks, another Bloodbeast charges into the fray, and Stella gets a chance to attack it before it can attack anyone. Once Stella's held action has resolved, her Initiative count resumes as normal (6 ticks after swinging at the charging Bloodbeast).
+_Example_: After polishing off the last standing Bloodbeast, on Stella's next action she declares a Held Attack - she will swing her sword at the next hostile being to get close enough to hit. After four more ticks, another Bloodbeast charges into the fray, and Stella gets a chance to attack it before it can attack anyone. Once Stella's held action has resolved, her Initiative count resumes as normal (6 ticks after swinging at the charging Bloodbeast).
 
 A held action can be canceled at any time at the cost of 2 ticks - the player declares that they are canceling the hold, and can then act again as normal 2 ticks later.
 
@@ -432,13 +430,13 @@ If you succeed at your health defense check, you are fine. Your character shrugg
 
 If your character's health defense check failed, they have taken a wound. This is serious and has several in-game implications.
 
-Each attribute can only sustain one wound. If you already have taken five wounds (each core attribute, plus health) and take another wound, the character dies. 
+Each attribute can only sustain one wound. If you already have taken five wounds (each core attribute, plus health) and take another wound, the character dies.
 
-When an attribute is wounded, the current pool for that attribute is immediately set to zero, and it cannot refresh during normal rest. Furthermore, a wound applies a hindrance to any checks made using that attribute.  The character should also show external effects of this wound - a gash in a large muscle group slowing them down, a solid blow to the head making them unfocused, or sprained or dislocated joints. 
+When an attribute is wounded, the current pool for that attribute is immediately set to zero, and it cannot refresh during normal rest. Furthermore, a wound applies a hindrance to any checks made using that attribute. The character should also show external effects of this wound - a gash in a large muscle group slowing them down, a solid blow to the head making them unfocused, or sprained or dislocated joints.
 
 Certain NPCs have special characteristics that increase the wounding capacity of their attacks, representing the significant danger of their weapons. The GM also has discretion to apply multiple wounds to a character at once due to an environmental effect (otherwise, PCs could leap from great height saying, "it's okay, the system caps me at one wound, so I can't die!"
 
-However, during normal play, wounds should be serious but not immediately fatal. The Tales system prioritizes storytelling over gritty action, and the death of a Player Character (or even Companion) should be the result of an epic story event, rather than a few unlucky rolls. 
+However, during normal play, wounds should be serious but not immediately fatal. The Tales system prioritizes storytelling over gritty action, and the death of a Player Character (or even Companion) should be the result of an epic story event, rather than a few unlucky rolls.
 
 # Scenes, Timing, and Recovery
 
@@ -450,15 +448,15 @@ In between scenes, PCs pools will refresh by the refresh score in that pool. You
 
 Wounds are harder to heal. Once per day, you can heal a wound in Might, Speed, Focus or Conviction (not Health) between scenes, if:
 
-* You have access to some form of first aid, either from a player having the First Aid skill at proficient or higher, or a piece of technology. AND
+- You have access to some form of first aid, either from a player having the First Aid skill at proficient or higher, or a piece of technology. AND
 
-* Your health attribute is not wounded AND
+- Your health attribute is not wounded AND
 
-* You forego refreshing pools between scenes.
+- You forego refreshing pools between scenes.
 
-So, if you have multiple core attribute wounds, they can take multiple days to heal. Some high-tech gear can speed that healing rate. 
+So, if you have multiple core attribute wounds, they can take multiple days to heal. Some high-tech gear can speed that healing rate.
 
-Taking a wound to Health represents a brush with death - significant organ damage, blood loss, and so on. You cannot heal a wound to Health naturally - instead, someone with the appropriate Empowerment and Healing ability must heal you. 
+Taking a wound to Health represents a brush with death - significant organ damage, blood loss, and so on. You cannot heal a wound to Health naturally - instead, someone with the appropriate Empowerment and Healing ability must heal you.
 
 At the end of each day that a character with a Health wound does not receive medical attention, make a health defense check with a target equal to the number of days since the attribute was wounded. Note that this roll will have a hindrance (due to the wound), and that failure will require taking another wound, resulting in death.
 
@@ -468,11 +466,11 @@ At the end of each day that a character with a Health wound does not receive med
 
 2. Your initial refresh rate for your attributes is:
 
-    1. 1 if the max pool is 5
+   1. 1 if the max pool is 5
 
-    2. 2 if the max pool is 6-10
+   2. 2 if the max pool is 6-10
 
-    3. 3 if the max pool is 11-15 
+   3. 3 if the max pool is 11-15
 
 3. Select one attribute to have edge 1, the rest have edge of 0.
 
@@ -486,23 +484,23 @@ At the end of each day that a character with a Health wound does not receive med
 
 To advance your character, spend Experience Points (XP). You will gain XP during gameplay sessions, for achieving goals, character development, defeating foes, and general quality gameplay.
 
-Each non-basic Upgrade has a cost, most also have requirements and discounts. Requirements are largely met during gameplay and represent conditions that might lead a character to gain particular insight into actions or abilities. 
+Each non-basic Upgrade has a cost, most also have requirements and discounts. Requirements are largely met during gameplay and represent conditions that might lead a character to gain particular insight into actions or abilities.
 
 Special Requirement Rules:
 
-* Requirements for Upgrades can also be bypassed by receiving training from a master or other in-game mechanism. Characters can also train each other, at the GM's discretion (typically the character doing the training needs to be highly capable in the ability in question).
+- Requirements for Upgrades can also be bypassed by receiving training from a master or other in-game mechanism. Characters can also train each other, at the GM's discretion (typically the character doing the training needs to be highly capable in the ability in question).
 
-* Requirements for Upgrades are ignored during character creation. It is assumed that your character received training or had the experience necessary to buy the abilities they start with.
+- Requirements for Upgrades are ignored during character creation. It is assumed that your character received training or had the experience necessary to buy the abilities they start with.
 
-* Upgrade requirements in the form of counters (Participate in five combat scenes, etc) reset to zero whenever an upgrade with that requirement is purchased. Thus, you need to use rapid strike twenty times to go from Rapid Strike 1 to 2, and an additional twenty times to go from Rapid Strike 2 to Whirlwind Strike.
+- Upgrade requirements in the form of counters (Participate in five combat scenes, etc) reset to zero whenever an upgrade with that requirement is purchased. Thus, you need to use rapid strike twenty times to go from Rapid Strike 1 to 2, and an additional twenty times to go from Rapid Strike 2 to Whirlwind Strike.
 
-* Some Upgrades have numbers in their name, but are referred to in requirements text without a number. That is intentional - any use of any of the numbered abilities in that case would  meet the requirements. Thus, it is possible to bypass Rapid Strike 2 and go straight from Rapid Strike 1 to Whirlwind Strike.
+- Some Upgrades have numbers in their name, but are referred to in requirements text without a number. That is intentional - any use of any of the numbered abilities in that case would meet the requirements. Thus, it is possible to bypass Rapid Strike 2 and go straight from Rapid Strike 1 to Whirlwind Strike.
 
 ## Basic Upgrades
 
 Unlike other upgrades listed below, Basic Upgrades have no prerequisites, nor do they offer any category discounts.
 
-**+1 to any Attribute's maximum pool**: cost is floor(max_pool / 5) + 3. Note that increasing the pool may also increase the baseline refresh value for the attribute. *ex: Increasing might pool from 4 to 5 costs 3 points, but from 11 to 12 costs 5.*
+**+1 to any Attribute's maximum pool**: cost is floor(max_pool / 5) + 3. Note that increasing the pool may also increase the baseline refresh value for the attribute. _ex: Increasing might pool from 4 to 5 costs 3 points, but from 11 to 12 costs 5._
 
 **+1 edge in any Attribute**: New total edge in all four attributes, squared. Ex: You already have 2 Might edge and 1 Focus edge, to gain 1 Concentration edge would be 16 points.
 
@@ -510,17 +508,17 @@ Unlike other upgrades listed below, Basic Upgrades have no prerequisites, nor do
 
 Unless otherwise noted, Upgrade Costs are determined by their tier level. Don’t forget the discounts below!
 
-* Tier 1: 5 XP
+- Tier 1: 5 XP
 
-* Tier 2: 8 XP
+- Tier 2: 8 XP
 
-* Tier 3: 12 XP
+- Tier 3: 12 XP
 
-* Tier 4: 17 XP
+- Tier 4: 17 XP
 
-* Tier 5: 25 XP
+- Tier 5: 25 XP
 
-* Tier 6: 40 XP
+- Tier 6: 40 XP
 
 ## Discounts
 
@@ -564,7 +562,7 @@ Ranged: This upgrade can only be used with Ranged weapons.
 
 Medicine: Every time a character is the target of an upgrade with the Medicine keyword, they receive a medicine hindrance that applies to all future rolls. These hindrances reset daily and are tracked per character (so multiple characters with medicine all share hindrances on the same target). Using abilities with the Medicine keyword that do not require a medicine check still apply the hindrance for future checks. Medicine hindrances are applied after the ability is activated.
 
-Stacks: Most upgrades do not stack with each other (if someone has Run Fast Legs +2 and purchases Run Fast Legs +3, they get +3 on their movement rolls, not +5). Multiple upgrades with the Stacks keyword, however, can stack. 
+Stacks: Most upgrades do not stack with each other (if someone has Run Fast Legs +2 and purchases Run Fast Legs +3, they get +3 on their movement rolls, not +5). Multiple upgrades with the Stacks keyword, however, can stack.
 
 ## Attacking
 
@@ -574,13 +572,13 @@ Stacks: Most upgrades do not stack with each other (if someone has Run Fast Legs
 
 Skill Affinity: Become proficient in one of the skills with an affinity for this discipline. **Requirement**: successfully use that skill 20 times.
 
-Unarmed Strike (Weapon - Unarmed) - You can strike foes with your hand, feet, and face. If unarmed, you can use an (I:3, D:2) strike power. **Requirement**: Defeat three foes without using a weapon. 
+Unarmed Strike (Weapon - Unarmed) - You can strike foes with your hand, feet, and face. If unarmed, you can use an (I:3, D:2) strike power. **Requirement**: Defeat three foes without using a weapon.
 
 Debilitating Strike: Daze (I:2, P:4, Weapon, Strike) - Successful hit will daze opponent. **Requirement**: Defeat 5 enemies in combat.
 
 Rapid Strike 1: (I:-1, Speed:2, Weapon, Strike) - A quick attack that lets you act again sooner than usual. **Requirement**: Participate in five combat scenes with your weapon.
 
-Multishot 1 (I:2, P:2, Weapon, Strike, Ranged): Attack two foes at the same time. **Requirement**: participate in five combat scenes with your weapon. 
+Multishot 1 (I:2, P:2, Weapon, Strike, Ranged): Attack two foes at the same time. **Requirement**: participate in five combat scenes with your weapon.
 
 Wide Swing 1:(I:2, P:2, Weapon, Strike, Melee) - Attack two foes at the same time within close range. **Requirement**: Participate in five combat scenes with your weapon.
 
@@ -588,13 +586,13 @@ Power Strike 1: (I:2, Might:2, Weapon, Strike) - Attack a foe with +4 damage. **
 
 Dual Wielding (Range): You can hold a weapon in each hand, and choose which weapon to attack with when striking.
 
-Aimed Shot (I:Variable, Extended P:2) - Choose an Initiative cost when declaring this action. Gain a bonus on your attack (resolved at the end of the extended action) equal to that initiative cost. 
+Aimed Shot (I:Variable, Extended P:2) - Choose an Initiative cost when declaring this action. Gain a bonus on your attack (resolved at the end of the extended action) equal to that initiative cost.
 
 ### Tier 2
 
 Debilitating Strike: Stun (I:2, P:4, Weapon, Strike) - Successful hit will stun opponent for 5 ticks. **Requirement**: Use Debilitating Strike: Daze successfully 10 times.
 
-Dual Strike (I:2, P:2): When attacking, you can strike with both of your weapons. Roll a single attack and add together the damage statistics of your two weapons. Use the highest initiative cost of your wielded weapons. **Requirement**: Dual wield in at least five combat scenes. 
+Dual Strike (I:2, P:2): When attacking, you can strike with both of your weapons. Roll a single attack and add together the damage statistics of your two weapons. Use the highest initiative cost of your wielded weapons. **Requirement**: Dual wield in at least five combat scenes.
 
 Always has a reload (P:2): Declare using this ability when rolling initiative. You have enough basic ammunition handy to fight this scene without running out.
 
@@ -622,7 +620,7 @@ Improved Unarmed Strike (Weapon - Unarmed): When making an unarmed attack, gain 
 
 Skill Affinity: Become trained in one of the skills with an affinity for this discipline. **Requirement**: successfully use that skill 20 times, proficient in that skill.
 
-Dual Defense: While dual wielding, gain +1 edge on defense checks. **Requirement**: Dual wield in at least five combat scenes. 
+Dual Defense: While dual wielding, gain +1 edge on defense checks. **Requirement**: Dual wield in at least five combat scenes.
 
 Rapid Strike 2: (I:-2, Speed:3, Weapon, Strike) - A quick attack that lets you act again sooner than usual. **Requirement**: use Rapid Strike twenty times.
 
@@ -630,7 +628,7 @@ Wide Swing 2:(I:2, P:4, Weapon, Strike) - Attack two foes at the same time withi
 
 Power Strike 2: (I:2, Might:4, Weapon, Strike) - Attack a foe with +8 damage. **Requirement**: Use Power Strike 1 at least 10 times.
 
-Multishot 2 (I:2, P:4, Weapon, Strike): Attack three foes at the same time. **Requirement**: use multishot 20 times. 
+Multishot 2 (I:2, P:4, Weapon, Strike): Attack three foes at the same time. **Requirement**: use multishot 20 times.
 
 Precise Placement (I:2, P:6, Strike, Weapon): bypass 10 armor in your attack. **Requirement**: engage in combat with five armored foes.
 
@@ -646,9 +644,9 @@ Skill Affinity: Become expert in one of the skills with an affinity for this dis
 
 Debilitating Strike: Disable (I:2, P:4, Weapon, Strike) - Successful hit will disable opponent for 20 ticks. **Requirement**: Use Debilitating Strike: Cripple successfully 10 times.
 
-Rapid Strike 3: (I:-2, Speed:3, Weapon) - A quick attack that lets you act again sooner than usual. **Requirement**: use Rapid Strike at least twenty times. *NOTE: this power is not a strike power, unlike the tier 3 version of the same name.*
+Rapid Strike 3: (I:-2, Speed:3, Weapon) - A quick attack that lets you act again sooner than usual. **Requirement**: use Rapid Strike at least twenty times. _NOTE: this power is not a strike power, unlike the tier 3 version of the same name._
 
-Power Strike 3: (I:2, Might:4, Weapon) - Attack a foe with +8 damage. **Requirement**: Use Power Strike at least twenty times. *NOTE: this power is not a strike power, unlike the tier 3 version of the same name.*
+Power Strike 3: (I:2, Might:4, Weapon) - Attack a foe with +8 damage. **Requirement**: Use Power Strike at least twenty times. _NOTE: this power is not a strike power, unlike the tier 3 version of the same name._
 
 ### Tier 6
 
@@ -660,9 +658,9 @@ Rain of Arrows / Hail of Bullets / Storm of Shuriken / Zephyr of Darts (I:6, P:1
 
 ## Defending
 
-**Armor proficiency**: If you are wearing armor that you are not proficient in, spend 3 might and speed pool at the start of each scene. 
+**Armor proficiency**: If you are wearing armor that you are not proficient in, spend 3 might and speed pool at the start of each scene.
 
-**Skill affinities**: Dodge, Toughness, Faith, Prediction, Reflexes, Providence, Tactics 
+**Skill affinities**: Dodge, Toughness, Faith, Prediction, Reflexes, Providence, Tactics
 
 ### Tier 1
 
@@ -688,7 +686,7 @@ Shield Other (I:2 Interrupt, Shield): Shift all damage from an attack targeting 
 
 Skill Affinity: Become trained in one of the skills with an affinity for this discipline. **Requirement**: successfully use that skill 20 times, proficient in that skill.
 
-Armor Expertise (Medium): Ignore all penalties for wearing medium armor. **Requirement**: participate in 5 combat scenes while wearing medium armor. 
+Armor Expertise (Medium): Ignore all penalties for wearing medium armor. **Requirement**: participate in 5 combat scenes while wearing medium armor.
 
 Powered Armor Training: Become proficient in the use of Powered Armor. **Requirement**: own some power armor.
 
@@ -712,17 +710,17 @@ Defend (I:2, P:6, Interrupt, Shield): Improve the defense of anyone within close
 
 While many animals can be trained and upgraded with magic, only some become true companions. The difference between a companion and a trained animal is:
 
-* Under normal circumstances, a companion only responds to commands given by its owner.
+- Under normal circumstances, a companion only responds to commands given by its owner.
 
-* Companions can be given much more complex commands than trained animals. Trained animals can guard something, companions will wake their owners under specific circumstances. Trained animals can attack someone, companions can go scout an area and retrieve something small.
+- Companions can be given much more complex commands than trained animals. Trained animals can guard something, companions will wake their owners under specific circumstances. Trained animals can attack someone, companions can go scout an area and retrieve something small.
 
-* Owners gain +4 edge when making command animal checks to command their companion.
+- Owners gain +4 edge when making command animal checks to command their companion.
 
-* Companion animals have access to a Loyalty pool, which can be spent like PC attribute pools to adjust the animal's rolls, and a Health pool instead of hit points. 
+- Companion animals have access to a Loyalty pool, which can be spent like PC attribute pools to adjust the animal's rolls, and a Health pool instead of hit points.
 
-* Companion animals can wound their Loyalty and Health pools before dying (and are therefore more resilient than trained animals).
+- Companion animals can wound their Loyalty and Health pools before dying (and are therefore more resilient than trained animals).
 
-* In order to gain a companion, the character must take one of the companion upgrades. They can only have one such companion, unless they take the Additional Companion upgrade.
+- In order to gain a companion, the character must take one of the companion upgrades. They can only have one such companion, unless they take the Additional Companion upgrade.
 
 If a player's companion dies or is dismissed, that character can gain a new companion (and upgrade it) from the tier and upgrade lists that have already been spent on the companion without spending additional experience points, through normal gameplay.
 
@@ -734,7 +732,7 @@ Endurance: Choose an attribute. Gain +1 refresh in that attribute. **Requirement
 
 Train Animal: You are proficient in training new companions. If you capture a wild animal (or somehow steal someone else's companion), you can spend time training it. Every day you spend with the animal, make a Command Animal check against the animal's Ornery score (modified situationally by the GM). If you succeed three times before you fail three times, you have befriended and trained the animal to respond to your commands. **Requirement**: participate in the training of five animals.
 
-Close Pals: Gain +3 edge on making Command Animal checks to command an animal you have personally trained. This stacks with the companion bonus, but is more useful with regular trained animals. **Requirement**: train five animals. 
+Close Pals: Gain +3 edge on making Command Animal checks to command an animal you have personally trained. This stacks with the companion bonus, but is more useful with regular trained animals. **Requirement**: train five animals.
 
 Companion Ability: Train your companion in a new ability. **Requirement**: The companion must meet the requirements of the new ability, the ability must be on its species list, and either you or someone else must possess the Train Animal ability and spend one day training the animal.
 
@@ -742,11 +740,11 @@ Skill Affinity: Become proficient in one of the skills with an affinity for this
 
 Animal Insight (I:4): Make a command animal check against an animal's ornery score. Success means you can tell the animal's motivation, status, and hostility.
 
-Animal Companion: You gain an animal companion from the basic tier list. 
+Animal Companion: You gain an animal companion from the basic tier list.
 
 ### Tier 2
 
-Wild Ability: Train your companion in a new ability. **Requirement**: The companion must meet the requirements of the new ability, and you must possess the Train Animal ability and spend one day training the animal. 
+Wild Ability: Train your companion in a new ability. **Requirement**: The companion must meet the requirements of the new ability, and you must possess the Train Animal ability and spend one day training the animal.
 
 Friend to Animals: You gain +4 edge on all interactions with animals that are not your companion.
 
@@ -766,7 +764,7 @@ Mimic Animal: (I:4) - Make a Wet Science Knowledge check. You mimic an animal's 
 
 Additional companion: You can gain an additional companion from any tier list that is available to you.
 
-Advanced Companion: You gain an animal companion from the advanced tier list (NYI). 
+Advanced Companion: You gain an animal companion from the advanced tier list (NYI).
 
 ### Tier 4
 
@@ -784,7 +782,7 @@ Epic Companion: Gain an animal companion from the Epic tier list (NYI).
 
 ## Knowing and Making Things
 
-**Note**: **Gadgets **are like **gizmos **([ref](#heading=h.dvhb3nxqu5p9)), but are further limited here. Gadgets (without the Tier 3 ability Lend Gadget) can only be used by their creator. Furthermore, the assumption is that the creator has a collection of materials and ingredients on hand and usually assembles things in the moment to create the gadget itself (so you cannot pre-create the gadget and use it later at a reduced pool / initiative cost). If the player is separated from their supplies, their ability to make gadgets will be reduced. 
+**Note**: **Gadgets **are like **gizmos **([ref](#heading=h.dvhb3nxqu5p9)), but are further limited here. Gadgets (without the Tier 3 ability Lend Gadget) can only be used by their creator. Furthermore, the assumption is that the creator has a collection of materials and ingredients on hand and usually assembles things in the moment to create the gadget itself (so you cannot pre-create the gadget and use it later at a reduced pool / initiative cost). If the player is separated from their supplies, their ability to make gadgets will be reduced.
 
 **Skill Affinities**: Arcane Knowledge, Arcane Tinker, Religious Knowledge, Religious Tinker, Psionic Knowledge, Psionic Tinker, Alchemical Knowledge, Alchemical Tinker, Other Knowledge, Other Tinker, Wilderness Lore
 
@@ -820,7 +818,7 @@ Multitool (Tradition): You can create a gadget (I:30, interruptible to create) t
 
 ### Tier 5
 
-Very Efficient use (Tradition): Gain an additional asset when rolling depletion rolls. **Requirement**: Roll twenty depletion rolls. 
+Very Efficient use (Tradition): Gain an additional asset when rolling depletion rolls. **Requirement**: Roll twenty depletion rolls.
 
 Skill Affinity: Become expert in one of the skills with an affinity for this discipline. **Requirement**: successfully use that skill 20 times, proficient in that skill.
 
@@ -918,9 +916,9 @@ Improved Rest: During the rest between scenes, each ally gains 1 additional pool
 
 EMT (Medicine): Add these two medicine actions to your repertoire:
 
-* Restore Pool (I:6, Medicine): DC: amount of missing pool. Restore one attribute's refresh value.
+- Restore Pool (I:6, Medicine): DC: amount of missing pool. Restore one attribute's refresh value.
 
-* Heal wounded attribute: (I:30, extended): DC: 5x number of wounded attributes. Heals one attribute other than health.
+- Heal wounded attribute: (I:30, extended): DC: 5x number of wounded attributes. Heals one attribute other than health.
 
 Good living through Chemistry (Tradition: Alchemy, Medicine): Each scene, choose one character (including yourself) and core attribute. That character gains +3 pool and max pool in that attribute for the duration of that scene. **Requirement**: craft at least three potions using Alchemical Tinker.
 
@@ -944,11 +942,11 @@ Surgeon (Medicine): Make a DC 20 medicine check to heal a wounded health attribu
 
 ### Tier 4
 
-Medium Pick Me Up (I:6, P:6, Medicine, Tradition - Alchemy): 
+Medium Pick Me Up (I:6, P:6, Medicine, Tradition - Alchemy):
 
-* Medicine DC 12:  Heal any one wounded attribute (except health)
+- Medicine DC 12: Heal any one wounded attribute (except health)
 
-* Medicine DC 8: Restore all pools
+- Medicine DC 8: Restore all pools
 
 ### Tier 5
 
@@ -962,7 +960,7 @@ Best Living through Chemistry (Medicine, Tradition - Alchemy): Each scene, choos
 
 ## Augmentations
 
-**Special**: When choosing your first augmentation power, you must select the tradition of magic used to enhance your character from Arcane, Religion, Psionic, and Alchemy. Typically you can only have one tradition of augmentation, and 
+**Special**: When choosing your first augmentation power, you must select the tradition of magic used to enhance your character from Arcane, Religion, Psionic, and Alchemy. Typically you can only have one tradition of augmentation, and
 
 **Requirements**: All augmentation upgrades have a materials requirement, related to your upgrade tradition, such as psionic tattoo ink ground from the pineal gland of a floating brain, or dragon's blood mixed with an alchemical tincture. This is in addition to any other listed requirements, and is consumed when applying the upgrade. The rarity and cost of these material goods will scale with the level of the upgrade.
 
@@ -1006,7 +1004,7 @@ Short-range teleportation
 
 ## Magic
 
-*A note on power*: Magical power in this game is intended to be somewhat rare and mysterious. A magic-focused player character in Tales is a student of magic, aspiring to wizardhood, and not a Wizard with Gandalf-tier powers. Do not expect to have the breadth of power that a typical Dungeons and Dragons character has. Instead, many forms of magic are much more specialized - a character might have arcane tattoos that provide defense and a steady supply of potions that grant fire breathing, rather than a spellbook with all the basic spells.
+_A note on power_: Magical power in this game is intended to be somewhat rare and mysterious. A magic-focused player character in Tales is a student of magic, aspiring to wizardhood, and not a Wizard with Gandalf-tier powers. Do not expect to have the breadth of power that a typical Dungeons and Dragons character has. Instead, many forms of magic are much more specialized - a character might have arcane tattoos that provide defense and a steady supply of potions that grant fire breathing, rather than a spellbook with all the basic spells.
 
 In this game there are three schools of magic: Arcane, Religion, and Psionic. They differ largely by flavor rather than mechanics, although Arcane magic tends to use Focus whereas Religion uses Conviction and Psionics uses a mix. Any upgrade tagged with **Tradition** must select one of those three when chosen, and the in-category discount and requirement counting treat different traditions as completely different (you cannot work towards a Religion upgrade by using Psionic magic. Below, the language "cast a spell" is usually used to mean any tradition of magic.
 
@@ -1028,7 +1026,7 @@ Casting a spell from equipment has a base initiative cost of 6E, representing th
 
 4. If the spell is successful, it takes effect. This may have an immediate effect, or in the case of a combat-oriented spell it will give you an opportunity to make a melee or ranged attack as your next action. (so spells like firebolt are relatively easy to cast, but also require a follow-up attack roll using a ranged weapon skill of your choice to actually hit the target with the fire).
 
-**Skill Affinities**: Arcane Knowledge, Arcane Tinker, Religious Knowledge, Religious Tinker, Psionic Knowledge, Psionic Tinker 
+**Skill Affinities**: Arcane Knowledge, Arcane Tinker, Religious Knowledge, Religious Tinker, Psionic Knowledge, Psionic Tinker
 
 Special Keywords:
 
@@ -1044,7 +1042,7 @@ Skill Affinity: Become proficient in one of the skills with an affinity for this
 
 Unlock Spells (Tradition): Gain the ability to cast any tier 1 spells you find. **Requirement**: Make at least 15 successful Tinker skills in your tradition.
 
-Elemental Dart (Spell, Element, Tradition): I:XE, P:X, X:[0-3]. Target: 1+X. Summon a very small orb of elemental power that can be used as a ranged weapon. Ranged attack, I:4, Damage 1-X. 
+Elemental Dart (Spell, Element, Tradition): I:XE, P:X, X:[0-3]. Target: 1+X. Summon a very small orb of elemental power that can be used as a ranged weapon. Ranged attack, I:4, Damage 1-X.
 
 ### Tier 2
 
@@ -1094,7 +1092,7 @@ Some equipment (often referred to as a **gizmo**) has a limited amount of uses, 
 
 Gizmos may be **reliable** or **unreliable**. Reliable gizmos gain an asset on their depletion roll, and unreliable ones gain a hindrance.
 
-Example: After firing a blaster with depletion *4 (reliable)*, roll 2d12 and keep the highest. If that number is 4+, the blaster is fine. Otherwise, it becomes unusable after firing.
+Example: After firing a blaster with depletion _4 (reliable)_, roll 2d12 and keep the highest. If that number is 4+, the blaster is fine. Otherwise, it becomes unusable after firing.
 
 ## Other Equipment
 
@@ -1251,7 +1249,6 @@ If you are not proficient in the armor you are wearing, lose 3 might and 3 speed
   </tr>
 </table>
 
-
 # Companions
 
 Only two companion types are outlined below, but other animals could be chosen using the template and structure provided.
@@ -1304,11 +1301,11 @@ Defensive; Well-armored; Look at Me; Masterful Attack; Bird's Eye; Pin; Ranged A
 
 ### Bird's Eye
 
-You and your companion both gain a magic link that allows you to see what your companion sees, as long as it’s within one mile of you. For ten minutes, you can connect with your companion and view the world through their eyes. I:4 to initiate.  
+You and your companion both gain a magic link that allows you to see what your companion sees, as long as it’s within one mile of you. For ten minutes, you can connect with your companion and view the world through their eyes. I:4 to initiate.
 
 ### Bone Breaker
 
-Your companion has an asset on using their tail (or other body part or augmentation) to crush or smash an object, such as a wall, building, locked door, machine, or boulder. If Bone Breaker is used on a living creature, it does 1 additional point of damage and staggers the creature, causing them to lose their next turn.  I:6
+Your companion has an asset on using their tail (or other body part or augmentation) to crush or smash an object, such as a wall, building, locked door, machine, or boulder. If Bone Breaker is used on a living creature, it does 1 additional point of damage and staggers the creature, causing them to lose their next turn. I:6
 
 ### Defensive
 
@@ -1328,11 +1325,11 @@ Gain an asset on attack rolls.
 
 ### Morale Booster
 
-Just having your companion around makes everyone feel happier, healthier, and more relaxed. During rests, your companion puts friends, comrades, and companions at ease so much that they recover 1 extra pool of their choice between scenes. This ability stacks with Improved Rest, but the party can only benefit from one Morale Booster per rest. 
+Just having your companion around makes everyone feel happier, healthier, and more relaxed. During rests, your companion puts friends, comrades, and companions at ease so much that they recover 1 extra pool of their choice between scenes. This ability stacks with Improved Rest, but the party can only benefit from one Morale Booster per rest.
 
 ### Ranged Attack
 
-These types of attacks are almost never natural, but companions can be enchanted to blast out ranged damage. A ranged attack does 2 points of damage to creatures within long range. Each time you take this ability, your companion does 2 additional points of damage. I:6 
+These types of attacks are almost never natural, but companions can be enchanted to blast out ranged damage. A ranged attack does 2 points of damage to creatures within long range. Each time you take this ability, your companion does 2 additional points of damage. I:6
 
 ### Pin
 
@@ -1340,7 +1337,7 @@ Your companion holds down prey with their body or claws, attacking it for 2 poin
 
 ### Scout
 
-Your companion’s tracking, seeking, and searching skills are well honed. You can send your companion ahead or behind you, up to a mile away, and ask them to find a person, scout out a place, search for time anomalies, or do some other thing. You and your companion have a special way of communicating the details of your companion’s discoveries to each other, perhaps through implanted technology, hand signals, or some other type of connection. 
+Your companion’s tracking, seeking, and searching skills are well honed. You can send your companion ahead or behind you, up to a mile away, and ask them to find a person, scout out a place, search for time anomalies, or do some other thing. You and your companion have a special way of communicating the details of your companion’s discoveries to each other, perhaps through implanted technology, hand signals, or some other type of connection.
 
 ### Skilled
 
@@ -1356,7 +1353,7 @@ Your companion is trained, equipped, and (if necessary) enhanced in some way so 
 
 ### Swift Healer
 
-Your companion has a natural or enhanced ability to heal, gaining 1 additional point of health between scenes.    
+Your companion has a natural or enhanced ability to heal, gaining 1 additional point of health between scenes.
 
 ### Sniff Magic
 
@@ -1364,7 +1361,7 @@ Your companion gains an asset when searching an area for magic items.
 
 ### Terrify
 
-Your companion is terrifying. Either as an attack action with no damage done (I:6) or for free when any foe sees your companion damage someone, any foes of the companion become shaken, with a 2 point penalty to all checks. 
+Your companion is terrifying. Either as an attack action with no damage done (I:6) or for free when any foe sees your companion damage someone, any foes of the companion become shaken, with a 2 point penalty to all checks.
 
 ### Uncanny Skill
 
@@ -1372,17 +1369,17 @@ Your companion has learned (or had implanted into their neural system) a skill t
 
 ### Well-armored
 
-You have worked hard to ensure that your companion is protected from predators, foes, and natural disasters. Either through training, body modification, or additional equipment, your companion gains +2 to Armor. 
+You have worked hard to ensure that your companion is protected from predators, foes, and natural disasters. Either through training, body modification, or additional equipment, your companion gains +2 to Armor.
 
 # Conditions
 
-When a condition is listed as having a modifier on difficulty scores, that is given assuming the target of the condition is a PC. For example, *dazed* raises all difficulties by 2, so a PC who was attempting a DC 4 task would now need to succeed at DC 6 instead. If the condition is applied to an NPC, all of the NPCs DCs are reduced by that amount when PCs attempt to act against them. If attacking a dazed opponent whose defense started at 5, the DC to attack is lowered to 3.
+When a condition is listed as having a modifier on difficulty scores, that is given assuming the target of the condition is a PC. For example, _dazed_ raises all difficulties by 2, so a PC who was attempting a DC 4 task would now need to succeed at DC 6 instead. If the condition is applied to an NPC, all of the NPCs DCs are reduced by that amount when PCs attempt to act against them. If attacking a dazed opponent whose defense started at 5, the DC to attack is lowered to 3.
 
 Dazed: a dazed character is temporarily unable to bring all their faculties to bear. Increase all difficulties for that character by two.
 
 Stunned: a stunned character cannot act in any way for some number of initiative ticks.
 
-Crippled arm: drop whatever was in the arm, can make no other actions with that arm. 
+Crippled arm: drop whatever was in the arm, can make no other actions with that arm.
 
 Crippled leg: speed halved, cannot run.
 

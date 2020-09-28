@@ -4,11 +4,13 @@ import { CommonModule } from '@angular/common';
 import { HomeModule } from './home/home.module';
 import { NgModule } from '@angular/core';
 import { PagesModule } from './pages/pages.module';
+import { RouterModule } from '@angular/router';
 import { UserModule } from './user/user.module';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule],
+  declarations: [WelcomeComponent],
+  imports: [CommonModule, RouterModule],
   exports: [
     CharactersModule,
     CampaignsModule,

@@ -1,8 +1,9 @@
-import { filter, map, switchMap, take } from 'rxjs/operators';
+import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from '../../../../types/user';
 import { firestore } from 'firebase';
 
@@ -10,19 +11,11 @@ import { firestore } from 'firebase';
   providedIn: 'root',
 })
 export class UserService {
-  currentUser: User;
-
   constructor(
     private firestore: AngularFirestore,
-    private auth: AngularFireAuth
-  ) {
-    this.auth.user
-      .pipe(
-        filter((v) => !!v),
-        switchMap((user) => this.get(user.uid))
-      )
-      .subscribe((user) => (this.currentUser = user));
-  }
+    private auth: AngularFireAuth,
+    private router: Router
+  ) {}
 
   list() {
     return this.firestore
@@ -70,6 +63,11 @@ export class UserService {
     } else {
       return 'ask';
     }
+  }
+
+  async logout() {
+    this.router.navigate(['welcome']);
+    this.auth.signOut();
   }
 
   async postLogin() {

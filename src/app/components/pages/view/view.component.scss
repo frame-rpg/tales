@@ -1,7 +1,6 @@
 .toc {
-
   max-width: 200px;
-  margin: 0 8px;
+  padding: 0 8px;
 
   .toc-active {
     font-weight: 700;
@@ -49,7 +48,6 @@
     height: 10vh;
   }
 
-
   &:hover {
     &::-webkit-scrollbar-thumb {
       background-clip: content-box;
@@ -73,7 +71,10 @@
 
   .hero {
     font-family: 'Abril Fatface';
-    margin-bottom: 20px;
+    font-size: 48px;
+    margin-bottom: 12px;
+    line-height: 1;
+    font-weight: 400;
   }
 
   h1 {

@@ -4,11 +4,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Message, RollRequest } from 'types/message';
 import { Observable, Subject, combineLatest } from 'rxjs';
 import {
+  distinctUntilChanged,
   filter,
   map,
   publishReplay,
   refCount,
   switchMap,
+  takeUntil,
 } from 'rxjs/operators';
 
 import { AttackService } from 'src/app/actions/attack/attack.service';
@@ -16,18 +18,25 @@ import { Campaign } from 'types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
 import { CharacterId } from 'types/idtypes';
 import { CharacterService } from 'src/app/data/character.service';
+import { InitiativeService } from 'src/app/actions/initiative/initiative.service';
 import { MessageService } from 'src/app/data/message.service';
-import { NoncombatService } from 'src/app/actions/noncombat/noncombat.service';
 import { mapById } from 'src/app/data/rxutil';
 
+type ActionType = 'initiative' | 'noncombat' | 'reset' | 'rest';
+interface Action {
+  type: ActionType;
+  character?: Character;
+  event: MouseEvent;
+}
+
 @Component({
-  selector: 'player',
-  templateUrl: './playerview.component.html',
-  styleUrls: ['./playerview.component.scss'],
+  selector: 'framesystem-campaign-view',
+  templateUrl: './view.component.html',
+  styleUrls: ['./view.component.scss'],
 })
-export class PlayerviewComponent implements OnInit, OnDestroy {
+export class ViewComponent implements OnInit, OnDestroy {
   campaign: Observable<Campaign>;
-  myCharacters: Observable<Character[]>;
+  characters: Observable<Character[]>;
   mappedCharacters: Observable<Record<string, Character>>;
   messages: Observable<Message[]>;
   campaignMessages: Observable<Message[]>;
@@ -37,12 +46,17 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
     .asObservable()
     .pipe(filter((v) => v === true));
 
+  actionSubject = new Subject<Action>();
+  action = this.actionSubject
+    .asObservable()
+    .pipe(distinctUntilChanged(), publishReplay(1), refCount());
+
   constructor(
     private campaignService: CampaignService,
     private characterService: CharacterService,
     private messageService: MessageService,
     private attackService: AttackService,
-    private noncombatService: NoncombatService,
+    private initiativeService: InitiativeService,
     private route: ActivatedRoute
   ) {}
 
@@ -61,15 +75,15 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
       publishReplay(1),
       refCount()
     );
-    this.myCharacters = this.campaign.pipe(
+    this.characters = this.campaign.pipe(
       switchMap((campagin) =>
-        this.characterService.list(campagin, ['player', 'gm'])
+        this.characterService.list(campagin, ['viewer', 'player', 'gm'])
       ),
       publishReplay(1),
       refCount()
     );
-    this.mappedCharacters = this.myCharacters.pipe(mapById('characterId'));
-    this.messages = combineLatest([this.myCharacters, this.campaign]).pipe(
+    this.mappedCharacters = this.characters.pipe(mapById('characterId'));
+    this.messages = combineLatest([this.characters, this.campaign]).pipe(
       switchMap(([characters, campaign]) =>
         this.messageService.fetchAll([
           campaign,
@@ -79,7 +93,7 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
       publishReplay(1),
       refCount()
     );
-    this.requiredRolls = combineLatest([this.myCharacters, this.messages]).pipe(
+    this.requiredRolls = combineLatest([this.characters, this.messages]).pipe(
       map(([characters, messages]) =>
         messages.filter(
           (m) =>
@@ -93,11 +107,42 @@ export class PlayerviewComponent implements OnInit, OnDestroy {
     this.campaignMessages = this.messages.pipe(
       map((messages) => messages.filter((m) => m.to.type === 'campaign'))
     );
+
+    const actionStream = combineLatest([
+      this.campaign,
+      this.characters,
+      this.action,
+    ]).pipe(takeUntil(this.destroying));
+
+    actionStream
+      .pipe(filter(([, , event]) => event.type === 'initiative'))
+      .subscribe(([campaign, characters]) =>
+        this.initiativeService.trigger(characters, campaign)
+      );
+    actionStream
+      .pipe(filter(([, , event]) => event.type === 'rest'))
+      .subscribe(([campaign, characters]) => {
+        this.characterService.rest(characters);
+        this.messageService.scene(campaign, characters);
+      });
+    actionStream
+      .pipe(filter(([, , event]) => event.type === 'reset'))
+      .subscribe(([, characters]) => this.characterService.reset(characters));
   }
 
-  async attack(character: Character, campaign: Campaign) {
-    const attack = await this.attackService.triggerSelf(character, campaign);
+  initiative(event: MouseEvent) {
+    this.actionSubject.next({ event, type: 'initiative' });
   }
 
-  async noncombat(character: SkilledCharacter, campaign: Campaign) {}
+  noncombat(event: MouseEvent, character: Character) {
+    this.actionSubject.next({ event, character, type: 'noncombat' });
+  }
+
+  rest(event: MouseEvent) {
+    this.actionSubject.next({ event, type: 'rest' });
+  }
+
+  reset(event: MouseEvent) {
+    this.actionSubject.next({ event, type: 'reset' });
+  }
 }

@@ -1,52 +1,48 @@
 import {
   AngularFireAuthGuard,
-  redirectLoggedInTo,
   redirectUnauthorizedTo,
 } from '@angular/fire/auth-guard';
 import { RouterModule, Routes } from '@angular/router';
 
-import { GmviewComponent } from './components/campaigns/gmview/gmview.component';
-import { LoginComponent } from './components/user/login/login.component';
+import { ViewComponent as CampaignViewComponent } from './components/campaigns/view/view.component';
+import { RouteComponent as HomeRouteComponent } from './components/home/route.component';
+import { LoginComponent } from './components/user/login.component';
 import { NgModule } from '@angular/core';
-import { PlayerviewComponent } from './components/campaigns/playerview/playerview.component';
-import { RouteComponent } from './components/home/route.component';
 import { RulesComponent } from './components/pages/static/rules.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
-function redirectUnauthorizedToLogin(continueUrl: string) {
-  return () => redirectUnauthorizedTo(['login']);
+function redirectUnauthorizedToLogin(after: string) {
+  return () => redirectUnauthorizedTo(['login', after]);
 }
 
 const routes: Routes = [
   {
-    path: 'campaigns/:campaignId/gm',
-    pathMatch: 'full',
-    component: GmviewComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin('/campaigns') },
+    path: 'welcome',
+    component: WelcomeComponent,
   },
   {
-    path: 'campaigns/:campaignId/player',
-    pathMatch: 'full',
-    component: PlayerviewComponent,
+    path: 'campaigns/:campaignId',
+    component: CampaignViewComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin('/campaigns') },
+    data: { authGuardPipe: redirectUnauthorizedToLogin('campaigns') },
   },
   {
-    path: '',
-    pathMatch: 'full',
-    component: RouteComponent,
+    path: 'home',
+    component: HomeRouteComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin('/') },
+    data: { authGuardPipe: redirectUnauthorizedToLogin('home') },
   },
   {
     path: 'login',
     component: LoginComponent,
+    children: [{ path: ':after', component: LoginComponent }],
   },
   { path: 'rules', component: RulesComponent },
+  { path: '**', redirectTo: 'welcome' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

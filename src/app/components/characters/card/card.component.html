@@ -61,7 +61,8 @@
             <div class="skillInfo">
               <div>{{skill.name}}</div>
               <div style="text-transform: capitalize;">{{skill.level}}</div>
-              <button mat-icon-button (click)="check($event, skill)">
+              <button mat-icon-button (click)="check($event, skill)" *ngIf="(relationship | async) === 'player' ||
+              (relationship | async) === 'gm'">
                 <mat-icon>casino</mat-icon>
               </button>
             </div>
