@@ -10,18 +10,22 @@ import {
 } from '@angular/core';
 import {
   distinctUntilChanged,
+  distinctUntilKeyChanged,
   filter,
   map,
   publishReplay,
   refCount,
   scan,
   startWith,
+  switchMap,
   takeUntil,
   tap,
 } from 'rxjs/operators';
 
 import { AclType } from 'types/acl';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { CharacterId } from 'types/idtypes';
+import { CharacterService } from 'src/app/data/character.service';
 import { CharacterSkill } from 'types/skill';
 import { NoncombatService } from 'src/app/actions/noncombat/noncombat.service';
 
@@ -31,9 +35,9 @@ import { NoncombatService } from 'src/app/actions/noncombat/noncombat.service';
   styleUrls: ['./card.component.scss'],
 })
 export class CardComponent implements OnChanges, OnInit, OnDestroy {
-  @Input('character') private _character: Character;
+  @Input('character') private _character: CharacterId;
   character: Observable<Character>;
-  characterSubject: BehaviorSubject<Character>;
+  characterIdSubject: BehaviorSubject<CharacterId>;
   locked: Observable<boolean>;
   gmOrPlayer: Observable<boolean>;
   player: Observable<boolean>;
@@ -58,6 +62,7 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
 
   constructor(
     private noncombatService: NoncombatService,
+    private characterService: CharacterService,
     private auth: AngularFireAuth
   ) {}
 
@@ -66,8 +71,14 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.characterSubject = new BehaviorSubject(this._character);
-    this.character = this.characterSubject.asObservable();
+    this.characterIdSubject = new BehaviorSubject(this._character);
+    this.character = this.characterIdSubject.asObservable().pipe(
+      distinctUntilChanged(
+        (a, b) =>
+          a.characterId === b.characterId && a.campaignId == b.campaignId
+      ),
+      switchMap((id) => this.characterService.get(id))
+    );
 
     this.relationship = combineLatest([this.auth.user, this.character]).pipe(
       map(([{ uid }, { acl }]) => acl[uid]),
@@ -109,7 +120,7 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.character?.currentValue) {
-      this.characterSubject.next(changes.character.currentValue);
+      this.characterIdSubject.next(changes.character.currentValue);
     }
   }
 

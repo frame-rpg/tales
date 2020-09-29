@@ -18,13 +18,14 @@ export class AdjustComponent {
 
   constructor(private characterService: CharacterService) {}
 
-  fire() {
-    this.characterService.update(this.character, {
+  async fire() {
+    const v = await this.characterService.update(this.character, {
       [this.path]:
         this.increment === 0
           ? 0
           : Math.min(Math.max(this.increment + this.value, this.min), this.max),
     });
+    console.log(v);
   }
 
   get value() {
