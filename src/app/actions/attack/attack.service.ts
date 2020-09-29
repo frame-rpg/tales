@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageService } from 'src/app/data/message.service';
 import { RollService } from '../roll/roll.service';
+import { Weapon } from 'types/equipment';
 import { basicRequest } from '../common';
 import { take } from 'rxjs/operators';
 
@@ -21,7 +22,20 @@ export class AttackService {
     private rollService: RollService
   ) {}
 
-  async triggerSelf(character: Character) {
+  async triggerSelf(character: SkilledCharacter, weapon: Weapon) {
+    const customMelee = {
+      ...basicMelee,
+      skills: character.skills
+        .filter((skill) => skill.category === 'melee')
+        .map((skill) => skill.skillId),
+    };
+    const customRanged = {
+      ...basicRanged,
+      skills: character.skills
+        .filter((skill) => skill.category === 'ranged')
+        .map((skill) => skill.skillId),
+    };
+
     const result: Attack = await this.dialogService
       .open(AttackComponent, { data: character })
       .afterClosed()
@@ -34,7 +48,8 @@ export class AttackService {
       };
       const rollResult: AttackResult = await this.rollService.trigger(
         rollRequest,
-        character as SkilledCharacter
+        character as SkilledCharacter,
+        weapon
       );
       if (rollResult) {
         await this.handle(
@@ -73,3 +88,27 @@ export class AttackService {
     await this.characterService.update(character, patch);
   }
 }
+
+export const basicMelee: Omit<Weapon, 'skills'> = {
+  type: 'weapon',
+  kind: 'melee',
+  initiative: 0,
+  damage: 0,
+  slot: 'other',
+  equipped: false,
+  size: 0,
+  name: 'Custom Melee Weapon',
+  effect: {},
+};
+
+export const basicRanged: Omit<Weapon, 'skills'> = {
+  type: 'weapon',
+  kind: 'ranged',
+  initiative: 0,
+  damage: 0,
+  slot: 'other',
+  equipped: false,
+  size: 0,
+  name: 'Custom Ranged Weapon',
+  effect: {},
+};

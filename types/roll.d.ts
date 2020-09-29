@@ -9,7 +9,7 @@ export type RollState = 'requested' | 'rolled';
 export interface RollMetadata {
   state: RollState;
   messageId?: string;
-  roller: CharacterId;
+  character: CharacterId;
   at: Date | Timestamp;
   archive: boolean;
 }
@@ -19,6 +19,7 @@ export interface BasicRoll {
   assets: number;
   edge: number;
   items: Equipment[];
+  skills?: string[];
 }
 
 export interface Initiative extends BasicRoll {
@@ -90,3 +91,5 @@ export type RollResult =
   | AttackResult
   | NoncombatResult
   | HealthResult;
+
+export type Roll = RollRequest | RollResult;

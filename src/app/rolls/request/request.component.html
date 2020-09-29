@@ -6,16 +6,6 @@
       <input matInput formControlName="target" type="text" inputmode="numeric"
           autocomplete="disabled" />
     </mat-form-field>
-    <mat-form-field *ngIf="has.weapon">
-      <mat-label>Choose a weapon</mat-label>
-      <mat-select (selectionChange)="weaponSelected($event)"
-          formControlName="weapon">
-        <mat-option *ngFor="let weapon of weapons" [value]="weapon">
-          {{ weapon.name }}</mat-option>
-        <mat-option [value]="customMelee">Custom Melee</mat-option>
-        <mat-option [value]="customRanged">Custom Ranged</mat-option>
-      </mat-select>
-    </mat-form-field>
     <mat-form-field appearance="outline" *ngIf="has.damage">
       <mat-label>Damage</mat-label>
       <input matInput formControlName="damage" type="text" inputmode="numeric"

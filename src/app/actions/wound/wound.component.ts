@@ -5,16 +5,16 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Attribute } from 'types/attribute';
 
 @Component({
-  selector: 'app-health',
-  templateUrl: './health.component.html',
-  styleUrls: ['./health.component.scss'],
+  selector: 'framesystem-wound',
+  templateUrl: './wound.component.html',
+  styleUrls: ['./wound.component.scss'],
 })
-export class HealthComponent implements OnInit {
+export class WoundComponent implements OnInit {
   attributeSelector = new FormControl('', [Validators.required]);
   attributes: Attribute[];
   constructor(
     @Inject(MAT_DIALOG_DATA) public character: SkilledCharacter,
-    public matDialogRef: MatDialogRef<HealthComponent>
+    public matDialogRef: MatDialogRef<WoundComponent>
   ) {}
   ngOnInit(): void {
     this.attributes = Object.values(this.character.attributes).sort((a, b) =>

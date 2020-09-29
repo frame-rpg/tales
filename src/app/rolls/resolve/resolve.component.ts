@@ -26,14 +26,14 @@ export interface InjectedData {
   templateUrl: './roll.component.html',
   styleUrls: ['./roll.component.scss'],
 })
-export class RollComponent implements OnDestroy {
+export class ResolveComponent implements OnDestroy {
   rollState: FormGroup;
   manuallyRolling = false;
   attribute: Attribute;
   private _chosenSkill: CharacterSkill;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: InjectedData,
-    public matDialogRef: MatDialogRef<RollComponent>,
+    public matDialogRef: MatDialogRef<ResolveComponent, RollResult>,
     private userService: UserService
   ) {
     this.rollState = new FormGroup(

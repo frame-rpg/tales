@@ -17,6 +17,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RollComponent } from './roll.component';
 import { SkilledCharacter } from 'types/character';
+import { Weapon } from 'types/equipment';
 import { take } from 'rxjs/operators';
 
 interface DialogInput {
@@ -32,7 +33,8 @@ export class RollService {
 
   async trigger(
     request: AttackRequest,
-    character: SkilledCharacter
+    character: SkilledCharacter,
+    weapon: Weapon
   ): Promise<AttackResult>;
   async trigger(
     request: DefenseRequest,
@@ -52,11 +54,19 @@ export class RollService {
   ): Promise<NoncombatResult>;
   async trigger<REQ extends RollRequest, RES extends RollResult>(
     request: REQ,
-    character: SkilledCharacter
+    character: SkilledCharacter,
+    weapon?: Weapon
   ): Promise<RES> {
+    const data = {
+      roll: request,
+      character: character,
+    };
+    if (weapon) {
+      data['weapon'] = weapon;
+    }
     const result = await this.dialogService
       .open<RollComponent, DialogInput, RES>(RollComponent, {
-        data: { roll: request, character },
+        data,
       })
       .afterClosed()
       .pipe(take(1))

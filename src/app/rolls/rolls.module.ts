@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../core/material/material.module';
 import { NgModule } from '@angular/core';
 import { PipesModule } from '../core/pipes/pipes.module';
-import { TriggerComponent } from './trigger/trigger.component';
+import { RequestComponent } from './request/request.component';
+import { ResolveComponent } from './resolve/resolve.component';
 
 @NgModule({
-  declarations: [TriggerComponent],
+  declarations: [RequestComponent, ResolveComponent],
   imports: [
     CommonModule,
     FormsModule,
