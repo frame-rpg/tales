@@ -1,15 +1,13 @@
+import { Attack, AttackRequest, AttackResult } from 'types/roll';
 import { Character, SkilledCharacter } from 'types/character';
-import { RollComplete, RollRequest } from 'types/message';
 
-import { AngularFirestore } from '@angular/fire/firestore';
 import { AttackComponent } from './attack.component';
-import { CampaignId } from 'types/idtypes';
 import { CharacterService } from 'src/app/data/character.service';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageService } from 'src/app/data/message.service';
 import { RollService } from '../roll/roll.service';
-import { idPluck } from 'src/app/data/util';
+import { basicRequest } from '../common';
 import { take } from 'rxjs/operators';
 
 @Injectable({
@@ -23,30 +21,18 @@ export class AttackService {
     private rollService: RollService
   ) {}
 
-  async triggerSelf(character: Character, campaign: CampaignId) {
-    const result = await this.dialogService
+  async triggerSelf(character: Character) {
+    const result: Attack = await this.dialogService
       .open(AttackComponent, { data: character })
       .afterClosed()
       .pipe(take(1))
       .toPromise();
     if (result) {
-      const rollRequest: Omit<RollRequest, 'messageId'> = {
-        messageType: 'rollRequest',
-        at: new Date(),
-        type: 'attack',
-        description: 'Attack Check',
-        assets: result.assets || 0,
-        target: result.target,
-        initiative: result.initiative,
-        damage: result.damage,
-        skills: result.weapon.skills.concat(),
-        edge: 0,
-        state: 'new',
-        from: idPluck(campaign),
-        to: idPluck(character),
-        items: [result.weapon, ...result.otherItems],
+      const rollRequest: AttackRequest = {
+        ...result,
+        ...basicRequest(character),
       };
-      const rollResult = await this.rollService.trigger(
+      const rollResult: AttackResult = await this.rollService.trigger(
         rollRequest,
         character as SkilledCharacter
       );
@@ -62,8 +48,8 @@ export class AttackService {
 
   async handle(
     character: SkilledCharacter,
-    request: Omit<RollRequest, 'messageId'>,
-    result: Omit<RollComplete, 'messageId'>
+    request: AttackRequest,
+    result: AttackResult
   ) {
     await this.messageService.send({
       ...result,

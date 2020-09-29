@@ -1,4 +1,3 @@
-import { Message, MessageState } from '../../../types/message';
 import { Observable, combineLatest } from 'rxjs';
 import { map, publishReplay, refCount, take } from 'rxjs/operators';
 

@@ -12,6 +12,7 @@ import { CoreModule } from './core/core.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MaterialModule } from './core/material/material.module';
 import { NgModule } from '@angular/core';
+import { RollsModule } from './rolls/rolls.module';
 
 const firebaseUiAuthConfig: any = {
   signInFlow: 'popup',
@@ -38,6 +39,7 @@ const firebaseUiAuthConfig: any = {
     BrowserModule,
     ComponentsModule,
     CommonModule,
+    RollsModule,
     FormsModule,
     ReactiveFormsModule,
     LayoutModule,

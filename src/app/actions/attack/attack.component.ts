@@ -11,6 +11,7 @@ import {
 } from 'src/app/data/modifiers';
 import { SkilledCharacter } from 'types/character';
 import { Equipment, Weapon } from 'types/equipment';
+import { Attack } from 'types/roll';
 
 @Component({
   selector: 'app-attack',
@@ -38,7 +39,7 @@ export class AttackComponent implements OnInit {
   });
 
   constructor(
-    public matDialogRef: MatDialogRef<AttackComponent>,
+    public matDialogRef: MatDialogRef<AttackComponent, Attack>,
     @Inject(MAT_DIALOG_DATA) public character: SkilledCharacter
   ) {
     this.weapons = this.character.equipment.filter(
@@ -50,15 +51,15 @@ export class AttackComponent implements OnInit {
   }
 
   ok() {
-    const response = {
+    const response: Attack = {
+      type: 'attack',
+      edge: parseInt(this.req.value.edge, 10) || 0,
       assets: parseInt(this.req.value.assets, 10) || 0,
       damage: parseInt(this.req.value.damage, 10) || 0,
       target: parseInt(this.req.value.target, 10) || 0,
       initiative: parseInt(this.req.value.initiative, 10) || 0,
-      weapon: this.chosenWeapon,
-      otherItems: countCharacter(this.character, 'attack').relevant.filter(
-        (e) => e.type !== 'weapon'
-      ),
+      skills: this.chosenWeapon.skills.concat(),
+      items: [this.chosenWeapon],
     };
     this.matDialogRef.close(response);
   }

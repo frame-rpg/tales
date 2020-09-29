@@ -1,13 +1,14 @@
 import { Timestamp } from '@firebase/firestore-types';
-import { Equipment } from './equipment';
+import { Equipment, Weapon } from './equipment';
 import { CharacterId } from './idtypes';
-import { SkillType } from './skill';
+import { CharacterSkill, SkillType } from './skill';
+import { Attribute, AttributeName } from './attribute';
 
 export type RollState = 'requested' | 'rolled';
 
 export interface RollMetadata {
   state: RollState;
-  messageId: string;
+  messageId?: string;
   roller: CharacterId;
   at: Date | Timestamp;
   archive: boolean;
@@ -33,7 +34,6 @@ export interface Defense extends BasicRoll {
 export interface Health extends BasicRoll {
   type: 'health';
   target: number;
-  attribute: string;
 }
 
 export interface Noncombat extends BasicRoll {
@@ -48,18 +48,21 @@ export interface Attack extends BasicRoll {
   target?: number;
   initiative: number;
   damage: number;
+  skills: string[];
 }
 
 export interface BasicRequest {
   state: 'requested';
 }
 
-export interface BasicComplete {
+export interface BasicResult {
   state: 'rolled';
   success?: boolean;
   result: number;
   effort: number;
   critical: boolean;
+  attribute: AttributeName;
+  skill: CharacterSkill;
 }
 
 export type InitiativeRequest = Initiative & BasicRequest & RollMetadata;
@@ -68,11 +71,11 @@ export type AttackRequest = Attack & BasicRequest & RollMetadata;
 export type NoncombatRequest = Noncombat & BasicRequest & RollMetadata;
 export type HealthRequest = Health & BasicRequest & RollMetadata;
 
-export type InitiativeComplete = Initiative & BasicComplete & RollMetadata;
-export type DefenseComplete = Defense & BasicComplete & RollMetadata;
-export type AttackComplete = Attack & BasicComplete & RollMetadata;
-export type NoncombatComplete = Noncombat & BasicComplete & RollMetadata;
-export type HealthComplete = Health & BasicComplete & RollMetadata;
+export type InitiativeResult = Initiative & BasicResult & RollMetadata;
+export type DefenseResult = Defense & BasicResult & RollMetadata;
+export type AttackResult = Attack & BasicResult & RollMetadata;
+export type NoncombatResult = Noncombat & BasicResult & RollMetadata;
+export type HealthResult = Health & BasicResult & RollMetadata;
 
 export type RollRequest =
   | InitiativeRequest
@@ -81,9 +84,9 @@ export type RollRequest =
   | NoncombatRequest
   | HealthRequest;
 
-export type RollComplete =
-  | InitiativeComplete
-  | DefenseComplete
-  | AttackComplete
-  | NoncombatComplete
-  | HealthComplete;
+export type RollResult =
+  | InitiativeResult
+  | DefenseResult
+  | AttackResult
+  | NoncombatResult
+  | HealthResult;
