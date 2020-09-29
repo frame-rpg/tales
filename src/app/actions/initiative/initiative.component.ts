@@ -14,6 +14,6 @@ export class InitiativeComponent {
   constructor(public matDialogRef: MatDialogRef<InitiativeComponent>) {}
 
   ok() {
-    this.matDialogRef.close({ modifier: parseInt(this.assets.value, 10) });
+    this.matDialogRef.close({ assets: parseInt(this.assets.value, 10) });
   }
 }

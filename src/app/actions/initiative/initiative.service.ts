@@ -18,7 +18,6 @@ export class InitiativeService {
   constructor(
     private dialogService: MatDialog,
     private messageService: MessageService,
-    private firestore: AngularFirestore,
     private characterService: CharacterService
   ) {}
 
@@ -41,21 +40,17 @@ export class InitiativeService {
             );
           } else {
             await this.characterService.setInitiative(character, 0);
-            const rollRequest: Omit<RollRequest, 'messageId'> = {
+            await this.messageService.send({
               messageType: 'rollRequest',
               type: 'initiative',
               at: new Date(),
               description: 'Initiative Check',
-              assets: 0,
+              assets: result.assets || 0,
               edge: 0,
               state: 'new',
               from: idPluck(campaignId),
               to: idPluck(character),
-            };
-            if (result.modifier) {
-              rollRequest.assets = result.modifier;
-            }
-            await this.messageService.send(rollRequest);
+            });
           }
         })
       );
