@@ -59,7 +59,7 @@ export interface BasicRequest {
 export interface BasicResult {
   state: 'rolled';
   success?: boolean;
-  result: number;
+  roll: number;
   effort: number;
   critical: boolean;
   attribute: AttributeName;
