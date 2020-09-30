@@ -12,7 +12,7 @@ import {
   countEdge,
   countInitiative,
 } from 'src/app/data/modifiers';
-import { RollRequest } from 'types/roll';
+import { RequestTemplate, RollRequest } from 'types/roll';
 
 export interface RequestDialogData {
   character?: SkilledCharacter;
@@ -96,18 +96,18 @@ function getDefault(field: string, weapon?: Weapon) {
   templateUrl: './request.component.html',
   styleUrls: ['./request.component.scss'],
 })
-export class RequestComponent<R extends RollRequest> {
+export class RequestComponent {
   req: FormGroup;
   has: Has;
 
   constructor(
-    public matDialogRef: MatDialogRef<RequestComponent<R>, Partial<R>>,
+    public matDialogRef: MatDialogRef<RequestComponent, RequestTemplate>,
     @Inject(MAT_DIALOG_DATA) public request: RequestDialogData
   ) {
     this.has = typesHave[this.request.type];
     this.req = new FormGroup(
       Object.entries(possibleFormFields)
-        .filter(([, present]) => present)
+        .filter(([id]) => this.has[id])
         .reduce(
           (acc, [id, field]) => ({
             ...acc,
@@ -116,11 +116,12 @@ export class RequestComponent<R extends RollRequest> {
           {}
         )
     );
+    console.log(this.req);
   }
 
   ok() {
     const result = Object.entries(possibleFormFields)
-      .filter(([, present]) => present)
+      .filter(([id]) => this.has[id])
       .reduce(
         (acc, [id, field]) => ({
           ...acc,
@@ -129,9 +130,10 @@ export class RequestComponent<R extends RollRequest> {
               ? parseInt(this.req.get(id).value, 10)
               : this.req.get(id).value,
         }),
-        {}
-      ) as R;
-
-    this.matDialogRef.close(result);
+        {
+          type: this.request.type,
+        }
+      );
+    this.matDialogRef.close(result as RequestTemplate);
   }
 }

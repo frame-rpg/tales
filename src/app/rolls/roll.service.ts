@@ -1,7 +1,14 @@
 import { CampaignId, CharacterId } from 'types/idtypes';
 import { Character, SkilledCharacter } from 'types/character';
-import { Initiative, RollMetadata, RollRequest, RollResult } from 'types/roll';
+import {
+  Initiative,
+  RequestTemplate,
+  RollMetadata,
+  RollRequest,
+  RollResult,
+} from 'types/roll';
 import { InjectedData, ResolveComponent } from './resolve/resolve.component';
+import { Observable, of } from 'rxjs';
 import {
   RequestComponent,
   RequestDialogData,
@@ -12,7 +19,6 @@ import { CharacterService } from '../data/character.service';
 import { FirebaseApp } from '@angular/fire';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
 import { SkillType } from 'types/skill';
 import { Weapon } from 'types/equipment';
 import { WoundService } from '../actions/wound/wound.service';
@@ -102,38 +108,49 @@ export class RollService {
 
   async request(data: RequestData) {
     const partialRequest = await this.dialogService
-      .open<
-        RequestComponent<RollRequest>,
-        RequestDialogData,
-        Partial<RollRequest>
-      >(RequestComponent, {
-        data,
-      })
+      .open<RequestComponent, RequestDialogData, RequestTemplate>(
+        RequestComponent,
+        {
+          data,
+        }
+      )
       .afterClosed()
       .pipe(take(1))
       .toPromise();
+
     if (!partialRequest) {
       return;
     }
+
     const meta: Partial<RollMetadata> = {
       at: new Date(),
       archive: false,
       state: 'requested',
     };
     const req = { ...partialRequest, ...meta } as RollRequest;
+    if (data.skills) {
+      req.skills = data.skills;
+    }
     if (data.type === 'initiative') {
       await this.fireInitiativeRequests(
         data.characters,
         partialRequest as Initiative
       );
     } else if (data.self) {
-      await this.resolve({ ...req, character: data.character }, data.character);
+      await this.resolve(
+        { ...req, character: pluckCharacterId(data.character) },
+        data.character
+      );
     } else {
-      await this.sendRequest({ ...req, character: data.character });
+      await this.sendRequest({
+        ...req,
+        character: pluckCharacterId(data.character),
+      });
     }
   }
 
   async resolve(roll: RollRequest, character: SkilledCharacter) {
+    console.log(roll);
     const result = await this.dialogService
       .open<ResolveComponent, InjectedData, RollResult>(ResolveComponent, {
         data: { roll, character },
@@ -141,6 +158,21 @@ export class RollService {
       .afterClosed()
       .pipe(take(1))
       .toPromise();
+
+    if (!result) {
+      return;
+    }
+    console.log(result);
+    if (result.rollId) {
+      await this.firestore
+        .doc(`/campaigns/${result.character.campaignId}/rolls/${result.rollId}`)
+        .update(result);
+    } else {
+      console.log(`/campaigns/${result.character.campaignId}/rolls`);
+      await this.firestore
+        .collection(`/campaigns/${result.character.campaignId}/rolls`)
+        .add(result);
+    }
 
     const patch: any = {};
     if (roll.type === 'initiative') {
@@ -164,16 +196,6 @@ export class RollService {
     }
     await this.characterService.update(character, patch);
 
-    if (result.rollId) {
-      await this.firestore
-        .doc(`/campaigns/${result.character.campaignId}/rolls/${result.rollId}`)
-        .update(result);
-    } else {
-      await this.firestore
-        .collection(`/campaigns/${result.character.campaignId}/rolls}`)
-        .add(result);
-    }
-
     if (roll.type === 'defense' && !result.success) {
       await this.sendRequest({
         at: new Date(),
@@ -184,11 +206,7 @@ export class RollService {
         state: 'requested',
         items: [],
         archive: false,
-        character: {
-          type: 'character',
-          characterId: character.characterId,
-          campaignId: character.campaignId,
-        },
+        character: pluckCharacterId(character),
       });
     } else if (roll.type === 'health' && !result.success) {
       this.woundService.triggerWound(character);
@@ -212,21 +230,25 @@ export class RollService {
     campaign: CampaignId,
     characters: CharacterId[]
   ): Observable<RollRequest[]> {
-    return this.firestore
-      .collection<RollRequest>(
-        `/campaigns/${campaign.campaignId}/rolls`,
-        (query) =>
-          query
-            .where('archive', '==', false)
-            .where('state', '==', 'requested')
-            .where(
-              'character.characterId',
-              'in',
-              characters.map((character) => character.characterId)
-            )
-            .orderBy('at')
-      )
-      .valueChanges({ idField: 'rollId' });
+    if (characters && characters.length > 0) {
+      return this.firestore
+        .collection<RollRequest>(
+          `/campaigns/${campaign.campaignId}/rolls`,
+          (query) =>
+            query
+              .where('archive', '==', false)
+              .where('state', '==', 'requested')
+              .where(
+                'character.characterId',
+                'in',
+                characters.map((character) => character.characterId)
+              )
+              .orderBy('at')
+        )
+        .valueChanges({ idField: 'rollId' });
+    } else {
+      return of([]);
+    }
   }
 
   async fireInitiativeRequests(
@@ -250,14 +272,18 @@ export class RollService {
             at: new Date(),
             state: 'requested',
             archive: false,
-            character: {
-              type: 'character',
-              characterId: character.characterId,
-              campaignId: character.campaignId,
-            },
+            character: pluckCharacterId(character),
           });
         }
       })
     );
   }
+}
+
+function pluckCharacterId(c: CharacterId): CharacterId {
+  return {
+    type: 'character',
+    campaignId: c.campaignId,
+    characterId: c.characterId,
+  };
 }

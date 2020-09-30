@@ -56,8 +56,7 @@
         <mat-panel-title>Skills</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="skills">
-        <div *ngFor="let skill of (character | async)?.skills | sortBy:'name':'asc'"
-            class="skill">
+        <div *ngFor="let skill of skills | async" class="skill">
           <div class="skillInfo">
             <div>{{skill.name}}</div>
             <button mat-stroked-button class="skillLevel" color="primary"

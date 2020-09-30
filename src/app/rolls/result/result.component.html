@@ -1,6 +1,6 @@
 <div class="result">
   <div class="description">
-    {{ (character | async).name }} made a {{ result.type }} check using
+    {{ (character | async)?.name }} made a {{ result.type }} check using
     {{ result.skill.name }} with {{ result.attribute }}.
   </div>
   <div class="outcome" *ngIf="result.target; else open">

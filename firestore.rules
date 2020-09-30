@@ -7,22 +7,6 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    function getRole(rsc) {
-      return rsc.data.acl[request.auth.uid];
-    }
-
-    function isOneOfRoles(rsc, array) {
-      return isSignedIn() && getRole(rsc) != null && (getRole(rsc) in array);
-    }
-
-    function writeAclZ(rsc) {
-      return isOneOfRoles(rsc, ['player', 'gm']);
-    }
-
-    function readAclZ(rsc) {
-      return isOneOfRoles(rsc, ['viewer', 'player', 'gm']);
-    }
-
     match /pages/{pageType} {
       allow read: if false
       allow write: if false
@@ -34,44 +18,42 @@ service cloud.firestore {
 
     match /campaigns/{campaignId} {
 
-      function campaignDoc() {
-        return get(/databases/$(database)/documents/campaigns/$(campaignId));
-      }
-      function campaignReader() {
-        return readAclZ(campaignDoc());
-      }
-      function campaignWriter() {
-        return writeAclZ(campaignDoc());
+      function gm() {
+        return get(/databases/$(database)/documents/campaigns/$(campaignId)).data.acl[request.auth.uid] == 'gm';
       }
 
-      allow read: if readAclZ(resource)
-      allow update: if writeAclZ(resource)
+      function atLeastPlayer() {
+        return get(/databases/$(database)/documents/campaigns/$(campaignId)).data.acl[request.auth.uid] in ['gm', 'player'];
+      }
+
+      function observer() {
+        return get(/databases/$(database)/documents/campaigns/$(campaignId)).data.acl[request.auth.uid] in ['gm', 'player', 'viewer'];
+      }
+
+      allow read: if resource.data.acl[request.auth.uid] in ['gm', 'player', 'viewer']
+      allow update: if resource.data.acl[request.auth.uid] in ['gm']
       allow create: if false
       allow delete: if false
       match /rolls/{rollId} {
-        allow read: if campaignReader()
-        allow create: if campaignWriter()
-        allow update: if campaignWriter()
-        allow delete: if campaignWriter()
+        allow read: if observer()
+        allow list: if observer()
+        allow create: if atLeastPlayer()
+        allow update: if atLeastPlayer()
+        allow delete: if false
       }
       match /messages/{messageId} {
-        allow read: if campaignReader()
-        allow create: if campaignReader()
-        allow update: if campaignWriter()
-        allow delete: if campaignWriter()
+        allow read: if observer()
+        allow list: if observer()
+        allow create: if atLeastPlayer()
+        allow update: if atLeastPlayer()
+        allow delete: if false
       }
       match /characters/{characterId} {
-        function characterDoc() {
-          return get(/databases/$(debug(database))/documents/campaigns/$(campaignId)/characters/$(characterId));
-        }
-        allow read: if readAclZ(characterDoc())
-        allow list: if campaignReader()
-        allow update: if writeAclZ(characterDoc())
+        allow read: if observer()
+        allow list: if observer()
+        allow update: if debug(gm()) || debug(request.resource.data).acl[request.auth.uid] in ['gm', 'player']
         allow create: if false
         allow delete: if false
-        match /messages/{messageId} {
-          allow read, write: if writeAclZ(characterDoc())
-        }
       }
     }
 

@@ -57,6 +57,19 @@ export interface BasicRequest {
   state: 'requested';
 }
 
+export type InitiativeTemplate = Initiative & BasicRequest;
+export type DefenseTemplate = Defense & BasicRequest;
+export type AttackTemplate = Attack & BasicRequest;
+export type NoncombatTemplate = Noncombat & BasicRequest;
+export type HealthTemplate = Health & BasicRequest;
+
+export type RequestTemplate =
+  | InitiativeTemplate
+  | DefenseTemplate
+  | AttackTemplate
+  | NoncombatTemplate
+  | HealthTemplate;
+
 export interface BasicResult {
   state: 'rolled';
   success?: boolean;

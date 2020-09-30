@@ -18,6 +18,7 @@ import {
   scan,
   startWith,
   switchMap,
+  take,
   takeUntil,
   tap,
 } from 'rxjs/operators';
@@ -37,6 +38,7 @@ import { RollService } from 'src/app/rolls/roll.service';
 export class CardComponent implements OnChanges, OnInit, OnDestroy {
   @Input('character') private _character: CharacterId;
   character: Observable<Character>;
+  skills: Observable<CharacterSkill[]>;
   characterIdSubject: BehaviorSubject<CharacterId>;
   locked: Observable<boolean>;
   gmOrPlayer: Observable<boolean>;
@@ -91,6 +93,15 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
       map((a) => a === 'gm' || a === 'player')
     );
 
+    this.skills = this.character.pipe(
+      filter((character) => character.subtype !== 'nonplayer'),
+      map((character: SkilledCharacter) =>
+        character.skills
+          .filter((skill) => skill.type === 'noncombat')
+          .sort((a, b) => a.name.localeCompare(b.name))
+      )
+    );
+
     this.locked = this.action.pipe(
       filter(({ action }) => action === 'lock'),
       scan<any, boolean>((acc) => !acc, true),
@@ -101,14 +112,19 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
       this.character.pipe(filter((c) => c.subtype !== 'nonplayer')),
       this.relationship.pipe(filter((r) => ['player', 'gm'].includes(r))),
       this.action.pipe(filter((a) => a.action === 'skill')),
-    ]).subscribe(([character, relationship, { skill }]) => {
-      this.rollService.request({
-        character: character as SkilledCharacter,
-        skills: [skill],
-        type: 'noncombat',
-        self: relationship === 'player',
+    ])
+      .pipe(
+        takeUntil(this.destroying),
+        distinctUntilChanged((a, b) => a[2].event === b[2].event)
+      )
+      .subscribe(([character, relationship, { skill }]) => {
+        this.rollService.request({
+          character: character as SkilledCharacter,
+          skills: [skill],
+          type: 'noncombat',
+          self: relationship === 'player',
+        });
       });
-    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
