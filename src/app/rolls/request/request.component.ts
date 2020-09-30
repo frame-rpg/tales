@@ -84,7 +84,11 @@ const possibleFormFields = {
 };
 
 function getDefault(field: string, weapon?: Weapon) {
-  return weapon[field] || possibleFormFields[field].default;
+  if (weapon && weapon[field]) {
+    return weapon[field];
+  } else {
+    return possibleFormFields[field].default;
+  }
 }
 
 @Component({

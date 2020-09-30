@@ -48,6 +48,12 @@ service cloud.firestore {
       allow update: if writeAclZ(resource)
       allow create: if false
       allow delete: if false
+      match /rolls/{rollId} {
+        allow read: if campaignReader()
+        allow create: if campaignWriter()
+        allow update: if campaignWriter()
+        allow delete: if campaignWriter()
+      }
       match /messages/{messageId} {
         allow read: if campaignReader()
         allow create: if campaignReader()

@@ -8,7 +8,7 @@ export type RollState = 'requested' | 'rolled';
 
 export interface RollMetadata {
   state: RollState;
-  messageId?: string;
+  rollId?: string;
   character: CharacterId;
   at: Date | Timestamp;
   archive: boolean;
@@ -24,6 +24,7 @@ export interface BasicRoll {
 
 export interface Initiative extends BasicRoll {
   type: 'initiative';
+  target: 0;
 }
 
 export interface Defense extends BasicRoll {
@@ -59,7 +60,7 @@ export interface BasicRequest {
 export interface BasicResult {
   state: 'rolled';
   success?: boolean;
-  roll: number;
+  result: number;
   effort: number;
   critical: boolean;
   attribute: AttributeName;

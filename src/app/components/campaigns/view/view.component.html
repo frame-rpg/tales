@@ -18,7 +18,7 @@
         Reset
       </button>
     </div>
-    <div class="requiredRoll" *ngFor="let roll of rolls | async">
-    </div>
+    <framesystem-roll-result *ngFor="let roll of rolls | async" [result]="roll">
+    </framesystem-roll-result>
   </div>
 </div>

@@ -2,6 +2,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { Character, SkilledCharacter } from 'types/character';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Roll, RollRequest } from 'types/roll';
 import {
   distinctUntilChanged,
   filter,
@@ -16,8 +17,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Campaign } from 'types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
 import { CharacterService } from 'src/app/data/character.service';
-import { InitiativeService } from 'src/app/actions/initiative/initiative.service';
-import { Roll } from 'types/roll';
 import { RollService } from 'src/app/rolls/roll.service';
 
 type ActionType = 'initiative' | 'noncombat' | 'reset' | 'rest';
@@ -36,6 +35,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   campaign: Observable<Campaign>;
   characters: Observable<Character[]>;
   rolls: Observable<Roll[]>;
+  requests: Observable<RollRequest[]>;
   gm: Observable<boolean>;
   destroyingSubject = new BehaviorSubject<boolean>(false);
   destroying = this.destroyingSubject
@@ -50,7 +50,6 @@ export class ViewComponent implements OnInit, OnDestroy {
   constructor(
     private campaignService: CampaignService,
     private characterService: CharacterService,
-    private initiativeService: InitiativeService,
     private rollService: RollService,
     private route: ActivatedRoute,
     private auth: AngularFireAuth
@@ -78,9 +77,47 @@ export class ViewComponent implements OnInit, OnDestroy {
       publishReplay(1),
       refCount()
     );
+
     this.gm = combineLatest([this.campaign, this.auth.user]).pipe(
       map(([{ acl }, { uid }]) => acl[uid] === 'gm')
     );
+
+    this.rolls = this.campaign.pipe(
+      switchMap((campaign) => this.rollService.results(campaign))
+    );
+
+    this.requests = combineLatest([
+      this.campaign,
+      this.characters,
+      this.auth.user,
+    ]).pipe(
+      map(([campaign, characters, { uid }]) => ({
+        campaign,
+        characters:
+          campaign.acl[uid] === 'gm'
+            ? characters
+            : characters.filter((character) => character.acl[uid] === 'player'),
+      })),
+      switchMap(({ campaign, characters }) =>
+        this.rollService.requests(campaign, characters)
+      ),
+      publishReplay(1),
+      refCount()
+    );
+
+    combineLatest([this.requests, this.characters])
+      .pipe(takeUntil(this.destroying))
+      .subscribe(([requests, characters]) => {
+        if (requests && requests.length > 0) {
+          this.rollService.resolve(
+            requests[0],
+            characters.find(
+              (character) =>
+                character.characterId === requests[0].character.characterId
+            ) as SkilledCharacter
+          );
+        }
+      });
 
     const actionStream = combineLatest([
       this.campaign,
@@ -90,8 +127,8 @@ export class ViewComponent implements OnInit, OnDestroy {
 
     actionStream
       .pipe(filter(([, , event]) => event.type === 'initiative'))
-      .subscribe(([campaign, characters]) =>
-        this.initiativeService.trigger(characters, campaign)
+      .subscribe(([, characters]) =>
+        this.rollService.request({ type: 'initiative', characters })
       );
     actionStream
       .pipe(filter(([, , event]) => event.type === 'rest'))

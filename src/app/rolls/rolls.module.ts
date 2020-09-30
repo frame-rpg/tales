@@ -17,5 +17,6 @@ import { ResultComponent } from './result/result.component';
     ReactiveFormsModule,
     PipesModule,
   ],
+  exports: [ResultComponent],
 })
 export class RollsModule {}

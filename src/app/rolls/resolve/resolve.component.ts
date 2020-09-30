@@ -22,9 +22,9 @@ export interface InjectedData {
 }
 
 @Component({
-  selector: 'roll-dialog',
-  templateUrl: './roll.component.html',
-  styleUrls: ['./roll.component.scss'],
+  selector: 'framesystem-resolve-roll',
+  templateUrl: './resolve.component.html',
+  styleUrls: ['./resolve.component.scss'],
 })
 export class ResolveComponent implements OnDestroy {
   rollState: FormGroup;

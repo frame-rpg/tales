@@ -2,15 +2,14 @@ import { ActionsModule } from 'src/app/actions/actions.module';
 import { CharactersModule } from '../characters/characters.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { GmviewComponent } from './gmview/gmview.component';
 import { MaterialModule } from '../../core/material/material.module';
-import { MessageComponent } from './message/message.component';
 import { NgModule } from '@angular/core';
 import { PipesModule } from 'src/app/core/pipes/pipes.module';
+import { RollsModule } from 'src/app/rolls/rolls.module';
 import { ViewComponent } from './view/view.component';
 
 @NgModule({
-  declarations: [GmviewComponent, MessageComponent, ViewComponent],
+  declarations: [ViewComponent],
   imports: [
     CharactersModule,
     CommonModule,
@@ -18,6 +17,7 @@ import { ViewComponent } from './view/view.component';
     MaterialModule,
     PipesModule,
     ActionsModule,
+    RollsModule,
   ],
   exports: [],
 })
