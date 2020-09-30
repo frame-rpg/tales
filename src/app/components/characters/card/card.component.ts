@@ -27,7 +27,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { CharacterId } from 'types/idtypes';
 import { CharacterService } from 'src/app/data/character.service';
 import { CharacterSkill } from 'types/skill';
-import { NoncombatService } from 'src/app/actions/noncombat/noncombat.service';
+import { RollService } from 'src/app/rolls/roll.service';
 
 @Component({
   selector: 'character-card',
@@ -61,7 +61,7 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
   };
 
   constructor(
-    private noncombatService: NoncombatService,
+    private rollService: RollService,
     private characterService: CharacterService,
     private auth: AngularFireAuth
   ) {}
@@ -99,22 +99,15 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
 
     combineLatest([
       this.character.pipe(filter((c) => c.subtype !== 'nonplayer')),
-      this.relationship,
+      this.relationship.pipe(filter((r) => ['player', 'gm'].includes(r))),
       this.action.pipe(filter((a) => a.action === 'skill')),
     ]).subscribe(([character, relationship, { skill }]) => {
-      if (relationship === 'gm') {
-        this.noncombatService.trigger(
-          character as SkilledCharacter,
-          skill,
-          false
-        );
-      } else if (relationship === 'player') {
-        this.noncombatService.trigger(
-          character as SkilledCharacter,
-          skill,
-          true
-        );
-      }
+      this.rollService.request({
+        character: character as SkilledCharacter,
+        skills: [skill],
+        type: 'noncombat',
+        self: relationship === 'player',
+      });
     });
   }
 

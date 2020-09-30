@@ -1,26 +1,14 @@
-import {
-  AttackRequest,
-  AttackResult,
-  DefenseRequest,
-  DefenseResult,
-  HealthRequest,
-  HealthResult,
-  InitiativeRequest,
-  InitiativeResult,
-  NoncombatRequest,
-  NoncombatResult,
-  RollMetadata,
-  RollRequest,
-  RollResult,
-} from 'types/roll';
 import { InjectedData, ResolveComponent } from './resolve/resolve.component';
 import {
   RequestComponent,
   RequestDialogData,
 } from './request/request.component';
+import { RollMetadata, RollRequest, RollResult } from 'types/roll';
 
 import { AngularFirestore } from '@angular/fire/firestore';
+import { CampaignId } from 'types/idtypes';
 import { CharacterService } from '../data/character.service';
+import { FirebaseApp } from '@angular/fire';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SkilledCharacter } from 'types/character';
@@ -36,7 +24,8 @@ export class RollService {
     private dialogService: MatDialog,
     private firestore: AngularFirestore,
     private characterService: CharacterService,
-    private woundService: WoundService
+    private woundService: WoundService,
+    private db: FirebaseApp
   ) {}
 
   async sendRequest(roll: RollRequest) {
@@ -45,14 +34,31 @@ export class RollService {
       .add(roll);
   }
 
-  async request<R extends RollRequest>(data: {
-    character: SkilledCharacter;
-    weapon?: Weapon;
-    type: R['type'];
-    self: true;
-  });
+  async scene(campaign: CampaignId) {
+    const actives = await this.firestore
+      .collection(`/campaigns/${campaign.campaignId}/rolls`, (query) =>
+        query.where('archive', '==', false).limit(400)
+      )
+      .get()
+      .pipe(take(1))
+      .toPromise();
+    await this.db
+      .firestore()
+      .runTransaction((txn) =>
+        Promise.all(
+          actives.docs.map((doc) => txn.update(doc.ref, { archive: true }))
+        )
+      );
+    if (actives.docs.length < 400) {
+      return;
+    } else {
+      await this.scene(campaign);
+    }
+  }
+
   async request<R extends RollRequest>(data: {
     character?: SkilledCharacter;
+    skills?: string[];
     weapon?: Weapon;
     type: R['type'];
     self: boolean;

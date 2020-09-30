@@ -1,8 +1,7 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { Character, SkilledCharacter } from 'types/character';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Message, RollRequest } from 'types/message';
-import { Observable, Subject, combineLatest } from 'rxjs';
 import {
   distinctUntilChanged,
   filter,
@@ -14,14 +13,12 @@ import {
 } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AttackService } from 'src/app/actions/attack/attack.service';
 import { Campaign } from 'types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
-import { CharacterId } from 'types/idtypes';
 import { CharacterService } from 'src/app/data/character.service';
 import { InitiativeService } from 'src/app/actions/initiative/initiative.service';
-import { MessageService } from 'src/app/data/message.service';
-import { mapById } from 'src/app/data/rxutil';
+import { Roll } from 'types/roll';
+import { RollService } from 'src/app/rolls/roll.service';
 
 type ActionType = 'initiative' | 'noncombat' | 'reset' | 'rest';
 interface Action {
@@ -38,12 +35,9 @@ interface Action {
 export class ViewComponent implements OnInit, OnDestroy {
   campaign: Observable<Campaign>;
   characters: Observable<Character[]>;
-  mappedCharacters: Observable<Record<string, Character>>;
-  messages: Observable<Message[]>;
-  campaignMessages: Observable<Message[]>;
-  requiredRolls: Observable<RollRequest[]>;
+  rolls: Observable<Roll[]>;
   gm: Observable<boolean>;
-  destroyingSubject = new Subject<boolean>();
+  destroyingSubject = new BehaviorSubject<boolean>(false);
   destroying = this.destroyingSubject
     .asObservable()
     .pipe(filter((v) => v === true));
@@ -56,9 +50,8 @@ export class ViewComponent implements OnInit, OnDestroy {
   constructor(
     private campaignService: CampaignService,
     private characterService: CharacterService,
-    private messageService: MessageService,
-    private attackService: AttackService,
     private initiativeService: InitiativeService,
+    private rollService: RollService,
     private route: ActivatedRoute,
     private auth: AngularFireAuth
   ) {}
@@ -88,31 +81,6 @@ export class ViewComponent implements OnInit, OnDestroy {
     this.gm = combineLatest([this.campaign, this.auth.user]).pipe(
       map(([{ acl }, { uid }]) => acl[uid] === 'gm')
     );
-    this.mappedCharacters = this.characters.pipe(mapById('characterId'));
-    this.messages = combineLatest([this.characters, this.campaign]).pipe(
-      switchMap(([characters, campaign]) =>
-        this.messageService.fetchAll([
-          campaign,
-          ...(characters as CharacterId[]),
-        ])
-      ),
-      publishReplay(1),
-      refCount()
-    );
-    this.requiredRolls = combineLatest([this.characters, this.messages]).pipe(
-      map(([characters, messages]) =>
-        messages.filter(
-          (m) =>
-            m.messageType === 'rollRequest' &&
-            m.state === 'new' &&
-            m.to.type === 'character' &&
-            characters.map((c) => c.characterId).includes(m.to.characterId)
-        )
-      )
-    ) as Observable<RollRequest[]>;
-    this.campaignMessages = this.messages.pipe(
-      map((messages) => messages.filter((m) => m.to.type === 'campaign'))
-    );
 
     const actionStream = combineLatest([
       this.campaign,
@@ -129,7 +97,7 @@ export class ViewComponent implements OnInit, OnDestroy {
       .pipe(filter(([, , event]) => event.type === 'rest'))
       .subscribe(([campaign, characters]) => {
         this.characterService.rest(characters);
-        this.messageService.scene(campaign, characters);
+        this.rollService.scene(campaign);
       });
     actionStream
       .pipe(filter(([, , event]) => event.type === 'reset'))

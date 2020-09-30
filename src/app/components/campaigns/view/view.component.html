@@ -18,13 +18,7 @@
         Reset
       </button>
     </div>
-    <div class="requiredRoll" *ngFor="let roll of requiredRolls | async">
-      <tales-roll-request [roll]="roll"
-          [character]="(mappedCharacters | async)[roll.to.characterId]">
-      </tales-roll-request>
+    <div class="requiredRoll" *ngFor="let roll of rolls | async">
     </div>
-    <message *ngFor="let message of campaignMessages | async"
-        [message]="message">
-    </message>
   </div>
 </div>

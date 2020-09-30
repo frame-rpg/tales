@@ -7,17 +7,9 @@ import { InitiativeComponent } from './initiative/initiative.component';
 import { MaterialModule } from '../core/material/material.module';
 import { NgModule } from '@angular/core';
 import { PipesModule } from '../core/pipes/pipes.module';
-import { RequestComponent } from './roll/request.component';
-import { RollComponent } from './roll/roll.component';
 
 @NgModule({
-  declarations: [
-    AttackComponent,
-    InitiativeComponent,
-    RollComponent,
-    AdjustComponent,
-    RequestComponent,
-  ],
+  declarations: [AttackComponent, InitiativeComponent, AdjustComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -25,6 +17,6 @@ import { RollComponent } from './roll/roll.component';
     ReactiveFormsModule,
     PipesModule,
   ],
-  exports: [AdjustComponent, RequestComponent],
+  exports: [AdjustComponent],
 })
 export class ActionsModule {}

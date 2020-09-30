@@ -64,19 +64,6 @@ export class CharacterService {
     );
   }
 
-  async triggerWound(character: Character) {
-    const result = await this.dialogService
-      .open(HealthComponent, { data: character, disableClose: true })
-      .afterClosed()
-      .pipe(take(1))
-      .toPromise();
-    const patch = {};
-    patch[`attributes.${result.attribute}.wound`] = true;
-    patch[`attributes.${result.attribute}.current`] = 0;
-    await this.characterService.update(character, patch);
-    return result.attribute;
-  }
-
   private containerAddress(id: UserId | CampaignId): string {
     if (id.type === 'user') {
       return `/users/${id.userId}/characters`;
