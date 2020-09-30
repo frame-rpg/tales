@@ -1,5 +1,6 @@
 import { FirebaseUIModule, firebase, firebaseui } from 'firebaseui-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 
 import { ActionsModule } from './actions/actions.module';
 import { AppComponent } from './app.component';
@@ -9,6 +10,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { ComponentsModule } from './components/components.module';
 import { CoreModule } from './core/core.module';
+import { FramesystemRenderer } from './staticRenderer';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MaterialModule } from './core/material/material.module';
 import { NgModule } from '@angular/core';
@@ -47,6 +49,19 @@ const firebaseUiAuthConfig: any = {
     MaterialModule,
     ActionsModule,
     FirebaseUIModule.forRoot(firebaseUiAuthConfig),
+    MarkdownModule.forRoot({
+      markedOptions: {
+        provide: MarkedOptions,
+        useValue: {
+          renderer: new FramesystemRenderer(),
+          gfm: true,
+          breaks: false,
+          pedantic: false,
+          smartLists: true,
+          smartypants: false,
+        },
+      },
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

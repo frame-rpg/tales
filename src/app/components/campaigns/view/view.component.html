@@ -20,5 +20,10 @@
     </div>
     <framesystem-roll-result *ngFor="let roll of rolls | async" [result]="roll">
     </framesystem-roll-result>
+    <framesystem-chat-view *ngFor="let msg of chat | async" [msg]="msg">
+    </framesystem-chat-view>
+    <framesystem-chat-write *ngIf="campaign | async as campaignScalar"
+        class="chatCompose" [campaign]="campaignScalar" [user]="user | async">
+    </framesystem-chat-write>
   </div>
 </div>

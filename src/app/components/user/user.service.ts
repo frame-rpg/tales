@@ -27,7 +27,9 @@ export class UserService {
     return this.firestore
       .doc<User>(`/users/${id}`)
       .snapshotChanges()
-      .pipe(map((v) => ({ id: v.payload.id, ...v.payload.data() } as User)));
+      .pipe(
+        map((v) => ({ userId: v.payload.id, ...v.payload.data() } as User))
+      );
   }
 
   update(id: String, user: Partial<User>) {
@@ -43,7 +45,7 @@ export class UserService {
       .collection<User>(`/users`, (query) =>
         query.where(firestore.FieldPath.documentId(), 'in', users)
       )
-      .valueChanges({ idField: 'id' });
+      .valueChanges({ idField: 'userId' });
   }
 
   async setRollPreference(rollPreference: 'automatic' | 'manual' | 'ask') {

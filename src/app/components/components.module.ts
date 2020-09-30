@@ -1,5 +1,6 @@
 import { CampaignsModule } from './campaigns/campaigns.module';
 import { CharactersModule } from './characters/characters.module';
+import { ChatModule } from './chat/chat.module';
 import { CommonModule } from '@angular/common';
 import { HomeModule } from './home/home.module';
 import { NgModule } from '@angular/core';
@@ -16,6 +17,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
     CampaignsModule,
     HomeModule,
     PagesModule,
+    ChatModule,
     UserModule,
   ],
 })

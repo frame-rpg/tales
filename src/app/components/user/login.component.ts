@@ -40,7 +40,7 @@ export class LoginComponent implements AfterViewInit, OnDestroy {
     ])
       .pipe(takeUntil(this.destroying))
       .subscribe(async ([result, params]) => {
-        // await this.userService.postLogin();
+        await this.userService.postLogin();
         this.snackBar.open('Successfully logged in.');
         if (params.get('after')) {
           this.router.navigate(['home', params.get('after')]);

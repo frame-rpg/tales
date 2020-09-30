@@ -2,9 +2,7 @@
   "pages": {
     "rules": {
       "meta": {
-        "authors": [
-          "eric"
-        ]
+        "authors": ["eric"]
       },
       "content": [
         {
@@ -21,18 +19,15 @@
     }
   },
   "campaigns": {
-    "685mwhwCnAtrfx0YH0lq": {
+    "ou": {
       "campaign": {
-        "campaignId": "685mwhwCnAtrfx0YH0lq",
-        "name": "Tales of Fantasy and Fighting",
+        "campaignId": "ou",
+        "name": "Underground Chaos, Fungoids, and SCIENCE!",
         "skills": [
           {
             "name": "Command Animal",
             "category": "adventuring",
-            "attributes": [
-              "conviction",
-              "focus"
-            ],
+            "attributes": ["conviction", "focus"],
             "description": "",
             "type": "noncombat",
             "skillId": "commandanimal"
@@ -41,9 +36,7 @@
             "type": "defense",
             "name": "Faith",
             "skillId": "faith",
-            "attributes": [
-              "conviction"
-            ],
+            "attributes": ["conviction"],
             "description": "",
             "category": "defense"
           },
@@ -51,18 +44,14 @@
             "type": "attack",
             "skillId": "righteousfury",
             "category": "melee",
-            "attributes": [
-              "conviction"
-            ],
+            "attributes": ["conviction"],
             "description": "",
             "name": "Righteous Fury"
           },
           {
             "type": "attack",
             "name": "Hip Shot",
-            "attributes": [
-              "conviction"
-            ],
+            "attributes": ["conviction"],
             "description": "",
             "skillId": "hipshot",
             "category": "ranged"
@@ -70,9 +59,7 @@
           {
             "category": "defense",
             "type": "defense",
-            "attributes": [
-              "focus"
-            ],
+            "attributes": ["focus"],
             "skillId": "combatprediction",
             "description": "",
             "name": "Combat Prediction"
@@ -80,9 +67,7 @@
           {
             "description": "",
             "type": "attack",
-            "attributes": [
-              "focus"
-            ],
+            "attributes": ["focus"],
             "category": "melee",
             "skillId": "combatinsight",
             "name": "Combat Insight"
@@ -92,15 +77,11 @@
             "description": "",
             "type": "attack",
             "category": "ranged",
-            "attributes": [
-              "focus"
-            ],
+            "attributes": ["focus"],
             "skillId": "sniper"
           },
           {
-            "attributes": [
-              "health"
-            ],
+            "attributes": ["health"],
             "category": "defense",
             "skillId": "health",
             "name": "Health Check",
@@ -112,9 +93,7 @@
             "description": "",
             "category": "initiative",
             "name": "Reflexes",
-            "attributes": [
-              "speed"
-            ],
+            "attributes": ["speed"],
             "type": "initiative"
           },
           {
@@ -123,25 +102,18 @@
             "skillId": "tactics",
             "category": "initiative",
             "name": "Tactics",
-            "attributes": [
-              "focus"
-            ]
+            "attributes": ["focus"]
           },
           {
             "category": "initiative",
             "type": "initiative",
             "skillId": "providence",
             "name": "Providence",
-            "attributes": [
-              "conviction"
-            ],
+            "attributes": ["conviction"],
             "description": ""
           },
           {
-            "attributes": [
-              "conviction",
-              "might"
-            ],
+            "attributes": ["conviction", "might"],
             "category": "defense",
             "description": "",
             "skillId": "intimidate",
@@ -154,14 +126,10 @@
             "skillId": "legerdemain",
             "type": "noncombat",
             "category": "movement",
-            "attributes": [
-              "speed"
-            ]
+            "attributes": ["speed"]
           },
           {
-            "attributes": [
-              "conviction"
-            ],
+            "attributes": ["conviction"],
             "name": "Lie",
             "category": "deception",
             "description": "",
@@ -169,10 +137,7 @@
             "skillId": "lie"
           },
           {
-            "attributes": [
-              "conviction",
-              "focus"
-            ],
+            "attributes": ["conviction", "focus"],
             "category": "adventuring",
             "name": "Medicine",
             "description": "",
@@ -182,17 +147,13 @@
           {
             "type": "defense",
             "name": "Toughness",
-            "attributes": [
-              "might"
-            ],
+            "attributes": ["might"],
             "category": "defense",
             "skillId": "toughness",
             "description": ""
           },
           {
-            "attributes": [
-              "might"
-            ],
+            "attributes": ["might"],
             "category": "melee",
             "type": "attack",
             "skillId": "bash",
@@ -205,27 +166,19 @@
             "type": "attack",
             "skillId": "hurl",
             "name": "Hurl",
-            "attributes": [
-              "might"
-            ]
+            "attributes": ["might"]
           },
           {
             "skillId": "movement",
             "name": "Movement",
             "type": "noncombat",
-            "attributes": [
-              "might",
-              "speed"
-            ],
+            "attributes": ["might", "speed"],
             "category": "movement",
             "description": ""
           },
           {
             "skillId": "otherknowledge",
-            "attributes": [
-              "focus",
-              "conviction"
-            ],
+            "attributes": ["focus", "conviction"],
             "category": "knowledge",
             "description": "",
             "type": "noncombat",
@@ -235,10 +188,7 @@
             "skillId": "perception",
             "type": "noncombat",
             "category": "adventuring",
-            "attributes": [
-              "conviction",
-              "focus"
-            ],
+            "attributes": ["conviction", "focus"],
             "description": "",
             "name": "Perception"
           },
@@ -247,28 +197,19 @@
             "description": "",
             "type": "noncombat",
             "skillId": "persuade",
-            "attributes": [
-              "focus"
-            ],
+            "attributes": ["focus"],
             "name": "Persuade"
           },
           {
             "description": "",
             "type": "noncombat",
-            "attributes": [
-              "speed",
-              "focus",
-              "conviction"
-            ],
+            "attributes": ["speed", "focus", "conviction"],
             "category": "adventuring",
             "skillId": "picklocks",
             "name": "Pick Locks"
           },
           {
-            "attributes": [
-              "speed",
-              "conviction"
-            ],
+            "attributes": ["speed", "conviction"],
             "type": "noncombat",
             "category": "movement",
             "description": "",
@@ -276,9 +217,7 @@
             "name": "Riding"
           },
           {
-            "attributes": [
-              "focus"
-            ],
+            "attributes": ["focus"],
             "skillId": "sensemotive",
             "name": "Sense Motive",
             "category": "deception",
@@ -286,10 +225,7 @@
             "type": "noncombat"
           },
           {
-            "attributes": [
-              "speed",
-              "focus"
-            ],
+            "attributes": ["speed", "focus"],
             "category": "movement",
             "description": "",
             "skillId": "sneaking",
@@ -302,15 +238,11 @@
             "description": "",
             "type": "defense",
             "category": "defense",
-            "attributes": [
-              "speed"
-            ]
+            "attributes": ["speed"]
           },
           {
             "skillId": "fencing",
-            "attributes": [
-              "speed"
-            ],
+            "attributes": ["speed"],
             "type": "attack",
             "category": "melee",
             "description": "",
@@ -322,27 +254,20 @@
             "category": "ranged",
             "type": "attack",
             "skillId": "quickdraw",
-            "attributes": [
-              "speed"
-            ]
+            "attributes": ["speed"]
           },
           {
             "skillId": "wildernesslore",
             "category": "adventuring",
             "name": "Wilderness Lore",
             "type": "noncombat",
-            "attributes": [
-              "conviction",
-              "focus"
-            ],
+            "attributes": ["conviction", "focus"],
             "description": ""
           },
           {
             "type": "noncombat",
             "name": "Arcane Knowledge",
-            "attributes": [
-              "conviction"
-            ],
+            "attributes": ["conviction"],
             "skillId": "arcaneknowledge",
             "category": "magic",
             "description": ""
@@ -351,9 +276,7 @@
             "category": "magic",
             "description": "",
             "name": "Arcane Tinker",
-            "attributes": [
-              "conviction"
-            ],
+            "attributes": ["conviction"],
             "type": "noncombat",
             "skillId": "arcanetinker"
           },
@@ -362,17 +285,11 @@
             "skillId": "alchemyknowledge",
             "category": "magic",
             "type": "noncombat",
-            "attributes": [
-              "conviction",
-              "focus"
-            ],
+            "attributes": ["conviction", "focus"],
             "name": "Alchemy Knowledge"
           },
           {
-            "attributes": [
-              "conviction",
-              "focus"
-            ],
+            "attributes": ["conviction", "focus"],
             "description": "",
             "type": "noncombat",
             "category": "magic",
@@ -381,9 +298,7 @@
           },
           {
             "name": "Divine Knowledge",
-            "attributes": [
-              "conviction"
-            ],
+            "attributes": ["conviction"],
             "skillId": "divineknowledge",
             "category": "magic",
             "type": "noncombat",
@@ -394,16 +309,11 @@
             "skillId": "divinetinker",
             "category": "magic",
             "name": "Divine Tinker",
-            "attributes": [
-              "conviction"
-            ],
+            "attributes": ["conviction"],
             "type": "noncombat"
           },
           {
-            "attributes": [
-              "conviction",
-              "focus"
-            ],
+            "attributes": ["conviction", "focus"],
             "name": "Psionic Knowledge",
             "description": "",
             "category": "magic",
@@ -413,42 +323,30 @@
           {
             "name": "Psionic Tinker",
             "type": "noncombat",
-            "attributes": [
-              "conviction",
-              "focus"
-            ],
+            "attributes": ["conviction", "focus"],
             "description": "",
             "skillId": "psionictinker",
             "category": "magic"
           },
           {
             "skillId": "traps",
-            "attributes": [
-              "conviction",
-              "focus"
-            ],
+            "attributes": ["conviction", "focus"],
             "category": "adventuring",
             "type": "noncombat",
             "description": "",
             "name": "Traps"
           }
         ],
-        "description": "also Underground Caverns and Chaos",
+        "description": "also some kind of quest or whatever",
         "acl": {
-          "CdRazs3fVkeTZzVlL2ohS5jt52k2": "read",
-          "RUEOViYBeHPUBClCUTQCmIhfrlT2": "read",
-          "E1gXs41G1mgiM441XXf14ac7ypb2": "admin",
-          "R6EOZRnWavTOUpEpYlUuqizJFdd2": "read",
-          "vh7vxSMo1lUSDVq7wM3akts9j7o1": "read",
-          "tsLxy7FyUqfuVc4prsMgUJLlwPe2": "read",
-          "UJxxtQzaOzWEFT2vtniCaDQdk2u2": "read"
+          "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
         },
         "type": "campaign"
       },
       "characters": [
         {
-          "characterId": "Hkf1RxKu9hmGcSprI5zf",
-          "campaignId": "685mwhwCnAtrfx0YH0lq",
+          "characterId": "kewulf",
+          "campaignId": "ou",
           "description": "",
           "initiative": 0,
           "subtype": "player",
@@ -464,10 +362,7 @@
               "kind": "ranged",
               "type": "weapon",
               "slot": "hand",
-              "skills": [
-                "hurling",
-                "hipshot"
-              ]
+              "skills": ["hurling", "hipshot"]
             },
             {
               "size": 1,
@@ -485,10 +380,7 @@
               "type": "armor"
             },
             {
-              "skills": [
-                "sniper",
-                "quickdraw"
-              ],
+              "skills": ["sniper", "quickdraw"],
               "equipped": true,
               "name": "Sonic Blast",
               "slot": "hand",
@@ -506,10 +398,7 @@
               "equipped": true,
               "slot": "hand",
               "effect": {},
-              "skills": [
-                "fencing",
-                "combatinsight"
-              ],
+              "skills": ["fencing", "combatinsight"],
               "type": "weapon",
               "name": "Dagger",
               "kind": "melee"
@@ -554,16 +443,11 @@
           },
           "type": "character",
           "acl": {
-            "tsLxy7FyUqfuVc4prsMgUJLlwPe2": "admin",
-            "b1": "admin",
-            "RUEOViYBeHPUBClCUTQCmIhfrlT2": "admin"
+            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
           },
           "skills": [
             {
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "type": "noncombat",
               "description": "",
               "name": "Command Animal",
@@ -578,14 +462,10 @@
               "category": "defense",
               "skillId": "faith",
               "description": "",
-              "attributes": [
-                "conviction"
-              ]
+              "attributes": ["conviction"]
             },
             {
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "name": "Righteous Fury",
               "skillId": "righteousfury",
               "level": "unskilled",
@@ -594,9 +474,7 @@
               "type": "attack"
             },
             {
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "skillId": "hipshot",
               "name": "Hip Shot",
               "type": "attack",
@@ -607,18 +485,14 @@
             {
               "category": "defense",
               "name": "Combat Prediction",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "type": "defense",
               "skillId": "combatprediction",
               "level": "unskilled",
               "description": ""
             },
             {
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "name": "Combat Insight",
               "type": "attack",
               "description": "",
@@ -631,9 +505,7 @@
               "description": "",
               "level": "unskilled",
               "skillId": "sniper",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "type": "attack",
               "name": "Sniper"
             },
@@ -641,9 +513,7 @@
               "type": "health",
               "description": "",
               "name": "Health Check",
-              "attributes": [
-                "health"
-              ],
+              "attributes": ["health"],
               "category": "defense",
               "level": "proficient",
               "skillId": "health"
@@ -654,9 +524,7 @@
               "category": "initiative",
               "skillId": "reflexes",
               "name": "Reflexes",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "description": ""
             },
             {
@@ -664,18 +532,14 @@
               "name": "Tactics",
               "level": "unskilled",
               "description": "",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "type": "initiative",
               "category": "initiative"
             },
             {
               "level": "unskilled",
               "name": "Providence",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "category": "initiative",
               "type": "initiative",
               "description": "",
@@ -685,10 +549,7 @@
               "type": "noncombat",
               "skillId": "intimidate",
               "category": "defense",
-              "attributes": [
-                "conviction",
-                "might"
-              ],
+              "attributes": ["conviction", "might"],
               "name": "Intimidate",
               "level": "unskilled",
               "description": ""
@@ -700,9 +561,7 @@
               "skillId": "legerdemain",
               "category": "movement",
               "level": "unskilled",
-              "attributes": [
-                "speed"
-              ]
+              "attributes": ["speed"]
             },
             {
               "name": "Lie",
@@ -711,16 +570,11 @@
               "type": "noncombat",
               "description": "",
               "skillId": "lie",
-              "attributes": [
-                "conviction"
-              ]
+              "attributes": ["conviction"]
             },
             {
               "level": "unskilled",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "skillId": "medicine",
               "description": "",
               "type": "noncombat",
@@ -728,9 +582,7 @@
               "category": "adventuring"
             },
             {
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "level": "unskilled",
               "name": "Toughness",
               "description": "",
@@ -741,9 +593,7 @@
             {
               "category": "melee",
               "skillId": "bash",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "name": "Bashing",
               "level": "unskilled",
               "type": "attack",
@@ -751,9 +601,7 @@
             },
             {
               "skillId": "hurl",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "level": "unskilled",
               "description": "",
               "name": "Hurl",
@@ -762,10 +610,7 @@
             },
             {
               "category": "movement",
-              "attributes": [
-                "might",
-                "speed"
-              ],
+              "attributes": ["might", "speed"],
               "name": "Movement",
               "skillId": "movement",
               "description": "",
@@ -775,10 +620,7 @@
             {
               "name": "Knowledge",
               "level": "unskilled",
-              "attributes": [
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["focus", "conviction"],
               "description": "",
               "skillId": "otherknowledge",
               "category": "knowledge",
@@ -787,10 +629,7 @@
             {
               "description": "",
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Perception",
               "level": "proficient",
               "category": "adventuring",
@@ -800,9 +639,7 @@
               "description": "",
               "level": "unskilled",
               "type": "noncombat",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "skillId": "persuade",
               "category": "deception",
               "name": "Persuade"
@@ -813,29 +650,20 @@
               "level": "unskilled",
               "name": "Pick Locks",
               "category": "adventuring",
-              "attributes": [
-                "speed",
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["speed", "focus", "conviction"],
               "type": "noncombat"
             },
             {
               "level": "unskilled",
               "skillId": "riding",
-              "attributes": [
-                "speed",
-                "conviction"
-              ],
+              "attributes": ["speed", "conviction"],
               "description": "",
               "category": "movement",
               "type": "noncombat",
               "name": "Riding"
             },
             {
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "level": "unskilled",
               "type": "noncombat",
               "description": "",
@@ -850,10 +678,7 @@
               "skillId": "sneaking",
               "category": "movement",
               "level": "proficient",
-              "attributes": [
-                "speed",
-                "focus"
-              ]
+              "attributes": ["speed", "focus"]
             },
             {
               "description": "",
@@ -861,16 +686,12 @@
               "name": "Dodge",
               "type": "defense",
               "skillId": "dodge",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "category": "defense"
             },
             {
               "skillId": "fencing",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "type": "attack",
               "category": "melee",
               "name": "Fencing",
@@ -883,18 +704,13 @@
               "name": "Quick Draw",
               "level": "unskilled",
               "skillId": "quickdraw",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "description": ""
             },
             {
               "description": "",
               "skillId": "wildernesslore",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "category": "adventuring",
               "level": "proficient",
               "name": "Wilderness Lore",
@@ -905,9 +721,7 @@
               "level": "unskilled",
               "category": "magic",
               "type": "noncombat",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "description": "",
               "name": "Arcane Knowledge"
             },
@@ -915,9 +729,7 @@
               "description": "",
               "type": "noncombat",
               "category": "magic",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "level": "inept",
               "skillId": "arcanetinker",
               "name": "Arcane Tinker"
@@ -929,16 +741,10 @@
               "description": "",
               "level": "unskilled",
               "name": "Alchemy Knowledge",
-              "attributes": [
-                "conviction",
-                "focus"
-              ]
+              "attributes": ["conviction", "focus"]
             },
             {
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Alchemy Tinker",
               "description": "",
               "category": "magic",
@@ -951,17 +757,13 @@
               "category": "magic",
               "name": "Divine Knowledge",
               "type": "noncombat",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "description": "",
               "skillId": "divineknowledge"
             },
             {
               "skillId": "divinetinker",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "description": "",
               "level": "unskilled",
               "type": "noncombat",
@@ -973,10 +775,7 @@
               "skillId": "psionicknowledge",
               "category": "magic",
               "level": "inept",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "description": "",
               "type": "noncombat"
             },
@@ -984,10 +783,7 @@
               "type": "noncombat",
               "category": "magic",
               "level": "inept",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Psionic Tinker",
               "skillId": "psionictinker",
               "description": ""
@@ -995,10 +791,7 @@
             {
               "name": "Traps",
               "skillId": "traps",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "level": "unskilled",
               "description": "",
               "type": "noncombat",
@@ -1008,15 +801,12 @@
           "name": "Kewulf Trannyth"
         },
         {
-          "characterId": "UU6VDSsfyU4guYXUuvm9",
-          "campaignId": "685mwhwCnAtrfx0YH0lq",
+          "characterId": "jordiz",
+          "campaignId": "ou",
           "skills": [
             {
               "level": "unskilled",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "skillId": "commandanimal",
               "type": "noncombat",
               "description": "",
@@ -1024,9 +814,7 @@
               "category": "adventuring"
             },
             {
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "level": "unskilled",
               "skillId": "faith",
               "name": "Faith",
@@ -1038,9 +826,7 @@
               "category": "melee",
               "skillId": "righteousfury",
               "name": "Righteous Fury",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "level": "unskilled",
               "description": "",
               "type": "attack"
@@ -1052,9 +838,7 @@
               "skillId": "hipshot",
               "name": "Hip Shot",
               "level": "unskilled",
-              "attributes": [
-                "conviction"
-              ]
+              "attributes": ["conviction"]
             },
             {
               "type": "defense",
@@ -1063,17 +847,13 @@
               "category": "defense",
               "level": "proficient",
               "name": "Combat Prediction",
-              "attributes": [
-                "focus"
-              ]
+              "attributes": ["focus"]
             },
             {
               "type": "attack",
               "category": "melee",
               "skillId": "combatinsight",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "description": "",
               "name": "Combat Insight",
               "level": "unskilled"
@@ -1082,9 +862,7 @@
               "level": "unskilled",
               "description": "",
               "category": "ranged",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "type": "attack",
               "skillId": "sniper",
               "name": "Sniper"
@@ -1095,16 +873,12 @@
               "category": "defense",
               "description": "",
               "level": "proficient",
-              "attributes": [
-                "health"
-              ],
+              "attributes": ["health"],
               "type": "health"
             },
             {
               "name": "Reflexes",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "level": "unskilled",
               "skillId": "reflexes",
               "category": "initiative",
@@ -1113,9 +887,7 @@
             },
             {
               "skillId": "tactics",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "type": "initiative",
               "name": "Tactics",
               "description": "",
@@ -1123,9 +895,7 @@
               "category": "initiative"
             },
             {
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "description": "",
               "skillId": "providence",
               "type": "initiative",
@@ -1137,10 +907,7 @@
               "skillId": "intimidate",
               "type": "noncombat",
               "name": "Intimidate",
-              "attributes": [
-                "conviction",
-                "might"
-              ],
+              "attributes": ["conviction", "might"],
               "category": "defense",
               "description": "",
               "level": "unskilled"
@@ -1151,16 +918,12 @@
               "skillId": "legerdemain",
               "category": "movement",
               "name": "Legerdemain",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "description": ""
             },
             {
               "description": "",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "level": "inept",
               "category": "deception",
               "skillId": "lie",
@@ -1168,10 +931,7 @@
               "type": "noncombat"
             },
             {
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "skillId": "medicine",
               "description": "",
               "level": "unskilled",
@@ -1181,9 +941,7 @@
             },
             {
               "skillId": "toughness",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "level": "unskilled",
               "type": "defense",
               "description": "",
@@ -1191,9 +949,7 @@
               "name": "Toughness"
             },
             {
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "level": "unskilled",
               "category": "melee",
               "name": "Bashing",
@@ -1205,9 +961,7 @@
               "description": "",
               "category": "ranged",
               "level": "unskilled",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "skillId": "hurl",
               "type": "attack",
               "name": "Hurl"
@@ -1216,10 +970,7 @@
               "type": "noncombat",
               "skillId": "movement",
               "category": "movement",
-              "attributes": [
-                "might",
-                "speed"
-              ],
+              "attributes": ["might", "speed"],
               "description": "",
               "level": "proficient",
               "name": "Movement"
@@ -1227,20 +978,14 @@
             {
               "category": "knowledge",
               "name": "Knowledge",
-              "attributes": [
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["focus", "conviction"],
               "level": "unskilled",
               "skillId": "otherknowledge",
               "description": "",
               "type": "noncombat"
             },
             {
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Perception",
               "description": "",
               "type": "noncombat",
@@ -1251,9 +996,7 @@
             {
               "description": "",
               "category": "deception",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "name": "Persuade",
               "type": "noncombat",
               "skillId": "persuade",
@@ -1262,11 +1005,7 @@
             {
               "skillId": "picklocks",
               "category": "adventuring",
-              "attributes": [
-                "speed",
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["speed", "focus", "conviction"],
               "type": "noncombat",
               "level": "inept",
               "description": "",
@@ -1279,10 +1018,7 @@
               "skillId": "riding",
               "name": "Riding",
               "type": "noncombat",
-              "attributes": [
-                "speed",
-                "conviction"
-              ]
+              "attributes": ["speed", "conviction"]
             },
             {
               "category": "deception",
@@ -1290,9 +1026,7 @@
               "skillId": "sensemotive",
               "level": "unskilled",
               "name": "Sense Motive",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "type": "noncombat"
             },
             {
@@ -1302,19 +1036,14 @@
               "name": "Sneaking",
               "type": "noncombat",
               "level": "unskilled",
-              "attributes": [
-                "speed",
-                "focus"
-              ]
+              "attributes": ["speed", "focus"]
             },
             {
               "description": "",
               "category": "defense",
               "skillId": "dodge",
               "level": "unskilled",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "name": "Dodge",
               "type": "defense"
             },
@@ -1322,9 +1051,7 @@
               "type": "attack",
               "level": "proficient",
               "description": "",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "category": "melee",
               "skillId": "fencing",
               "name": "Fencing"
@@ -1336,18 +1063,13 @@
               "level": "unskilled",
               "skillId": "quickdraw",
               "type": "attack",
-              "attributes": [
-                "speed"
-              ]
+              "attributes": ["speed"]
             },
             {
               "description": "",
               "type": "noncombat",
               "skillId": "wildernesslore",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "level": "inept",
               "category": "adventuring",
               "name": "Wilderness Lore"
@@ -1358,9 +1080,7 @@
               "type": "noncombat",
               "name": "Arcane Knowledge",
               "level": "unskilled",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "skillId": "arcaneknowledge"
             },
             {
@@ -1368,9 +1088,7 @@
               "description": "",
               "level": "unskilled",
               "type": "noncombat",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "category": "magic",
               "skillId": "arcanetinker"
             },
@@ -1380,10 +1098,7 @@
               "level": "unskilled",
               "type": "noncombat",
               "category": "magic",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "skillId": "alchemyknowledge"
             },
             {
@@ -1392,16 +1107,11 @@
               "skillId": "alchemytinker",
               "level": "unskilled",
               "name": "Alchemy Tinker",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "type": "noncombat"
             },
             {
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "level": "unskilled",
               "category": "magic",
               "name": "Divine Knowledge",
@@ -1414,9 +1124,7 @@
               "type": "noncombat",
               "name": "Divine Tinker",
               "level": "unskilled",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "skillId": "divinetinker",
               "category": "magic"
             },
@@ -1426,20 +1134,14 @@
               "skillId": "psionicknowledge",
               "name": "Psionic Knowledge",
               "category": "magic",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "type": "noncombat"
             },
             {
               "description": "",
               "type": "noncombat",
               "category": "magic",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Psionic Tinker",
               "skillId": "psionictinker",
               "level": "unskilled"
@@ -1447,22 +1149,14 @@
             {
               "level": "unskilled",
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "skillId": "traps",
               "category": "adventuring",
               "description": "",
               "name": "Traps"
             },
             {
-              "attributes": [
-                "focus",
-                "speed",
-                "might",
-                "conviction"
-              ],
+              "attributes": ["focus", "speed", "might", "conviction"],
               "skillId": "unarmed",
               "level": "proficient",
               "name": "Unarmed Combat",
@@ -1478,9 +1172,7 @@
             {
               "effect": {},
               "name": "Unarmed Attack",
-              "skills": [
-                "unarmedfighting"
-              ],
+              "skills": ["unarmedfighting"],
               "damage": 1,
               "initiative": 3,
               "equipped": true,
@@ -1545,28 +1237,22 @@
           "name": "Jordiz Shirodz",
           "description": "",
           "acl": {
-            "RUEOViYBeHPUBClCUTQCmIhfrlT2": "admin",
-            "e1": "admin"
+            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
           },
           "type": "character"
         },
         {
-          "characterId": "vw4sF8na1O7wxXhfWIeI",
-          "campaignId": "685mwhwCnAtrfx0YH0lq",
+          "characterId": "malven",
+          "campaignId": "ou",
           "experience": 5,
           "acl": {
-            "j1": "admin",
-            "vh7vxSMo1lUSDVq7wM3akts9j7o1": "admin",
-            "RUEOViYBeHPUBClCUTQCmIhfrlT2": "admin"
+            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
           },
           "initiative": 29,
           "skills": [
             {
               "level": "inept",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Command Animal",
               "type": "noncombat",
               "category": "adventuring",
@@ -1574,9 +1260,7 @@
               "skillId": "commandanimal"
             },
             {
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "level": "unskilled",
               "skillId": "faith",
               "name": "Faith",
@@ -1590,17 +1274,13 @@
               "name": "Righteous Fury",
               "level": "unskilled",
               "category": "melee",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "skillId": "righteousfury"
             },
             {
               "skillId": "hipshot",
               "category": "ranged",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "level": "unskilled",
               "description": "",
               "name": "Hip Shot",
@@ -1610,9 +1290,7 @@
               "category": "defense",
               "skillId": "combatprediction",
               "type": "defense",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "level": "proficient",
               "description": "",
               "name": "Combat Prediction"
@@ -1620,9 +1298,7 @@
             {
               "name": "Combat Insight",
               "description": "",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "level": "unskilled",
               "category": "melee",
               "skillId": "combatinsight",
@@ -1635,25 +1311,19 @@
               "category": "ranged",
               "description": "",
               "level": "unskilled",
-              "attributes": [
-                "focus"
-              ]
+              "attributes": ["focus"]
             },
             {
               "category": "defense",
               "skillId": "health",
-              "attributes": [
-                "health"
-              ],
+              "attributes": ["health"],
               "description": "",
               "level": "proficient",
               "type": "health",
               "name": "Health Check"
             },
             {
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "category": "initiative",
               "name": "Reflexes",
               "level": "unskilled",
@@ -1663,9 +1333,7 @@
             },
             {
               "category": "initiative",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "level": "unskilled",
               "type": "initiative",
               "description": "",
@@ -1677,17 +1345,12 @@
               "type": "initiative",
               "skillId": "providence",
               "name": "Providence",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "category": "initiative",
               "description": ""
             },
             {
-              "attributes": [
-                "conviction",
-                "might"
-              ],
+              "attributes": ["conviction", "might"],
               "category": "defense",
               "level": "unskilled",
               "description": "",
@@ -1702,9 +1365,7 @@
               "description": "",
               "category": "movement",
               "type": "noncombat",
-              "attributes": [
-                "speed"
-              ]
+              "attributes": ["speed"]
             },
             {
               "level": "unskilled",
@@ -1712,17 +1373,12 @@
               "name": "Lie",
               "category": "deception",
               "type": "noncombat",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "description": ""
             },
             {
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "category": "adventuring",
               "description": "",
               "skillId": "medicine",
@@ -1730,9 +1386,7 @@
               "name": "Medicine"
             },
             {
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "level": "unskilled",
               "type": "defense",
               "skillId": "toughness",
@@ -1743,9 +1397,7 @@
             {
               "name": "Bashing",
               "skillId": "bash",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "description": "",
               "category": "melee",
               "type": "attack",
@@ -1756,9 +1408,7 @@
               "level": "unskilled",
               "type": "attack",
               "category": "ranged",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "description": "",
               "skillId": "hurl"
             },
@@ -1768,18 +1418,12 @@
               "name": "Movement",
               "skillId": "movement",
               "category": "movement",
-              "attributes": [
-                "might",
-                "speed"
-              ],
+              "attributes": ["might", "speed"],
               "type": "noncombat"
             },
             {
               "skillId": "otherknowledge",
-              "attributes": [
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["focus", "conviction"],
               "type": "noncombat",
               "name": "Knowledge",
               "category": "knowledge",
@@ -1792,16 +1436,11 @@
               "description": "",
               "name": "Perception",
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "skillId": "perception"
             },
             {
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "type": "noncombat",
               "description": "",
               "category": "deception",
@@ -1816,19 +1455,12 @@
               "name": "Pick Locks",
               "level": "proficient",
               "skillId": "picklocks",
-              "attributes": [
-                "speed",
-                "focus",
-                "conviction"
-              ]
+              "attributes": ["speed", "focus", "conviction"]
             },
             {
               "type": "noncombat",
               "skillId": "riding",
-              "attributes": [
-                "speed",
-                "conviction"
-              ],
+              "attributes": ["speed", "conviction"],
               "category": "movement",
               "name": "Riding",
               "level": "unskilled",
@@ -1840,17 +1472,12 @@
               "description": "",
               "skillId": "sensemotive",
               "name": "Sense Motive",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "type": "noncombat"
             },
             {
               "category": "movement",
-              "attributes": [
-                "speed",
-                "focus"
-              ],
+              "attributes": ["speed", "focus"],
               "level": "proficient",
               "skillId": "sneaking",
               "description": "",
@@ -1861,9 +1488,7 @@
               "description": "",
               "skillId": "dodge",
               "level": "unskilled",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "name": "Dodge",
               "category": "defense",
               "type": "defense"
@@ -1874,9 +1499,7 @@
               "category": "melee",
               "type": "attack",
               "description": "",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "name": "Fencing"
             },
             {
@@ -1884,9 +1507,7 @@
               "type": "attack",
               "category": "ranged",
               "skillId": "quickdraw",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "level": "unskilled",
               "description": ""
             },
@@ -1894,19 +1515,14 @@
               "type": "noncombat",
               "name": "Wilderness Lore",
               "category": "adventuring",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "description": "",
               "skillId": "wildernesslore",
               "level": "inept"
             },
             {
               "skillId": "arcaneknowledge",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "description": "",
               "category": "magic",
               "level": "inept",
@@ -1918,19 +1534,14 @@
               "level": "unskilled",
               "name": "Arcane Tinker",
               "skillId": "arcanetinker",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "category": "magic",
               "type": "noncombat"
             },
             {
               "type": "noncombat",
               "category": "magic",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Alchemy Knowledge",
               "level": "unskilled",
               "skillId": "alchemyknowledge",
@@ -1938,10 +1549,7 @@
             },
             {
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "level": "unskilled",
               "skillId": "alchemytinker",
               "description": "",
@@ -1952,9 +1560,7 @@
               "level": "unskilled",
               "type": "noncombat",
               "name": "Divine Knowledge",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "description": "",
               "category": "magic",
               "skillId": "divineknowledge"
@@ -1965,19 +1571,14 @@
               "name": "Divine Tinker",
               "skillId": "divinetinker",
               "type": "noncombat",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "description": ""
             },
             {
               "description": "",
               "category": "magic",
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Psionic Knowledge",
               "level": "unskilled",
               "skillId": "psionicknowledge"
@@ -1985,20 +1586,14 @@
             {
               "category": "magic",
               "skillId": "psionictinker",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "type": "noncombat",
               "name": "Psionic Tinker",
               "description": "",
               "level": "unskilled"
             },
             {
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "description": "",
               "skillId": "traps",
               "name": "Traps",
@@ -2052,10 +1647,7 @@
               "effect": {},
               "equipped": true,
               "slot": "hand",
-              "skills": [
-                "fencing",
-                "combatinsight"
-              ],
+              "skills": ["fencing", "combatinsight"],
               "damage": 2,
               "name": "Light Mace",
               "size": 1,
@@ -2088,17 +1680,14 @@
               "damage": 0,
               "type": "weapon",
               "kind": "melee",
-              "skills": [
-                "fencing",
-                "combatinsight"
-              ]
+              "skills": ["fencing", "combatinsight"]
             }
           ],
           "name": "Malven Stonecutter"
         },
         {
-          "characterId": "wDTSEIXrPRKeOdE7ghNV",
-          "campaignId": "685mwhwCnAtrfx0YH0lq",
+          "characterId": "stu",
+          "campaignId": "ou",
           "attributes": {
             "health": {
               "pool": 10,
@@ -2160,10 +1749,7 @@
               "initiative": 8,
               "name": "Crossbow",
               "damage": 5,
-              "skills": [
-                "sniper",
-                "quickdraw"
-              ],
+              "skills": ["sniper", "quickdraw"],
               "effect": {},
               "kind": "ranged",
               "slot": "hand",
@@ -2172,10 +1758,7 @@
               "equipped": true
             },
             {
-              "skills": [
-                "fencing",
-                "combatinsight"
-              ],
+              "skills": ["fencing", "combatinsight"],
               "type": "weapon",
               "damage": 0,
               "name": "Dagger",
@@ -2218,10 +1801,7 @@
             },
             {
               "initiative": 6,
-              "skills": [
-                "fencing",
-                "combatinsight"
-              ],
+              "skills": ["fencing", "combatinsight"],
               "size": 2,
               "kind": "melee",
               "name": "Staff",
@@ -2236,10 +1816,7 @@
               "equipped": true,
               "type": "weapon",
               "initiative": 6,
-              "skills": [
-                "sniper",
-                "quickdraw"
-              ],
+              "skills": ["sniper", "quickdraw"],
               "kind": "ranged",
               "effect": {},
               "damage": -10,
@@ -2249,17 +1826,12 @@
           ],
           "subtype": "player",
           "acl": {
-            "CdRazs3fVkeTZzVlL2ohS5jt52k2": "admin",
-            "d1": "admin",
-            "RUEOViYBeHPUBClCUTQCmIhfrlT2": "admin"
+            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
           },
           "skills": [
             {
               "skillId": "commandanimal",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "category": "adventuring",
               "name": "Command Animal",
               "description": "",
@@ -2268,9 +1840,7 @@
             },
             {
               "skillId": "faith",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "level": "unskilled",
               "name": "Faith",
               "type": "defense",
@@ -2278,9 +1848,7 @@
               "category": "defense"
             },
             {
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "level": "unskilled",
               "category": "melee",
               "description": "",
@@ -2290,9 +1858,7 @@
             },
             {
               "category": "ranged",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "type": "attack",
               "level": "unskilled",
               "skillId": "hipshot",
@@ -2305,17 +1871,13 @@
               "category": "defense",
               "level": "proficient",
               "type": "defense",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "description": ""
             },
             {
               "skillId": "combatinsight",
               "level": "proficient",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "name": "Combat Insight",
               "category": "melee",
               "type": "attack",
@@ -2323,9 +1885,7 @@
             },
             {
               "category": "ranged",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "level": "proficient",
               "skillId": "sniper",
               "description": "",
@@ -2335,9 +1895,7 @@
             {
               "name": "Health Check",
               "level": "proficient",
-              "attributes": [
-                "health"
-              ],
+              "attributes": ["health"],
               "type": "health",
               "category": "defense",
               "skillId": "health",
@@ -2347,9 +1905,7 @@
               "level": "unskilled",
               "skillId": "reflexes",
               "name": "Reflexes",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "category": "initiative",
               "type": "initiative",
               "description": ""
@@ -2359,9 +1915,7 @@
               "category": "initiative",
               "description": "",
               "name": "Tactics",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "skillId": "tactics",
               "type": "initiative"
             },
@@ -2369,18 +1923,13 @@
               "category": "initiative",
               "level": "unskilled",
               "type": "initiative",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "description": "",
               "name": "Providence",
               "skillId": "providence"
             },
             {
-              "attributes": [
-                "conviction",
-                "might"
-              ],
+              "attributes": ["conviction", "might"],
               "type": "noncombat",
               "description": "",
               "category": "defense",
@@ -2391,9 +1940,7 @@
             {
               "skillId": "legerdemain",
               "type": "noncombat",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "description": "",
               "level": "inept",
               "name": "Legerdemain",
@@ -2403,9 +1950,7 @@
               "category": "deception",
               "name": "Lie",
               "level": "unskilled",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "type": "noncombat",
               "description": "",
               "skillId": "lie"
@@ -2414,10 +1959,7 @@
               "category": "adventuring",
               "description": "",
               "skillId": "medicine",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "level": "proficient",
               "type": "noncombat",
               "name": "Medicine"
@@ -2425,9 +1967,7 @@
             {
               "category": "defense",
               "level": "unskilled",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "type": "defense",
               "skillId": "toughness",
               "name": "Toughness",
@@ -2435,9 +1975,7 @@
             },
             {
               "type": "attack",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "category": "melee",
               "level": "unskilled",
               "description": "",
@@ -2445,9 +1983,7 @@
               "name": "Bashing"
             },
             {
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "level": "unskilled",
               "type": "attack",
               "category": "ranged",
@@ -2457,10 +1993,7 @@
             },
             {
               "level": "unskilled",
-              "attributes": [
-                "might",
-                "speed"
-              ],
+              "attributes": ["might", "speed"],
               "skillId": "movement",
               "description": "",
               "type": "noncombat",
@@ -2472,19 +2005,13 @@
               "category": "knowledge",
               "level": "unskilled",
               "type": "noncombat",
-              "attributes": [
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["focus", "conviction"],
               "description": "",
               "skillId": "otherknowledge"
             },
             {
               "name": "Perception",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "description": "",
               "category": "adventuring",
               "type": "noncombat",
@@ -2496,9 +2023,7 @@
               "category": "deception",
               "level": "unskilled",
               "type": "noncombat",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "description": "",
               "skillId": "persuade"
             },
@@ -2507,11 +2032,7 @@
               "category": "adventuring",
               "skillId": "picklocks",
               "level": "inept",
-              "attributes": [
-                "speed",
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["speed", "focus", "conviction"],
               "type": "noncombat",
               "name": "Pick Locks"
             },
@@ -2522,17 +2043,12 @@
               "name": "Riding",
               "type": "noncombat",
               "skillId": "riding",
-              "attributes": [
-                "speed",
-                "conviction"
-              ]
+              "attributes": ["speed", "conviction"]
             },
             {
               "level": "unskilled",
               "type": "noncombat",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "name": "Sense Motive",
               "category": "deception",
               "skillId": "sensemotive",
@@ -2540,10 +2056,7 @@
             },
             {
               "category": "movement",
-              "attributes": [
-                "speed",
-                "focus"
-              ],
+              "attributes": ["speed", "focus"],
               "level": "unskilled",
               "type": "noncombat",
               "description": "",
@@ -2552,9 +2065,7 @@
             },
             {
               "level": "unskilled",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "skillId": "dodge",
               "category": "defense",
               "type": "defense",
@@ -2564,18 +2075,14 @@
             {
               "name": "Fencing",
               "type": "attack",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "level": "unskilled",
               "skillId": "fencing",
               "description": "",
               "category": "melee"
             },
             {
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "level": "unskilled",
               "description": "",
               "name": "Quick Draw",
@@ -2587,10 +2094,7 @@
               "category": "adventuring",
               "level": "unskilled",
               "skillId": "wildernesslore",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "type": "noncombat",
               "description": "",
               "name": "Wilderness Lore"
@@ -2601,28 +2105,21 @@
               "level": "unskilled",
               "name": "Arcane Knowledge",
               "type": "noncombat",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "category": "magic"
             },
             {
               "name": "Arcane Tinker",
               "type": "noncombat",
               "category": "magic",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "level": "unskilled",
               "description": "",
               "skillId": "arcanetinker"
             },
             {
               "category": "magic",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "description": "",
               "type": "noncombat",
               "skillId": "alchemyknowledge",
@@ -2635,10 +2132,7 @@
               "category": "magic",
               "name": "Alchemy Tinker",
               "skillId": "alchemytinker",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "level": "proficient"
             },
             {
@@ -2648,17 +2142,13 @@
               "level": "unskilled",
               "skillId": "divineknowledge",
               "name": "Divine Knowledge",
-              "attributes": [
-                "conviction"
-              ]
+              "attributes": ["conviction"]
             },
             {
               "category": "magic",
               "description": "",
               "skillId": "divinetinker",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "type": "noncombat",
               "name": "Divine Tinker",
               "level": "unskilled"
@@ -2670,10 +2160,7 @@
               "skillId": "psionicknowledge",
               "category": "magic",
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ]
+              "attributes": ["conviction", "focus"]
             },
             {
               "description": "",
@@ -2682,10 +2169,7 @@
               "name": "Psionic Tinker",
               "level": "unskilled",
               "skillId": "psionictinker",
-              "attributes": [
-                "conviction",
-                "focus"
-              ]
+              "attributes": ["conviction", "focus"]
             },
             {
               "description": "",
@@ -2694,17 +2178,14 @@
               "skillId": "traps",
               "category": "adventuring",
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ]
+              "attributes": ["conviction", "focus"]
             }
           ],
           "type": "character"
         },
         {
-          "characterId": "zLlDQHOm9l1FiyPKKG5h",
-          "campaignId": "685mwhwCnAtrfx0YH0lq",
+          "characterId": "loupe",
+          "campaignId": "ou",
           "subtype": "player",
           "type": "character",
           "attributes": {
@@ -2763,10 +2244,7 @@
               "size": 1,
               "initiative": 4,
               "slot": "hand",
-              "skills": [
-                "fencing",
-                "combatinsight"
-              ],
+              "skills": ["fencing", "combatinsight"],
               "equipped": true
             },
             {
@@ -2809,10 +2287,7 @@
               "damage": 5,
               "initiative": 8,
               "kind": "ranged",
-              "skills": [
-                "sniper",
-                "quickdraw"
-              ],
+              "skills": ["sniper", "quickdraw"],
               "slot": "hand"
             }
           ],
@@ -2824,17 +2299,12 @@
               "category": "adventuring",
               "description": "",
               "name": "Command Animal",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "type": "noncombat"
             },
             {
               "category": "defense",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "type": "defense",
               "name": "Faith",
               "skillId": "faith",
@@ -2847,17 +2317,13 @@
               "description": "",
               "type": "attack",
               "skillId": "righteousfury",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "category": "melee"
             },
             {
               "name": "Hip Shot",
               "type": "attack",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "skillId": "hipshot",
               "level": "unskilled",
               "category": "ranged",
@@ -2868,9 +2334,7 @@
               "name": "Combat Prediction",
               "category": "defense",
               "level": "unskilled",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "type": "defense",
               "skillId": "combatprediction"
             },
@@ -2880,9 +2344,7 @@
               "category": "melee",
               "description": "",
               "skillId": "combatinsight",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "name": "Combat Insight"
             },
             {
@@ -2892,15 +2354,11 @@
               "name": "Sniper",
               "category": "ranged",
               "type": "attack",
-              "attributes": [
-                "focus"
-              ]
+              "attributes": ["focus"]
             },
             {
               "skillId": "health",
-              "attributes": [
-                "health"
-              ],
+              "attributes": ["health"],
               "category": "defense",
               "name": "Health Check",
               "description": "",
@@ -2908,9 +2366,7 @@
               "type": "health"
             },
             {
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "level": "proficient",
               "skillId": "reflexes",
               "category": "initiative",
@@ -2925,27 +2381,20 @@
               "level": "unskilled",
               "skillId": "tactics",
               "name": "Tactics",
-              "attributes": [
-                "focus"
-              ]
+              "attributes": ["focus"]
             },
             {
               "type": "initiative",
               "skillId": "providence",
               "description": "",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "name": "Providence",
               "category": "initiative",
               "level": "unskilled"
             },
             {
               "name": "Intimidate",
-              "attributes": [
-                "conviction",
-                "might"
-              ],
+              "attributes": ["conviction", "might"],
               "type": "noncombat",
               "description": "",
               "category": "defense",
@@ -2959,16 +2408,12 @@
               "description": "",
               "category": "movement",
               "skillId": "legerdemain",
-              "attributes": [
-                "speed"
-              ]
+              "attributes": ["speed"]
             },
             {
               "level": "unskilled",
               "name": "Lie",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "category": "deception",
               "type": "noncombat",
               "description": "",
@@ -2976,10 +2421,7 @@
             },
             {
               "skillId": "medicine",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "category": "adventuring",
               "type": "noncombat",
               "name": "Medicine",
@@ -2988,9 +2430,7 @@
             },
             {
               "category": "defense",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "skillId": "toughness",
               "level": "unskilled",
               "name": "Toughness",
@@ -2999,9 +2439,7 @@
             },
             {
               "name": "Bashing",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "skillId": "bash",
               "level": "unskilled",
               "category": "melee",
@@ -3009,9 +2447,7 @@
               "type": "attack"
             },
             {
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "category": "ranged",
               "level": "unskilled",
               "name": "Hurl",
@@ -3021,10 +2457,7 @@
             },
             {
               "level": "proficient",
-              "attributes": [
-                "might",
-                "speed"
-              ],
+              "attributes": ["might", "speed"],
               "name": "Movement",
               "description": "",
               "category": "movement",
@@ -3033,10 +2466,7 @@
             },
             {
               "category": "knowledge",
-              "attributes": [
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["focus", "conviction"],
               "description": "",
               "type": "noncombat",
               "skillId": "otherknowledge",
@@ -3046,10 +2476,7 @@
             {
               "name": "Perception",
               "category": "adventuring",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "skillId": "perception",
               "description": "",
               "level": "unskilled",
@@ -3060,9 +2487,7 @@
               "name": "Persuade",
               "skillId": "persuade",
               "type": "noncombat",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "description": "",
               "category": "deception"
             },
@@ -3071,20 +2496,13 @@
               "level": "unskilled",
               "name": "Pick Locks",
               "skillId": "picklocks",
-              "attributes": [
-                "speed",
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["speed", "focus", "conviction"],
               "type": "noncombat",
               "description": ""
             },
             {
               "type": "noncombat",
-              "attributes": [
-                "speed",
-                "conviction"
-              ],
+              "attributes": ["speed", "conviction"],
               "category": "movement",
               "description": "",
               "name": "Riding",
@@ -3097,18 +2515,13 @@
               "level": "unskilled",
               "type": "noncombat",
               "name": "Sense Motive",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "description": ""
             },
             {
               "category": "movement",
               "skillId": "sneaking",
-              "attributes": [
-                "speed",
-                "focus"
-              ],
+              "attributes": ["speed", "focus"],
               "level": "unskilled",
               "type": "noncombat",
               "description": "",
@@ -3121,9 +2534,7 @@
               "name": "Dodge",
               "level": "proficient",
               "type": "defense",
-              "attributes": [
-                "speed"
-              ]
+              "attributes": ["speed"]
             },
             {
               "skillId": "fencing",
@@ -3132,26 +2543,19 @@
               "type": "attack",
               "level": "proficient",
               "name": "Fencing",
-              "attributes": [
-                "speed"
-              ]
+              "attributes": ["speed"]
             },
             {
               "type": "attack",
               "skillId": "quickdraw",
               "description": "",
               "level": "unskilled",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "category": "ranged",
               "name": "Quick Draw"
             },
             {
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "description": "",
               "skillId": "wildernesslore",
               "level": "unskilled",
@@ -3161,9 +2565,7 @@
             },
             {
               "category": "magic",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "description": "",
               "name": "Arcane Knowledge",
               "level": "unskilled",
@@ -3177,16 +2579,11 @@
               "level": "unskilled",
               "description": "",
               "category": "magic",
-              "attributes": [
-                "conviction"
-              ]
+              "attributes": ["conviction"]
             },
             {
               "skillId": "alchemyknowledge",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "type": "noncombat",
               "name": "Alchemy Knowledge",
               "description": "",
@@ -3196,10 +2593,7 @@
             {
               "name": "Alchemy Tinker",
               "level": "unskilled",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "skillId": "alchemytinker",
               "description": "",
               "category": "magic",
@@ -3209,9 +2603,7 @@
               "type": "noncombat",
               "level": "unskilled",
               "skillId": "divineknowledge",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "description": "",
               "category": "magic",
               "name": "Divine Knowledge"
@@ -3219,9 +2611,7 @@
             {
               "category": "magic",
               "type": "noncombat",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "name": "Divine Tinker",
               "description": "",
               "level": "unskilled",
@@ -3231,20 +2621,14 @@
               "category": "magic",
               "level": "unskilled",
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Psionic Knowledge",
               "skillId": "psionicknowledge",
               "description": ""
             },
             {
               "level": "unskilled",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "skillId": "psionictinker",
               "type": "noncombat",
               "name": "Psionic Tinker",
@@ -3253,10 +2637,7 @@
             },
             {
               "skillId": "traps",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "description": "",
               "category": "adventuring",
               "name": "Traps",
@@ -3266,20 +2647,16 @@
           ],
           "experience": 5,
           "acl": {
-            "a1": "admin",
-            "RUEOViYBeHPUBClCUTQCmIhfrlT2": "admin",
-            "R6EOZRnWavTOUpEpYlUuqizJFdd2": "admin"
+            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
           }
         }
       ]
     },
-    "r7BuXcvLh3sGO8EGFcxE": {
+    "dino": {
       "campaign": {
-        "campaignId": "r7BuXcvLh3sGO8EGFcxE",
+        "campaignId": "dino",
         "acl": {
-          "E1gXs41G1mgiM441XXf14ac7ypb2": "admin",
-          "RUEOViYBeHPUBClCUTQCmIhfrlT2": "read",
-          "UJxxtQzaOzWEFT2vtniCaDQdk2u2": "read"
+          "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
         },
         "description": "also Time Travel and Alien Spaceships",
         "type": "campaign",
@@ -3291,25 +2668,18 @@
             "description": "",
             "type": "noncombat",
             "skillId": "commandanimal",
-            "attributes": [
-              "conviction",
-              "focus"
-            ]
+            "attributes": ["conviction", "focus"]
           },
           {
             "skillId": "faith",
             "description": "",
             "type": "defense",
             "category": "defense",
-            "attributes": [
-              "conviction"
-            ],
+            "attributes": ["conviction"],
             "name": "Faith"
           },
           {
-            "attributes": [
-              "conviction"
-            ],
+            "attributes": ["conviction"],
             "category": "melee",
             "name": "Righteous Fury",
             "description": "",
@@ -3321,25 +2691,19 @@
             "skillId": "hipshot",
             "category": "ranged",
             "type": "attack",
-            "attributes": [
-              "conviction"
-            ],
+            "attributes": ["conviction"],
             "name": "Hip Shot"
           },
           {
             "type": "defense",
             "skillId": "combatprediction",
-            "attributes": [
-              "focus"
-            ],
+            "attributes": ["focus"],
             "category": "defense",
             "name": "Combat Prediction",
             "description": ""
           },
           {
-            "attributes": [
-              "focus"
-            ],
+            "attributes": ["focus"],
             "category": "melee",
             "skillId": "combatinsight",
             "name": "Combat Insight",
@@ -3350,9 +2714,7 @@
             "skillId": "sniper",
             "description": "",
             "name": "Sniper",
-            "attributes": [
-              "focus"
-            ],
+            "attributes": ["focus"],
             "type": "attack",
             "category": "ranged"
           },
@@ -3362,15 +2724,11 @@
             "category": "defense",
             "type": "health",
             "skillId": "health",
-            "attributes": [
-              "health"
-            ]
+            "attributes": ["health"]
           },
           {
             "category": "initiative",
-            "attributes": [
-              "speed"
-            ],
+            "attributes": ["speed"],
             "type": "initiative",
             "description": "",
             "name": "Reflexes",
@@ -3380,16 +2738,12 @@
             "skillId": "tactics",
             "category": "initiative",
             "name": "Tactics",
-            "attributes": [
-              "focus"
-            ],
+            "attributes": ["focus"],
             "description": "",
             "type": "initiative"
           },
           {
-            "attributes": [
-              "conviction"
-            ],
+            "attributes": ["conviction"],
             "type": "initiative",
             "skillId": "providence",
             "category": "initiative",
@@ -3400,18 +2754,13 @@
             "description": "",
             "category": "defense",
             "name": "Intimidate",
-            "attributes": [
-              "conviction",
-              "might"
-            ],
+            "attributes": ["conviction", "might"],
             "skillId": "intimidate",
             "type": "noncombat"
           },
           {
             "type": "noncombat",
-            "attributes": [
-              "speed"
-            ],
+            "attributes": ["speed"],
             "description": "",
             "skillId": "legerdemain",
             "name": "Legerdemain",
@@ -3420,9 +2769,7 @@
           {
             "category": "deception",
             "type": "noncombat",
-            "attributes": [
-              "conviction"
-            ],
+            "attributes": ["conviction"],
             "description": "",
             "skillId": "lie",
             "name": "Lie"
@@ -3433,10 +2780,7 @@
             "type": "noncombat",
             "description": "",
             "skillId": "medicine",
-            "attributes": [
-              "conviction",
-              "focus"
-            ]
+            "attributes": ["conviction", "focus"]
           },
           {
             "description": "",
@@ -3444,25 +2788,19 @@
             "type": "defense",
             "category": "defense",
             "skillId": "toughness",
-            "attributes": [
-              "might"
-            ]
+            "attributes": ["might"]
           },
           {
             "type": "attack",
             "description": "",
             "category": "melee",
             "name": "Bashing",
-            "attributes": [
-              "might"
-            ],
+            "attributes": ["might"],
             "skillId": "bash"
           },
           {
             "description": "",
-            "attributes": [
-              "might"
-            ],
+            "attributes": ["might"],
             "category": "ranged",
             "skillId": "hurl",
             "name": "Hurl",
@@ -3474,27 +2812,18 @@
             "skillId": "movement",
             "description": "",
             "category": "movement",
-            "attributes": [
-              "might",
-              "speed"
-            ]
+            "attributes": ["might", "speed"]
           },
           {
             "name": "Knowledge",
             "type": "noncombat",
-            "attributes": [
-              "focus",
-              "conviction"
-            ],
+            "attributes": ["focus", "conviction"],
             "category": "knowledge",
             "description": "",
             "skillId": "otherknowledge"
           },
           {
-            "attributes": [
-              "conviction",
-              "focus"
-            ],
+            "attributes": ["conviction", "focus"],
             "description": "",
             "skillId": "perception",
             "type": "noncombat",
@@ -3506,9 +2835,7 @@
             "category": "deception",
             "type": "noncombat",
             "skillId": "persuade",
-            "attributes": [
-              "focus"
-            ],
+            "attributes": ["focus"],
             "description": ""
           },
           {
@@ -3517,29 +2844,20 @@
             "description": "",
             "type": "noncombat",
             "skillId": "picklocks",
-            "attributes": [
-              "speed",
-              "focus",
-              "conviction"
-            ]
+            "attributes": ["speed", "focus", "conviction"]
           },
           {
             "category": "movement",
             "name": "Riding",
             "type": "noncombat",
             "skillId": "riding",
-            "attributes": [
-              "speed",
-              "conviction"
-            ],
+            "attributes": ["speed", "conviction"],
             "description": ""
           },
           {
             "type": "noncombat",
             "skillId": "sensemotive",
-            "attributes": [
-              "focus"
-            ],
+            "attributes": ["focus"],
             "name": "Sense Motive",
             "category": "deception",
             "description": ""
@@ -3549,26 +2867,19 @@
             "category": "movement",
             "type": "noncombat",
             "name": "Sneaking",
-            "attributes": [
-              "speed",
-              "focus"
-            ],
+            "attributes": ["speed", "focus"],
             "description": ""
           },
           {
             "category": "defense",
             "skillId": "dodge",
             "name": "Dodge",
-            "attributes": [
-              "speed"
-            ],
+            "attributes": ["speed"],
             "description": "",
             "type": "defense"
           },
           {
-            "attributes": [
-              "speed"
-            ],
+            "attributes": ["speed"],
             "category": "melee",
             "name": "Fencing",
             "skillId": "fencing",
@@ -3578,9 +2889,7 @@
           {
             "skillId": "quickdraw",
             "name": "Quick Draw",
-            "attributes": [
-              "speed"
-            ],
+            "attributes": ["speed"],
             "category": "ranged",
             "type": "attack",
             "description": ""
@@ -3591,10 +2900,7 @@
             "category": "adventuring",
             "name": "Wilderness Lore",
             "skillId": "wildernesslore",
-            "attributes": [
-              "conviction",
-              "focus"
-            ]
+            "attributes": ["conviction", "focus"]
           },
           {
             "type": "noncombat",
@@ -3602,10 +2908,7 @@
             "description": "",
             "skillId": "advancedsecurity",
             "name": "Advanced Security",
-            "attributes": [
-              "focus",
-              "conviction"
-            ]
+            "attributes": ["focus", "conviction"]
           },
           {
             "description": "",
@@ -3613,17 +2916,11 @@
             "category": "knowledge",
             "type": "noncombat",
             "skillId": "dryscienceknowledge",
-            "attributes": [
-              "conviction",
-              "focus"
-            ]
+            "attributes": ["conviction", "focus"]
           },
           {
             "name": "Dry Science Tinker",
-            "attributes": [
-              "conviction",
-              "focus"
-            ],
+            "attributes": ["conviction", "focus"],
             "type": "noncombat",
             "skillId": "drysciencetinker",
             "category": "knowledge",
@@ -3631,10 +2928,7 @@
           },
           {
             "category": "adventuring",
-            "attributes": [
-              "conviction",
-              "focus"
-            ],
+            "attributes": ["conviction", "focus"],
             "name": "Hacking",
             "description": "",
             "skillId": "hacking",
@@ -3644,11 +2938,7 @@
             "category": "movement",
             "name": "Piloting",
             "skillId": "piloting",
-            "attributes": [
-              "speed",
-              "conviction",
-              "focus"
-            ],
+            "attributes": ["speed", "conviction", "focus"],
             "type": "noncombat",
             "description": ""
           },
@@ -3657,18 +2947,12 @@
             "name": "Wet Science Knowledge",
             "type": "noncombat",
             "skillId": "wetscienceknowledge",
-            "attributes": [
-              "conviction",
-              "focus"
-            ],
+            "attributes": ["conviction", "focus"],
             "category": "knowledge"
           },
           {
             "name": "Wet Science Tinker",
-            "attributes": [
-              "conviction",
-              "focus"
-            ],
+            "attributes": ["conviction", "focus"],
             "category": "knowledge",
             "type": "noncombat",
             "skillId": "wetsciencetinker",
@@ -3679,15 +2963,14 @@
       "characters": [
         {
           "characterId": "2MMgYYCKMUxOd4ev9yw0",
-          "campaignId": "r7BuXcvLh3sGO8EGFcxE",
+          "campaignId": "dino",
           "attack": 1,
           "baseInitiative": 4,
           "initiative": 0,
-          "abilities": [
-            "hands",
-            "makingTheGMRegretHisLifeChoices"
-          ],
-          "acl": {},
+          "abilities": ["hands", "makingTheGMRegretHisLifeChoices"],
+          "acl": {
+            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
+          },
           "type": "character",
           "armor": 0,
           "name": "Smammal",
@@ -3715,16 +2998,12 @@
               "name": "Attack",
               "type": "attack",
               "level": "proficient",
-              "attributes": [
-                "loyalty"
-              ]
+              "attributes": ["loyalty"]
             },
             {
               "level": "proficient",
               "skillId": "defense",
-              "attributes": [
-                "loyalty"
-              ],
+              "attributes": ["loyalty"],
               "description": "Companion Defense Skill",
               "name": "Defense",
               "category": "defense",
@@ -3735,9 +3014,7 @@
               "skillId": "health",
               "type": "health",
               "category": "defense",
-              "attributes": [
-                "health"
-              ],
+              "attributes": ["health"],
               "description": "Companion Health Check",
               "name": "Health"
             }
@@ -3749,11 +3026,11 @@
         },
         {
           "characterId": "7tXXwQZabKH3bD3mvVQx",
-          "campaignId": "r7BuXcvLh3sGO8EGFcxE",
+          "campaignId": "dino",
           "initiative": 0,
           "equipment": [],
           "acl": {
-            "guy@albertelli.com": "admin"
+            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
           },
           "name": "Chad",
           "subtype": "player",
@@ -3803,18 +3080,13 @@
               "skillId": "commandanimal",
               "description": "",
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ]
+              "attributes": ["conviction", "focus"]
             },
             {
               "level": "unskilled",
               "description": "",
               "category": "defense",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "type": "defense",
               "skillId": "faith",
               "name": "Faith"
@@ -3825,15 +3097,11 @@
               "skillId": "righteousfury",
               "description": "",
               "name": "Righteous Fury",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "type": "attack"
             },
             {
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "skillId": "hipshot",
               "name": "Hip Shot",
               "description": "",
@@ -3846,9 +3114,7 @@
               "skillId": "combatprediction",
               "level": "unskilled",
               "category": "defense",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "type": "defense",
               "name": "Combat Prediction"
             },
@@ -3857,27 +3123,21 @@
               "skillId": "combatinsight",
               "type": "attack",
               "category": "melee",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "description": "",
               "name": "Combat Insight"
             },
             {
               "name": "Sniper",
               "type": "attack",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "description": "",
               "level": "unskilled",
               "category": "ranged",
               "skillId": "sniper"
             },
             {
-              "attributes": [
-                "health"
-              ],
+              "attributes": ["health"],
               "skillId": "health",
               "level": "proficient",
               "description": "",
@@ -3886,9 +3146,7 @@
               "name": "Health Check"
             },
             {
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "description": "",
               "name": "Reflexes",
               "category": "initiative",
@@ -3903,15 +3161,11 @@
               "level": "unskilled",
               "name": "Tactics",
               "category": "initiative",
-              "attributes": [
-                "focus"
-              ]
+              "attributes": ["focus"]
             },
             {
               "description": "",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "name": "Providence",
               "skillId": "providence",
               "category": "initiative",
@@ -3925,10 +3179,7 @@
               "description": "",
               "skillId": "intimidate",
               "category": "defense",
-              "attributes": [
-                "conviction",
-                "might"
-              ]
+              "attributes": ["conviction", "might"]
             },
             {
               "type": "noncombat",
@@ -3937,17 +3188,13 @@
               "description": "",
               "skillId": "legerdemain",
               "category": "movement",
-              "attributes": [
-                "speed"
-              ]
+              "attributes": ["speed"]
             },
             {
               "type": "noncombat",
               "category": "deception",
               "description": "",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "name": "Lie",
               "level": "proficient",
               "skillId": "lie"
@@ -3958,10 +3205,7 @@
               "category": "adventuring",
               "description": "",
               "level": "proficient",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Medicine"
             },
             {
@@ -3969,9 +3213,7 @@
               "description": "",
               "skillId": "toughness",
               "name": "Toughness",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "level": "proficient",
               "type": "defense"
             },
@@ -3980,9 +3222,7 @@
               "category": "melee",
               "level": "unskilled",
               "skillId": "bash",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "description": "",
               "type": "attack"
             },
@@ -3990,9 +3230,7 @@
               "description": "",
               "skillId": "hurl",
               "category": "ranged",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "type": "attack",
               "name": "Hurl",
               "level": "unskilled"
@@ -4001,10 +3239,7 @@
               "name": "Movement",
               "description": "",
               "category": "movement",
-              "attributes": [
-                "might",
-                "speed"
-              ],
+              "attributes": ["might", "speed"],
               "level": "unskilled",
               "type": "noncombat",
               "skillId": "movement"
@@ -4012,10 +3247,7 @@
             {
               "category": "knowledge",
               "level": "proficient",
-              "attributes": [
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["focus", "conviction"],
               "description": "",
               "skillId": "otherknowledge",
               "type": "noncombat",
@@ -4028,10 +3260,7 @@
               "category": "adventuring",
               "skillId": "perception",
               "description": "",
-              "attributes": [
-                "conviction",
-                "focus"
-              ]
+              "attributes": ["conviction", "focus"]
             },
             {
               "level": "proficient",
@@ -4039,20 +3268,14 @@
               "category": "deception",
               "name": "Persuade",
               "description": "",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "type": "noncombat"
             },
             {
               "description": "",
               "name": "Pick Locks",
               "category": "adventuring",
-              "attributes": [
-                "speed",
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["speed", "focus", "conviction"],
               "type": "noncombat",
               "skillId": "picklocks",
               "level": "unskilled"
@@ -4062,10 +3285,7 @@
               "category": "movement",
               "name": "Riding",
               "level": "unskilled",
-              "attributes": [
-                "speed",
-                "conviction"
-              ],
+              "attributes": ["speed", "conviction"],
               "description": "",
               "skillId": "riding"
             },
@@ -4074,18 +3294,13 @@
               "type": "noncombat",
               "description": "",
               "skillId": "sensemotive",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "category": "deception",
               "level": "unskilled"
             },
             {
               "skillId": "sneaking",
-              "attributes": [
-                "speed",
-                "focus"
-              ],
+              "attributes": ["speed", "focus"],
               "level": "proficient",
               "category": "movement",
               "description": "",
@@ -4094,9 +3309,7 @@
             },
             {
               "description": "",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "level": "unskilled",
               "name": "Dodge",
               "type": "defense",
@@ -4105,9 +3318,7 @@
             },
             {
               "category": "melee",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "skillId": "fencing",
               "level": "unskilled",
               "type": "attack",
@@ -4119,9 +3330,7 @@
               "description": "",
               "name": "Quick Draw",
               "category": "ranged",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "skillId": "quickdraw",
               "level": "unskilled"
             },
@@ -4130,10 +3339,7 @@
               "type": "noncombat",
               "category": "adventuring",
               "level": "proficient",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "description": "",
               "skillId": "wildernesslore"
             },
@@ -4141,10 +3347,7 @@
               "level": "trained",
               "type": "noncombat",
               "name": "Advanced Security",
-              "attributes": [
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["focus", "conviction"],
               "category": "adventuring",
               "description": "",
               "skillId": "advancedsecurity"
@@ -4153,10 +3356,7 @@
               "level": "inept",
               "skillId": "dryscienceknowledge",
               "description": "",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Dry Science Knowledge",
               "category": "knowledge",
               "type": "noncombat"
@@ -4165,19 +3365,13 @@
               "description": "",
               "category": "knowledge",
               "level": "inept",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "type": "noncombat",
               "skillId": "drysciencetinker",
               "name": "Dry Science Tinker"
             },
             {
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "skillId": "hacking",
               "type": "noncombat",
               "level": "unskilled",
@@ -4191,21 +3385,14 @@
               "name": "Piloting",
               "type": "noncombat",
               "category": "movement",
-              "attributes": [
-                "speed",
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["speed", "conviction", "focus"],
               "level": "unskilled"
             },
             {
               "type": "noncombat",
               "description": "",
               "skillId": "wetscienceknowledge",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "category": "knowledge",
               "level": "inept",
               "name": "Wet Science Knowledge"
@@ -4214,10 +3401,7 @@
               "description": "",
               "level": "inept",
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Wet Science Tinker",
               "skillId": "wetsciencetinker",
               "category": "knowledge"
@@ -4228,11 +3412,13 @@
         },
         {
           "characterId": "L6RelEYJhlfxng3giK1l",
-          "campaignId": "r7BuXcvLh3sGO8EGFcxE",
+          "campaignId": "dino",
           "subtype": "player",
           "experience": 34,
           "equipment": [],
-          "acl": {},
+          "acl": {
+            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
+          },
           "name": "Connecticut (Connie) Butler",
           "initiative": 0,
           "description": "",
@@ -4281,16 +3467,11 @@
               "name": "Command Animal",
               "category": "adventuring",
               "description": "",
-              "attributes": [
-                "conviction",
-                "focus"
-              ]
+              "attributes": ["conviction", "focus"]
             },
             {
               "name": "Faith",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "type": "defense",
               "level": "unskilled",
               "skillId": "faith",
@@ -4300,9 +3481,7 @@
             {
               "description": "",
               "skillId": "righteousfury",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "type": "attack",
               "category": "melee",
               "level": "unskilled",
@@ -4311,9 +3490,7 @@
             {
               "name": "Hip Shot",
               "type": "attack",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "description": "",
               "level": "unskilled",
               "category": "ranged",
@@ -4322,9 +3499,7 @@
             {
               "name": "Combat Prediction",
               "category": "defense",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "level": "unskilled",
               "skillId": "combatprediction",
               "description": "",
@@ -4335,9 +3510,7 @@
               "type": "attack",
               "level": "unskilled",
               "description": "",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "name": "Combat Insight",
               "skillId": "combatinsight"
             },
@@ -4348,25 +3521,19 @@
               "name": "Sniper",
               "description": "",
               "skillId": "sniper",
-              "attributes": [
-                "focus"
-              ]
+              "attributes": ["focus"]
             },
             {
               "name": "Health Check",
               "skillId": "health",
-              "attributes": [
-                "health"
-              ],
+              "attributes": ["health"],
               "type": "health",
               "level": "proficient",
               "description": "",
               "category": "defense"
             },
             {
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "level": "unskilled",
               "category": "initiative",
               "name": "Reflexes",
@@ -4376,9 +3543,7 @@
             },
             {
               "skillId": "tactics",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "type": "initiative",
               "category": "initiative",
               "level": "unskilled",
@@ -4391,9 +3556,7 @@
               "type": "initiative",
               "skillId": "providence",
               "category": "initiative",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "name": "Providence"
             },
             {
@@ -4402,27 +3565,20 @@
               "skillId": "intimidate",
               "category": "defense",
               "level": "unskilled",
-              "attributes": [
-                "conviction",
-                "might"
-              ],
+              "attributes": ["conviction", "might"],
               "type": "noncombat"
             },
             {
               "skillId": "legerdemain",
               "level": "proficient",
               "description": "",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "name": "Legerdemain",
               "type": "noncombat",
               "category": "movement"
             },
             {
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "category": "deception",
               "type": "noncombat",
               "name": "Lie",
@@ -4434,10 +3590,7 @@
               "description": "",
               "skillId": "medicine",
               "category": "adventuring",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Medicine",
               "type": "noncombat",
               "level": "proficient"
@@ -4446,17 +3599,13 @@
               "name": "Toughness",
               "level": "proficient",
               "skillId": "toughness",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "type": "defense",
               "category": "defense",
               "description": ""
             },
             {
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "skillId": "bash",
               "category": "melee",
               "name": "Bashing",
@@ -4471,16 +3620,11 @@
               "type": "attack",
               "level": "unskilled",
               "description": "",
-              "attributes": [
-                "might"
-              ]
+              "attributes": ["might"]
             },
             {
               "description": "",
-              "attributes": [
-                "might",
-                "speed"
-              ],
+              "attributes": ["might", "speed"],
               "level": "unskilled",
               "name": "Movement",
               "type": "noncombat",
@@ -4488,10 +3632,7 @@
               "category": "movement"
             },
             {
-              "attributes": [
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["focus", "conviction"],
               "name": "Knowledge",
               "type": "noncombat",
               "category": "knowledge",
@@ -4505,10 +3646,7 @@
               "name": "Perception",
               "description": "",
               "category": "adventuring",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "skillId": "perception"
             },
             {
@@ -4518,16 +3656,10 @@
               "name": "Persuade",
               "level": "proficient",
               "skillId": "persuade",
-              "attributes": [
-                "focus"
-              ]
+              "attributes": ["focus"]
             },
             {
-              "attributes": [
-                "speed",
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["speed", "focus", "conviction"],
               "category": "adventuring",
               "name": "Pick Locks",
               "type": "noncombat",
@@ -4542,28 +3674,20 @@
               "category": "movement",
               "skillId": "riding",
               "type": "noncombat",
-              "attributes": [
-                "speed",
-                "conviction"
-              ]
+              "attributes": ["speed", "conviction"]
             },
             {
               "description": "",
               "name": "Sense Motive",
               "type": "noncombat",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "category": "deception",
               "level": "unskilled",
               "skillId": "sensemotive"
             },
             {
               "level": "proficient",
-              "attributes": [
-                "speed",
-                "focus"
-              ],
+              "attributes": ["speed", "focus"],
               "type": "noncombat",
               "category": "movement",
               "skillId": "sneaking",
@@ -4575,9 +3699,7 @@
               "type": "defense",
               "category": "defense",
               "level": "unskilled",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "name": "Dodge",
               "skillId": "dodge"
             },
@@ -4586,9 +3708,7 @@
               "description": "",
               "skillId": "fencing",
               "level": "unskilled",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "type": "attack",
               "category": "melee"
             },
@@ -4598,9 +3718,7 @@
               "name": "Quick Draw",
               "category": "ranged",
               "skillId": "quickdraw",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "type": "attack"
             },
             {
@@ -4609,10 +3727,7 @@
               "category": "adventuring",
               "level": "proficient",
               "description": "",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "type": "noncombat"
             },
             {
@@ -4621,10 +3736,7 @@
               "name": "Advanced Security",
               "type": "noncombat",
               "description": "",
-              "attributes": [
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["focus", "conviction"],
               "level": "trained"
             },
             {
@@ -4633,10 +3745,7 @@
               "description": "",
               "level": "inept",
               "skillId": "dryscienceknowledge",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "category": "knowledge"
             },
             {
@@ -4644,10 +3753,7 @@
               "category": "knowledge",
               "level": "inept",
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "description": "",
               "skillId": "drysciencetinker"
             },
@@ -4656,10 +3762,7 @@
               "type": "noncombat",
               "level": "unskilled",
               "name": "Hacking",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "description": "",
               "category": "adventuring"
             },
@@ -4669,11 +3772,7 @@
               "skillId": "piloting",
               "description": "",
               "type": "noncombat",
-              "attributes": [
-                "speed",
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["speed", "conviction", "focus"],
               "category": "movement"
             },
             {
@@ -4682,20 +3781,14 @@
               "description": "",
               "name": "Wet Science Knowledge",
               "level": "inept",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "skillId": "wetscienceknowledge"
             },
             {
               "level": "inept",
               "skillId": "wetsciencetinker",
               "name": "Wet Science Tinker",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "description": "",
               "category": "knowledge",
               "type": "noncombat"
@@ -4705,7 +3798,7 @@
         },
         {
           "characterId": "N0XLQabod6OkxiDQafl4",
-          "campaignId": "r7BuXcvLh3sGO8EGFcxE",
+          "campaignId": "dino",
           "equipment": [],
           "description": "",
           "subtype": "player",
@@ -4717,27 +3810,20 @@
               "skillId": "commandanimal",
               "description": "",
               "level": "unskilled",
-              "attributes": [
-                "conviction",
-                "focus"
-              ]
+              "attributes": ["conviction", "focus"]
             },
             {
               "level": "unskilled",
               "name": "Faith",
               "skillId": "faith",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "type": "defense",
               "description": "",
               "category": "defense"
             },
             {
               "description": "",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "skillId": "righteousfury",
               "level": "unskilled",
               "type": "attack",
@@ -4747,18 +3833,14 @@
             {
               "description": "",
               "name": "Hip Shot",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "category": "ranged",
               "type": "attack",
               "skillId": "hipshot",
               "level": "unskilled"
             },
             {
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "skillId": "combatprediction",
               "level": "unskilled",
               "type": "defense",
@@ -4767,9 +3849,7 @@
               "category": "defense"
             },
             {
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "skillId": "combatinsight",
               "category": "melee",
               "type": "attack",
@@ -4778,9 +3858,7 @@
               "name": "Combat Insight"
             },
             {
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "level": "unskilled",
               "category": "ranged",
               "name": "Sniper",
@@ -4789,9 +3867,7 @@
               "type": "attack"
             },
             {
-              "attributes": [
-                "health"
-              ],
+              "attributes": ["health"],
               "category": "defense",
               "skillId": "health",
               "type": "health",
@@ -4800,9 +3876,7 @@
               "name": "Health Check"
             },
             {
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "category": "initiative",
               "level": "unskilled",
               "type": "initiative",
@@ -4817,9 +3891,7 @@
               "level": "unskilled",
               "description": "",
               "skillId": "tactics",
-              "attributes": [
-                "focus"
-              ]
+              "attributes": ["focus"]
             },
             {
               "level": "unskilled",
@@ -4827,27 +3899,20 @@
               "name": "Providence",
               "description": "",
               "category": "initiative",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "type": "initiative"
             },
             {
               "level": "unskilled",
               "description": "",
               "skillId": "intimidate",
-              "attributes": [
-                "conviction",
-                "might"
-              ],
+              "attributes": ["conviction", "might"],
               "type": "noncombat",
               "category": "defense",
               "name": "Intimidate"
             },
             {
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "name": "Legerdemain",
               "level": "proficient",
               "category": "movement",
@@ -4859,9 +3924,7 @@
               "level": "proficient",
               "description": "",
               "skillId": "lie",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "type": "noncombat",
               "category": "deception",
               "name": "Lie"
@@ -4869,19 +3932,14 @@
             {
               "level": "proficient",
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Medicine",
               "skillId": "medicine",
               "category": "adventuring",
               "description": ""
             },
             {
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "type": "defense",
               "name": "Toughness",
               "category": "defense",
@@ -4892,9 +3950,7 @@
             {
               "category": "melee",
               "type": "attack",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "name": "Bashing",
               "level": "unskilled",
               "skillId": "bash",
@@ -4904,9 +3960,7 @@
               "description": "",
               "level": "unskilled",
               "category": "ranged",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "name": "Hurl",
               "type": "attack",
               "skillId": "hurl"
@@ -4916,19 +3970,13 @@
               "level": "unskilled",
               "name": "Movement",
               "description": "",
-              "attributes": [
-                "might",
-                "speed"
-              ],
+              "attributes": ["might", "speed"],
               "type": "noncombat",
               "category": "movement"
             },
             {
               "description": "",
-              "attributes": [
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["focus", "conviction"],
               "type": "noncombat",
               "skillId": "otherknowledge",
               "level": "proficient",
@@ -4941,10 +3989,7 @@
               "name": "Perception",
               "level": "proficient",
               "category": "adventuring",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "type": "noncombat"
             },
             {
@@ -4952,9 +3997,7 @@
               "type": "noncombat",
               "category": "deception",
               "description": "",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "level": "proficient",
               "skillId": "persuade"
             },
@@ -4965,19 +4008,12 @@
               "description": "",
               "skillId": "picklocks",
               "level": "unskilled",
-              "attributes": [
-                "speed",
-                "focus",
-                "conviction"
-              ]
+              "attributes": ["speed", "focus", "conviction"]
             },
             {
               "name": "Riding",
               "category": "movement",
-              "attributes": [
-                "speed",
-                "conviction"
-              ],
+              "attributes": ["speed", "conviction"],
               "description": "",
               "type": "noncombat",
               "level": "unskilled",
@@ -4987,18 +4023,13 @@
               "level": "unskilled",
               "description": "",
               "type": "noncombat",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "category": "deception",
               "skillId": "sensemotive",
               "name": "Sense Motive"
             },
             {
-              "attributes": [
-                "speed",
-                "focus"
-              ],
+              "attributes": ["speed", "focus"],
               "level": "proficient",
               "type": "noncombat",
               "skillId": "sneaking",
@@ -5011,9 +4042,7 @@
               "name": "Dodge",
               "category": "defense",
               "skillId": "dodge",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "level": "unskilled",
               "type": "defense"
             },
@@ -5023,17 +4052,13 @@
               "category": "melee",
               "description": "",
               "type": "attack",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "name": "Fencing"
             },
             {
               "level": "unskilled",
               "skillId": "quickdraw",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "category": "ranged",
               "type": "attack",
               "description": "",
@@ -5042,20 +4067,14 @@
             {
               "name": "Wilderness Lore",
               "category": "adventuring",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "level": "proficient",
               "skillId": "wildernesslore",
               "type": "noncombat",
               "description": ""
             },
             {
-              "attributes": [
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["focus", "conviction"],
               "description": "",
               "level": "trained",
               "type": "noncombat",
@@ -5066,20 +4085,14 @@
             {
               "level": "inept",
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Dry Science Knowledge",
               "description": "",
               "skillId": "dryscienceknowledge",
               "category": "knowledge"
             },
             {
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "type": "noncombat",
               "skillId": "drysciencetinker",
               "name": "Dry Science Tinker",
@@ -5089,10 +4102,7 @@
             },
             {
               "category": "adventuring",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "level": "unskilled",
               "type": "noncombat",
               "description": "",
@@ -5101,11 +4111,7 @@
             },
             {
               "skillId": "piloting",
-              "attributes": [
-                "speed",
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["speed", "conviction", "focus"],
               "type": "noncombat",
               "level": "unskilled",
               "name": "Piloting",
@@ -5115,20 +4121,14 @@
             {
               "type": "noncombat",
               "name": "Wet Science Knowledge",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "level": "inept",
               "skillId": "wetscienceknowledge",
               "category": "knowledge",
               "description": ""
             },
             {
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "level": "inept",
               "skillId": "wetsciencetinker",
               "type": "noncombat",
@@ -5176,13 +4176,15 @@
             }
           },
           "name": "Thomson Anning",
-          "acl": {},
+          "acl": {
+            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
+          },
           "experience": 16,
           "initiative": 0
         },
         {
           "characterId": "PgIHQBeFmEzVErSV4yCT",
-          "campaignId": "r7BuXcvLh3sGO8EGFcxE",
+          "campaignId": "dino",
           "attributes": {
             "health": {
               "wound": false,
@@ -5205,9 +4207,7 @@
           "subtype": "companion",
           "skills": [
             {
-              "attributes": [
-                "loyalty"
-              ],
+              "attributes": ["loyalty"],
               "type": "attack",
               "level": "proficient",
               "description": "Companion Attack Skill",
@@ -5220,17 +4220,13 @@
               "skillId": "defense",
               "description": "Companion Defense Skill",
               "category": "defense",
-              "attributes": [
-                "loyalty"
-              ],
+              "attributes": ["loyalty"],
               "type": "defense",
               "name": "Defense"
             },
             {
               "category": "defense",
-              "attributes": [
-                "health"
-              ],
+              "attributes": ["health"],
               "level": "proficient",
               "type": "health",
               "skillId": "health",
@@ -5249,9 +4245,9 @@
         },
         {
           "characterId": "T3qN0aUj4xd00UKWE8Jv",
-          "campaignId": "r7BuXcvLh3sGO8EGFcxE",
+          "campaignId": "dino",
           "acl": {
-            "megan@albertelli.com": "admin"
+            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
           },
           "attack": 2,
           "attributes": {
@@ -5290,9 +4286,7 @@
               "level": "proficient",
               "category": "melee",
               "skillId": "attack",
-              "attributes": [
-                "loyalty"
-              ],
+              "attributes": ["loyalty"],
               "type": "attack",
               "name": "Attack"
             },
@@ -5302,17 +4296,13 @@
               "category": "defense",
               "type": "defense",
               "level": "proficient",
-              "attributes": [
-                "loyalty"
-              ],
+              "attributes": ["loyalty"],
               "skillId": "defense"
             },
             {
               "description": "Companion Health Check",
               "level": "proficient",
-              "attributes": [
-                "health"
-              ],
+              "attributes": ["health"],
               "skillId": "health",
               "name": "Health",
               "type": "health",
@@ -5323,12 +4313,9 @@
         },
         {
           "characterId": "XWVF44L7FsWgXjAYLnyp",
-          "campaignId": "r7BuXcvLh3sGO8EGFcxE",
+          "campaignId": "dino",
           "baseInitiative": 4,
-          "abilities": [
-            "hands",
-            "birdseye"
-          ],
+          "abilities": ["hands", "birdseye"],
           "subtype": "companion",
           "attack": 2,
           "defend": 2,
@@ -5343,9 +4330,7 @@
               "description": "Companion Attack Skill",
               "level": "proficient",
               "category": "melee",
-              "attributes": [
-                "loyalty"
-              ],
+              "attributes": ["loyalty"],
               "skillId": "attack"
             },
             {
@@ -5355,16 +4340,12 @@
               "category": "defense",
               "description": "Companion Defense Skill",
               "skillId": "defense",
-              "attributes": [
-                "loyalty"
-              ]
+              "attributes": ["loyalty"]
             },
             {
               "type": "health",
               "name": "Health",
-              "attributes": [
-                "health"
-              ],
+              "attributes": ["health"],
               "skillId": "health",
               "level": "proficient",
               "category": "defense",
@@ -5372,8 +4353,7 @@
             }
           ],
           "acl": {
-            "UJxxtQzaOzWEFT2vtniCaDQdk2u2": "admin",
-            "RUEOViYBeHPUBClCUTQCmIhfrlT2": "admin"
+            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
           },
           "name": "Sparks",
           "attributes": {
@@ -5396,7 +4376,7 @@
         },
         {
           "characterId": "lkHqZmhp3Nr9kwqr5nsS",
-          "campaignId": "r7BuXcvLh3sGO8EGFcxE",
+          "campaignId": "dino",
           "skills": [
             {
               "skillId": "commandanimal",
@@ -5404,10 +4384,7 @@
               "description": "",
               "type": "noncombat",
               "name": "Command Animal",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "category": "adventuring"
             },
             {
@@ -5417,9 +4394,7 @@
               "skillId": "faith",
               "type": "defense",
               "description": "",
-              "attributes": [
-                "conviction"
-              ]
+              "attributes": ["conviction"]
             },
             {
               "level": "unskilled",
@@ -5427,16 +4402,12 @@
               "name": "Righteous Fury",
               "category": "melee",
               "type": "attack",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "description": ""
             },
             {
               "level": "unskilled",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "skillId": "hipshot",
               "description": "",
               "name": "Hip Shot",
@@ -5449,9 +4420,7 @@
               "category": "defense",
               "level": "proficient",
               "description": "",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "type": "defense"
             },
             {
@@ -5460,17 +4429,13 @@
               "name": "Combat Insight",
               "category": "melee",
               "type": "attack",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "description": ""
             },
             {
               "name": "Sniper",
               "description": "",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "skillId": "sniper",
               "category": "ranged",
               "level": "unskilled",
@@ -5478,9 +4443,7 @@
             },
             {
               "type": "health",
-              "attributes": [
-                "health"
-              ],
+              "attributes": ["health"],
               "description": "",
               "name": "Health Check",
               "category": "defense",
@@ -5488,9 +4451,7 @@
               "skillId": "health"
             },
             {
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "category": "initiative",
               "skillId": "reflexes",
               "level": "unskilled",
@@ -5504,15 +4465,11 @@
               "name": "Tactics",
               "description": "",
               "skillId": "tactics",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "level": "proficient"
             },
             {
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "skillId": "providence",
               "description": "",
               "level": "proficient",
@@ -5523,10 +4480,7 @@
             {
               "level": "unskilled",
               "name": "Intimidate",
-              "attributes": [
-                "conviction",
-                "might"
-              ],
+              "attributes": ["conviction", "might"],
               "category": "defense",
               "description": "",
               "skillId": "intimidate",
@@ -5535,18 +4489,14 @@
             {
               "description": "",
               "type": "noncombat",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "level": "proficient",
               "skillId": "legerdemain",
               "name": "Legerdemain",
               "category": "movement"
             },
             {
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "description": "",
               "skillId": "lie",
               "category": "deception",
@@ -5557,10 +4507,7 @@
             {
               "skillId": "medicine",
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "level": "unskilled",
               "description": "",
               "name": "Medicine",
@@ -5572,9 +4519,7 @@
               "skillId": "toughness",
               "name": "Toughness",
               "category": "defense",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "type": "defense"
             },
             {
@@ -5584,26 +4529,19 @@
               "type": "attack",
               "category": "melee",
               "description": "",
-              "attributes": [
-                "might"
-              ]
+              "attributes": ["might"]
             },
             {
               "category": "ranged",
               "skillId": "hurl",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "level": "unskilled",
               "type": "attack",
               "name": "Hurl",
               "description": ""
             },
             {
-              "attributes": [
-                "might",
-                "speed"
-              ],
+              "attributes": ["might", "speed"],
               "skillId": "movement",
               "name": "Movement",
               "description": "",
@@ -5612,10 +4550,7 @@
               "category": "movement"
             },
             {
-              "attributes": [
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["focus", "conviction"],
               "skillId": "otherknowledge",
               "name": "Knowledge",
               "level": "unskilled",
@@ -5625,10 +4560,7 @@
             },
             {
               "name": "Perception",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "type": "noncombat",
               "category": "adventuring",
               "level": "proficient",
@@ -5641,19 +4573,13 @@
               "skillId": "persuade",
               "description": "",
               "type": "noncombat",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "level": "proficient"
             },
             {
               "description": "",
               "level": "proficient",
-              "attributes": [
-                "speed",
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["speed", "focus", "conviction"],
               "category": "adventuring",
               "name": "Pick Locks",
               "skillId": "picklocks",
@@ -5662,10 +4588,7 @@
             {
               "name": "Riding",
               "level": "unskilled",
-              "attributes": [
-                "speed",
-                "conviction"
-              ],
+              "attributes": ["speed", "conviction"],
               "skillId": "riding",
               "description": "",
               "type": "noncombat",
@@ -5674,9 +4597,7 @@
             {
               "name": "Sense Motive",
               "description": "",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "skillId": "sensemotive",
               "category": "deception",
               "level": "proficient",
@@ -5684,10 +4605,7 @@
             },
             {
               "category": "movement",
-              "attributes": [
-                "speed",
-                "focus"
-              ],
+              "attributes": ["speed", "focus"],
               "description": "",
               "level": "proficient",
               "type": "noncombat",
@@ -5697,9 +4615,7 @@
             {
               "description": "",
               "level": "proficient",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "type": "defense",
               "category": "defense",
               "name": "Dodge",
@@ -5711,17 +4627,13 @@
               "category": "melee",
               "type": "attack",
               "name": "Fencing",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "skillId": "fencing"
             },
             {
               "skillId": "quickdraw",
               "description": "",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "type": "attack",
               "name": "Quick Draw",
               "category": "ranged",
@@ -5732,10 +4644,7 @@
               "level": "unskilled",
               "type": "noncombat",
               "category": "adventuring",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Wilderness Lore",
               "skillId": "wildernesslore"
             },
@@ -5744,10 +4653,7 @@
               "skillId": "advancedsecurity",
               "category": "adventuring",
               "name": "Advanced Security",
-              "attributes": [
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["focus", "conviction"],
               "description": "",
               "level": "trained"
             },
@@ -5757,10 +4663,7 @@
               "category": "knowledge",
               "description": "",
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "level": "proficient"
             },
             {
@@ -5768,10 +4671,7 @@
               "type": "noncombat",
               "category": "knowledge",
               "level": "proficient",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Dry Science Tinker",
               "skillId": "drysciencetinker"
             },
@@ -5781,10 +4681,7 @@
               "skillId": "hacking",
               "name": "Hacking",
               "type": "noncombat",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "level": "proficient"
             },
             {
@@ -5793,30 +4690,20 @@
               "type": "noncombat",
               "skillId": "piloting",
               "name": "Piloting",
-              "attributes": [
-                "speed",
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["speed", "conviction", "focus"],
               "level": "proficient"
             },
             {
               "description": "",
               "category": "knowledge",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Wet Science Knowledge",
               "skillId": "wetscienceknowledge",
               "type": "noncombat",
               "level": "unskilled"
             },
             {
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "name": "Wet Science Tinker",
               "type": "noncombat",
               "level": "unskilled",
@@ -5829,8 +4716,7 @@
           "subtype": "player",
           "initiative": 0,
           "acl": {
-            "RUEOViYBeHPUBClCUTQCmIhfrlT2": "admin",
-            "UJxxtQzaOzWEFT2vtniCaDQdk2u2": "admin"
+            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
           },
           "attributes": {
             "speed": {
@@ -5876,16 +4762,13 @@
         },
         {
           "characterId": "tRnBF0ROmo6vbjhvxXMU",
-          "campaignId": "r7BuXcvLh3sGO8EGFcxE",
+          "campaignId": "dino",
           "name": "Momentus Undergrave",
           "skills": [
             {
               "level": "unskilled",
               "category": "adventuring",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "skillId": "commandanimal",
               "description": "",
               "name": "Command Animal",
@@ -5893,9 +4776,7 @@
             },
             {
               "type": "defense",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "description": "",
               "level": "unskilled",
               "skillId": "faith",
@@ -5904,9 +4785,7 @@
             },
             {
               "type": "attack",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "skillId": "righteousfury",
               "category": "melee",
               "level": "unskilled",
@@ -5915,9 +4794,7 @@
             },
             {
               "skillId": "hipshot",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "level": "unskilled",
               "category": "ranged",
               "description": "",
@@ -5931,14 +4808,10 @@
               "name": "Combat Prediction",
               "type": "defense",
               "description": "",
-              "attributes": [
-                "focus"
-              ]
+              "attributes": ["focus"]
             },
             {
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "skillId": "combatinsight",
               "type": "attack",
               "level": "unskilled",
@@ -5953,26 +4826,20 @@
               "level": "unskilled",
               "description": "",
               "type": "attack",
-              "attributes": [
-                "focus"
-              ]
+              "attributes": ["focus"]
             },
             {
               "category": "defense",
               "name": "Health Check",
               "description": "",
               "skillId": "health",
-              "attributes": [
-                "health"
-              ],
+              "attributes": ["health"],
               "level": "proficient",
               "type": "health"
             },
             {
               "description": "",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "type": "initiative",
               "name": "Reflexes",
               "category": "initiative",
@@ -5984,16 +4851,12 @@
               "name": "Tactics",
               "type": "initiative",
               "skillId": "tactics",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "category": "initiative",
               "level": "unskilled"
             },
             {
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "category": "initiative",
               "description": "",
               "level": "unskilled",
@@ -6008,15 +4871,10 @@
               "name": "Intimidate",
               "type": "noncombat",
               "category": "defense",
-              "attributes": [
-                "conviction",
-                "might"
-              ]
+              "attributes": ["conviction", "might"]
             },
             {
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "level": "proficient",
               "name": "Legerdemain",
               "category": "movement",
@@ -6026,9 +4884,7 @@
             },
             {
               "level": "proficient",
-              "attributes": [
-                "conviction"
-              ],
+              "attributes": ["conviction"],
               "type": "noncombat",
               "description": "",
               "skillId": "lie",
@@ -6036,10 +4892,7 @@
               "category": "deception"
             },
             {
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "category": "adventuring",
               "level": "proficient",
               "type": "noncombat",
@@ -6053,9 +4906,7 @@
               "type": "defense",
               "category": "defense",
               "name": "Toughness",
-              "attributes": [
-                "might"
-              ],
+              "attributes": ["might"],
               "skillId": "toughness"
             },
             {
@@ -6065,9 +4916,7 @@
               "name": "Bashing",
               "level": "unskilled",
               "description": "",
-              "attributes": [
-                "might"
-              ]
+              "attributes": ["might"]
             },
             {
               "category": "ranged",
@@ -6076,15 +4925,10 @@
               "level": "unskilled",
               "description": "",
               "type": "attack",
-              "attributes": [
-                "might"
-              ]
+              "attributes": ["might"]
             },
             {
-              "attributes": [
-                "might",
-                "speed"
-              ],
+              "attributes": ["might", "speed"],
               "category": "movement",
               "level": "unskilled",
               "description": "",
@@ -6097,10 +4941,7 @@
               "description": "",
               "type": "noncombat",
               "level": "proficient",
-              "attributes": [
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["focus", "conviction"],
               "skillId": "otherknowledge",
               "name": "Knowledge"
             },
@@ -6108,19 +4949,14 @@
               "description": "",
               "level": "proficient",
               "name": "Perception",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "skillId": "perception",
               "category": "adventuring",
               "type": "noncombat"
             },
             {
               "category": "deception",
-              "attributes": [
-                "focus"
-              ],
+              "attributes": ["focus"],
               "description": "",
               "type": "noncombat",
               "skillId": "persuade",
@@ -6134,11 +4970,7 @@
               "skillId": "picklocks",
               "type": "noncombat",
               "level": "unskilled",
-              "attributes": [
-                "speed",
-                "focus",
-                "conviction"
-              ]
+              "attributes": ["speed", "focus", "conviction"]
             },
             {
               "level": "unskilled",
@@ -6146,10 +4978,7 @@
               "description": "",
               "name": "Riding",
               "category": "movement",
-              "attributes": [
-                "speed",
-                "conviction"
-              ],
+              "attributes": ["speed", "conviction"],
               "skillId": "riding"
             },
             {
@@ -6159,17 +4988,12 @@
               "level": "unskilled",
               "description": "",
               "type": "noncombat",
-              "attributes": [
-                "focus"
-              ]
+              "attributes": ["focus"]
             },
             {
               "skillId": "sneaking",
               "level": "proficient",
-              "attributes": [
-                "speed",
-                "focus"
-              ],
+              "attributes": ["speed", "focus"],
               "description": "",
               "name": "Sneaking",
               "type": "noncombat",
@@ -6178,9 +5002,7 @@
             {
               "description": "",
               "category": "defense",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "type": "defense",
               "level": "unskilled",
               "skillId": "dodge",
@@ -6190,9 +5012,7 @@
               "skillId": "fencing",
               "description": "",
               "category": "melee",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "type": "attack",
               "level": "unskilled",
               "name": "Fencing"
@@ -6202,19 +5022,14 @@
               "description": "",
               "type": "attack",
               "category": "ranged",
-              "attributes": [
-                "speed"
-              ],
+              "attributes": ["speed"],
               "level": "unskilled",
               "name": "Quick Draw"
             },
             {
               "skillId": "wildernesslore",
               "description": "",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "category": "adventuring",
               "type": "noncombat",
               "name": "Wilderness Lore",
@@ -6223,10 +5038,7 @@
             {
               "category": "adventuring",
               "skillId": "advancedsecurity",
-              "attributes": [
-                "focus",
-                "conviction"
-              ],
+              "attributes": ["focus", "conviction"],
               "description": "",
               "type": "noncombat",
               "name": "Advanced Security",
@@ -6236,10 +5048,7 @@
               "skillId": "dryscienceknowledge",
               "name": "Dry Science Knowledge",
               "description": "",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "type": "noncombat",
               "category": "knowledge",
               "level": "inept"
@@ -6251,16 +5060,10 @@
               "name": "Dry Science Tinker",
               "description": "",
               "category": "knowledge",
-              "attributes": [
-                "conviction",
-                "focus"
-              ]
+              "attributes": ["conviction", "focus"]
             },
             {
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "type": "noncombat",
               "category": "adventuring",
               "name": "Hacking",
@@ -6273,21 +5076,14 @@
               "type": "noncombat",
               "skillId": "piloting",
               "level": "unskilled",
-              "attributes": [
-                "speed",
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["speed", "conviction", "focus"],
               "category": "movement",
               "name": "Piloting"
             },
             {
               "skillId": "wetscienceknowledge",
               "description": "",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "level": "inept",
               "category": "knowledge",
               "type": "noncombat",
@@ -6298,16 +5094,15 @@
               "skillId": "wetsciencetinker",
               "category": "knowledge",
               "description": "",
-              "attributes": [
-                "conviction",
-                "focus"
-              ],
+              "attributes": ["conviction", "focus"],
               "type": "noncombat",
               "name": "Wet Science Tinker"
             }
           ],
           "type": "character",
-          "acl": {},
+          "acl": {
+            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
+          },
           "subtype": "player",
           "experience": 22,
           "equipment": [],
@@ -6353,7 +5148,7 @@
         },
         {
           "characterId": "zstXcehOBFL3zos0FPjV",
-          "campaignId": "r7BuXcvLh3sGO8EGFcxE",
+          "campaignId": "dino",
           "attributes": {
             "health": {
               "pool": 14,
@@ -6377,9 +5172,7 @@
               "type": "attack",
               "description": "Companion Attack Skill",
               "name": "Attack",
-              "attributes": [
-                "loyalty"
-              ],
+              "attributes": ["loyalty"],
               "level": "proficient",
               "skillId": "attack",
               "category": "melee"
@@ -6389,9 +5182,7 @@
               "level": "proficient",
               "skillId": "defense",
               "category": "defense",
-              "attributes": [
-                "loyalty"
-              ],
+              "attributes": ["loyalty"],
               "name": "Defense",
               "type": "defense"
             },
@@ -6399,22 +5190,18 @@
               "category": "defense",
               "description": "Companion Health Check",
               "name": "Health",
-              "attributes": [
-                "health"
-              ],
+              "attributes": ["health"],
               "level": "proficient",
               "skillId": "health",
               "type": "health"
             }
           ],
           "type": "character",
-          "acl": {},
+          "acl": {
+            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
+          },
           "description": "Centrosaurus",
-          "abilities": [
-            "terrify",
-            "sturdyMount",
-            "mountedWeapon"
-          ],
+          "abilities": ["terrify", "sturdyMount", "mountedWeapon"],
           "name": "Dr. Fantabulous",
           "equipment": [],
           "defend": 6,

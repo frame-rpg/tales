@@ -17,7 +17,11 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Campaign } from 'types/campaign';
 import { CampaignService } from 'src/app/data/campaign.service';
 import { CharacterService } from 'src/app/data/character.service';
+import { ChatService } from '../../chat/chat.service';
+import { Message } from 'types/chat';
 import { RollService } from 'src/app/rolls/roll.service';
+import { User } from 'types/user';
+import { UserService } from '../../user/user.service';
 
 type ActionType = 'initiative' | 'noncombat' | 'reset' | 'rest';
 interface Action {
@@ -38,7 +42,9 @@ export class ViewComponent implements OnInit, OnDestroy {
   rolls: Observable<Roll[]>;
   requests: Observable<RollRequest[]>;
   gm: Observable<boolean>;
+  user: Observable<User>;
   destroyingSubject = new BehaviorSubject<boolean>(false);
+  chat: Observable<Message[]>;
   destroying = this.destroyingSubject
     .asObservable()
     .pipe(filter((v) => v === true));
@@ -53,6 +59,8 @@ export class ViewComponent implements OnInit, OnDestroy {
     private characterService: CharacterService,
     private rollService: RollService,
     private route: ActivatedRoute,
+    private userService: UserService,
+    private chatService: ChatService,
     private auth: AngularFireAuth
   ) {}
 
@@ -93,8 +101,17 @@ export class ViewComponent implements OnInit, OnDestroy {
       )
     );
 
+    this.chat = this.campaign.pipe(
+      switchMap((campaign) => this.chatService.list(campaign)),
+      map((msg) => msg.reverse())
+    );
+
     this.rolls = this.campaign.pipe(
       switchMap((campaign) => this.rollService.results(campaign))
+    );
+
+    this.user = this.auth.user.pipe(
+      switchMap((user) => this.userService.get(user.uid))
     );
 
     this.requests = combineLatest([

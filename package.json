@@ -11,7 +11,8 @@
     "buildSeed": "tsc --project admin/tsconfig.json",
     "seedEmulators": "npm run-script buildSeed && env FIRESTORE_EMULATOR_HOST=localhost:8080  node admin/build/seedFF.js --gm d78TvAPWYnU3xVOBAo5TFBCUNmy1 --player ZCOPITFHMmgiKmXpgJRXAhHqgRe2",
     "seedRules": "env FIRESTORE_EMULATOR_HOST=localhost:8080  node rules/seed.js --gm d78TvAPWYnU3xVOBAo5TFBCUNmy1",
-    "testDump": "env FIRESTORE_EMULATOR_HOST=localhost:8080  node admin/build/export.js"
+    "testDump": "env FIRESTORE_EMULATOR_HOST=localhost:8080  node admin/build/export.js",
+    "testSeed": "env FIRESTORE_EMULATOR_HOST=localhost:8080  node admin/build/import.js admin/ffdump.json"
   },
   "private": true,
   "dependencies": {

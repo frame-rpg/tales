@@ -7,6 +7,8 @@ import {
   MatSnackBarModule,
 } from '@angular/material/snack-bar';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -33,6 +35,8 @@ import { NgModule } from '@angular/core';
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 1000 } },
   ],
   imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
     MatButtonModule,
     MatCardModule,
@@ -53,6 +57,8 @@ import { NgModule } from '@angular/core';
     MatTooltipModule,
   ],
   exports: [
+    BrowserModule,
+    BrowserAnimationsModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,

@@ -1,7 +1,9 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { ActionsModule } from 'src/app/actions/actions.module';
 import { CharactersModule } from '../characters/characters.module';
+import { ChatModule } from '../chat/chat.module';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../../core/material/material.module';
 import { NgModule } from '@angular/core';
 import { PipesModule } from 'src/app/core/pipes/pipes.module';
@@ -14,9 +16,11 @@ import { ViewComponent } from './view/view.component';
     CharactersModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     PipesModule,
     ActionsModule,
+    ChatModule,
     RollsModule,
   ],
   exports: [],

@@ -41,7 +41,7 @@ service cloud.firestore {
         allow update: if atLeastPlayer()
         allow delete: if false
       }
-      match /messages/{messageId} {
+      match /chat/{messageId} {
         allow read: if observer()
         allow list: if observer()
         allow create: if atLeastPlayer()
