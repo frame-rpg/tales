@@ -4,7 +4,7 @@
       {{ (character | async)?.name }}
     </div>
     <button mat-icon-button [matMenuTriggerFor]="actionMenu">
-      <mat-icon>more</mat-icon>
+      <mat-icon>more_vert</mat-icon>
     </button>
   </div>
   <div class="characterBody">
@@ -19,31 +19,17 @@
           <mat-icon color="warn">sentiment_very_dissatisfied</mat-icon>
         </div>
         <div class="attributeContent" *ngIf="!attribute.value.wound">
-          <adjust-character *ngIf="!(locked|async)" min="0"
-              [max]="attribute.value.pool" [increment]="-1"
-              [character]="characterScalar"
-              [path]="'attributes.'+attribute.key+'.current'">
-          </adjust-character>
-          <div class="pool">
-            {{ attribute.value.current }} / {{attribute.value.pool}}
-          </div>
-          <adjust-character *ngIf="!(locked|async)" min="0"
-              [max]="attribute.value.pool" [increment]="1"
-              [character]="characterScalar"
-              [path]="'attributes.'+attribute.key+'.current'">
-          </adjust-character>
+          <framesystem-spinner [max]="attribute.value.pool" [min]="0"
+              [initial]="attribute.value.current" #attributeSpinner>
+          </framesystem-spinner>
         </div>
       </div>
-      <div class="attribute" *ngIf="characterScalar.initiative >= 0">
+      <div class="attribute">
         <div class="attributeName">Initiative:</div>
         <div class="attributeContent">
-          <adjust-character *ngIf="!(locked|async)" min="0" [max]="1000"
-              [increment]="0" [character]="character" [path]="'initiative'">
-          </adjust-character>
-          <div class="pool">{{characterScalar.initiative}}</div>
-          <adjust-character *ngIf="!(locked|async)" min="0" [max]="1000"
-              [increment]="1" [character]="character" [path]="'initiative'">
-          </adjust-character>
+          <framesystem-spinner [min]="0"
+              [initial]="(character | async)?.initiative">
+          </framesystem-spinner>
         </div>
       </div>
     </div>
@@ -80,3 +66,5 @@
     </mat-expansion-panel>
   </div>
 </div>
+
+<mat-menu #actionMenu></mat-menu>

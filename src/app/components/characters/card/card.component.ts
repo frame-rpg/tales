@@ -1,18 +1,29 @@
-import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
-import { Character, SkilledCharacter } from 'types/character';
 import {
+  AfterViewInit,
   Component,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
+  QueryList,
   SimpleChanges,
+  ViewChildren,
 } from '@angular/core';
+import {
+  BehaviorSubject,
+  Observable,
+  Subject,
+  combineLatest,
+  merge,
+} from 'rxjs';
+import { Character, SkilledCharacter } from 'types/character';
 import {
   distinctUntilChanged,
   distinctUntilKeyChanged,
   filter,
   map,
+  mergeAll,
+  mergeMap,
   publishReplay,
   refCount,
   scan,
@@ -25,17 +36,20 @@ import {
 
 import { AclType } from 'types/acl';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Attribute } from 'types/attribute';
 import { CharacterId } from 'types/idtypes';
 import { CharacterService } from 'src/app/data/character.service';
 import { CharacterSkill } from 'types/skill';
 import { RollService } from 'src/app/rolls/roll.service';
+import { SpinnerComponent } from 'src/app/shared/spinner.component';
 
 @Component({
   selector: 'character-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
 })
-export class CardComponent implements OnChanges, OnInit, OnDestroy {
+export class CardComponent
+  implements OnChanges, OnInit, OnDestroy, AfterViewInit {
   @Input('character') private _character: CharacterId;
   character: Observable<Character>;
   skills: Observable<CharacterSkill[]>;
@@ -46,11 +60,16 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
   relationship: Observable<AclType>;
   destroyingSubject = new Subject<boolean>();
   destroying = this.destroyingSubject.asObservable();
+  attributeValues: Observable<{ name: string; value: number }>;
   actionSubject = new BehaviorSubject<{
     event: MouseEvent;
     action: 'lock' | 'skill' | 'defend';
     skill?: string;
   }>(null);
+
+  @ViewChildren('attributeSpinner') attributeSpinners: QueryList<
+    SpinnerComponent
+  >;
 
   action = this.actionSubject.asObservable().pipe(
     takeUntil(this.destroying),
@@ -132,6 +151,16 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
     if (changes.character?.currentValue) {
       this.characterIdSubject.next(changes.character.currentValue);
     }
+  }
+
+  ngAfterViewInit() {
+    this.attributeSpinners.changes.subscribe(
+      (spinners: QueryList<SpinnerComponent>) => {
+        spinners.forEach((spinner) =>
+          spinner.current.subscribe((v) => console.log(v))
+        );
+      }
+    );
   }
 
   check(event: MouseEvent, skill: CharacterSkill) {

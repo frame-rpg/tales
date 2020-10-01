@@ -15,6 +15,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MaterialModule } from './core/material/material.module';
 import { NgModule } from '@angular/core';
 import { RollsModule } from './rolls/rolls.module';
+import { SharedModule } from './shared/shared.module';
 
 const firebaseUiAuthConfig: any = {
   signInFlow: 'popup',
@@ -41,6 +42,7 @@ const firebaseUiAuthConfig: any = {
     BrowserModule,
     ComponentsModule,
     CommonModule,
+    SharedModule,
     RollsModule,
     FormsModule,
     ReactiveFormsModule,
