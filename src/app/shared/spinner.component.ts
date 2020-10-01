@@ -1,13 +1,16 @@
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import {
+  debounceTime,
   distinctUntilChanged,
   filter,
   publishReplay,
@@ -17,6 +20,10 @@ import {
   takeUntil,
   tap,
 } from 'rxjs/operators';
+
+import { Character } from 'types/character';
+import { CharacterId } from 'types/idtypes';
+import { CharacterService } from '../data/character.service';
 
 @Component({
   selector: 'framesystem-spinner',
@@ -44,19 +51,26 @@ import {
     `,
   ],
 })
-export class SpinnerComponent implements OnInit, OnDestroy {
-  @Input('max') max: number;
-  @Input('min') min: number;
+export class SpinnerComponent implements OnInit, OnDestroy, OnChanges {
+  @Input('max') max: number = Number.POSITIVE_INFINITY;
+  @Input('min') min: number = 0;
   @Input('initial') initial: number;
-
-  @Output() value = new EventEmitter();
 
   destroying_ = new BehaviorSubject<boolean>(false);
   destroying = this.destroying_.asObservable().pipe(filter((v) => v));
   eventStream = new Subject<number>();
   current: Observable<number>;
 
-  constructor() {}
+  constructor(private characterService: CharacterService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      !changes.initial.firstChange &&
+      changes.initial.currentValue !== changes.initial.previousValue
+    ) {
+      this.eventStream.next(0);
+    }
+  }
 
   ngOnDestroy(): void {
     this.destroying_.next(true);
@@ -75,10 +89,6 @@ export class SpinnerComponent implements OnInit, OnDestroy {
       publishReplay(1),
       refCount()
     );
-    this.current
-      .pipe(takeUntil(this.destroying), distinctUntilChanged())
-      .subscribe((v) => this.value.next(v));
-    this.value.next(clamp(this.initial || 0, this.min, this.max));
   }
 
   emit(v: number) {

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../core/material/material.module';
 import { NgModule } from '@angular/core';
 import { PipesModule } from '../core/pipes/pipes.module';
+import { SharedModule } from '../shared/shared.module';
 import { WoundComponent } from './wound/wound.component';
 
 @NgModule({
@@ -15,6 +16,7 @@ import { WoundComponent } from './wound/wound.component';
     MaterialModule,
     ReactiveFormsModule,
     PipesModule,
+    SharedModule,
   ],
   exports: [AdjustComponent],
 })

@@ -3,33 +3,43 @@
     <div class="name">
       {{ (character | async)?.name }}
     </div>
-    <button mat-icon-button [matMenuTriggerFor]="actionMenu">
+    <button mat-icon-button [matMenuTriggerFor]="actionMenu"
+        *ngIf="(relationship | async) === 'gm'">
       <mat-icon>more_vert</mat-icon>
     </button>
   </div>
   <div class="characterBody">
-    <div class="attributes"
-        *ngIf="(character | async)?.subtype !== 'nonplayer'">
-      <div *ngFor="let attribute of (character | async)?.attributes | keyvalue"
+    <div class="attributes" *ngIf="skilled | async">
+      <div *ngFor="let attribute of attributes | async; trackBy: ('name' | trackByProperty)"
           class="attribute">
         <div class="attributeName">
-          {{attribute.value.name}}:
+          {{attribute.name}}:
         </div>
-        <div *ngIf="attribute.value.wound">
+        <div *ngIf="attribute.wound">
           <mat-icon color="warn">sentiment_very_dissatisfied</mat-icon>
         </div>
-        <div class="attributeContent" *ngIf="!attribute.value.wound">
-          <framesystem-spinner [max]="attribute.value.pool" [min]="0"
-              [initial]="attribute.value.current" #attributeSpinner>
-          </framesystem-spinner>
+        <div class="attributeContent" *ngIf="!attribute.wound">
+          <framesystem-adjust-character [max]="attribute.pool"
+              [initial]="attribute.current"
+              [path]="'attributes.'+attribute.name+'.current'"
+              [character]="character | async | extractId" *ngIf="!locked">
+          </framesystem-adjust-character>
+          <div *ngIf="locked">
+            {{ attribute.current }} / {{ attribute.pool }}
+            {{ attribute.edge > 0 ? '+'+attribute.edge : ''}}
+          </div>
         </div>
       </div>
       <div class="attribute">
         <div class="attributeName">Initiative:</div>
         <div class="attributeContent">
-          <framesystem-spinner [min]="0"
-              [initial]="(character | async)?.initiative">
-          </framesystem-spinner>
+          <framesystem-adjust-character *ngIf="!locked"
+              [initial]="(character | async)?.initiative" path="initiative"
+              [character]="character | async | extractId">
+          </framesystem-adjust-character>
+          <div *ngIf="locked">
+            {{ (character | async)?.initiative }}
+          </div>
         </div>
       </div>
     </div>
@@ -67,4 +77,13 @@
   </div>
 </div>
 
-<mat-menu #actionMenu></mat-menu>
+<mat-menu #actionMenu>
+  <button mat-menu-item (click)="toggleLock()">
+    <mat-icon>{{ locked ? 'lock_open' : 'lock' }}</mat-icon>
+    <span>{{locked ? 'Unlock' : 'Lock'}} Character</span>
+  </button>
+  <button mat-menu-item (click)="triggerDefend($event)">
+    <mat-icon>security</mat-icon>
+    <span>Trigger Defense</span>
+  </button>
+</mat-menu>

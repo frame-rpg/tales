@@ -18,18 +18,16 @@ import {
 } from 'rxjs';
 import { Character, SkilledCharacter } from 'types/character';
 import {
+  debounceTime,
   distinctUntilChanged,
   distinctUntilKeyChanged,
   filter,
   map,
-  mergeAll,
-  mergeMap,
   publishReplay,
   refCount,
   scan,
   startWith,
   switchMap,
-  take,
   takeUntil,
   tap,
 } from 'rxjs/operators';
@@ -48,22 +46,27 @@ import { SpinnerComponent } from 'src/app/shared/spinner.component';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
 })
-export class CardComponent
-  implements OnChanges, OnInit, OnDestroy, AfterViewInit {
+export class CardComponent implements OnChanges, OnInit, OnDestroy {
   @Input('character') private _character: CharacterId;
   character: Observable<Character>;
   skills: Observable<CharacterSkill[]>;
   characterIdSubject: BehaviorSubject<CharacterId>;
-  locked: Observable<boolean>;
+  locked: boolean = true;
   gmOrPlayer: Observable<boolean>;
   player: Observable<boolean>;
   relationship: Observable<AclType>;
   destroyingSubject = new Subject<boolean>();
+  skilled: Observable<boolean>;
   destroying = this.destroyingSubject.asObservable();
+  attributes: Observable<Attribute[]>;
   attributeValues: Observable<{ name: string; value: number }>;
+
+  attributeUpdateStream = new Subject<{ name: string; value: number }>();
+  attributeUpdates: Observable<Record<string, number>>;
+
   actionSubject = new BehaviorSubject<{
     event: MouseEvent;
-    action: 'lock' | 'skill' | 'defend';
+    action: 'lock' | 'skill' | 'defense';
     skill?: string;
   }>(null);
 
@@ -99,7 +102,22 @@ export class CardComponent
         (a, b) =>
           a.characterId === b.characterId && a.campaignId == b.campaignId
       ),
-      switchMap((id) => this.characterService.get(id))
+      switchMap((id) => this.characterService.get(id)),
+      publishReplay(1),
+      refCount()
+    );
+
+    this.skilled = this.character.pipe(
+      map((character) => character.subtype !== 'nonplayer')
+    );
+
+    this.attributes = this.character.pipe(
+      filter((character) => character.subtype !== 'nonplayer'),
+      map((character: SkilledCharacter) =>
+        this.characterAttributeNames[character.subtype].map(
+          (v) => character.attributes[v]
+        )
+      )
     );
 
     this.relationship = combineLatest([this.auth.user, this.character]).pipe(
@@ -122,12 +140,6 @@ export class CardComponent
       )
     );
 
-    this.locked = this.action.pipe(
-      filter(({ action }) => action === 'lock'),
-      scan<any, boolean>((acc) => !acc, true),
-      startWith(true)
-    );
-
     combineLatest([
       this.character.pipe(filter((c) => c.subtype !== 'nonplayer')),
       this.relationship.pipe(filter((r) => ['player', 'gm'].includes(r))),
@@ -145,6 +157,23 @@ export class CardComponent
           self: relationship === 'player',
         });
       });
+
+    combineLatest([
+      this.character.pipe(filter((c) => c.subtype !== 'nonplayer')),
+      this.relationship.pipe(filter((r) => ['player', 'gm'].includes(r))),
+      this.action.pipe(filter((a) => a.action === 'defense')),
+    ])
+      .pipe(
+        takeUntil(this.destroying),
+        distinctUntilChanged((a, b) => a[2].event === b[2].event)
+      )
+      .subscribe(([character, relationship]) => {
+        this.rollService.request({
+          character: character as SkilledCharacter,
+          type: 'defense',
+          self: relationship === 'player',
+        });
+      });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -153,21 +182,19 @@ export class CardComponent
     }
   }
 
-  ngAfterViewInit() {
-    this.attributeSpinners.changes.subscribe(
-      (spinners: QueryList<SpinnerComponent>) => {
-        spinners.forEach((spinner) =>
-          spinner.current.subscribe((v) => console.log(v))
-        );
-      }
-    );
+  poolChange(name: string, value: number) {
+    this.attributeUpdateStream.next({ name, value });
   }
 
   check(event: MouseEvent, skill: CharacterSkill) {
     this.actionSubject.next({ event, action: 'skill', skill: skill.skillId });
   }
 
-  toggleLock(event: MouseEvent) {
-    this.actionSubject.next({ event, action: 'lock' });
+  toggleLock() {
+    this.locked = !this.locked;
+  }
+
+  triggerDefend(e: MouseEvent) {
+    this.actionSubject.next({ event: e, action: 'defense' });
   }
 }

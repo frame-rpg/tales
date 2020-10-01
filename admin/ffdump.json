@@ -339,7 +339,8 @@
         ],
         "description": "also some kind of quest or whatever",
         "acl": {
-          "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
+          "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm",
+          "Jf05035Th7OeMDguUN893kvM9wD2": "player"
         },
         "type": "campaign"
       },
@@ -443,7 +444,8 @@
           },
           "type": "character",
           "acl": {
-            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
+            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm",
+            "Jf05035Th7OeMDguUN893kvM9wD2": "player"
           },
           "skills": [
             {
@@ -1237,7 +1239,8 @@
           "name": "Jordiz Shirodz",
           "description": "",
           "acl": {
-            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm"
+            "d78TvAPWYnU3xVOBAo5TFBCUNmy1": "gm",
+            "Jf05035Th7OeMDguUN893kvM9wD2": "player"
           },
           "type": "character"
         },

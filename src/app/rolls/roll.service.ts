@@ -48,7 +48,7 @@ interface AttackRequestData extends BaseRequestData {
 }
 
 interface DefenseRequestData extends BaseRequestData {
-  type: 'attack';
+  type: 'defense';
   self: boolean;
   character: SkilledCharacter;
 }
@@ -150,7 +150,6 @@ export class RollService {
   }
 
   async resolve(roll: RollRequest, character: SkilledCharacter) {
-    console.log(roll);
     const result = await this.dialogService
       .open<ResolveComponent, InjectedData, RollResult>(ResolveComponent, {
         data: { roll, character },
@@ -162,7 +161,6 @@ export class RollService {
     if (!result) {
       return;
     }
-    console.log(result);
     if (result.rollId) {
       await this.firestore
         .doc(`/campaigns/${result.character.campaignId}/rolls/${result.rollId}`)
