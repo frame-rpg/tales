@@ -48,13 +48,14 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
   destroying = this.destroyingSubject.asObservable();
   actionSubject = new BehaviorSubject<{
     event: MouseEvent;
-    action: 'lock' | 'skill';
+    action: 'lock' | 'skill' | 'defend';
     skill?: string;
   }>(null);
+
   action = this.actionSubject.asObservable().pipe(
     takeUntil(this.destroying),
     filter((v) => !!v),
-    distinctUntilChanged((a, b) => a === b)
+    distinctUntilChanged((a, b) => a.event === b.event)
   );
 
   characterAttributeNames = {

@@ -1,20 +1,16 @@
-<div class="playerCard" *ngIf="character | async as characterScalar">
+<div class="playerCard">
   <div class="nameRow">
     <div class="name">
-      {{ characterScalar.name }}
+      {{ (character | async)?.name }}
     </div>
-    <div class="lock">
-      <button mat-icon-button (click)="toggleLock($event)"
-          *ngIf="(relationship | async) === 'gm'">
-        <mat-icon inline="true" class="lockIcon">
-          {{ (locked | async) ? 'lock' : 'lock_open'}}
-        </mat-icon>
-      </button>
-    </div>
+    <button mat-icon-button [matMenuTriggerFor]="actionMenu">
+      <mat-icon>more</mat-icon>
+    </button>
   </div>
   <div class="characterBody">
-    <div class="attributes" *ngIf="characterScalar.subtype !== 'nonplayer'">
-      <div *ngFor="let attribute of characterScalar.attributes | keyvalue"
+    <div class="attributes"
+        *ngIf="(character | async)?.subtype !== 'nonplayer'">
+      <div *ngFor="let attribute of (character | async)?.attributes | keyvalue"
           class="attribute">
         <div class="attributeName">
           {{attribute.value.name}}:
@@ -51,7 +47,7 @@
         </div>
       </div>
     </div>
-    <mat-expansion-panel *ngIf="characterScalar.subtype !== 'nonplayer'">
+    <mat-expansion-panel *ngIf="(character | async)?.subtype !== 'nonplayer'">
       <mat-expansion-panel-header>
         <mat-panel-title>Skills</mat-panel-title>
       </mat-expansion-panel-header>
@@ -71,11 +67,11 @@
         </div>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="characterScalar.equipment.length > 0">
+    <mat-expansion-panel *ngIf="(character | async)?.equipment.length > 0">
       <mat-expansion-panel-header>
         <mat-panel-title>Equipment</mat-panel-title>
       </mat-expansion-panel-header>
-      <div *ngFor="let item of characterScalar.equipment" class="item">
+      <div *ngFor="let item of (character | async)?.equipment" class="item">
         <div>
           {{item.name}}
         </div>
