@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.characters = exports.campaign = void 0;
-var equipment_1 = require("./equipment");
-var util_1 = require("./util");
-var skills_1 = require("./skills");
-var localSkills = [
+const equipment_1 = require("./equipment");
+const util_1 = require("./util");
+const skills_1 = require("./skills");
+const localSkills = [
     {
         skillId: 'arcaneknowledge',
         type: 'noncombat',

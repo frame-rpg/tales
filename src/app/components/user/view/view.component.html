@@ -1,0 +1,14 @@
+<div class="avatarBlock">
+  <div class="avatar">
+    <img [src]="url" *ngIf="avatar | async as url; else noImg">
+  </div>
+  <h1 class="name">{{ name | async }}</h1>
+</div>
+
+<button mat-button [routerLink]="['./edit']" *ngIf="canEdit | async">
+  <mat-icon>edit</mat-icon><span>Edit</span>
+</button>
+
+<ng-template #noImg>
+  <div class="empty">No Image.</div>
+</ng-template>

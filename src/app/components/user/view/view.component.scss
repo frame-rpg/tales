@@ -1,0 +1,27 @@
+.avatarBlock {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.avatar {
+  display: flex;
+  flex: 0 0 auto;
+  margin: 12px;
+}
+
+.attributes {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.empty {
+  background-color: #cccccc;
+  height: 128px;
+  width: 128px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

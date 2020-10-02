@@ -1,8 +1,20 @@
-import { filter, map, switchMap, take, tap } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  distinctUntilKeyChanged,
+  filter,
+  map,
+  publishReplay,
+  refCount,
+  startWith,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../../../../types/user';
 import { firestore } from 'firebase';
@@ -17,17 +29,50 @@ export class UserService {
     private router: Router
   ) {}
 
+  hasPrivilege(priv: string) {
+    return this.auth.user.pipe(
+      distinctUntilKeyChanged('uid'),
+      switchMap((user) => user.getIdTokenResult()),
+      map((token) => token.claims[priv] === true),
+      publishReplay(1),
+      refCount()
+    );
+  }
+
+  userIsEmailVerified(): Observable<boolean> {
+    return this.auth.user.pipe(map((user) => user.emailVerified));
+  }
+
   list() {
     return this.firestore
       .collection<User>('users')
       .valueChanges({ idField: 'id' });
   }
 
+  loggedInData: Observable<User> = this.auth.user.pipe(
+    distinctUntilKeyChanged('uid'),
+    tap((v) => console.log(v)),
+    switchMap((user) =>
+      this.get(user.uid).pipe(
+        startWith({
+          name: user.displayName,
+          email: user.email,
+          userId: user.uid,
+          avatar: user.photoURL,
+        } as User)
+      )
+    ),
+    publishReplay(1),
+    refCount(),
+    tap((v) => console.log(v))
+  );
+
   get(id: String) {
     return this.firestore
       .doc<User>(`/users/${id}`)
       .snapshotChanges()
       .pipe(
+        filter((v) => v.payload.exists),
         map((v) => ({ userId: v.payload.id, ...v.payload.data() } as User))
       );
   }

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.characters = exports.companions = exports.campaign = void 0;
-var util_1 = require("./util");
-var skills_1 = require("./skills");
-var localSkills = [
+const util_1 = require("./util");
+const skills_1 = require("./skills");
+const localSkills = [
     {
         skillId: 'advancedsecurity',
         type: 'noncombat',
@@ -68,7 +68,7 @@ exports.campaign = {
     acl: {},
     skills: skills_1.commonSkills.concat(localSkills),
 };
-var players = [
+const players = [
     {
         name: 'Ry McGinnis',
         acl: {},

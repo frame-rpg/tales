@@ -6,7 +6,7 @@ exports.variables = {
     range: ['melee', 'ranged'],
 };
 function template(tpl, args) {
-    return tpl.replace(/\${(\w+)}/g, function (_, v) { return args[v]; });
+    return tpl.replace(/\${(\w+)}/g, (_, v) => args[v]);
 }
 exports.template = template;
 exports.powers = [

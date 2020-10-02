@@ -5,10 +5,12 @@ import {
 import { RouterModule, Routes } from '@angular/router';
 
 import { ViewComponent as CampaignViewComponent } from './components/campaigns/view/view.component';
-import { RouteComponent as HomeRouteComponent } from './components/home/route.component';
+import { HomeComponent } from './components/user/home/home.component';
 import { LoginComponent } from './components/user/login.component';
 import { NgModule } from '@angular/core';
 import { RulesComponent } from './components/pages/static/rules.component';
+import { EditComponent as UserEditComponent } from './components/user/edit/edit.component';
+import { ViewComponent as UserViewComponent } from './components/user/view/view.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 
 function redirectUnauthorizedToLogin(after: string) {
@@ -28,9 +30,21 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeRouteComponent,
+    component: HomeComponent,
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin('home') },
+  },
+  {
+    path: 'users/:userId',
+    component: UserViewComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin('home') },
+  },
+  {
+    path: 'users/:userId/edit',
+    component: UserEditComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin('campaigns') },
   },
   {
     path: 'login',
