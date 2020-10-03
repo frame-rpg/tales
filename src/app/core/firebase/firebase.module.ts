@@ -1,6 +1,6 @@
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SETTINGS } from '@angular/fire/firestore';
@@ -30,6 +30,7 @@ import { environment } from '../../../environments/environment';
       messagingSenderId: '414765217858',
       appId: '1:414765217858:web:0575368df99009430295db',
     }),
+    AngularFireStorageModule,
     CommonModule,
   ],
 })

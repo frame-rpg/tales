@@ -1,1 +1,28 @@
-<p>edit works!</p>
+<div class="avatarBlock">
+  <div class="avatar">
+    <img [src]="url" *ngIf="avatar | async as url; else noImg">
+  </div>
+  <div class="avatar">
+    <img [src]="url" *ngIf="newAvatarUrl | async as url">
+  </div>
+  <input type="file" (change)="upload($event)" accept=".png,.jpg,.gif,.jpeg" />
+  <h1 class="name">{{ name | async }}</h1>
+</div>
+
+<ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)">
+  <ng-template ngx-file-drop-content-tmp
+      let-openFileSelector="openFileSelector">
+    Optional custom content that replaces the the entire default content.
+    <button type="button" (click)="openFileSelector()">Browse Files</button>
+  </ng-template>
+</ngx-file-drop>
+
+
+<div class="progress">
+  <mat-progress-bar mode="determinate" [value]="uploadProgress | async">
+  </mat-progress-bar>
+</div>
+
+<ng-template #noImg>
+  <div class="empty">No Image.</div>
+</ng-template>
