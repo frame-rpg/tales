@@ -1,5 +1,6 @@
 import * as firebase from 'firebase/app';
 
+import { NavigationEnd, Router } from '@angular/router';
 import {
   Observable,
   Subject,
@@ -24,21 +25,16 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Injectable } from '@angular/core';
 
-interface Status {
-  state: 'offline' | 'online';
-}
-
 @Injectable({
   providedIn: 'root',
 })
 export class PresenceService {
-  hiddenStream = new Subject<boolean>();
-
-  constructor(private db: AngularFireDatabase, private auth: AngularFireAuth) {
+  constructor(
+    private db: AngularFireDatabase,
+    private auth: AngularFireAuth,
+    private router: Router
+  ) {
     this.init();
-    document.addEventListener('visibilitychange', () =>
-      this.hiddenStream.next(document.visibilityState === 'hidden')
-    );
   }
 
   getPresence(uid: string) {
@@ -77,29 +73,38 @@ export class PresenceService {
     combineLatest([
       onlineState,
       this.auth.user,
-      this.hiddenStream.asObservable().pipe(startWith(true)),
-    ])
-      .pipe(tap((v) => console.log(v)))
-      .subscribe(([online, { uid }, visible]) => {
-        this.setPresence(visible ? online : 'hidden', uid);
-      });
+      this.router.events.pipe(
+        filter((ev) => ev instanceof NavigationEnd),
+        map((ev: NavigationEnd) => ev.urlAfterRedirects)
+      ),
+    ]).subscribe(([online, { uid }, url]) => {
+      this.setPresence(online === 'online' ? url : 'offline', uid);
+    });
   }
 
   getPresences() {
     return this.db
-      .object<Status>('status')
+      .object('status')
       .valueChanges()
       .pipe(
         map((v) =>
-          Object.entries(v)
-            .filter(([, { status }]) => status === 'online')
-            .map(([uid]) => uid)
+          Object.fromEntries(
+            Object.entries(v)
+              .filter(([, { status }]) => status !== 'offline')
+              .map(([uid, { status }]) => [uid, status])
+          )
         ),
-        distinctUntilChanged(
-          (a, b) =>
-            a.length === b.length &&
-            a.filter((v) => b.includes(v)).length === a.length
-        )
+        distinctUntilChanged(recordsEqual)
       );
   }
+}
+
+function recordsEqual(
+  a: Record<string, string>,
+  b: Record<string, string>
+): boolean {
+  if (Object.keys(a).length !== Object.keys(b).length) {
+    return false;
+  }
+  return Object.keys(a).every((key) => a[key] === b[key]);
 }
