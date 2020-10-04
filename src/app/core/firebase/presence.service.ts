@@ -1,73 +1,105 @@
 import * as firebase from 'firebase/app';
 
+import {
+  Observable,
+  Subject,
+  Subscriber,
+  VirtualTimeScheduler,
+  combineLatest,
+  of,
+} from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  distinctUntilKeyChanged,
+  filter,
+  map,
+  startWith,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs/operators';
+
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { Injectable } from '@angular/core';
+
+interface Status {
+  state: 'offline' | 'online';
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class PresenceService {
-  constructor() {}
-  async init() {
-    // Fetch the current user's ID from Firebase Authentication.
-    var uid = firebase.auth().currentUser.uid;
+  hiddenStream = new Subject<boolean>();
 
-    // Create a reference to this user's specific status node.
-    // This is where we will store data about being online/offline.
-    var userStatusDatabaseRef = firebase.database().ref('/status/' + uid);
-    var userStatusFirestoreRef = firebase.firestore().doc('/status/' + uid);
+  constructor(private db: AngularFireDatabase, private auth: AngularFireAuth) {
+    this.init();
+    document.addEventListener('visibilitychange', () =>
+      this.hiddenStream.next(document.visibilityState === 'hidden')
+    );
+  }
 
-    // We'll create two constants which we will write to
-    // the Realtime database when this device is offline
-    // or online.
-    var isOfflineForDatabase = {
-      state: 'offline',
-      last_changed: firebase.database.ServerValue.TIMESTAMP,
-    };
-    var isOfflineForFirestore = {
-      state: 'offline',
-      last_changed: firebase.firestore.FieldValue.serverTimestamp(),
-    };
+  getPresence(uid: string) {
+    return this.db.object(`status/${uid}`).valueChanges();
+  }
 
-    var isOnlineForDatabase = {
-      state: 'online',
-      last_changed: firebase.database.ServerValue.TIMESTAMP,
-    };
-    var isOnlineForFirestore = {
-      state: 'online',
-      last_changed: firebase.firestore.FieldValue.serverTimestamp(),
-    };
+  async setPresence(status: string, uid: string) {
+    return await this.db
+      .object(`status/${uid}`)
+      .update({ status, timestamp: firebase.database.ServerValue.TIMESTAMP });
+  }
 
-    // Create a reference to the special '.info/connected' path in
-    // Realtime Database. This path returns `true` when connected
-    // and `false` when disconnected.
-    firebase
-      .database()
-      .ref('.info/connected')
-      .on('value', function (snapshot) {
-        // If we're not currently connected, don't do anything.
-        if (snapshot.val() == false) {
-          userStatusFirestoreRef.set(isOfflineForFirestore);
-          return;
+  private init() {
+    const onlineState = this.auth.authState.pipe().pipe(
+      switchMap((user) => {
+        if (user) {
+          return this.db
+            .object('.info/connected')
+            .valueChanges()
+            .pipe(map((connected) => (connected ? 'online' : 'offline')));
+        } else {
+          return of('offline');
         }
+      })
+    );
 
-        // If we are currently connected, then use the 'onDisconnect()'
-        // method to add a set which will only trigger once this
-        // client has disconnected by closing the app,
-        // losing internet, or any other means.
-        userStatusDatabaseRef
-          .onDisconnect()
-          .set(isOfflineForDatabase)
-          .then(function () {
-            // The promise returned from .onDisconnect().set() will
-            // resolve as soon as the server acknowledges the onDisconnect()
-            // request, NOT once we've actually disconnected:
-            // https://firebase.google.com/docs/reference/js/firebase.database.OnDisconnect
+    this.auth.authState.subscribe((user) => {
+      if (user) {
+        this.db.object(`status/${user.uid}`).query.ref.onDisconnect().update({
+          status: 'offline',
+          timestamp: firebase.database.ServerValue.TIMESTAMP,
+        });
+      }
+    });
 
-            // We can now safely set ourselves as 'online' knowing that the
-            // server will mark us as offline once we lose connection.
-            userStatusDatabaseRef.set(isOnlineForDatabase);
-            userStatusFirestoreRef.set(isOnlineForFirestore);
-          });
+    combineLatest([
+      onlineState,
+      this.auth.user,
+      this.hiddenStream.asObservable().pipe(startWith(true)),
+    ])
+      .pipe(tap((v) => console.log(v)))
+      .subscribe(([online, { uid }, visible]) => {
+        this.setPresence(visible ? online : 'hidden', uid);
       });
+  }
+
+  getPresences() {
+    return this.db
+      .object<Status>('status')
+      .valueChanges()
+      .pipe(
+        map((v) =>
+          Object.entries(v)
+            .filter(([, { status }]) => status === 'online')
+            .map(([uid]) => uid)
+        ),
+        distinctUntilChanged(
+          (a, b) =>
+            a.length === b.length &&
+            a.filter((v) => b.includes(v)).length === a.length
+        )
+      );
   }
 }

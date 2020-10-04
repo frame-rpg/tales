@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PresenceService } from './core/firebase/presence.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Framesystem';
-  constructor() {}
+  constructor(private presence: PresenceService) {
+    this.presence.getPresences().subscribe((v) => console.log(v));
+  }
 }
