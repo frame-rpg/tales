@@ -1,24 +1,13 @@
 import * as firebase from 'firebase/app';
 
 import { NavigationEnd, Router } from '@angular/router';
+import { combineLatest, of } from 'rxjs';
 import {
-  Observable,
-  Subject,
-  Subscriber,
-  VirtualTimeScheduler,
-  combineLatest,
-  of,
-} from 'rxjs';
-import {
-  debounceTime,
   distinctUntilChanged,
-  distinctUntilKeyChanged,
   filter,
   map,
   startWith,
   switchMap,
-  take,
-  tap,
 } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -75,7 +64,8 @@ export class PresenceService {
       this.auth.user,
       this.router.events.pipe(
         filter((ev) => ev instanceof NavigationEnd),
-        map((ev: NavigationEnd) => ev.urlAfterRedirects)
+        map((ev: NavigationEnd) => ev.urlAfterRedirects),
+        startWith('/')
       ),
     ]).subscribe(([online, { uid }, url]) => {
       this.setPresence(online === 'online' ? url : 'offline', uid);
