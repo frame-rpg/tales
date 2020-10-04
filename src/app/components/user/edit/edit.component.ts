@@ -13,6 +13,7 @@ import { Observable, from } from 'rxjs';
 import { map, publishReplay, refCount } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
+import { ImageSelectService } from 'src/app/shared/image-select.service';
 import { User } from 'types/user';
 import { UserService } from '../user.service';
 import { ulid } from 'ulid';
@@ -40,6 +41,7 @@ export class EditComponent implements OnInit {
     private userService: UserService,
     private auth: AngularFireAuth,
     private storage: AngularFireStorage,
+    private imageSelect: ImageSelectService,
     private cdr: ChangeDetectorRef
   ) {}
 

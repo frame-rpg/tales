@@ -1,3 +1,4 @@
+import { User, UserMedia } from '../../../../types/user';
 import {
   distinctUntilChanged,
   distinctUntilKeyChanged,
@@ -16,7 +17,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { User } from '../../../../types/user';
+import { UserId } from 'types/idtypes';
 import { firestore } from 'firebase';
 
 @Injectable({
@@ -47,6 +48,12 @@ export class UserService {
     return this.firestore
       .collection<User>('users')
       .valueChanges({ idField: 'id' });
+  }
+
+  listMedia(uid: UserId): Observable<UserMedia[]> {
+    return this.firestore
+      .collection<UserMedia>(`/users/${uid.userId}/media`)
+      .valueChanges();
   }
 
   loggedInData: Observable<User> = this.auth.user.pipe(

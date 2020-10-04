@@ -1,10 +1,16 @@
 export interface BasicId {
-  type: 'character' | 'campaign' | 'user' | 'page';
+  type: 'character' | 'campaign' | 'user' | 'page' | 'media';
 }
 
 export interface UserId extends BasicId {
   type: 'user';
   userId: string;
+}
+
+export interface MediaId extends BasicId {
+  type: 'media';
+  userId: string;
+  mediaId: string;
 }
 
 export interface CampaignId extends BasicId {
