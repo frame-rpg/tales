@@ -12,9 +12,10 @@ import { NgModule } from '@angular/core';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { RouterModule } from '@angular/router';
 import { ViewComponent } from './view/view.component';
+import { ImageComponent } from './image/image.component';
 
 @NgModule({
-  declarations: [LoginComponent, HomeComponent, ViewComponent, EditComponent],
+  declarations: [LoginComponent, HomeComponent, ViewComponent, EditComponent, ImageComponent],
   imports: [
     CommonModule,
     BrowserModule,
