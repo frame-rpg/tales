@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { ImageSelectComponent } from './image-select/image-select.component';
+import { MaterialModule } from '../core/material/material.module';
 import { NgModule } from '@angular/core';
+import { NgxFileDropModule } from 'ngx-file-drop';
 import { SpinnerComponent } from './spinner.component';
-import { ImageSelectComponent } from './image-select.component';
 
 @NgModule({
   declarations: [SpinnerComponent, ImageSelectComponent],
-  imports: [CommonModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, MaterialModule, NgxFileDropModule],
   exports: [SpinnerComponent],
 })
 export class SharedModule {}

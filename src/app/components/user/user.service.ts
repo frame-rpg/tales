@@ -51,14 +51,20 @@ export class UserService {
   }
 
   listMedia(uid: UserId): Observable<UserMedia[]> {
+    console.log(`/users/${uid.userId}/media`);
     return this.firestore
       .collection<UserMedia>(`/users/${uid.userId}/media`)
       .valueChanges();
   }
 
+  addMedia(media: UserMedia) {
+    return this.firestore
+      .doc(`/users/${media.userId}/media/${media.mediaId}`)
+      .set(media);
+  }
+
   loggedInData: Observable<User> = this.auth.user.pipe(
     distinctUntilKeyChanged('uid'),
-    tap((v) => console.log(v)),
     switchMap((user) =>
       this.get(user.uid).pipe(
         startWith({
@@ -70,8 +76,7 @@ export class UserService {
       )
     ),
     publishReplay(1),
-    refCount(),
-    tap((v) => console.log(v))
+    refCount()
   );
 
   get(id: String) {

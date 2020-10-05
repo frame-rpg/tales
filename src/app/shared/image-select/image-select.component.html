@@ -1,0 +1,31 @@
+<div class="dialogContent">
+  <h2 mat-dialog-title>
+    Image select
+  </h2>
+  <div class="progress" *ngIf="showProgress">
+    <mat-progress-bar mode="determinate" [value]="uploadProgress | async">
+    </mat-progress-bar>
+  </div>
+  <mat-dialog-content class="dialog">
+    <div class="dialogBody" mat-dialog-content>
+      <div class="imageUpload">
+        <ngx-file-drop dropZoneLabel="Drop files here"
+            (onFileDrop)="dropped($event)">
+          <ng-template ngx-file-drop-content-tmp
+              let-openFileSelector="openFileSelector">
+            Drop File Here.
+            <button type="button" (click)="openFileSelector()">Browse
+              Files</button>
+          </ng-template>
+        </ngx-file-drop>
+      </div>
+      <div class="imageContainer" *ngFor="let image of userMedia | async"
+          (click)="select(image.url)">
+        <img [src]="image.url" class="imagePreview">
+      </div>
+    </div>
+    <div mat-dialog-actions class="buttonRow">
+      <button mat-raised-button [matDialogClose]="false">Cancel</button>
+    </div>
+  </mat-dialog-content>
+</div>

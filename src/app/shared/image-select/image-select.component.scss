@@ -1,0 +1,36 @@
+.dialogContent {
+  display: flex;
+  flex-direction: column;
+  min-width: 40vw;
+}
+
+.dialogBody {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  min-height: 25vh;
+  flex: 1 0 auto;
+}
+
+.imageUpload {
+  display: flex;
+  flex: 0 0 100px;
+  min-height: 100px;
+}
+
+.imageContainer {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.imagePreview {
+  object-fit: scale-down;
+  height: 100%;
+  width: 100%;
+}
+
+.buttonRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

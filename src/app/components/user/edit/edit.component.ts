@@ -1,49 +1,46 @@
-import {
-  AngularFireStorage,
-  AngularFireUploadTask,
-} from '@angular/fire/storage';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import {
-  FileSystemFileEntry,
-  NgxFileDropEntry,
-  NgxFileDropModule,
-} from 'ngx-file-drop';
+import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, from } from 'rxjs';
-import { map, publishReplay, refCount } from 'rxjs/operators';
+import {
+  distinctUntilKeyChanged,
+  filter,
+  map,
+  publishReplay,
+  refCount,
+  takeUntil,
+} from 'rxjs/operators';
 
-import { AngularFireAuth } from '@angular/fire/auth';
 import { ImageSelectService } from 'src/app/shared/image-select.service';
 import { User } from 'types/user';
 import { UserService } from '../user.service';
-import { ulid } from 'ulid';
 
 @Component({
   selector: 'framesystem-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss'],
 })
-export class EditComponent implements OnInit {
+export class EditComponent implements OnInit, OnDestroy {
   form = new FormGroup({
     name: new FormControl('', [Validators.required]),
     avatar: new FormControl(null, [Validators.required]),
   });
 
-  uploadTask: AngularFireUploadTask;
-  uploadProgress: Observable<number>;
-  newAvatarUrl: Observable<string>;
-  dropFile: NgxFileDropEntry;
+  destroying_ = new BehaviorSubject<boolean>(false);
+  destroying = this.destroying_.asObservable().pipe(filter((v) => v));
+  avatarUpdate = new Subject<string>();
+
   user: Observable<User>;
   name: Observable<String>;
   avatar: Observable<string>;
 
   constructor(
     private userService: UserService,
-    private auth: AngularFireAuth,
-    private storage: AngularFireStorage,
-    private imageSelect: ImageSelectService,
-    private cdr: ChangeDetectorRef
+    private imageSelect: ImageSelectService
   ) {}
+
+  ngOnDestroy(): void {
+    this.destroying_.next(true);
+  }
 
   ngOnInit(): void {
     this.user = this.userService.loggedInData.pipe(
@@ -52,29 +49,21 @@ export class EditComponent implements OnInit {
     );
     this.name = this.user.pipe(map((u) => u.name));
     this.avatar = this.user.pipe(map((u) => u.avatar));
-  }
-
-  dropped([file]: NgxFileDropEntry[]) {
-    if (file?.fileEntry?.isFile) {
-      (file.fileEntry as FileSystemFileEntry).file((file) =>
-        this.initiateUpload(file)
+    combineLatest([this.user, this.avatarUpdate])
+      .pipe(
+        filter(([, url]) => !!url && url.length > 0),
+        distinctUntilKeyChanged(1),
+        takeUntil(this.destroying)
+      )
+      .subscribe(([{ userId }, url]) =>
+        this.userService.update(userId, { avatar: url })
       );
+  }
+
+  async changeAvatar() {
+    const avatar = await this.imageSelect.selectImage();
+    if (avatar) {
+      this.avatarUpdate.next(avatar);
     }
-  }
-
-  initiateUpload(file: File) {
-    const id = ulid();
-    const ref = this.storage.ref(id);
-    this.uploadTask = ref.put(file);
-    this.uploadProgress = this.uploadTask.percentageChanges();
-    this.newAvatarUrl = from(
-      this.uploadTask.then((v) => v.ref.getDownloadURL())
-    );
-    this.cdr.detectChanges();
-  }
-
-  upload(event) {
-    console.log(event);
-    this.initiateUpload(event.target.files[0]);
   }
 }

@@ -1,5 +1,8 @@
 import * as admin from 'firebase-admin';
 import * as fs from 'fs';
+
+import { promises } from 'dns';
+
 (async () => {
   const app = admin.initializeApp({
     credential: admin.credential.applicationDefault(),
@@ -35,6 +38,20 @@ import * as fs from 'fs';
             .firestore()
             .doc(`/campaigns/${id}/characters/${character.characterId}`)
             .set(character)
+        )
+      );
+    })
+  );
+
+  await Promise.all(
+    Object.entries(data.users).map(async ([id, user]) => {
+      await app
+        .firestore()
+        .doc(`/users/${id}`)
+        .set((user as any).user);
+      await Promise.all(
+        (user as any).media.map((media: any) =>
+          app.firestore().doc(`/users/${id}/media/${media.mediaId}`).set(media)
         )
       );
     })

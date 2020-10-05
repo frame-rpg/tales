@@ -45,4 +45,11 @@ const fs = __importStar(require("fs"));
             .doc(`/campaigns/${id}/characters/${character.characterId}`)
             .set(character)));
     }));
+    await Promise.all(Object.entries(data.users).map(async ([id, user]) => {
+        await app
+            .firestore()
+            .doc(`/users/${id}`)
+            .set(user.user);
+        await Promise.all(user.media.map((media) => app.firestore().doc(`/users/${id}/media/${media.mediaId}`).set(media)));
+    }));
 })();

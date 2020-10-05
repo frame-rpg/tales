@@ -1,4 +1,52 @@
 {
+  "users": {
+    "d78TvAPWYnU3xVOBAo5TFBCUNmy1": {
+      "user": {
+        "name": "Eric Eslinger",
+        "email": "eric.eslinger@gmail.com",
+        "type": "user",
+        "userId": "d78TvAPWYnU3xVOBAo5TFBCUNmy1",
+        "rollPreference": "ask",
+        "avatar": "https://lh3.googleusercontent.com/a-/AOh14GhGS8NOD-Uu3_PPwk4DcKVJ79fRGsWFdT7eavroqg"
+      },
+      "media": [
+        {
+          "type": "media",
+          "mediaId": "01EKPCBGA35XYSMMDS61Y2SKEK",
+          "userId": "d78TvAPWYnU3xVOBAo5TFBCUNmy1",
+          "url": "https://firebasestorage.googleapis.com/v0/b/framesystem-rpg.appspot.com/o/01EKPCBGA35XYSMMDS61Y2SKEK?alt=media&token=eb4a0c2a-bca1-4629-be2d-6b11618cd290",
+          "public": true,
+          "date": {
+            "_seconds": 1601050917,
+            "_nanoseconds": 437000000
+          }
+        }
+      ]
+    },
+    "Jf05035Th7OeMDguUN893kvM9wD2": {
+      "user": {
+        "name": "Other Eric",
+        "email": "eric.eslinger@manyminds.org",
+        "type": "user",
+        "userId": "Jf05035Th7OeMDguUN893kvM9wD2",
+        "rollPreference": "ask",
+        "avatar": "https://lh3.googleusercontent.com/-0Ig04xCNXio/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucniAoyBxJvKFI9AIfcEQpXZxpBE2w/photo.jpg"
+      },
+      "media": [
+        {
+          "type": "media",
+          "mediaId": "01EKPCBGA35XYSMMDS61Y2SKEK",
+          "userId": "Jf05035Th7OeMDguUN893kvM9wD2",
+          "url": "https://firebasestorage.googleapis.com/v0/b/framesystem-rpg.appspot.com/o/01EKPCBGA35XYSMMDS61Y2SKEK?alt=media&token=eb4a0c2a-bca1-4629-be2d-6b11618cd290",
+          "public": true,
+          "date": {
+            "_seconds": 1601050917,
+            "_nanoseconds": 437000000
+          }
+        }
+      ]
+    }
+  },
   "pages": {
     "rules": {
       "meta": {
