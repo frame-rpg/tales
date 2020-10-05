@@ -6,8 +6,7 @@ export interface User extends UserId {
   email: string;
   name?: string;
   avatar?: string;
-  rollPreference?: string;
-  premium: boolean;
+  rollPreference?: 'manual' | 'automatic' | 'ask';
 }
 
 export interface UserMedia extends MediaId {

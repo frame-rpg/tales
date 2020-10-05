@@ -4,6 +4,55 @@
   justify-content: flex-start;
 }
 
+.img {
+  object-fit: contain;
+}
+
+.editButton {
+  display: none;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  justify-content: flex-start;
+}
+
+.infoRow {
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 auto;
+  margin: 12px;
+  align-items: center;
+
+  &:hover .editButton {
+    display: block;
+  }
+}
+
+.rollerColumn {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  margin: 12px;
+}
+
+.rollerGroup {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+
+.name {
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.rollerRadio {
+  margin-left: 12px;
+}
+
 .avatar {
   display: flex;
   flex: 0 0 auto;

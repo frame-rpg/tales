@@ -150,7 +150,6 @@ export class UserService {
         userId: user.uid,
         rollPreference: 'ask',
         avatar: user.photoURL,
-        premium: false,
       });
     }
   }

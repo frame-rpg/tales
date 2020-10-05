@@ -1,14 +1,67 @@
 <div class="avatarBlock">
-  <div class="avatar">
-    <img [src]="url" *ngIf="avatar | async as url; else noImg">
+  <ng-container *ngIf="canEdit; then editableImage; else readonlyImage">
+  </ng-container>
+  <div class="info">
+    <ng-container *ngIf="editing.name; then nameEdit; else nameView">
+    </ng-container>
+    <div class="rollerColumn" *ngIf="canEdit | async">
+      <mat-label>Dice Roller Preference</mat-label>
+      <mat-radio-group class="rollerGroup"
+          (change)="update({type: 'rollPreference' , payload: $event.value})"
+          [value]="rollPreference | async">
+        <mat-radio-button class="rollerRadio" value="manual">
+          Always manual rolls
+        </mat-radio-button>
+        <mat-radio-button class="rollerRadio" value="automatic">
+          Always automatic rolls
+        </mat-radio-button>
+        <mat-radio-button class="rollerRadio" value="ask">Ask every time
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
   </div>
-  <h1 class="name">{{ name | async }}</h1>
 </div>
 
-<button mat-button [routerLink]="['./edit']" *ngIf="canEdit | async">
-  <mat-icon>edit</mat-icon><span>Edit</span>
-</button>
+<ng-template #readonlyImage>
+  <div class="avatar">
+    <img [src]="url" *ngIf="avatar | async as url; else noImg" class="img">
+  </div>
+</ng-template>
+
+<ng-template #editableImage>
+  <div class="avatar" (click)="updateAvatar()">
+    <img [src]="url" *ngIf="avatar | async as url; else noImg" class="img">
+  </div>
+</ng-template>
 
 <ng-template #noImg>
   <div class="empty">No Image.</div>
+</ng-template>
+
+<ng-template #nameView>
+  <div class="infoRow">
+    <div class="name">
+      {{ name | async }}
+    </div>
+    <button mat-icon-button *ngIf="canEdit | async"
+        (click)="editing.name = true">
+      <mat-icon class="editButton">edit</mat-icon>
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #nameEdit>
+  <div class="infoRow">
+    <mat-form-field>
+      <input matInput [value]="name | async" #nameInput
+          (keydown.enter)="update({type: 'name', payload: nameInput.value})">
+    </mat-form-field>
+    <button mat-icon-button
+        (click)="update({type: 'name', payload: nameInput.value})">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button mat-icon-button (click)="readonly()">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
 </ng-template>
