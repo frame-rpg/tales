@@ -1,8 +1,6 @@
 import * as admin from 'firebase-admin';
 import * as fs from 'fs';
 
-import { promises } from 'dns';
-
 (async () => {
   const app = admin.initializeApp({
     credential: admin.credential.applicationDefault(),
@@ -17,10 +15,13 @@ import { promises } from 'dns';
       await app
         .firestore()
         .doc(`/pages/${id}`)
-        .set((page as any).meta);
+        .set(restoreDate((page as any).meta));
       await Promise.all(
         (page as any).content.map((child: any) =>
-          app.firestore().doc(`/pages/${id}/pages/${child.id}`).set(child)
+          app
+            .firestore()
+            .doc(`/pages/${id}/pages/${child.id}`)
+            .set(restoreDate(child))
         )
       );
     })
@@ -31,13 +32,13 @@ import { promises } from 'dns';
       await app
         .firestore()
         .doc(`/campaigns/${id}`)
-        .set((campaign as any).campaign);
+        .set(restoreDate((campaign as any).campaign));
       await Promise.all(
         (campaign as any).characters.map((character: any) =>
           app
             .firestore()
             .doc(`/campaigns/${id}/characters/${character.characterId}`)
-            .set(character)
+            .set(restoreDate(character))
         )
       );
     })
@@ -48,12 +49,25 @@ import { promises } from 'dns';
       await app
         .firestore()
         .doc(`/users/${id}`)
-        .set((user as any).user);
+        .set(restoreDate((user as any).user));
       await Promise.all(
         (user as any).media.map((media: any) =>
-          app.firestore().doc(`/users/${id}/media/${media.mediaId}`).set(media)
+          app
+            .firestore()
+            .doc(`/users/${id}/media/${media.mediaId}`)
+            .set(restoreDate(media))
         )
       );
     })
   );
 })();
+
+function restoreDate<T>(obj: T): T {
+  return Object.fromEntries(
+    Object.entries(obj).map(([key, val]) =>
+      val._seconds > 0
+        ? [key, new admin.firestore.Timestamp(val._seconds, val._nanoseconds)]
+        : [key, val]
+    )
+  ) as T;
+}

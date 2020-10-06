@@ -1,19 +1,10 @@
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  filter,
-  map,
-  publishReplay,
-  refCount,
-  switchMap,
-  takeUntil,
-  tap,
-  withLatestFrom,
-} from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject, combineLatest, of } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { filter, map, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ImageSelectService } from 'src/app/shared/image-select.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'types/user';
 import { UserService } from '../user.service';
 
@@ -23,7 +14,7 @@ interface Action {
 }
 
 @Component({
-  selector: 'framesystem-view',
+  selector: 'framesystem-user-view',
   templateUrl: './view.component.html',
   styleUrls: ['./view.component.scss'],
 })
@@ -38,43 +29,41 @@ export class ViewComponent implements OnInit, OnDestroy {
     rollPreference: false,
   };
 
-  user: Observable<User>;
+  @Input('user') user: Observable<User>;
   name: Observable<string>;
   avatar: Observable<string>;
   rollPreference: Observable<string>;
   canEdit: Observable<boolean>;
+  unverified: Observable<boolean>;
 
   constructor(
     private auth: AngularFireAuth,
     private userService: UserService,
-    private route: ActivatedRoute,
-    private imageSelect: ImageSelectService
+    private imageSelect: ImageSelectService,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnDestroy() {
     this.destroying_.next(true);
   }
 
-  check(a: any) {
-    console.log(a);
-  }
-
   ngOnInit(): void {
-    this.user = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.userService.get(params.get('userId'))
-      ),
-      publishReplay(1),
-      refCount()
-    );
     this.name = this.user.pipe(map((u) => u.name));
     this.avatar = this.user.pipe(map((u) => u.avatar));
     this.rollPreference = this.user.pipe(map((u) => u.rollPreference));
     this.canEdit = combineLatest([
       this.userService.hasPrivilege('admin'),
       this.auth.user,
-      this.route.paramMap.pipe(map((params) => params.get('userId'))),
-    ]).pipe(map(([admin, { uid }, userId]) => admin || uid === userId));
+      this.user,
+    ]).pipe(map(([admin, { uid }, { userId }]) => admin || uid === userId));
+
+    this.unverified = this.user.pipe(
+      withLatestFrom(this.auth.user),
+      tap((v) => console.log(v)),
+      map(([lookingAt, me]) =>
+        lookingAt.userId === me.uid ? !me.emailVerified : false
+      )
+    );
 
     this.actions_
       .asObservable()
@@ -87,6 +76,13 @@ export class ViewComponent implements OnInit, OnDestroy {
   update(action: Action) {
     this.actions_.next(action);
     this.readonly();
+  }
+
+  async sendVerification() {
+    const u = await this.auth.currentUser;
+    u.sendEmailVerification();
+    this.snackbar.open('Email Sent');
+    this.unverified = of(false);
   }
 
   async updateAvatar() {

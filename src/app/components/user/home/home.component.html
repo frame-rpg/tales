@@ -1,9 +1,5 @@
 <div class="avatarBlock" *ngIf="!editing">
   <div class="name">{{ name | async }}</div>
-  <div class="unverified" *ngIf="unverified | async">
-    <span>Your email is not yet verified.</span>
-    <button mat-button>Send verification email</button>
-  </div>
   <div class="avatar">
     <img [src]="url" *ngIf="avatar | async as url; else noImg">
   </div>

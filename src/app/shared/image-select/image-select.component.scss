@@ -1,3 +1,6 @@
+@use "sass:map";
+@import '../../../vars.scss';
+
 .dialogContent {
   display: flex;
   flex-direction: column;
@@ -9,7 +12,8 @@
   flex-direction: row;
   flex-wrap: wrap;
   min-height: 25vh;
-  flex: 1 0 auto;
+  flex: 0 0 auto;
+  align-items: flex-start;
 }
 
 .imageUpload {
@@ -18,15 +22,28 @@
   min-height: 100px;
 }
 
-.imageContainer {
-  max-width: 100px;
-  max-height: 100px;
+.scrim {
+  background-color: rgba(map.get($mat-accent, 'main'), 0.3);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  flex: 1 0 auto;
+  display: none;
 }
 
 .imagePreview {
-  object-fit: scale-down;
-  height: 100%;
-  width: 100%;
+  object-fit: contain;
+  height: 100px;
+  width: 100px;
+}
+
+.previewContainer {
+  position: relative;
+  &:hover > .scrim {
+    display: flex;
+  }
 }
 
 .buttonRow {

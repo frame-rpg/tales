@@ -32,24 +32,35 @@ const fs = __importStar(require("fs"));
         await app
             .firestore()
             .doc(`/pages/${id}`)
-            .set(page.meta);
-        await Promise.all(page.content.map((child) => app.firestore().doc(`/pages/${id}/pages/${child.id}`).set(child)));
+            .set(restoreDate(page.meta));
+        await Promise.all(page.content.map((child) => app
+            .firestore()
+            .doc(`/pages/${id}/pages/${child.id}`)
+            .set(restoreDate(child))));
     }));
     await Promise.all(Object.entries(data.campaigns).map(async ([id, campaign]) => {
         await app
             .firestore()
             .doc(`/campaigns/${id}`)
-            .set(campaign.campaign);
+            .set(restoreDate(campaign.campaign));
         await Promise.all(campaign.characters.map((character) => app
             .firestore()
             .doc(`/campaigns/${id}/characters/${character.characterId}`)
-            .set(character)));
+            .set(restoreDate(character))));
     }));
     await Promise.all(Object.entries(data.users).map(async ([id, user]) => {
         await app
             .firestore()
             .doc(`/users/${id}`)
-            .set(user.user);
-        await Promise.all(user.media.map((media) => app.firestore().doc(`/users/${id}/media/${media.mediaId}`).set(media)));
+            .set(restoreDate(user.user));
+        await Promise.all(user.media.map((media) => app
+            .firestore()
+            .doc(`/users/${id}/media/${media.mediaId}`)
+            .set(restoreDate(media))));
     }));
 })();
+function restoreDate(obj) {
+    return Object.fromEntries(Object.entries(obj).map(([key, val]) => val._seconds > 0
+        ? [key, new admin.firestore.Timestamp(val._seconds, val._nanoseconds)]
+        : [key, val]));
+}

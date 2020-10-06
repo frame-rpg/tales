@@ -1,7 +1,19 @@
 <div class="avatarBlock">
-  <ng-container *ngIf="canEdit; then editableImage; else readonlyImage">
-  </ng-container>
+  <div class="avatar">
+    <div class="editOverlay" (click)="updateAvatar()" *ngIf="canEdit | async">
+      <mat-icon class="editOverlayIcon">edit</mat-icon>
+    </div>
+    <img [src]="url" *ngIf="avatar | async as url; else noImg" class="img">
+  </div>
   <div class="info">
+    <div class="unverified" *ngIf="unverified | async">
+      <mat-toolbar color="warn">
+        <h2>Your email is not yet verified.</h2>
+      </mat-toolbar>
+      <button mat-button (click)="sendVerification()">
+        Send verification email
+        <mat-icon>email</mat-icon></button>
+    </div>
     <ng-container *ngIf="editing.name; then nameEdit; else nameView">
     </ng-container>
     <div class="rollerColumn" *ngIf="canEdit | async">
@@ -21,18 +33,6 @@
     </div>
   </div>
 </div>
-
-<ng-template #readonlyImage>
-  <div class="avatar">
-    <img [src]="url" *ngIf="avatar | async as url; else noImg" class="img">
-  </div>
-</ng-template>
-
-<ng-template #editableImage>
-  <div class="avatar" (click)="updateAvatar()">
-    <img [src]="url" *ngIf="avatar | async as url; else noImg" class="img">
-  </div>
-</ng-template>
 
 <ng-template #noImg>
   <div class="empty">No Image.</div>

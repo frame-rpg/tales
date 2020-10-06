@@ -9,8 +9,7 @@ import { HomeComponent } from './components/user/home/home.component';
 import { LoginComponent } from './components/user/login.component';
 import { NgModule } from '@angular/core';
 import { RulesComponent } from './components/pages/static/rules.component';
-import { EditComponent as UserEditComponent } from './components/user/edit/edit.component';
-import { ViewComponent as UserViewComponent } from './components/user/view/view.component';
+import { RouteComponent as UserViewRouteComponent } from './components/user/view/route.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 
 function redirectUnauthorizedToLogin(after: string) {
@@ -36,15 +35,9 @@ const routes: Routes = [
   },
   {
     path: 'users/:userId',
-    component: UserViewComponent,
+    component: UserViewRouteComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin('home') },
-  },
-  {
-    path: 'users/:userId/edit',
-    component: UserEditComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin('campaigns') },
+    data: { authGuardPipe: redirectUnauthorizedToLogin('users/:userId') },
   },
   {
     path: 'login',

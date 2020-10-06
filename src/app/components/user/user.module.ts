@@ -13,6 +13,7 @@ import { NgModule } from '@angular/core';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { RouterModule } from '@angular/router';
 import { ViewComponent } from './view/view.component';
+import { RouteComponent } from './view/route.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ViewComponent } from './view/view.component';
     ViewComponent,
     EditComponent,
     ImageComponent,
+    RouteComponent,
   ],
   imports: [
     CommonModule,
