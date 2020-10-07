@@ -31,3 +31,13 @@ export interface PageId extends BasicId {
 }
 
 export type Id = CharacterId | CampaignId | UserId | PageId;
+
+// Types used to display information about a character or a user in an avatar/monogram
+export interface BasePerson {
+  avatar?: string;
+  name: string;
+}
+
+export type UserPerson = UserId & BasePerson;
+export type CharacterPerson = CharacterId & BasePerson;
+export type Person = UserPerson | CharacterPerson;

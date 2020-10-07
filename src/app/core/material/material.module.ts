@@ -10,6 +10,7 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -39,6 +40,7 @@ import { NgModule } from '@angular/core';
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,
+    MatBadgeModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
@@ -61,6 +63,7 @@ import { NgModule } from '@angular/core';
   exports: [
     BrowserModule,
     BrowserAnimationsModule,
+    MatBadgeModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,

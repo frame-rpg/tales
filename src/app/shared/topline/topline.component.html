@@ -1,0 +1,19 @@
+<mat-toolbar class="topline">
+  <button mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>{{title | async}}</span>
+  <span class="spacer"></span>
+  <button mat-icon-button matBadgePosition="after" matBadgeColor="alert"
+      [matBadge]="(notifications | async)?.length">
+    <mat-icon>notifications</mat-icon>
+  </button>
+  <button mat-button *ngIf="loggedIn | async">
+    <framesystem-person-image [size]="32" [person]="user | async">
+    </framesystem-person-image>
+  </button>
+  <button mat-button *ngIf="!(loggedIn | async)">
+    <mat-icon>login</mat-icon>
+    <span>Log In</span>
+  </button>
+</mat-toolbar>

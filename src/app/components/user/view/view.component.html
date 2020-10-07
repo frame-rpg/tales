@@ -3,7 +3,9 @@
     <div class="editOverlay" (click)="updateAvatar()" *ngIf="canEdit | async">
       <mat-icon class="editOverlayIcon">edit</mat-icon>
     </div>
-    <img [src]="url" *ngIf="avatar | async as url; else noImg" class="img">
+    <framesystem-person-image [size]="200" [person]="user | async"
+        monogramLength="10">
+    </framesystem-person-image>
   </div>
   <div class="info">
     <div class="unverified" *ngIf="unverified | async">

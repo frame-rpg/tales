@@ -2,32 +2,24 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { EditComponent } from './edit/edit.component';
 import { FirebaseUIModule } from 'firebaseui-angular';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ImageComponent } from './image/image.component';
 import { LoginComponent } from './login.component';
 import { MaterialModule } from 'src/app/core/material/material.module';
 import { NgModule } from '@angular/core';
-import { NgxFileDropModule } from 'ngx-file-drop';
-import { RouterModule } from '@angular/router';
-import { ViewComponent } from './view/view.component';
 import { RouteComponent } from './view/route.component';
+import { RouterModule } from '@angular/router';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { ViewComponent } from './view/view.component';
 
 @NgModule({
-  declarations: [
-    LoginComponent,
-    HomeComponent,
-    ViewComponent,
-    EditComponent,
-    ImageComponent,
-    RouteComponent,
-  ],
+  declarations: [LoginComponent, HomeComponent, ViewComponent, RouteComponent],
   imports: [
     CommonModule,
     BrowserModule,
     HttpClientModule,
+    SharedModule,
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
