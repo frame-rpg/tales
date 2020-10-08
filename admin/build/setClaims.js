@@ -12,15 +12,9 @@ const firebase_admin_1 = __importDefault(require("firebase-admin"));
         projectId: 'framesystem-rpg',
     });
     const { customClaims } = await firebase_admin_1.default.auth().getUser(uid);
-    await firebase_admin_1.default
-        .auth()
-        .setCustomUserClaims(uid, {
+    await firebase_admin_1.default.auth().setCustomUserClaims(uid, {
         ...customClaims,
         ...Object.fromEntries(claims.map((claim) => [claim, true])),
-    })
-        .then((v) => console.log(v))
-        .catch((e) => {
-        console.log('ERROR');
-        console.log(e);
     });
+    console.log('success');
 })();

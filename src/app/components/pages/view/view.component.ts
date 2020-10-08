@@ -27,6 +27,8 @@ import {
   map,
   publishReplay,
   refCount,
+  scan,
+  startWith,
   switchMap,
   takeUntil,
   tap,
@@ -41,7 +43,7 @@ import { Page } from 'types/page';
 import { PageId } from 'types/idtypes';
 
 interface ContentsElement {
-  el: HTMLHeadingElement;
+  index: number;
   text: string;
   inView: boolean;
 }
@@ -63,6 +65,29 @@ export class ViewComponent
   page: Observable<Page>;
   markdown: Observable<string>;
   narrow: Observable<boolean>;
+  activeHeaderSubject = new BehaviorSubject<
+    Record<string, { header: string; inView: boolean }>
+  >({});
+  activeHeaders = this.activeHeaderSubject.asObservable().pipe(
+    scan((acc, curr) => ({ ...acc, ...curr }), {}),
+    map((entries: Record<string, { header: string; inView: boolean }>) =>
+      Array.from(
+        new Set(
+          Object.entries(entries)
+            .filter(([, { inView }]) => inView)
+            .map(([, { header }]) => header)
+        )
+      )
+    ),
+    filter((list) => list.length > 0),
+    distinctUntilChanged(
+      (a, b) => a.length === b.length && a.every((item) => b.includes(item))
+    ),
+    map((list) => Object.fromEntries(list.map((item) => [item, true]))),
+    startWith({}),
+    publishReplay(1),
+    refCount()
+  );
 
   destroyingSubject = new BehaviorSubject<boolean>(false);
   destroying = this.destroyingSubject.asObservable().pipe(filter((s) => s));
@@ -119,23 +144,18 @@ export class ViewComponent
   }
 
   calculateContents() {
-    const headers: HTMLHeadingElement[] = Array.from(
-      this.md.element.nativeElement.querySelectorAll('h1, h2')
-    );
-    this.contentsSubject.next(
-      headers.map((el) => ({
-        inView: false,
-        text: el.textContent,
-        level: parseInt(el.tagName[1], 10) - 1,
-        el: el,
-      }))
-    );
-
     const observer = new IntersectionObserver(
       (c) => {
-        c.forEach(
-          (intersecting) =>
-            (intersecting.target['inView'] = intersecting.isIntersecting)
+        this.activeHeaderSubject.next(
+          Object.fromEntries(
+            c.map((item) => [
+              item.target.getAttribute('data-seq'),
+              {
+                header: item.target.getAttribute('data-toc'),
+                inView: item.isIntersecting,
+              },
+            ])
+          )
         );
       },
       {
@@ -144,12 +164,34 @@ export class ViewComponent
         threshold: 1,
       }
     );
-    headers.forEach((el) => observer.observe(el));
+
+    const headers = [];
+    Array.from(this.md.element.nativeElement.children).reduce(
+      (acc, curr, idx) => {
+        if (curr.tagName === 'H1') {
+          curr.setAttribute('data-toc', `${idx}`);
+          curr.setAttribute('data-seq', `${idx}`);
+          observer.observe(curr);
+          headers.push({ inView: false, text: curr.textContent, index: idx });
+          return idx;
+        } else {
+          curr.setAttribute('data-toc', `${acc}`);
+          curr.setAttribute('data-seq', `${idx}`);
+          observer.observe(curr);
+          return acc;
+        }
+      },
+      0
+    );
+    this.contentsSubject.next(headers);
     this.cdr.detectChanges();
   }
 
-  scrollTo(el: HTMLElement, event: MouseEvent) {
-    this.zoomSubject.next({ event, el });
+  scrollTo(index: string, event: MouseEvent) {
+    this.zoomSubject.next({
+      event,
+      el: this.md.element.nativeElement.querySelector(`[data-toc="${index}"]`),
+    });
   }
 
   ngAfterViewInit() {

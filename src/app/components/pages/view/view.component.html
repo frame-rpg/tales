@@ -11,9 +11,8 @@
       </button>
     </div>
     <div *ngFor="let contentsItem of contents | async" class="toc-item"
-        [class.toc-active]="contentsItem.el.inView"
-        [style.marginLeft]="7*contentsItem.level + 'px'"
-        (click)="scrollTo(contentsItem.el, $event)">
+        [class.toc-active]="(activeHeaders | async)[contentsItem.index]"
+        (click)="scrollTo(contentsItem.index, $event)">
       {{ contentsItem.text }}
     </div>
     <div class="license">
