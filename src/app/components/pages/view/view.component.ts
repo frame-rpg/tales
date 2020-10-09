@@ -165,23 +165,29 @@ export class ViewComponent
       }
     );
 
-    const headers = [];
-    Array.from(this.md.element.nativeElement.children).reduce(
+    const { headers } = Array.from(
+      this.md.element.nativeElement.getElementsByTagName('*')
+    ).reduce(
       (acc, curr, idx) => {
         if (curr.tagName === 'H1') {
           curr.setAttribute('data-toc', `${idx}`);
           curr.setAttribute('data-seq', `${idx}`);
-          observer.observe(curr);
-          headers.push({ inView: false, text: curr.textContent, index: idx });
-          return idx;
+          // observer.observe(curr);
+          return {
+            lastHeader: idx,
+            headers: [
+              ...acc.headers,
+              { inView: false, text: curr.textContent, index: idx },
+            ],
+          };
         } else {
-          curr.setAttribute('data-toc', `${acc}`);
+          curr.setAttribute('data-toc', `${acc.lastHeader}`);
           curr.setAttribute('data-seq', `${idx}`);
           observer.observe(curr);
           return acc;
         }
       },
-      0
+      { lastHeader: 0, headers: [] }
     );
     this.contentsSubject.next(headers);
     this.cdr.detectChanges();
