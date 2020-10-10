@@ -3,7 +3,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FirebaseUIModule } from 'firebaseui-angular';
-import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login.component';
 import { MaterialModule } from 'src/app/core/material/material.module';
@@ -14,7 +13,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ViewComponent } from './view/view.component';
 
 @NgModule({
-  declarations: [LoginComponent, HomeComponent, ViewComponent, RouteComponent],
+  declarations: [LoginComponent, ViewComponent, RouteComponent],
   imports: [
     CommonModule,
     BrowserModule,

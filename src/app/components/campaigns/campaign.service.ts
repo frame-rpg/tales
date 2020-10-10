@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Campaign } from 'types/campaign';
 import { CampaignId } from 'types/idtypes';
 import { Injectable } from '@angular/core';
-import { addId } from './rxutil';
+import { addId } from '../../data/rxutil';
 import { switchMap } from 'rxjs/operators';
 
 @Injectable({

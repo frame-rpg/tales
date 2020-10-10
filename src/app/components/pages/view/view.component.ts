@@ -52,7 +52,6 @@ interface ContentsElement {
   selector: 'tales-page-view',
   templateUrl: './view.component.html',
   styleUrls: ['./view.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class ViewComponent
   implements OnChanges, OnInit, AfterViewInit, OnDestroy {

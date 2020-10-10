@@ -1,9 +1,21 @@
-.main {
-  overflow: hidden;
+.shell {
+  position: relative;
   height: 100vh;
 }
 
 .topline {
-  position: sticky;
+  position: absolute;
   top: 0;
+  left: 0;
+  right: 0;
+}
+
+.content {
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

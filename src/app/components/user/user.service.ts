@@ -16,6 +16,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { PresenceService } from 'src/app/core/firebase/presence.service';
 import { Router } from '@angular/router';
 import { UserId } from 'types/idtypes';
 import { firestore } from 'firebase';
@@ -27,7 +28,8 @@ export class UserService {
   constructor(
     private firestore: AngularFirestore,
     private auth: AngularFireAuth,
-    private router: Router
+    private router: Router,
+    private presenceService: PresenceService
   ) {}
 
   hasPrivilege(priv: string) {
@@ -63,30 +65,21 @@ export class UserService {
       .set(media);
   }
 
-  loggedInData: Observable<User> = this.auth.user.pipe(
-    distinctUntilKeyChanged('uid'),
-    switchMap((user) =>
-      this.get(user.uid).pipe(
-        startWith({
-          name: user.displayName,
-          email: user.email,
-          userId: user.uid,
-          avatar: user.photoURL,
-        } as User)
-      )
-    ),
-    publishReplay(1),
-    refCount()
-  );
-
-  get(id: String) {
-    return this.firestore
-      .doc<User>(`/users/${id}`)
-      .snapshotChanges()
-      .pipe(
-        filter((v) => v.payload.exists),
-        map((v) => ({ userId: v.payload.id, ...v.payload.data() } as User))
+  get(id?: String): Observable<User> {
+    if (id) {
+      return this.firestore
+        .doc<User>(`/users/${id}`)
+        .snapshotChanges()
+        .pipe(
+          filter((v) => v.payload.exists),
+          map((v) => ({ userId: v.payload.id, ...v.payload.data() } as User))
+        );
+    } else {
+      return this.auth.user.pipe(
+        distinctUntilKeyChanged('uid'),
+        switchMap((user) => this.get(user.uid))
       );
+    }
   }
 
   update(id: String, user: Partial<User>) {
@@ -125,7 +118,9 @@ export class UserService {
   }
 
   async logout() {
+    const { uid } = await this.auth.currentUser;
     this.router.navigate(['welcome']);
+    await this.presenceService.setPresence('disconnected', uid);
     this.auth.signOut();
   }
 

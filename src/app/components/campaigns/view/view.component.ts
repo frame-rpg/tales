@@ -15,12 +15,15 @@ import {
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Campaign } from 'types/campaign';
-import { CampaignService } from 'src/app/data/campaign.service';
+import { CampaignService } from 'src/app/components/campaigns/campaign.service';
 import { CharacterService } from 'src/app/data/character.service';
 import { ChatService } from '../../chat/chat.service';
 import { Message } from 'types/chat';
+import { PresenceService } from 'src/app/core/firebase/presence.service';
 import { RollService } from 'src/app/rolls/roll.service';
+import { TitleService } from 'src/app/shared/topline/title.service';
 import { User } from 'types/user';
+import { UserId } from 'types/idtypes';
 import { UserService } from '../../user/user.service';
 
 type ActionType = 'initiative' | 'noncombat' | 'reset' | 'rest';
@@ -45,6 +48,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   user: Observable<User>;
   destroyingSubject = new BehaviorSubject<boolean>(false);
   chat: Observable<Message[]>;
+  present: Observable<User[]>;
   destroying = this.destroyingSubject
     .asObservable()
     .pipe(filter((v) => v === true));
@@ -61,6 +65,8 @@ export class ViewComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private userService: UserService,
     private chatService: ChatService,
+    private presenceService: PresenceService,
+    private titleService: TitleService,
     private auth: AngularFireAuth
   ) {}
 
@@ -80,6 +86,10 @@ export class ViewComponent implements OnInit, OnDestroy {
       refCount()
     );
 
+    this.campaign
+      .pipe(takeUntil(this.destroying))
+      .subscribe((c) => this.titleService.setTitle(c.name));
+
     this.characters = this.campaign.pipe(
       switchMap((campagin) => this.characterService.list(campagin)),
       publishReplay(1),
@@ -97,6 +107,21 @@ export class ViewComponent implements OnInit, OnDestroy {
       map(([characters, { uid }]) =>
         characters.filter((character) =>
           ['gm', 'player'].includes(character.acl[uid])
+        )
+      )
+    );
+
+    this.present = combineLatest([
+      this.presenceService.getPresences(),
+      this.route.paramMap,
+    ]).pipe(
+      switchMap(([present, params]) =>
+        combineLatest(
+          Object.entries(present)
+            .filter(([, location]) =>
+              location.endsWith(params.get('campaignId'))
+            )
+            .map(([uid]) => this.userService.get(uid))
         )
       )
     );
