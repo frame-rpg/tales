@@ -1,4 +1,5 @@
 import { Acl } from './acl';
+import { Action } from './action';
 import { Equipment } from './equipment';
 import { CampaignId, CharacterId } from './idtypes';
 
@@ -11,4 +12,5 @@ export interface CharacterBase extends CharacterId {
   subtype: CharacterType;
   initiative: number;
   equipment: Equipment[];
+  abilities: Action[];
 }
