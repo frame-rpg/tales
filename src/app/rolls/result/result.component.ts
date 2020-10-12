@@ -2,7 +2,7 @@ import { Character, SkilledCharacter } from 'types/character';
 import { Component, Input, OnInit } from '@angular/core';
 import { map, publishReplay, refCount } from 'rxjs/operators';
 
-import { CharacterService } from 'src/app/data/character.service';
+import { CharacterService } from 'src/app/components/characters/character.service';
 import { CharacterSkill } from 'types/skill';
 import { Observable } from 'rxjs';
 import { RollResult } from 'types/roll';

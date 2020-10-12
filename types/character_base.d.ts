@@ -1,5 +1,6 @@
 import { Acl } from './acl';
 import { Action } from './action';
+import { Effect } from './effect';
 import { CharacterId } from './idtypes';
 import { Item } from './item';
 
@@ -14,4 +15,5 @@ export interface CharacterBase extends CharacterId {
   equipped: Item[];
   carried: Item[];
   abilities: Action[];
+  auras: Effect[];
 }

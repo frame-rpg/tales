@@ -1,5 +1,5 @@
 import { Character } from 'types/character';
-import { CharacterService } from 'src/app/data/character.service';
+import { CharacterService } from 'src/app/components/characters/character.service';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { WoundComponent } from './wound.component';

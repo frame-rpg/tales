@@ -36,7 +36,7 @@ import { AclType } from 'types/acl';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Attribute } from 'types/attribute';
 import { CharacterId } from 'types/idtypes';
-import { CharacterService } from 'src/app/data/character.service';
+import { CharacterService } from 'src/app/components/characters/character.service';
 import { CharacterSkill } from 'types/skill';
 import { RollService } from 'src/app/rolls/roll.service';
 import { SpinnerComponent } from 'src/app/shared/spinner.component';

@@ -23,7 +23,7 @@ import {
 
 import { Character } from 'types/character';
 import { CharacterId } from 'types/idtypes';
-import { CharacterService } from '../data/character.service';
+import { CharacterService } from '../components/characters/character.service';
 
 @Component({
   selector: 'framesystem-spinner',

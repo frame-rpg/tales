@@ -9,7 +9,7 @@ import { debounceTime, filter, map, takeUntil } from 'rxjs/operators';
 
 import { BehaviorSubject } from 'rxjs';
 import { CharacterId } from 'types/idtypes';
-import { CharacterService } from '../../data/character.service';
+import { CharacterService } from '../../components/characters/character.service';
 import { SpinnerComponent } from 'src/app/shared/spinner.component';
 
 @Component({

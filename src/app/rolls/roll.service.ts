@@ -15,7 +15,7 @@ import {
 } from './request/request.component';
 
 import { AngularFirestore } from '@angular/fire/firestore';
-import { CharacterService } from '../data/character.service';
+import { CharacterService } from '../components/characters/character.service';
 import { FirebaseApp } from '@angular/fire';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
