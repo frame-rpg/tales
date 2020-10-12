@@ -1,3 +1,4 @@
+import { Action } from '../../types/action';
 import { Item } from '../../types/item';
 
 function weapon({
@@ -217,4 +218,20 @@ export const shield: Item = {
       costs: [],
     },
   ],
+};
+
+export const feet: Action = {
+  name: 'Unarmed Strike',
+  type: 'activate',
+  costs: [{ type: 'initiative', cost: { type: 'concrete', cost: 3 } }],
+  effects: [
+    {
+      type: 'bonus',
+      damage: 2,
+      duration: 'roll',
+    },
+  ],
+  category: 'attack',
+  skills: ['unarmedcombat'],
+  description: 'With fists and feet of fury, pummel your foes.',
 };

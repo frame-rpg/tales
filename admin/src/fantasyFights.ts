@@ -2,6 +2,7 @@ import { attr, skillBlock } from './util';
 import {
   crossbow,
   dagger,
+  feet,
   lightMace,
   longbow,
   magicCrossbow,
@@ -247,7 +248,7 @@ export const characters: PlayerCharacter[] = [
     initiative: 0,
     equipped: [stoneCloak],
     carried: [],
-    abilities: [],
+    abilities: [feet],
   },
   {
     name: 'Cantaloupe "Loupe" Pantaloons',
