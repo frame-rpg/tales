@@ -1,10 +1,17 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  Optional,
+  ViewChild,
+} from '@angular/core';
 import { BehaviorSubject, Subject, combineLatest } from 'rxjs';
 import { filter, takeUntil, tap } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { FirebaseuiAngularLibraryComponent } from 'firebaseui-angular';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from './user.service';
 import { auth } from 'firebase/app';
@@ -24,29 +31,20 @@ export class LoginComponent implements AfterViewInit, OnDestroy {
     private snackBar: MatSnackBar,
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    @Optional() public matDialogRef: MatDialogRef<LoginComponent>
   ) {}
 
-  async loginWithGoogle() {
-    await this.auth.signInWithPopup(new auth.GoogleAuthProvider());
-    await this.userService.postLogin();
-    this.router.navigateByUrl('/');
-  }
-
   ngAfterViewInit() {
-    combineLatest([
-      this.login.signInSuccessWithAuthResultCallback,
-      this.route.paramMap,
-    ])
+    this.login.signInSuccessWithAuthResultCallback
       .pipe(takeUntil(this.destroying))
-      .subscribe(async ([result, params]) => {
+      .subscribe(async () => {
         await this.userService.postLogin();
-        this.snackBar.open('Successfully logged in.');
-        if (params.get('after')) {
-          this.router.navigate(['home', params.get('after')]);
-        } else {
-          this.router.navigate(['home']);
+        if (this.matDialogRef) {
+          this.matDialogRef.close();
         }
+        this.snackBar.open('Successfully logged in.');
+        this.router.navigate(['users']);
       });
     this.login.signInFailureCallback
       .pipe(takeUntil(this.destroying))

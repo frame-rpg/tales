@@ -146,3 +146,44 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 .theme-alternate {
   @include angular-material-theme($altTheme);
 }
+
+.longform {
+  width: clamp(150px, 90%, 600px);
+  font-family: 'Merriweather';
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+
+  .hero {
+    font-family: 'Abril Fatface';
+    font-size: 48px;
+    margin-bottom: 12px;
+    line-height: 1;
+    font-weight: 400;
+  }
+
+  h1 {
+    margin-bottom: 0;
+    margin-top: 24px;
+    font-family: 'Merriweather';
+    font-weight: 600;
+  }
+
+  h2 {
+    margin-bottom: 0;
+    margin-top: 20px;
+    font-family: 'Merriweather';
+    font-weight: 600;
+  }
+
+  h3 {
+    margin-bottom: 0;
+    margin-top: 12px;
+    font-family: 'Merriweather';
+  }
+
+  p {
+    margin-top: 8px;
+    margin-bottom: 0;
+  }
+}

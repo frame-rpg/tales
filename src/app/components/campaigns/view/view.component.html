@@ -22,6 +22,11 @@
     </framesystem-roll-result>
     <framesystem-chat-view *ngFor="let msg of chat | async" [msg]="msg">
     </framesystem-chat-view>
+    <div class="presence">
+      <framesystem-person-image [person]="presentUser"
+          *ngFor="let presentUser of present | async">
+      </framesystem-person-image>
+    </div>
     <framesystem-chat-write *ngIf="campaign | async as campaignScalar"
         class="chatCompose" [campaign]="campaignScalar" [user]="user | async">
     </framesystem-chat-write>

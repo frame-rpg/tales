@@ -17,7 +17,9 @@ export class RouteComponent implements OnInit {
   constructor(private route: ActivatedRoute, private userService: UserService) {
     this.user = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.userService.get(params.get('userId'))
+        params.get('userId')?.length > 0
+          ? this.userService.get(params.get('userId'))
+          : this.userService.get()
       ),
       publishReplay(1),
       refCount()

@@ -4,6 +4,7 @@ import { MaterialModule } from '../core/material/material.module';
 import { NgModule } from '@angular/core';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { PersonImageComponent } from './person-image/person-image.component';
+import { RouterModule } from '@angular/router';
 import { SpinnerComponent } from './spinner.component';
 import { ToplineComponent } from './topline/topline.component';
 
@@ -14,7 +15,7 @@ import { ToplineComponent } from './topline/topline.component';
     ToplineComponent,
     PersonImageComponent,
   ],
-  imports: [CommonModule, MaterialModule, NgxFileDropModule],
+  imports: [CommonModule, MaterialModule, NgxFileDropModule, RouterModule],
   exports: [
     SpinnerComponent,
     ImageSelectComponent,
