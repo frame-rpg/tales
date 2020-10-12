@@ -3,8 +3,8 @@ export type AuraDuration = 'scene' | 'day' | 'next' | number;
 export interface BaseEffect {
   type: 'bonus' | 'generic';
   duration: 'roll' | AuraDuration;
-  name: string;
-  description: string;
+  name?: string;
+  description?: string;
   icon?: string;
 }
 
@@ -16,7 +16,7 @@ export interface BonusEffect extends BaseEffect {
   damage?: number;
 }
 
-export interface GenericEffect {
+export interface GenericEffect extends BaseEffect {
   type: 'generic';
 }
 

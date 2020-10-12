@@ -9,8 +9,5 @@ export interface Action {
   name: string;
   description: string;
   category: SkillType;
-  roll?: {
-    skills: string[];
-    initiative: number;
-  };
+  skills?: string[];
 }

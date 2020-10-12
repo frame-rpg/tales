@@ -6,4 +6,5 @@ export interface Item {
   slot: 'body' | 'hand' | 'head';
   size: number;
   abilities: Action[];
+  depleted?: boolean;
 }
