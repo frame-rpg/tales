@@ -43,6 +43,11 @@ export interface DepletionCost extends BaseCost {
   type: 'depletion';
   target: number;
   level: number;
+  item?: {
+    characterId: string;
+    campaignId: string;
+    itemId: string;
+  };
 }
 
 export type CalculatedCost = PoolCost | InitiativeCost | DamageCost;

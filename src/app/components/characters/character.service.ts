@@ -1,9 +1,9 @@
+import { Ability, AbilityType } from 'types/ability';
 import { CampaignId, CharacterId, UserId } from 'types/idtypes';
 import { Character, SkilledCharacter } from 'types/character';
 import { publishReplay, refCount, switchMap } from 'rxjs/operators';
 
 import { AclType } from 'types/acl';
-import { Action } from 'types/action';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Cost } from 'types/cost';
@@ -13,6 +13,8 @@ import { Item } from 'types/item';
 import { Observable } from 'rxjs';
 import { SkillType } from 'types/skill';
 import { addId } from '../../data/rxutil';
+import { firestore } from 'firebase/app';
+import { ulid } from 'ulid';
 
 @Injectable({
   providedIn: 'root',
@@ -61,80 +63,83 @@ export class CharacterService {
     await this.update(character, patch);
   }
 
-  actions(character: SkilledCharacter): Action[] {
+  abilities(
+    character: SkilledCharacter,
+    filter: { skills?: string[]; category?: SkillType },
+    type: AbilityType
+  ): Ability[] {
     const undepletedAbilities = character.equipped.flatMap((item) =>
       item.abilities
-        .filter((ability) => ability.type === 'activate')
+        .filter((ability) => ability.type === type)
+        .filter(
+          (ability) =>
+            !('category' in ability || 'skills' in ability) ||
+            ('category' in ability && ability.category === filter.category) ||
+            ('skills' in ability &&
+              ability.skills?.some((skill) => filter.skills?.includes(skill)))
+        )
         .filter(
           (ability) =>
             !item.depleted ||
             ability.costs.every((cost) => cost.type !== 'depletion')
         )
+        .map((ability) => ({
+          ...ability,
+          from: item.owner,
+        }))
     );
     const characterAbilities = character.abilities.filter(
-      (ability) => ability.type === 'activate'
+      (ability) => ability.type === type
     );
     return [...undepletedAbilities, ...characterAbilities];
   }
 
-  replacements(character: SkilledCharacter): Action[] {
-    const undepletedAbilities = character.equipped.flatMap((item) =>
-      item.abilities
-        .filter((ability) => ability.type === 'replace')
-        .filter(
-          (ability) =>
-            !item.depleted ||
-            ability.costs.every((cost) => cost.type !== 'depletion')
-        )
-    );
-    const characterAbilities = character.abilities.filter(
-      (ability) => ability.type === 'replace'
-    );
-    return [...undepletedAbilities, ...characterAbilities];
+  actions(
+    character: SkilledCharacter,
+    filter: { skills?: string[]; category?: SkillType }
+  ) {
+    return this.abilities(character, filter, 'action');
+  }
+
+  reactions(
+    character: SkilledCharacter,
+    filter: { skills?: string[]; category?: SkillType }
+  ) {
+    return this.abilities(character, filter, 'replace');
+  }
+
+  modifiers(
+    character: SkilledCharacter,
+    filter: { skills?: string[]; category?: SkillType }
+  ) {
+    return this.abilities(character, filter, 'modifier');
   }
 
   passives(
     character: SkilledCharacter,
-    filter: { skills: string[] } | { category: SkillType }
-  ): { items: Item[]; effects: Effect[]; costs: Cost[] } {
-    const undepletedItems: Item[] = character.equipped.filter((item) =>
-      item.abilities.some((ability) =>
-        itemEffect(ability, item, { ...filter, type: 'automatic' })
-      )
+    filter: { skills?: string[]; category?: SkillType }
+  ): { abilities: Ability[]; auras: Effect[] } {
+    const abilities = this.abilities(character, filter, 'passive');
+    const auras = character.auras.filter(
+      (aura) =>
+        (aura.type === 'bonus' &&
+          'category' in filter &&
+          filter.category === aura.category) ||
+        ('skills' in filter &&
+          filter.skills.some((skill) => aura.skills?.includes(skill)))
     );
-
-    const itemActions: Action[] = undepletedItems.flatMap((item) =>
-      item.abilities.filter((ability) =>
-        itemEffect(ability, item, { ...filter, type: 'automatic' })
-      )
-    );
-
-    const characterPassives = character.abilities.filter(
-      (ability) => ability.type === 'automatic' && applyFilter(ability, filter)
-    );
-
-    return {
-      items: undepletedItems,
-      effects: [
-        ...itemActions.flatMap((action) => action.effects),
-        ...characterPassives.flatMap((action) => action.effects),
-      ],
-      costs: [
-        ...itemActions.flatMap((action) => action.costs),
-        ...characterPassives.flatMap((action) => action.costs),
-      ],
-    };
+    return { abilities, auras };
   }
 
-  withs(
-    character: SkilledCharacter,
-    filter: { skills: string[] } | { category: SkillType }
-  ): Item[] {
-    return character.equipped.filter((item) =>
-      item.abilities.some((ability) =>
-        itemEffect(ability, item, { ...filter, type: 'with' })
-      )
-    );
+  async giveItem(character: SkilledCharacter, item: Item) {
+    const owner = {
+      characterId: character.characterId,
+      campaignId: character.campaignId,
+      itemId: ulid(),
+    };
+    await this.update(character, {
+      carried: firestore.FieldValue.arrayUnion({ ...item, owner }),
+    });
   }
 
   async rest(characters: Character[]) {
@@ -180,7 +185,7 @@ export class CharacterService {
       .pipe(addId('characterId'), publishReplay(1), refCount());
   }
 
-  update(id: CharacterId, character: Partial<Character>) {
+  update(id: CharacterId, character: any) {
     return this.firestore.doc(this.characterAddress(id)).update(character);
   }
 
@@ -190,7 +195,7 @@ export class CharacterService {
 }
 
 function applyFilter(
-  ability: Action,
+  ability: Ability,
   filter: { skills: string[] } | { category: SkillType }
 ): boolean {
   if ('category' in filter) {
@@ -201,9 +206,12 @@ function applyFilter(
 }
 
 function itemEffect(
-  ability: Action,
+  ability: Ability,
   item: Item,
-  filter: { type: string } & ({ skills: string[] } | { category: SkillType })
+  filter: { type: AbilityType } & (
+    | { skills: string[] }
+    | { category: SkillType }
+  )
 ): boolean {
   return (
     ability.type === filter.type &&

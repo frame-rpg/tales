@@ -1,8 +1,12 @@
+import { SkillCategory, SkillType } from './skill';
+
 export type AuraDuration = 'scene' | 'day' | 'next' | number;
 
 export interface BaseEffect {
   type: 'bonus' | 'generic';
   duration: 'roll' | AuraDuration;
+  category?: SkillType;
+  skills?: string[];
   name?: string;
   description?: string;
   icon?: string;

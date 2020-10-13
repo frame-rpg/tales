@@ -1,4 +1,4 @@
-import { Action } from '../../types/action';
+import { Ability } from '../../types/ability';
 import { Item } from '../../types/item';
 
 function weapon({
@@ -21,7 +21,7 @@ function weapon({
     size,
     abilities: [
       {
-        type: 'activate',
+        type: 'action',
         name: 'Attack',
         description: `Basic attack with a ${name}.`,
         category: 'attack',
@@ -54,7 +54,7 @@ export const magicRapier: Item = {
   abilities: [
     ...rapier.abilities,
     {
-      type: 'activate',
+      type: 'action',
       name: 'Attack',
       description: 'Magical strike against a chaotic foe.',
       category: 'attack',
@@ -114,7 +114,7 @@ export const magicCrossbow: Item = {
   abilities: [
     ...crossbow.abilities,
     {
-      type: 'activate',
+      type: 'action',
       name: 'Imbue with Blood',
       description:
         'You pour a little bit of your soul into the crossbow. It appreciates the donation.',
@@ -151,7 +151,7 @@ export const stoneCloak: Item = {
   depleted: false,
   abilities: [
     {
-      type: 'automatic',
+      type: 'passive',
       name: 'Defensive Assist',
       description:
         'The stone cloak swirls of its own accord, confounding your foe',
@@ -166,7 +166,7 @@ export const stoneCloak: Item = {
       costs: [{ type: 'depletion', target: 3, level: 0 }],
     },
     {
-      type: 'automatic',
+      type: 'passive',
       name: 'Defensive Assist',
       description: 'The stone cloak helps you hide.',
       category: 'noncombat',
@@ -190,7 +190,7 @@ export const shield: Item = {
   size: 1,
   abilities: [
     {
-      type: 'automatic',
+      type: 'passive',
       name: 'Shield Bonus',
       description: 'You use your shield to aid your defense',
       category: 'defense',
@@ -204,7 +204,7 @@ export const shield: Item = {
       costs: [],
     },
     {
-      type: 'automatic',
+      type: 'passive',
       name: 'Shield Nonproficency Penalty',
       description: 'Your shield hinders your attack',
       category: 'attack',
@@ -220,9 +220,9 @@ export const shield: Item = {
   ],
 };
 
-export const feet: Action = {
+export const feet: Ability = {
   name: 'Unarmed Strike',
-  type: 'activate',
+  type: 'action',
   costs: [{ type: 'initiative', cost: { type: 'concrete', cost: 3 } }],
   effects: [
     {

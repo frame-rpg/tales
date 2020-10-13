@@ -1,10 +1,15 @@
-import { Action } from './action';
+import { Ability } from './ability';
 
 export interface Item {
   name: string;
+  owner?: {
+    campaignId: string;
+    characterId: string;
+    itemId: string;
+  };
   description: string;
   slot: 'body' | 'hand' | 'head';
   size: number;
-  abilities: Action[];
+  abilities: Ability[];
   depleted?: boolean;
 }
