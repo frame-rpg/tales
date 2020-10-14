@@ -146,9 +146,7 @@ export class CharacterService {
     characterId: string;
     campaignId: string;
     itemId: string;
-  }) {
-    throw new Error('Method not implemented.');
-  }
+  }) {}
 
   async rest(characters: Character[]) {
     await Promise.all(
