@@ -1,6 +1,9 @@
 import * as admin from 'firebase-admin';
 
-import { campaign, characters } from './fantasyFights';
+import { Character, PlayerCharacter } from '../../types/character';
+import { campaign, characters, inventory } from './fantasyFights';
+
+import { addItem } from './util';
 
 (async () => {
   const flagArgs: Record<string, string> = {};
@@ -41,16 +44,20 @@ import { campaign, characters } from './fantasyFights';
       characters
         .map((c) => {
           if (flagArgs.player) {
-            return { ...c, acl };
+            return { ...c, acl } as PlayerCharacter;
           } else {
             return c;
           }
         })
+        .map((c: PlayerCharacter) => {
+          inventory[c.characterId].forEach((item) => addItem(c, item));
+          return c;
+        })
         .map((p) =>
           app
             .firestore()
-            .collection(`/campaigns/${ffc.id}/characters`)
-            .add({ ...p, campaignId: ffc.id })
+            .doc(`/campaigns/${ffc.id}/characters/${p.characterId}`)
+            .set({ ...p, campaignId: ffc.id })
         )
     ),
   ]);

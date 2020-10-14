@@ -13,6 +13,7 @@ import {
 } from './equipment';
 
 import { Campaign } from '../../types/campaign';
+import { Item } from '../../types/item';
 import { PlayerCharacter } from '../../types/character';
 import { Skill } from '../../types/skill';
 import { commonSkills } from './skills';
@@ -100,6 +101,14 @@ export const campaign: Omit<Campaign, 'campaignId'> = {
   skills: commonSkills.concat(localSkills),
 };
 
+export const inventory: Record<string, Item[]> = {
+  stu: [stoneCloak, crossbow, dagger, shield, staff],
+  kewulf: [longbow, stoneCloak, dagger],
+  malven: [lightMace, stoneCloak, dagger],
+  jordiz: [stoneCloak],
+  loupe: [magicRapier, stoneCloak, magicCrossbow],
+};
+
 export const characters: PlayerCharacter[] = [
   {
     name: 'Stu Roid',
@@ -132,9 +141,10 @@ export const characters: PlayerCharacter[] = [
     }),
     experience: 1,
     initiative: 0,
-    equipped: [stoneCloak, crossbow, dagger, shield, staff],
+    equipped: [],
     carried: [],
     abilities: [],
+    auras: [],
   },
   {
     name: 'Kewulf Trannyth',
@@ -164,9 +174,10 @@ export const characters: PlayerCharacter[] = [
     }),
     experience: 5,
     initiative: 0,
-    equipped: [longbow, stoneCloak, dagger],
+    equipped: [],
     carried: [],
     abilities: [],
+    auras: [],
   },
   {
     name: 'Malven Stonecutter',
@@ -203,9 +214,10 @@ export const characters: PlayerCharacter[] = [
     }),
     experience: 5,
     initiative: 0,
-    equipped: [lightMace, stoneCloak, dagger],
+    equipped: [],
     carried: [],
     abilities: [],
+    auras: [],
   },
   {
     name: 'Jordiz Shirodz',
@@ -246,9 +258,10 @@ export const characters: PlayerCharacter[] = [
     ]),
     experience: 5,
     initiative: 0,
-    equipped: [stoneCloak],
+    equipped: [],
     carried: [],
     abilities: [feet],
+    auras: [],
   },
   {
     name: 'Cantaloupe "Loupe" Pantaloons',
@@ -273,8 +286,9 @@ export const characters: PlayerCharacter[] = [
     }),
     experience: 5,
     initiative: 0,
-    equipped: [magicRapier, stoneCloak, magicCrossbow],
+    equipped: [],
     carried: [],
     abilities: [],
+    auras: [],
   },
 ];

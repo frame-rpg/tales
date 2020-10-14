@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.skillBlock = exports.attr = void 0;
+exports.addItem = exports.skillBlock = exports.attr = void 0;
+const ulid_1 = require("ulid");
 function attr(v, e, n) {
     return {
         name: n,
@@ -29,3 +30,12 @@ function skillBlock(base, { inept, proficient, trained, expert }) {
     });
 }
 exports.skillBlock = skillBlock;
+function addItem(c, i) {
+    const owner = {
+        characterId: c.characterId,
+        campaignId: c.campaignId,
+        itemId: ulid_1.ulid(),
+    };
+    c.carried.push(JSON.parse(JSON.stringify({ ...i, owner })));
+}
+exports.addItem = addItem;

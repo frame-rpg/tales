@@ -1,155 +1,211 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.rapidStrike = exports.nonproficiencyPenalty = exports.shield = exports.stoneCloak = exports.feet = exports.longbow = exports.crossbow = exports.magicRapier = exports.sonicBlast = exports.antimagicBlast = exports.staff = exports.lightMace = exports.dagger = exports.rapier = void 0;
-exports.rapier = {
-    type: 'weapon',
-    kind: 'melee',
-    slot: 'hand',
-    size: 1,
-    damage: 2,
-    initiative: 4,
-    effect: {},
+exports.feet = exports.shield = exports.stoneCloak = exports.longbow = exports.magicCrossbow = exports.crossbow = exports.staff = exports.lightMace = exports.dagger = exports.magicRapier = exports.rapier = void 0;
+function weapon({ name, initiative, size, damage, skills, }) {
+    return {
+        name,
+        description: `A ${name}`,
+        slot: 'hand',
+        size,
+        abilities: [
+            {
+                type: 'action',
+                name: 'Attack',
+                description: `Basic attack with a ${name}.`,
+                category: 'attack',
+                skills,
+                costs: [
+                    { type: 'initiative', cost: { type: 'concrete', cost: initiative } },
+                ],
+                effects: [
+                    {
+                        type: 'bonus',
+                        damage: damage,
+                        duration: 'roll',
+                    },
+                ],
+            },
+        ],
+    };
+}
+exports.rapier = weapon({
     name: 'Rapier',
-    equipped: true,
-    skills: ['fencing', 'combatinsight'],
-};
-exports.dagger = {
-    type: 'weapon',
-    kind: 'melee',
-    slot: 'hand',
-    size: 1,
-    damage: 0,
-    initiative: 3,
-    effect: {},
-    name: 'Dagger',
-    equipped: true,
-    skills: ['fencing', 'combatinsight'],
-};
-exports.lightMace = {
-    type: 'weapon',
-    kind: 'melee',
-    slot: 'hand',
-    size: 1,
+    initiative: 4,
     damage: 2,
-    initiative: 4,
-    effect: {},
-    name: 'Light Mace',
-    equipped: true,
-    skills: ['fencing', 'combatinsight'],
-};
-exports.staff = {
-    type: 'weapon',
-    kind: 'melee',
-    slot: 'hand',
-    size: 2,
-    damage: 4,
-    initiative: 6,
-    effect: {},
-    name: 'Staff',
-    equipped: true,
-    skills: ['fencing', 'combatinsight'],
-};
-exports.antimagicBlast = {
-    type: 'weapon',
-    kind: 'ranged',
-    slot: 'hand',
-    size: 2,
-    damage: -10,
-    initiative: 6,
-    effect: {},
-    name: 'Antimagic Staff',
-    equipped: true,
-    skills: ['sniper', 'quickdraw'],
-};
-exports.sonicBlast = {
-    type: 'weapon',
-    kind: 'ranged',
-    slot: 'hand',
     size: 1,
-    damage: 4,
-    initiative: 4,
-    effect: {},
-    name: 'Sonic Blast',
-    equipped: true,
-    skills: ['sniper', 'quickdraw'],
-};
+    skills: ['fencing', 'combatinsight'],
+});
 exports.magicRapier = {
-    type: 'weapon',
-    kind: 'melee',
-    slot: 'hand',
-    size: 1,
-    damage: 2,
-    initiative: 4,
-    effect: { assets: [{ category: 'attack', value: 1 }] },
-    name: 'Magical Rapier',
-    equipped: true,
-    skills: ['fencing', 'combatinsight'],
+    ...exports.rapier,
+    abilities: [
+        ...exports.rapier.abilities,
+        {
+            type: 'action',
+            name: 'Attack',
+            description: 'Magical strike against a chaotic foe.',
+            category: 'attack',
+            skills: ['fencing', 'combatinsight'],
+            costs: [
+                { type: 'initiative', cost: { type: 'concrete', cost: 4 } },
+                { type: 'depletion', level: 0, target: 4 },
+            ],
+            effects: [
+                {
+                    type: 'bonus',
+                    damage: 2,
+                    assets: 1,
+                    duration: 'roll',
+                },
+            ],
+        },
+    ],
 };
-exports.crossbow = {
-    type: 'weapon',
-    kind: 'ranged',
-    slot: 'hand',
-    size: 2,
-    damage: 5,
-    initiative: 8,
-    effect: {},
-    name: 'Crossbow',
-    equipped: true,
-    skills: ['sniper', 'quickdraw'],
-};
-exports.longbow = {
-    type: 'weapon',
-    kind: 'ranged',
-    slot: 'hand',
-    size: 2,
-    damage: 3,
-    initiative: 6,
-    effect: {},
-    name: 'Longbow',
-    equipped: true,
-    skills: ['hurling', 'righteousfury'],
-};
-exports.feet = {
-    type: 'weapon',
-    kind: 'melee',
-    slot: 'body',
-    damage: 1,
+exports.dagger = weapon({
+    name: 'Dagger',
     initiative: 3,
-    effect: {},
-    name: 'Unarmed Attack',
-    equipped: true,
+    damage: 0,
     size: 1,
-    skills: ['unarmedfighting'],
+    skills: ['fencing', 'combatinsight', 'sniper', 'quickdraw'],
+});
+exports.lightMace = weapon({
+    name: 'Light Mace',
+    initiative: 4,
+    damage: 2,
+    size: 1,
+    skills: ['fencing', 'combatinsight'],
+});
+exports.staff = weapon({
+    name: 'Staff',
+    initiative: 6,
+    damage: 4,
+    size: 2,
+    skills: ['fencing', 'combatinsight'],
+});
+exports.crossbow = weapon({
+    name: 'Crossbow',
+    initiative: 8,
+    damage: 5,
+    size: 2,
+    skills: ['sniper', 'quickdraw'],
+});
+exports.magicCrossbow = {
+    ...exports.crossbow,
+    name: 'Blood Crossbow',
+    depleted: false,
+    abilities: [
+        ...exports.crossbow.abilities,
+        {
+            type: 'action',
+            name: 'Imbue with Blood',
+            description: 'You pour a little bit of your soul into the crossbow. It appreciates the donation.',
+            costs: [
+                { type: 'depletion', level: 0, target: 4 },
+                { type: 'pool', pool: ['health'], cost: { type: 'concrete', cost: 1 } },
+            ],
+            effects: [
+                {
+                    duration: 'next',
+                    type: 'bonus',
+                    damage: 10,
+                },
+            ],
+            category: 'attack',
+        },
+    ],
 };
+exports.longbow = weapon({
+    name: 'Crossbow',
+    initiative: 6,
+    damage: 3,
+    size: 2,
+    skills: ['hurling', 'righteousfury'],
+});
 exports.stoneCloak = {
-    type: 'armor',
+    name: 'Stone Cloak',
+    description: 'A cloak the same color and consistency of old stone, it provides additional defense as well as camouflage.',
     slot: 'body',
     size: 1,
-    effect: { assets: [{ category: 'defense', value: 1 }] },
-    equipped: true,
-    name: 'Stone Cloak',
+    depleted: false,
+    abilities: [
+        {
+            type: 'passive',
+            name: 'Defensive Assist',
+            description: 'The stone cloak swirls of its own accord, confounding your foe',
+            category: 'defense',
+            effects: [
+                {
+                    type: 'bonus',
+                    assets: 1,
+                    duration: 'roll',
+                },
+            ],
+            costs: [{ type: 'depletion', target: 3, level: 0 }],
+        },
+        {
+            type: 'passive',
+            name: 'Defensive Assist',
+            description: 'The stone cloak helps you hide.',
+            category: 'noncombat',
+            skills: ['sneaking'],
+            effects: [
+                {
+                    type: 'bonus',
+                    assets: 1,
+                    duration: 'roll',
+                },
+            ],
+            costs: [{ type: 'depletion', target: 3, level: 0 }],
+        },
+    ],
 };
 exports.shield = {
-    type: 'armor',
-    slot: 'body',
-    size: 1,
-    effect: { edge: [{ category: 'defense', value: 1 }] },
-    equipped: true,
     name: 'Shield',
+    description: 'A simple shield.',
+    slot: 'hand',
+    size: 1,
+    abilities: [
+        {
+            type: 'passive',
+            name: 'Shield Bonus',
+            description: 'You use your shield to aid your defense',
+            category: 'defense',
+            effects: [
+                {
+                    type: 'bonus',
+                    edge: 1,
+                    duration: 'roll',
+                },
+            ],
+            costs: [],
+        },
+        {
+            type: 'passive',
+            name: 'Shield Nonproficency Penalty',
+            description: 'Your shield hinders your attack',
+            category: 'attack',
+            effects: [
+                {
+                    type: 'bonus',
+                    assets: -1,
+                    duration: 'roll',
+                },
+            ],
+            costs: [],
+        },
+    ],
 };
-exports.nonproficiencyPenalty = {
-    type: 'other',
-    name: 'Shield Nonproficiency Penalty',
-    equipped: true,
-    size: 0,
-    slot: 'body',
-    effect: { assets: [{ category: 'attack', value: -1 }] },
-};
-exports.rapidStrike = {
-    type: 'other',
-    name: 'Rapid Strike',
-    equipped: true,
-    size: 0,
-    slot: 'body',
-    effect: { initiative: -1, edge: [{ category: 'attack', value: 0 }] },
+exports.feet = {
+    name: 'Unarmed Strike',
+    type: 'action',
+    costs: [{ type: 'initiative', cost: { type: 'concrete', cost: 3 } }],
+    effects: [
+        {
+            type: 'bonus',
+            damage: 2,
+            duration: 'roll',
+        },
+    ],
+    category: 'attack',
+    skills: ['unarmedcombat'],
+    description: 'With fists and feet of fury, pummel your foes.',
 };

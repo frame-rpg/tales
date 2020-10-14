@@ -21,6 +21,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const admin = __importStar(require("firebase-admin"));
 const fantasyFights_1 = require("./fantasyFights");
+const util_1 = require("./util");
 (async () => {
     const flagArgs = {};
     const args = process.argv.slice(2);
@@ -59,9 +60,13 @@ const fantasyFights_1 = require("./fantasyFights");
                 return c;
             }
         })
+            .map((c) => {
+            fantasyFights_1.inventory[c.characterId].forEach((item) => util_1.addItem(c, item));
+            return c;
+        })
             .map((p) => app
             .firestore()
-            .collection(`/campaigns/${ffc.id}/characters`)
-            .add({ ...p, campaignId: ffc.id }))),
+            .doc(`/campaigns/${ffc.id}/characters/${p.characterId}`)
+            .set({ ...p, campaignId: ffc.id }))),
     ]);
 })();

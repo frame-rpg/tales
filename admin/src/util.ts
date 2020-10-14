@@ -1,6 +1,9 @@
 import { CharacterSkill, Skill } from '../../types/skill';
 
 import { AttributeName } from '../../types/attribute';
+import { Character } from '../../types/character';
+import { Item } from '../../types/item';
+import { ulid } from 'ulid';
 
 export function attr<T extends AttributeName>(v: number, e: number, n: T) {
   return {
@@ -28,4 +31,13 @@ export function skillBlock(
     }
     return { ...skill, level: 'unskilled' };
   });
+}
+
+export function addItem(c: Character, i: Item) {
+  const owner = {
+    characterId: c.characterId,
+    campaignId: c.campaignId,
+    itemId: ulid(),
+  };
+  c.carried.push(JSON.parse(JSON.stringify({ ...i, owner })));
 }

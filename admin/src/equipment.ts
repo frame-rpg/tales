@@ -135,11 +135,11 @@ export const magicCrossbow: Item = {
 };
 
 export const longbow = weapon({
-  name: 'Crossbow',
+  name: 'Longbow',
   initiative: 6,
   damage: 3,
   size: 2,
-  skills: ['hurling', 'righteousfury'],
+  skills: ['hurling', 'sniper'],
 });
 
 export const stoneCloak: Item = {

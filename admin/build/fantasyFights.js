@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.characters = exports.campaign = void 0;
-const equipment_1 = require("./equipment");
+exports.characters = exports.inventory = exports.campaign = void 0;
 const util_1 = require("./util");
+const equipment_1 = require("./equipment");
 const skills_1 = require("./skills");
 const localSkills = [
     {
@@ -85,9 +85,18 @@ exports.campaign = {
     acl: {},
     skills: skills_1.commonSkills.concat(localSkills),
 };
+exports.inventory = {
+    stu: [equipment_1.stoneCloak, equipment_1.crossbow, equipment_1.dagger, equipment_1.shield, equipment_1.staff],
+    kewulf: [equipment_1.longbow, equipment_1.stoneCloak, equipment_1.dagger],
+    malven: [equipment_1.lightMace, equipment_1.stoneCloak, equipment_1.dagger],
+    jordiz: [equipment_1.stoneCloak],
+    loupe: [equipment_1.magicRapier, equipment_1.stoneCloak, equipment_1.magicCrossbow],
+};
 exports.characters = [
     {
         name: 'Stu Roid',
+        campaignId: 'ou',
+        characterId: 'stu',
         acl: {},
         description: '',
         type: 'character',
@@ -115,18 +124,15 @@ exports.characters = [
         }),
         experience: 1,
         initiative: 0,
-        equipment: [
-            equipment_1.stoneCloak,
-            equipment_1.crossbow,
-            equipment_1.dagger,
-            equipment_1.shield,
-            equipment_1.nonproficiencyPenalty,
-            equipment_1.staff,
-            equipment_1.antimagicBlast,
-        ],
+        equipped: [],
+        carried: [],
+        abilities: [],
+        auras: [],
     },
     {
         name: 'Kewulf Trannyth',
+        campaignId: 'ou',
+        characterId: 'kewulf',
         acl: {},
         description: '',
         type: 'character',
@@ -151,10 +157,15 @@ exports.characters = [
         }),
         experience: 5,
         initiative: 0,
-        equipment: [equipment_1.longbow, equipment_1.stoneCloak, equipment_1.sonicBlast, equipment_1.dagger],
+        equipped: [],
+        carried: [],
+        abilities: [],
+        auras: [],
     },
     {
         name: 'Malven Stonecutter',
+        campaignId: 'ou',
+        characterId: 'malven',
         acl: {},
         description: '',
         type: 'character',
@@ -186,10 +197,15 @@ exports.characters = [
         }),
         experience: 5,
         initiative: 0,
-        equipment: [equipment_1.lightMace, equipment_1.stoneCloak, equipment_1.dagger],
+        equipped: [],
+        carried: [],
+        abilities: [],
+        auras: [],
     },
     {
         name: 'Jordiz Shirodz',
+        campaignId: 'ou',
+        characterId: 'jordiz',
         acl: {},
         description: '',
         type: 'character',
@@ -225,10 +241,15 @@ exports.characters = [
         ]),
         experience: 5,
         initiative: 0,
-        equipment: [equipment_1.feet, equipment_1.stoneCloak],
+        equipped: [],
+        carried: [],
+        abilities: [equipment_1.feet],
+        auras: [],
     },
     {
         name: 'Cantaloupe "Loupe" Pantaloons',
+        campaignId: 'ou',
+        characterId: 'loupe',
         acl: {},
         description: '',
         type: 'character',
@@ -248,6 +269,9 @@ exports.characters = [
         }),
         experience: 5,
         initiative: 0,
-        equipment: [equipment_1.magicRapier, equipment_1.stoneCloak, equipment_1.rapidStrike, equipment_1.crossbow],
+        equipped: [],
+        carried: [],
+        abilities: [],
+        auras: [],
     },
 ];
