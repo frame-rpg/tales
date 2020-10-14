@@ -63,22 +63,14 @@ export class CharacterService {
   }
 
   abilities(
-    character: SkilledCharacter,
+    character: { equipment: Record<string, Item>; abilities: Ability[] },
     filter: { skills?: string[]; category?: SkillType },
     type: AbilityType
   ): Ability[] {
     const undepletedAbilities = Object.values(character.equipment)
       .filter((e) => e.equipped)
       .flatMap((item) =>
-        item.abilities
-          .filter((ability) => ability.type === type)
-          .filter(
-            (ability) =>
-              !('category' in filter || 'skills' in filter) ||
-              ('category' in ability && ability.category === filter.category) ||
-              ('skills' in ability &&
-                ability.skills?.some((skill) => filter.skills?.includes(skill)))
-          )
+        filterAbilities(item.abilities, type, filter)
           .filter(
             (ability) =>
               !item.depleted ||
@@ -90,28 +82,31 @@ export class CharacterService {
           }))
       );
 
-    const characterAbilities = character.abilities.filter(
-      (ability) => ability.type === type
+    const characterAbilities = filterAbilities(
+      character.abilities,
+      type,
+      filter
     );
+
     return [...undepletedAbilities, ...characterAbilities];
   }
 
   actions(
-    character: SkilledCharacter,
+    character: { equipment: Record<string, Item>; abilities: Ability[] },
     filter: { skills?: string[]; category?: SkillType }
   ) {
     return this.abilities(character, filter, 'action');
   }
 
   reactions(
-    character: SkilledCharacter,
+    character: { equipment: Record<string, Item>; abilities: Ability[] },
     filter: { skills?: string[]; category?: SkillType }
   ) {
     return this.abilities(character, filter, 'replace');
   }
 
   modifiers(
-    character: SkilledCharacter,
+    character: { equipment: Record<string, Item>; abilities: Ability[] },
     filter: { skills?: string[]; category?: SkillType }
   ) {
     return this.abilities(character, filter, 'modifier');
@@ -119,9 +114,15 @@ export class CharacterService {
 
   passives(
     character: SkilledCharacter,
-    filter: { skills?: string[]; category?: SkillType }
+    filter: { skills?: string[]; category?: SkillType },
+    additional?: { abilities: Ability[] }
   ): { abilities: Ability[]; auras: Effect[] } {
-    const abilities = this.abilities(character, filter, 'passive');
+    let abilities = this.abilities(character, filter, 'passive');
+    if (additional?.abilities.length > 0) {
+      abilities = abilities.concat(
+        filterAbilities(additional.abilities, 'passive', filter)
+      );
+    }
     const auras = character.auras.filter(
       (aura) =>
         (aura.type === 'bonus' &&
@@ -215,6 +216,22 @@ function applyFilter(
   } else {
     return filter.skills.some((skill) => ability.skills?.includes(skill));
   }
+}
+
+function filterAbilities(
+  abilities: Ability[],
+  type: string,
+  filter: { skills?: string[]; category?: SkillType }
+) {
+  return abilities
+    .filter((ability) => ability.type === type)
+    .filter(
+      (ability) =>
+        !('category' in filter || 'skills' in filter) ||
+        ('category' in ability && ability.category === filter.category) ||
+        ('skills' in ability &&
+          ability.skills?.some((skill) => filter.skills?.includes(skill)))
+    );
 }
 
 function itemEffect(

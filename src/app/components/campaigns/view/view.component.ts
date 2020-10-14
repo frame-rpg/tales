@@ -43,7 +43,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   characters: Observable<Character[]>;
   notableCharacters: Observable<Character[]>;
   rolls: Observable<Roll[]>;
-  requests: Observable<RollRequest[]>;
+  nextRequest: Observable<RollRequest>;
   gm: Observable<boolean>;
   user: Observable<User>;
   destroyingSubject = new BehaviorSubject<boolean>(false);
@@ -139,7 +139,7 @@ export class ViewComponent implements OnInit, OnDestroy {
       switchMap((user) => this.userService.get(user.uid))
     );
 
-    this.requests = combineLatest([
+    this.nextRequest = combineLatest([
       this.campaign,
       this.notableCharacters,
       this.auth.user,
@@ -151,29 +151,31 @@ export class ViewComponent implements OnInit, OnDestroy {
             ? characters
             : characters.filter((character) => character.acl[uid] === 'player'),
       })),
+      filter(({ characters }) => characters.length > 0),
       switchMap(({ campaign, characters }) =>
-        this.rollService.requests(campaign, characters)
+        this.rollService.nextRequest(campaign, characters)
       ),
       publishReplay(1),
       refCount()
     );
 
-    combineLatest([this.requests, this.notableCharacters, this.auth.user])
-      .pipe(takeUntil(this.destroying))
-      .subscribe(([requests, characters, { uid }]) => {
-        const mine = requests.filter(
-          (request) =>
+    combineLatest([this.nextRequest, this.notableCharacters, this.auth.user])
+      .pipe(
+        takeUntil(this.destroying),
+        distinctUntilChanged((a, b) => a[0].rollId === b[0].rollId)
+      )
+      .subscribe(([request, characters, { uid }]) => {
+        if (
+          characters.find(
+            (character) =>
+              character.characterId === request.character.characterId
+          )?.acl[uid] === 'player'
+        ) {
+          this.rollService.resolve(
+            request,
             characters.find(
               (character) =>
                 character.characterId === request.character.characterId
-            )?.acl[uid] === 'player'
-        );
-        if (mine && mine.length > 0) {
-          this.rollService.resolve(
-            requests[0],
-            characters.find(
-              (character) =>
-                character.characterId === requests[0].character.characterId
             ) as SkilledCharacter
           );
         }
@@ -191,7 +193,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     actionStream
       .pipe(filter(([, , event]) => event.type === 'initiative'))
       .subscribe(([, characters]) =>
-        this.rollService.request({ type: 'initiative', characters })
+        this.rollService.requestInitiative({ type: 'initiative', characters })
       );
     actionStream
       .pipe(filter(([, , event]) => event.type === 'rest'))

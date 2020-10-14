@@ -163,12 +163,21 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
         distinctUntilChanged((a, b) => a[2].event === b[2].event)
       )
       .subscribe(([character, relationship, { skill }]) => {
-        this.rollService.request({
-          character: character as SkilledCharacter,
-          skills: [skill],
-          type: 'noncombat',
-          self: relationship === 'player',
-        });
+        this.rollService.triggerAction(
+          {
+            type: 'action',
+            category: 'noncombat',
+            name: `${skill} trigger`,
+            description: 'Activating a noncombat skill',
+            effects: [],
+            skills: [skill],
+            costs: [
+              { type: 'initiative', cost: { type: 'concrete', cost: 10 } },
+            ],
+          },
+          character as SkilledCharacter,
+          relationship === 'player'
+        );
       });
 
     combineLatest([
@@ -184,7 +193,8 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
         if (ability.category === 'attack') {
           this.rollService.triggerAction(
             ability,
-            character as SkilledCharacter
+            character as SkilledCharacter,
+            true
           );
         }
       });
@@ -199,11 +209,11 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
         distinctUntilChanged((a, b) => a[2].event === b[2].event)
       )
       .subscribe(([character, relationship]) => {
-        this.rollService.request({
-          character: character as SkilledCharacter,
-          type: 'defense',
-          self: relationship === 'player',
-        });
+        // this.rollService.request({
+        //   character: character as SkilledCharacter,
+        //   type: 'defense',
+        //   self: relationship === 'player',
+        // });
       });
 
     combineLatest([

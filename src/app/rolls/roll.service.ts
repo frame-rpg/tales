@@ -2,6 +2,7 @@ import { Action, AngularFirestore } from '@angular/fire/firestore';
 import {
   AttackTemplate,
   Initiative,
+  InitiativeRequest,
   NoncombatTemplate,
   RequestTemplate,
   RollMetadata,
@@ -22,6 +23,14 @@ import {
   RequestComponent,
   RequestDialogData,
 } from './request/request.component';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  take,
+  tap,
+} from 'rxjs/operators';
 
 import { Ability } from 'types/ability';
 import { CharacterService } from '../components/characters/character.service';
@@ -33,7 +42,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { SkillType } from 'types/skill';
 import { Weapon } from 'types/equipment';
 import { WoundService } from '../actions/wound/wound.service';
-import { take } from 'rxjs/operators';
 
 interface BaseRequestData {
   type: SkillType;
@@ -119,7 +127,11 @@ export class RollService {
     }
   }
 
-  async triggerAction(ability: Ability, character: SkilledCharacter) {
+  async triggerAction(
+    ability: Ability,
+    character: SkilledCharacter,
+    self: boolean
+  ) {
     const data: AttackRequestData | NoncombatRequestData = {
       self: true,
       type: ability.category as 'attack' | 'noncombat',
@@ -196,13 +208,21 @@ export class RollService {
     if (data.skills) {
       req.skills = data.skills;
     }
-    await this.resolve(
-      { ...req, character: pluckCharacterId(data.character) },
-      data.character
-    );
+
+    if (self) {
+      await this.resolve(
+        { ...req, character: pluckCharacterId(data.character) },
+        data.character
+      );
+    } else {
+      await this.sendRequest({
+        ...req,
+        character: pluckCharacterId(data.character),
+      });
+    }
   }
 
-  async request(data: RequestData) {
+  async requestInitiative(data: InitiativeRequestData) {
     const partialRequest = await this.dialogService
       .open<RequestComponent, RequestDialogData, RequestTemplate>(
         RequestComponent,
@@ -217,32 +237,47 @@ export class RollService {
     if (!partialRequest) {
       return;
     }
+    const adHocPassive: Ability = {
+      type: 'passive',
+      name: 'Ad hoc ability',
+      description: 'Applied during roll trigger',
+      costs: [],
+      category: 'initiative',
+      effects: [],
+    };
+
+    if ('assets' in partialRequest && partialRequest.assets !== 0) {
+      adHocPassive.effects.push({
+        duration: 'roll',
+        type: 'bonus',
+        assets: partialRequest.assets,
+      });
+    }
+    if ('edge' in partialRequest && partialRequest.edge !== 0) {
+      adHocPassive.effects.push({
+        duration: 'roll',
+        type: 'bonus',
+        edge: partialRequest.edge,
+      });
+    }
 
     const meta: Partial<RollMetadata> = {
       at: new Date(),
       archive: false,
       state: 'requested',
     };
-    const req = { ...partialRequest, ...meta } as RollRequest;
+    const req = {
+      ...partialRequest,
+      ...meta,
+      abilities: [],
+    } as InitiativeRequest;
+    if (adHocPassive.effects.length > 0) {
+      req.abilities.push(adHocPassive);
+    }
     if (data.skills) {
       req.skills = data.skills;
     }
-    if (data.type === 'initiative') {
-      await this.fireInitiativeRequests(
-        data.characters,
-        partialRequest as Initiative
-      );
-    } else if (data.self) {
-      await this.resolve(
-        { ...req, character: pluckCharacterId(data.character) },
-        data.character
-      );
-    } else {
-      await this.sendRequest({
-        ...req,
-        character: pluckCharacterId(data.character),
-      });
-    }
+    await this.fireInitiativeRequests(data.characters, req);
   }
 
   async resolve(roll: RollRequest, character: SkilledCharacter) {
@@ -293,38 +328,42 @@ export class RollService {
             .where('archive', '==', false)
             .where('state', '==', 'rolled')
             .orderBy('at')
+            .limit(20)
       )
       .valueChanges();
   }
 
-  requests(
+  nextRequest(
     campaign: CampaignId,
     characters: CharacterId[]
-  ): Observable<RollRequest[]> {
-    if (characters && characters.length > 0) {
-      return this.firestore
-        .collection<RollRequest>(
-          `/campaigns/${campaign.campaignId}/rolls`,
-          (query) =>
-            query
-              .where('archive', '==', false)
-              .where('state', '==', 'requested')
-              .where(
-                'character.characterId',
-                'in',
-                characters.map((character) => character.characterId)
-              )
-              .orderBy('at')
-        )
-        .valueChanges({ idField: 'rollId' });
-    } else {
-      return of([]);
-    }
+  ): Observable<RollRequest> {
+    return this.firestore
+      .collection<RollRequest>(
+        `/campaigns/${campaign.campaignId}/rolls`,
+        (query) =>
+          query
+            .where('archive', '==', false)
+            .where('state', '==', 'requested')
+            .where(
+              'character.characterId',
+              'in',
+              characters.map((character) => character.characterId)
+            )
+            .orderBy('at', 'desc')
+            .limit(1)
+      )
+      .valueChanges({ idField: 'rollId' })
+      .pipe(
+        debounceTime(300),
+        filter((v) => v?.length > 0),
+        map((v: RollRequest[]) => v[0] as RollRequest),
+        distinctUntilChanged((a, b) => a?.rollId === b?.rollId)
+      );
   }
 
   async fireInitiativeRequests(
     characters: Character[],
-    initRequest: Initiative
+    initRequest: InitiativeRequest
   ) {
     await Promise.all(
       characters.map(async (character) => {
@@ -340,9 +379,6 @@ export class RollService {
           await this.characterService.setInitiative(character, 0);
           await this.sendRequest({
             ...initRequest,
-            at: new Date(),
-            state: 'requested',
-            archive: false,
             character: pluckCharacterId(character),
           });
         }

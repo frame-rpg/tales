@@ -15,6 +15,9 @@ import { Attribute, AttributeName } from 'types/attribute';
 import { MatSelectChange } from '@angular/material/select';
 import { UserService } from 'src/app/components/user/user.service';
 import { RollRequest, RollResult } from 'types/roll';
+import { CharacterService } from 'src/app/components/characters/character.service';
+import { Ability } from 'types/ability';
+import { Effect, BonusEffect } from 'types/effect';
 
 export interface InjectedData {
   character: SkilledCharacter;
@@ -30,11 +33,20 @@ export class ResolveComponent implements OnDestroy {
   rollState: FormGroup;
   manuallyRolling = false;
   attribute: Attribute;
+  passives: { auras: Effect[]; abilities: Ability[] };
+  modifiers: {
+    initiative: number;
+    assets: number;
+    edge: number;
+    damage: number;
+  };
+  auras: BonusEffect[];
   private _chosenSkill: CharacterSkill;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: InjectedData,
     public matDialogRef: MatDialogRef<ResolveComponent, RollResult>,
-    private userService: UserService
+    private userService: UserService,
+    private characterService: CharacterService
   ) {
     this.rollState = new FormGroup(
       {
@@ -51,6 +63,31 @@ export class ResolveComponent implements OnDestroy {
         this.data.character.attributes[this.skill.attributes[0]]
       );
     }
+    this.passives = this.characterService.passives(
+      data.character,
+      {
+        category: this.roll.type,
+      },
+      this.roll
+    );
+    this.auras = this.passives.abilities
+      .flatMap((ability) => ability.effects)
+      .concat(this.passives.auras)
+      .filter((effect) => effect.type === 'bonus') as BonusEffect[];
+    this.modifiers = this.auras.reduce(
+      (acc, curr) => ({
+        initiative: acc.initiative + curr.initiative || 0,
+        assets: acc.assets + curr.assets || 0,
+        edge: acc.edge + curr.edge || 0,
+        damage: acc.damage + curr.damage || 0,
+      }),
+      {
+        initiative: 0,
+        assets: 0,
+        edge: 0,
+        damage: 0,
+      }
+    );
   }
 
   ngOnDestroy(): void {}
@@ -183,9 +220,9 @@ export class ResolveComponent implements OnDestroy {
 
   get skillLevel(): number {
     if (!this.skill) {
-      return this.roll.assets || 0;
+      return this.modifiers.assets;
     }
-    return Level[this.skill?.level] + (this.roll.assets || 0);
+    return Level[this.skill?.level] + this.modifiers.assets;
   }
 
   get effectiveLevel(): string {
@@ -210,11 +247,13 @@ export class ResolveComponent implements OnDestroy {
   }
 
   get skillModifierDescription() {
-    if (this.roll.assets >= 0) {
-      return `${this.roll.assets} asset${this.roll.assets === 1 ? '' : 's'}`;
-    } else if (this.roll.assets < 0) {
-      return `${this.roll.assets} hindrance${
-        this.roll.assets === -1 ? '' : 's'
+    if (this.modifiers.assets >= 0) {
+      return `${this.modifiers.assets} asset${
+        this.modifiers.assets === 1 ? '' : 's'
+      }`;
+    } else if (this.modifiers.assets < 0) {
+      return `${this.modifiers.assets} hindrance${
+        this.modifiers.assets === -1 ? '' : 's'
       }`;
     } else {
       return '';
