@@ -32,6 +32,7 @@ import {
   tap,
 } from 'rxjs/operators';
 
+import { Ability } from 'types/ability';
 import { AclType } from 'types/acl';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Attribute } from 'types/attribute';
@@ -57,6 +58,7 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
   relationship: Observable<AclType>;
   destroyingSubject = new Subject<boolean>();
   skilled: Observable<boolean>;
+  actions: Observable<Ability[]>;
   destroying = this.destroyingSubject.asObservable();
   attributes: Observable<Attribute[]>;
   attributeValues: Observable<{ name: string; value: number }>;
@@ -131,6 +133,13 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
       map((a) => a === 'gm' || a === 'player')
     );
 
+    this.actions = this.character.pipe(
+      filter((c) => c.subtype !== 'nonplayer'),
+      map((character: SkilledCharacter) =>
+        this.characterService.actions(character, {})
+      )
+    );
+
     this.skills = this.character.pipe(
       filter((character) => character.subtype !== 'nonplayer'),
       map((character: SkilledCharacter) =>
@@ -193,6 +202,8 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
   toggleLock() {
     this.locked = !this.locked;
   }
+
+  triggerAction(e: MouseEvent, a: Ability) {}
 
   triggerDefend(e: MouseEvent) {
     this.actionSubject.next({ event: e, action: 'defense' });

@@ -93,8 +93,9 @@ const localSkills: Skill[] = [
   },
 ];
 
-export const campaign: Omit<Campaign, 'campaignId'> = {
+export const campaign: Campaign = {
   type: 'campaign',
+  campaignId: 'ou',
   name: 'Tales of Fantasy and Fighting',
   description: 'also Underground Caverns and Chaos',
   acl: {},

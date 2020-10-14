@@ -114,11 +114,11 @@ exports.magicCrossbow = {
     ],
 };
 exports.longbow = weapon({
-    name: 'Crossbow',
+    name: 'Longbow',
     initiative: 6,
     damage: 3,
     size: 2,
-    skills: ['hurling', 'righteousfury'],
+    skills: ['hurling', 'sniper'],
 });
 exports.stoneCloak = {
     name: 'Stone Cloak',

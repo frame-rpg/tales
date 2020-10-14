@@ -22,6 +22,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const admin = __importStar(require("firebase-admin"));
 const fantasyFights_1 = require("./fantasyFights");
 const util_1 = require("./util");
+const users_1 = require("./users");
 (async () => {
     const flagArgs = {};
     const args = process.argv.slice(2);
@@ -42,8 +43,8 @@ const util_1 = require("./util");
     }
     const ffc = await app
         .firestore()
-        .collection(`/campaigns`)
-        .add({ ...fantasyFights_1.campaign, acl });
+        .doc(`/campaigns/${fantasyFights_1.campaign.campaignId}`)
+        .set({ ...fantasyFights_1.campaign, acl });
     await app
         .firestore()
         .doc('/pages/rules')
@@ -66,7 +67,8 @@ const util_1 = require("./util");
         })
             .map((p) => app
             .firestore()
-            .doc(`/campaigns/${ffc.id}/characters/${p.characterId}`)
-            .set({ ...p, campaignId: ffc.id }))),
+            .doc(`/campaigns/${fantasyFights_1.campaign.campaignId}/characters/${p.characterId}`)
+            .set({ ...p, campaignId: fantasyFights_1.campaign.campaignId }))),
+        Promise.all(users_1.users.map((user) => app.firestore().doc(`/users/${user.userId}`).set(user))),
     ]);
 })();

@@ -3,8 +3,12 @@
     <div class="name">
       {{ (character | async)?.name }}
     </div>
-    <button mat-icon-button [matMenuTriggerFor]="actionMenu"
+    <button mat-icon-button [matMenuTriggerFor]="gmActionMenu"
         *ngIf="(relationship | async) === 'gm'">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="playerActionMenu"
+        *ngIf="(relationship | async) === 'player'">
       <mat-icon>more_vert</mat-icon>
     </button>
   </div>
@@ -63,7 +67,7 @@
         </div>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="(character | async)?.equipment.length > 0">
+    <mat-expansion-panel *ngIf="(character | async)?.equipped.length > 0">
       <mat-expansion-panel-header>
         <mat-panel-title>Equipment</mat-panel-title>
       </mat-expansion-panel-header>
@@ -77,7 +81,7 @@
   </div>
 </div>
 
-<mat-menu #actionMenu>
+<mat-menu #gmActionMenu>
   <button mat-menu-item (click)="toggleLock()">
     <mat-icon>{{ locked ? 'lock_open' : 'lock' }}</mat-icon>
     <span>{{locked ? 'Unlock' : 'Lock'}} Character</span>
@@ -85,5 +89,12 @@
   <button mat-menu-item (click)="triggerDefend($event)">
     <mat-icon>security</mat-icon>
     <span>Trigger Defense</span>
+  </button>
+</mat-menu>
+
+<mat-menu #playerActionMenu>
+  <button mat-menu-item (click)="triggerAction($event, action)"
+      *ngFor="let action of actions | async">
+    <span>{{action.name}}</span>
   </button>
 </mat-menu>

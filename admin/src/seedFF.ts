@@ -4,6 +4,7 @@ import { Character, PlayerCharacter } from '../../types/character';
 import { campaign, characters, inventory } from './fantasyFights';
 
 import { addItem } from './util';
+import { users } from './users';
 
 (async () => {
   const flagArgs: Record<string, string> = {};
@@ -29,8 +30,8 @@ import { addItem } from './util';
 
   const ffc = await app
     .firestore()
-    .collection(`/campaigns`)
-    .add({ ...campaign, acl });
+    .doc(`/campaigns/${campaign.campaignId}`)
+    .set({ ...campaign, acl });
 
   await app
     .firestore()
@@ -56,9 +57,16 @@ import { addItem } from './util';
         .map((p) =>
           app
             .firestore()
-            .doc(`/campaigns/${ffc.id}/characters/${p.characterId}`)
-            .set({ ...p, campaignId: ffc.id })
+            .doc(
+              `/campaigns/${campaign.campaignId}/characters/${p.characterId}`
+            )
+            .set({ ...p, campaignId: campaign.campaignId })
         )
+    ),
+    Promise.all(
+      users.map((user: any) =>
+        app.firestore().doc(`/users/${user.userId}`).set(user)
+      )
     ),
   ]);
 })();

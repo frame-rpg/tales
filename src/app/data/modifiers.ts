@@ -5,16 +5,7 @@ export function selectRelevant(
   character: Character,
   category: string
 ): Equipment[] {
-  return character.equipment
-    .filter((e) => e.equipped)
-    .filter(
-      (e) =>
-        (e.effect.assets &&
-          e.effect.assets.filter((asset) => asset.category === category)
-            .length > 0) ||
-        (e.effect.edge &&
-          e.effect.edge.filter((edge) => edge.category === category).length > 0)
-    );
+  return [];
 }
 
 export function countCharacter(
@@ -66,9 +57,5 @@ export function countEdge(
 }
 
 export function countInitiative(character: Character): number {
-  return character.equipment
-    .filter((e) => e.equipped)
-    .filter((e) => !!e.effect.initiative)
-    .map((e) => e.effect.initiative)
-    .reduce((tot, cur) => tot + cur, 0);
+  return 0;
 }
