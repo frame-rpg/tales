@@ -305,6 +305,20 @@ export const characters: PlayerCharacter[] = [
         ],
         category: 'attack',
       },
+      {
+        type: 'passive',
+        name: 'Weird Beetle Carapace',
+        description: 'Your beetle carapace makes it hard to wound you',
+        category: 'defense',
+        effects: [
+          {
+            type: 'bonus',
+            edge: 3,
+            duration: 'roll',
+          },
+        ],
+        costs: [],
+      },
     ],
     auras: [],
   },

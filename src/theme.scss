@@ -185,5 +185,6 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
   p {
     margin-top: 8px;
     margin-bottom: 0;
+    line-height: initial;
   }
 }
