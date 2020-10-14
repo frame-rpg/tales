@@ -104,8 +104,17 @@
   background-color: var(--honeydew);
 }
 
+.space {
+  display: flex;
+  flex: 1 0 auto;
+}
+
 .item {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-begin;
+}
+
+.infoIcon {
+  margin-left: 3px;
 }

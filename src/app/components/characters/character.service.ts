@@ -197,6 +197,10 @@ export class CharacterService {
     return this.firestore.doc(this.characterAddress(id)).update(character);
   }
 
+  equip(id: CharacterId, item: string, equipped: boolean) {
+    return this.update(id, { [`equipment.${item}.equipped`]: equipped });
+  }
+
   setInitiative(id: CharacterId, initiative: number) {
     return this.update(id, { initiative });
   }

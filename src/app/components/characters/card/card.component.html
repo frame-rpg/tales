@@ -67,15 +67,18 @@
         </div>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="(character | async)?.equipped.length > 0">
+    <mat-expansion-panel *ngIf="(equipment | async).length > 0">
       <mat-expansion-panel-header>
         <mat-panel-title>Equipment</mat-panel-title>
       </mat-expansion-panel-header>
-      <div *ngFor="let item of (character | async)?.equipment" class="item">
+      <div *ngFor="let item of equipment | async" class="item">
         <div>
           {{item.name}}
         </div>
-        <mat-icon [matTooltip]="item|json">info</mat-icon>
+        <div class="space"></div>
+        <mat-checkbox [checked]="item.equipped"
+            (change)="equipItem($event, item)">Equipped</mat-checkbox>
+        <mat-icon [matTooltip]="item|json" class="infoIcon">info</mat-icon>
       </div>
     </mat-expansion-panel>
   </div>

@@ -327,6 +327,21 @@ export class ResolveComponent implements OnDestroy {
         ],
         category: result.type,
       });
+      if (result.type !== 'initiative') {
+        result.abilities.push({
+          type: 'passive',
+          effects: [],
+          description: 'Effort initiative cost',
+          name: 'effort',
+          costs: [
+            {
+              type: 'initiative',
+              cost: { type: 'concrete', cost: this.effort.value },
+            },
+          ],
+          category: result.type,
+        });
+      }
     }
     if (result.type === 'health' && result.success !== true) {
       result.abilities.push({

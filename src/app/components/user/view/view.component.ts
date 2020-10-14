@@ -59,7 +59,6 @@ export class ViewComponent implements OnInit, OnDestroy {
 
     this.unverified = this.user.pipe(
       withLatestFrom(this.auth.user),
-      tap((v) => console.log(v)),
       map(([lookingAt, me]) =>
         lookingAt.userId === me.uid ? !me.emailVerified : false
       )

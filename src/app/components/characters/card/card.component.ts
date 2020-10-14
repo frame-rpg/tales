@@ -16,6 +16,7 @@ import {
   map,
   publishReplay,
   refCount,
+  startWith,
   switchMap,
   takeUntil,
   tap,
@@ -29,6 +30,8 @@ import { Attribute } from 'types/attribute';
 import { CharacterId } from 'types/idtypes';
 import { CharacterService } from 'src/app/components/characters/character.service';
 import { CharacterSkill } from 'types/skill';
+import { Item } from 'types/item';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { RollService } from 'src/app/rolls/roll.service';
 import { SpinnerComponent } from 'src/app/shared/spinner.component';
 
@@ -48,6 +51,7 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
   relationship: Observable<AclType>;
   destroyingSubject = new Subject<boolean>();
   skilled: Observable<boolean>;
+  equipment: Observable<Item[]>;
   actions: Observable<Ability[]>;
   destroying = this.destroyingSubject.asObservable();
   attributes: Observable<Attribute[]>;
@@ -57,9 +61,10 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
   attributeUpdates: Observable<Record<string, number>>;
 
   actionSubject = new BehaviorSubject<{
-    event: MouseEvent;
-    action: 'lock' | 'skill' | 'defense' | 'action';
+    event: any;
+    action: 'lock' | 'skill' | 'defense' | 'action' | 'equip';
     skill?: string;
+    equip?: { item: string; equip: boolean };
     ability?: Ability;
   }>(null);
 
@@ -111,6 +116,14 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
           (v) => character.attributes[v]
         )
       )
+    );
+
+    this.equipment = this.character.pipe(
+      map((character) => Object.values(character.equipment)),
+      distinctUntilChanged(),
+      startWith([]),
+      publishReplay(1),
+      refCount()
     );
 
     this.relationship = combineLatest([this.auth.user, this.character]).pipe(
@@ -192,6 +205,19 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
           self: relationship === 'player',
         });
       });
+
+    combineLatest([
+      this.character.pipe(filter((c) => c.subtype !== 'nonplayer')),
+      this.relationship.pipe(filter((r) => ['player', 'gm'].includes(r))),
+      this.action.pipe(filter((a) => a.action === 'equip')),
+    ])
+      .pipe(
+        takeUntil(this.destroying),
+        distinctUntilChanged((a, b) => a[2].event === b[2].event)
+      )
+      .subscribe(([character, , { equip }]) => {
+        this.characterService.equip(character, equip.item, equip.equip);
+      });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -218,5 +244,13 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
 
   triggerDefend(e: MouseEvent) {
     this.actionSubject.next({ event: e, action: 'defense' });
+  }
+
+  equipItem(event: MatCheckboxChange, item: Item) {
+    this.actionSubject.next({
+      event,
+      action: 'equip',
+      equip: { item: item.owner.itemId, equip: event.checked },
+    });
   }
 }

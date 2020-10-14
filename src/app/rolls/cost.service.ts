@@ -1,5 +1,6 @@
 import {
   ConcreteCost,
+  Cost,
   DepletionCost,
   HealthCost,
   InitiativeCost,
@@ -25,23 +26,18 @@ export class CostService {
   ) {}
 
   handleInitiativeCosts(
-    roll: RollResult,
     costs: InitiativeCost[],
     character: SkilledCharacter
   ): any {
     return {
       initiative: costs.reduce(
         (acc, curr: InitiativeCost) => acc + (curr.cost.cost as number),
-        (character.initiative || 0) + roll.effort
+        character.initiative || 0
       ),
     };
   }
 
-  handlePoolCosts(
-    roll: RollResult,
-    costs: PoolCost[],
-    character: SkilledCharacter
-  ): any {
+  handlePoolCosts(costs: PoolCost[], character: SkilledCharacter): any {
     return Object.fromEntries(
       Object.entries(
         costs.reduce<Record<string, number>>(
@@ -59,7 +55,6 @@ export class CostService {
   }
 
   handleDepletionCosts(
-    roll: RollResult,
     costs: DepletionCost[],
     character: SkilledCharacter
   ): any {
@@ -69,6 +64,7 @@ export class CostService {
         .fill(0)
         .map((v) => Math.floor(Math.random() * 12) + 1);
       const roll = depletion.level < 0 ? Math.min(...dice) : Math.max(...dice);
+      console.log({ depletion, roll });
       if (roll < depletion.target) {
         return {
           ...acc,
@@ -81,11 +77,10 @@ export class CostService {
   }
 
   async handleHealthCosts(
-    roll: RollResult,
     costs: HealthCost[],
     character: SkilledCharacter
   ): Promise<any> {
-    const wounds = await Promise.all(
+    await Promise.all(
       costs.map(async (cost) => {
         await this.firestore
           .collection<RollRequest>(`/campaigns/${character.campaignId}/rolls`)
@@ -110,7 +105,6 @@ export class CostService {
   }
 
   async handleWoundCost(
-    roll: RollResult,
     costs: WoundCost[],
     character: SkilledCharacter
   ): Promise<any> {
@@ -129,38 +123,35 @@ export class CostService {
     );
   }
 
-  async handleCosts(roll: RollResult, character: SkilledCharacter) {
-    const initiativeCosts = roll.abilities
-      .flatMap((ability) => ability.costs)
-      .filter(
-        (cost) => cost.type === 'initiative' && cost.cost.type === 'concrete'
-      ) as InitiativeCost[];
+  async handleCosts(costs: Cost[], character: SkilledCharacter) {
+    const initiativeCosts = costs.filter(
+      (cost) => cost.type === 'initiative' && cost.cost.type === 'concrete'
+    ) as InitiativeCost[];
     const initiativePatch = this.handleInitiativeCosts(
-      roll,
       initiativeCosts,
       character
     );
 
-    const poolCosts = roll.abilities
-      .flatMap((ability) => ability.costs)
-      .filter(
-        (cost) => cost.type === 'pool' && cost.cost.type === 'concrete'
-      ) as PoolCost[];
-    const poolPatch = this.handlePoolCosts(roll, poolCosts, character);
+    const poolCosts = costs.filter(
+      (cost) => cost.type === 'pool' && cost.cost.type === 'concrete'
+    ) as PoolCost[];
+    const poolPatch = this.handlePoolCosts(poolCosts, character);
 
-    const depletionCosts = roll.abilities
-      .flatMap((ability) => ability.costs)
-      .filter((cost) => cost.type === 'depletion') as DepletionCost[];
-    const depletionPatch = this.handleDepletionCosts(
-      roll,
-      depletionCosts,
-      character
-    );
+    const depletionCosts = costs.filter(
+      (cost) => cost.type === 'depletion'
+    ) as DepletionCost[];
+    const depletionPatch = this.handleDepletionCosts(depletionCosts, character);
 
-    const woundCosts = roll.abilities
-      .flatMap((ability) => ability.costs)
-      .filter((cost) => cost.type === 'wound') as WoundCost[];
-    const woundPatch = await this.handleWoundCost(roll, woundCosts, character);
+    const woundCosts = costs.filter(
+      (cost) => cost.type === 'wound'
+    ) as WoundCost[];
+    const woundPatch = await this.handleWoundCost(woundCosts, character);
+
+    const healthCosts = costs.filter(
+      (cost) => cost.type === 'health'
+    ) as HealthCost[];
+    // there is no patch for health costs
+    await this.handleHealthCosts(healthCosts, character);
 
     const characterPatch = {
       ...initiativePatch,

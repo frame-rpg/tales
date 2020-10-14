@@ -61,7 +61,7 @@ export class PresenceService {
 
     combineLatest([
       onlineState,
-      this.auth.user,
+      this.auth.user.pipe(filter((user) => !!user)),
       this.router.events.pipe(
         filter((ev) => ev instanceof NavigationEnd),
         map((ev: NavigationEnd) => ev.urlAfterRedirects),

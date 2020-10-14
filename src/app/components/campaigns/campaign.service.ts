@@ -1,3 +1,5 @@
+import { filter, switchMap } from 'rxjs/operators';
+
 import { AclType } from 'types/acl';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -5,7 +7,6 @@ import { Campaign } from 'types/campaign';
 import { CampaignId } from 'types/idtypes';
 import { Injectable } from '@angular/core';
 import { addId } from '../../data/rxutil';
-import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class CampaignService {
 
   list(acls: AclType[] = ['player', 'gm', 'viewer']) {
     return this.auth.user.pipe(
+      filter((user) => !!user),
       switchMap((user) =>
         this.firestore
           .collection<Campaign>('campaigns', (ref) =>

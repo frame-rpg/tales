@@ -267,7 +267,16 @@ export class RollService {
         .add(result);
     }
 
-    await this.costService.handleCosts(result, character);
+    const costs = result.abilities.flatMap((ability) =>
+      ability.costs.map((cost) => {
+        if (cost.type === 'depletion') {
+          return { ...cost, item: { ...ability.from } };
+        }
+        return cost;
+      })
+    );
+
+    await this.costService.handleCosts(costs, character);
     if (roll.type === 'initiative') {
       await this.characterService.update(character, {
         initiative: result.result,

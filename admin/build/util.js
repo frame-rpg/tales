@@ -36,6 +36,6 @@ function addItem(c, i) {
         campaignId: c.campaignId,
         itemId: ulid_1.ulid(),
     };
-    c.equipped.push(JSON.parse(JSON.stringify({ ...i, owner })));
+    c.equipment[owner.itemId] = JSON.parse(JSON.stringify({ ...i, owner }));
 }
 exports.addItem = addItem;
