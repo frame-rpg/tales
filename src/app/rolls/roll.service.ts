@@ -25,6 +25,7 @@ import {
 
 import { Ability } from 'types/ability';
 import { CharacterService } from '../components/characters/character.service';
+import { CostService } from './cost.service';
 import { FirebaseApp } from '@angular/fire';
 import { Injectable } from '@angular/core';
 import { Item } from 'types/item';
@@ -86,6 +87,7 @@ export class RollService {
     private firestore: AngularFirestore,
     private characterService: CharacterService,
     private woundService: WoundService,
+    private costService: CostService,
     private db: FirebaseApp
   ) {}
 
@@ -265,29 +267,12 @@ export class RollService {
         .add(result);
     }
 
-    this.handleCosts(result, character);
-    return;
-
-    // const patch: any = {};
-    // if (roll.type === 'initiative') {
-    //   patch.initiative = result.result;
-    // await this.characterService.update(character, patch);
-
-    // if (roll.type === 'defense' && !result.success) {
-    //   await this.sendRequest({
-    //     at: new Date(),
-    //     type: 'health',
-    //     assets: 0,
-    //     target: roll.damage + roll.target - result.result,
-    //     edge: 0,
-    //     state: 'requested',
-    //     abilities: [],
-    //     archive: false,
-    //     character: pluckCharacterId(character),
-    //   });
-    // } else if (roll.type === 'health' && !result.success) {
-    //   this.woundService.triggerWound(character);
-    // }
+    await this.costService.handleCosts(result, character);
+    if (roll.type === 'initiative') {
+      await this.characterService.update(character, {
+        initiative: result.result,
+      });
+    }
   }
 
   results(campaign: CampaignId): Observable<RollResult[]> {
@@ -351,58 +336,6 @@ export class RollService {
             archive: false,
             character: pluckCharacterId(character),
           });
-        }
-      })
-    );
-  }
-
-  async handleCosts(roll: RollResult, character: SkilledCharacter) {
-    const initiativeCosts = roll.abilities
-      .flatMap((ability) => ability.costs)
-      .filter(
-        (cost) => cost.type === 'initiative' && cost.cost.type === 'concrete'
-      )
-      .reduce(
-        (acc, curr: InitiativeCost) => acc + (curr.cost.cost as number),
-        (character.initiative || 0) + roll.effort
-      );
-    if (initiativeCosts !== character.initiative) {
-      await this.characterService.setInitiative(character, initiativeCosts);
-    }
-    const poolCosts: Record<string, number> = roll.abilities
-      .flatMap((ability) => ability.costs)
-      .filter((cost) => cost.type === 'pool' && cost.cost.type === 'concrete')
-      .reduce(
-        (acc, curr: PoolCost & ConcreteCost) => ({
-          ...acc,
-          [curr.pool[0]]: (acc[curr.pool[0]] || 0) + curr.cost.cost,
-        }),
-        {}
-      );
-    const poolPatch = Object.fromEntries(
-      Object.entries(poolCosts).map(([attr, cost]) => [
-        `attributes.${attr}.current`,
-        Math.max(character.attributes[attr]?.current - cost, 0),
-      ])
-    );
-    if (Object.keys(poolPatch).length > 0) {
-      await this.characterService.update(character, poolPatch);
-    }
-
-    const depletionCosts = roll.abilities
-      .flatMap((ability) => ability.costs)
-      .filter((cost) => cost.type === 'depletion');
-
-    await Promise.all(
-      depletionCosts.map((depletion: DepletionCost) => {
-        const diceCount = Math.abs(depletion.level) + 1;
-        const dice = new Array(diceCount)
-          .fill(0)
-          .map((v) => Math.floor(Math.random() * 12) + 1);
-        const roll =
-          depletion.level < 0 ? Math.min(...dice) : Math.max(...dice);
-        if (roll < depletion.target) {
-          await this.characterService.deplete(depletion.item);
         }
       })
     );

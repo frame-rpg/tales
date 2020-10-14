@@ -19,6 +19,7 @@ function weapon({
     description: `A ${name}`,
     slot: 'hand',
     size,
+    equipped: true,
     abilities: [
       {
         type: 'action',
@@ -55,7 +56,7 @@ export const magicRapier: Item = {
     ...rapier.abilities,
     {
       type: 'action',
-      name: 'Attack',
+      name: 'Anti Chaos Strike',
       description: 'Magical strike against a chaotic foe.',
       category: 'attack',
       skills: ['fencing', 'combatinsight'],
@@ -144,6 +145,7 @@ export const longbow = weapon({
 
 export const stoneCloak: Item = {
   name: 'Stone Cloak',
+  equipped: true,
   description:
     'A cloak the same color and consistency of old stone, it provides additional defense as well as camouflage.',
   slot: 'body',
@@ -188,6 +190,7 @@ export const shield: Item = {
   description: 'A simple shield.',
   slot: 'hand',
   size: 1,
+  equipped: true,
   abilities: [
     {
       type: 'passive',

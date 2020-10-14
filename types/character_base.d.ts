@@ -12,8 +12,7 @@ export interface CharacterBase extends CharacterId {
   acl: Acl;
   subtype: CharacterType;
   initiative: number;
-  equipped: Item[];
-  carried: Item[];
+  equipment: Record<string, Item>;
   abilities: Ability[];
   auras: Effect[];
 }

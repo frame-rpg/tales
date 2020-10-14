@@ -328,6 +328,39 @@ export class ResolveComponent implements OnDestroy {
         category: result.type,
       });
     }
+    if (result.type === 'health' && result.success !== true) {
+      result.abilities.push({
+        type: 'passive',
+        effects: [],
+        description: 'Wound',
+        name: 'wound',
+        costs: [
+          {
+            type: 'wound',
+          },
+        ],
+        category: result.type,
+      });
+    }
+
+    if (result.type === 'defense' && !result.success) {
+      result.abilities.push({
+        type: 'passive',
+        effects: [],
+        description: 'Health Trigger',
+        name: 'health',
+        costs: [
+          {
+            type: 'health',
+            cost: {
+              cost: result.damage + result.target - result.result,
+              type: 'concrete',
+            },
+          },
+        ],
+        category: result.type,
+      });
+    }
     if ('target' in this.data.roll && this.data.roll.target >= 0) {
       result.success = this.total >= this.data.roll.target;
     }

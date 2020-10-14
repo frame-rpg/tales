@@ -16,7 +16,13 @@ export interface CalculatedCalculation extends BaseCalculation {
 
 export type Calculation = CalculatedCalculation | ConcreteCalculation;
 
-export type CostType = 'pool' | 'initiative' | 'damage' | 'depletion';
+export type CostType =
+  | 'pool'
+  | 'initiative'
+  | 'damage'
+  | 'depletion'
+  | 'wound'
+  | 'health';
 
 export interface BaseCost {
   type: CostType;
@@ -28,8 +34,17 @@ export interface PoolCost extends BaseCost {
   cost: Calculation;
 }
 
+export interface WoundCost extends BaseCost {
+  type: 'wound';
+}
+
 export interface InitiativeCost extends BaseCost {
   type: 'initiative';
+  cost: Calculation;
+}
+
+export interface HealthCost extends BaseCost {
+  type: 'health';
   cost: Calculation;
 }
 
@@ -50,8 +65,18 @@ export interface DepletionCost extends BaseCost {
   };
 }
 
-export type CalculatedCost = PoolCost | InitiativeCost | DamageCost;
+export type CalculatedCost =
+  | PoolCost
+  | InitiativeCost
+  | DamageCost
+  | HealthCost;
 export type ConcreteCost =
   | (CalculatedCost & { cost: ConcreteCalculation })
   | DepletionCost;
-export type Cost = PoolCost | InitiativeCost | DamageCost | DepletionCost;
+export type Cost =
+  | PoolCost
+  | InitiativeCost
+  | DamageCost
+  | DepletionCost
+  | HealthCost
+  | WoundCost;

@@ -67,26 +67,28 @@ export class CharacterService {
     filter: { skills?: string[]; category?: SkillType },
     type: AbilityType
   ): Ability[] {
-    const undepletedAbilities = character.equipped.flatMap((item) =>
-      item.abilities
-        .filter((ability) => ability.type === type)
-        .filter(
-          (ability) =>
-            !('category' in filter || 'skills' in filter) ||
-            ('category' in ability && ability.category === filter.category) ||
-            ('skills' in ability &&
-              ability.skills?.some((skill) => filter.skills?.includes(skill)))
-        )
-        .filter(
-          (ability) =>
-            !item.depleted ||
-            ability.costs.every((cost) => cost.type !== 'depletion')
-        )
-        .map((ability) => ({
-          ...ability,
-          from: item.owner,
-        }))
-    );
+    const undepletedAbilities = Object.values(character.equipment)
+      .filter((e) => e.equipped)
+      .flatMap((item) =>
+        item.abilities
+          .filter((ability) => ability.type === type)
+          .filter(
+            (ability) =>
+              !('category' in filter || 'skills' in filter) ||
+              ('category' in ability && ability.category === filter.category) ||
+              ('skills' in ability &&
+                ability.skills?.some((skill) => filter.skills?.includes(skill)))
+          )
+          .filter(
+            (ability) =>
+              !item.depleted ||
+              ability.costs.every((cost) => cost.type !== 'depletion')
+          )
+          .map((ability) => ({
+            ...ability,
+            from: item.owner,
+          }))
+      );
 
     const characterAbilities = character.abilities.filter(
       (ability) => ability.type === type

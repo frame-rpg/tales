@@ -39,5 +39,5 @@ export function addItem(c: Character, i: Item) {
     campaignId: c.campaignId,
     itemId: ulid(),
   };
-  c.equipped.push(JSON.parse(JSON.stringify({ ...i, owner })));
+  c.equipment[owner.itemId] = JSON.parse(JSON.stringify({ ...i, owner }));
 }

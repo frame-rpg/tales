@@ -12,4 +12,5 @@ export interface Item {
   size: number;
   abilities: Ability[];
   depleted?: boolean;
+  equipped: boolean;
 }
