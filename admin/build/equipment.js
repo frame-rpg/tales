@@ -96,7 +96,7 @@ exports.magicCrossbow = {
     abilities: [
         ...exports.crossbow.abilities,
         {
-            type: 'action',
+            type: 'modifier',
             name: 'Imbue with Blood',
             description: 'You pour a little bit of your soul into the crossbow. It appreciates the donation.',
             costs: [
@@ -105,7 +105,7 @@ exports.magicCrossbow = {
             ],
             effects: [
                 {
-                    duration: 'next',
+                    duration: 'roll',
                     type: 'bonus',
                     damage: 10,
                 },
@@ -209,6 +209,6 @@ exports.feet = {
         },
     ],
     category: 'attack',
-    skills: ['unarmedcombat'],
+    skills: ['unarmed'],
     description: 'With fists and feet of fury, pummel your foes.',
 };

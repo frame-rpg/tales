@@ -62,17 +62,17 @@ const typesHave: Record<SkillType, Has> = {
 
 const possibleFormFields = {
   assets: {
-    default: 0,
+    default: null,
     validators: [Validators.pattern(/\-?[0-9]*/)],
     type: 'number',
   },
   edge: {
-    default: 0,
+    default: null,
     validators: [Validators.pattern(/\-?[0-9]*/)],
     type: 'number',
   },
   target: {
-    default: 0,
+    default: null,
     validators: [
       Validators.pattern(/[0-9]*/),
       Validators.required,
@@ -80,7 +80,7 @@ const possibleFormFields = {
     ],
     type: 'number',
   },
-  damage: { default: 0, validators: [], type: 'number' },
+  damage: { default: null, validators: [], type: 'number' },
 };
 
 function getDefault(field: string, weapon?: Weapon) {
@@ -126,8 +126,8 @@ export class RequestComponent {
           ...acc,
           [id]:
             field.type === 'number'
-              ? parseInt(this.req.get(id).value, 10)
-              : this.req.get(id).value,
+              ? parseInt(this.req.value[id], 10) || 0
+              : this.req.value[id],
         }),
         {
           type: this.request.type,

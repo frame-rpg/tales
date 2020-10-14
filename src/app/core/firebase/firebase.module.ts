@@ -22,9 +22,18 @@ import { environment } from '../../../environments/environment';
     {
       provide: FIREBASE_OPTIONS,
       useValue: environment.production
-        ? undefined
+        ? {
+            databaseURL: 'https://framesystem-rpg.firebaseio.com',
+            apiKey: 'AIzaSyDUOWopxmEK8n3r4wSOXzKsZJg_78D_OF8',
+            authDomain: 'framesystem-rpg.firebaseapp.com',
+            projectId: 'framesystem-rpg',
+            storageBucket: 'framesystem-rpg.appspot.com',
+            messagingSenderId: '414765217858',
+            appId: '1:414765217858:web:0575368df99009430295db',
+          }
         : {
-            databaseURL: 'http://localhost:9000?ns=framesystem-rpg',
+            // databaseURL: 'http://localhost:9000?ns=framesystem-rpg',
+            databaseURL: 'https://framesystem-rpg.firebaseio.com',
             apiKey: 'AIzaSyDUOWopxmEK8n3r4wSOXzKsZJg_78D_OF8',
             authDomain: 'framesystem-rpg.firebaseapp.com',
             projectId: 'framesystem-rpg',

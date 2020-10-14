@@ -267,7 +267,28 @@ exports.characters = [
         experience: 5,
         initiative: 0,
         equipment: {},
-        abilities: [],
+        abilities: [
+            {
+                type: 'modifier',
+                name: 'Rapid Strike',
+                description: 'You strike more quickly than usal.',
+                costs: [
+                    {
+                        type: 'pool',
+                        pool: ['speed'],
+                        cost: { type: 'concrete', cost: 1 },
+                    },
+                ],
+                effects: [
+                    {
+                        duration: 'roll',
+                        type: 'bonus',
+                        initiative: -1,
+                    },
+                ],
+                category: 'attack',
+            },
+        ],
         auras: [],
     },
 ];

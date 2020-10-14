@@ -115,7 +115,7 @@ export const magicCrossbow: Item = {
   abilities: [
     ...crossbow.abilities,
     {
-      type: 'action',
+      type: 'modifier',
       name: 'Imbue with Blood',
       description:
         'You pour a little bit of your soul into the crossbow. It appreciates the donation.',
@@ -125,7 +125,7 @@ export const magicCrossbow: Item = {
       ],
       effects: [
         {
-          duration: 'next',
+          duration: 'roll',
           type: 'bonus',
           damage: 10,
         },
@@ -235,6 +235,6 @@ export const feet: Ability = {
     },
   ],
   category: 'attack',
-  skills: ['unarmedcombat'],
+  skills: ['unarmed'],
   description: 'With fists and feet of fury, pummel your foes.',
 };

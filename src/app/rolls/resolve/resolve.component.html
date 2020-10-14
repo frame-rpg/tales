@@ -23,6 +23,10 @@
       <div class="label">{{ i === 0 ? 'Ability:' : '' }}</div>
       <div class="value">{{ item.name }}</div>
     </div>
+    <div class="modifier" *ngFor="let mod of possibleModifiers; let i = index"
+        formArrayName="modifierActive">
+      <mat-checkbox [formControlName]="i">{{mod.name}}</mat-checkbox>
+    </div>
     <div *ngIf="attribute" class="modifier">
       <div class="label">
         {{ attribute.name }}:

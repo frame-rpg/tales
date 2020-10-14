@@ -209,11 +209,18 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
         distinctUntilChanged((a, b) => a[2].event === b[2].event)
       )
       .subscribe(([character, relationship]) => {
-        // this.rollService.request({
-        //   character: character as SkilledCharacter,
-        //   type: 'defense',
-        //   self: relationship === 'player',
-        // });
+        this.rollService.triggerAction(
+          {
+            type: 'action',
+            category: 'defense',
+            name: 'Defend yourself',
+            description: 'you have been attacked',
+            effects: [],
+            costs: [],
+          },
+          character as SkilledCharacter,
+          relationship === 'player'
+        );
       });
 
     combineLatest([

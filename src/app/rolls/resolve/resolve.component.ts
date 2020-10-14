@@ -34,6 +34,7 @@ export class ResolveComponent implements OnDestroy {
   manuallyRolling = false;
   attribute: Attribute;
   passives: { auras: Effect[]; abilities: Ability[] };
+  possibleModifiers: Ability[];
   modifiers: {
     initiative: number;
     assets: number;
@@ -55,6 +56,7 @@ export class ResolveComponent implements OnDestroy {
           validators: [Validators.min(0), (e) => this.validateEffort(e)],
           updateOn: 'change',
         }),
+        modifierActive: new FormArray([]),
       },
       () => this.validate()
     );
@@ -75,18 +77,29 @@ export class ResolveComponent implements OnDestroy {
       .concat(this.passives.auras)
       .filter((effect) => effect.type === 'bonus') as BonusEffect[];
     this.modifiers = this.auras.reduce(
-      (acc, curr) => ({
-        initiative: acc.initiative + curr.initiative || 0,
-        assets: acc.assets + curr.assets || 0,
-        edge: acc.edge + curr.edge || 0,
-        damage: acc.damage + curr.damage || 0,
-      }),
+      (acc, curr) =>
+        Object.fromEntries(
+          Object.entries(acc).map(([key, val]) => [key, val + (curr[key] || 0)])
+        ),
       {
         initiative: 0,
         assets: 0,
         edge: 0,
         damage: 0,
       }
+    ) as {
+      initiative: number;
+      assets: number;
+      edge: number;
+      damage: number;
+    };
+    this.possibleModifiers = this.characterService.modifiers(data.character, {
+      category: this.roll.type,
+    });
+    this.possibleModifiers.forEach(() =>
+      (this.rollState.get('modifierActive') as FormArray).push(
+        new FormControl(false)
+      )
     );
   }
 
@@ -115,7 +128,9 @@ export class ResolveComponent implements OnDestroy {
     if (
       this.attribute &&
       this.die &&
-      this.die + this.direction * (e.value + this.attribute.edge) < 1 &&
+      this.die +
+        this.direction * (e.value + this.attribute.edge + this.modifiers.edge) <
+        1 &&
       e.value > 0
     ) {
       return { tooHigh: 'Result cannot be below 1' };
@@ -334,7 +349,7 @@ export class ResolveComponent implements OnDestroy {
 
   get total() {
     return Math.max(
-      this.die + (this.effort.value + this.attribute.edge) * this.direction,
+      this.die + (this.effort.value + this.edge) * this.direction,
       1
     );
   }
@@ -351,6 +366,38 @@ export class ResolveComponent implements OnDestroy {
       effort: this.effort.value,
       critical: false,
     };
+
+    const activatedModifiers = this.possibleModifiers.filter(
+      (mod, idx) => this.rollState.get('modifierActive').value[idx]
+    );
+
+    this.modifiers = activatedModifiers
+      .flatMap((modifier) => modifier.effects)
+      .filter((effect) => effect.type === 'bonus')
+      .reduce(
+        (acc, curr) =>
+          Object.fromEntries(
+            Object.entries(acc).map(([key, val]) => [
+              key,
+              val + (curr[key] || 0),
+            ])
+          ),
+        this.modifiers
+      ) as {
+      initiative: number;
+      assets: number;
+      edge: number;
+      damage: number;
+    };
+
+    if ('target' in this.data.roll && this.data.roll.target >= 0) {
+      result.success = this.total >= this.data.roll.target;
+    }
+
+    result.abilities = result.abilities
+      .concat(activatedModifiers)
+      .concat(this.passives.abilities);
+    console.log(result.abilities);
     if (this.effort.value > 0) {
       result.abilities.push({
         type: 'passive',
@@ -375,7 +422,10 @@ export class ResolveComponent implements OnDestroy {
           costs: [
             {
               type: 'initiative',
-              cost: { type: 'concrete', cost: this.effort.value },
+              cost: {
+                type: 'concrete',
+                cost: this.effort.value + this.modifiers.initiative,
+              },
             },
           ],
           category: result.type,
@@ -397,6 +447,10 @@ export class ResolveComponent implements OnDestroy {
       });
     }
 
+    if (result.type === 'attack' && result.success) {
+      result.damage = this.modifiers.damage;
+    }
+
     if (result.type === 'defense' && !result.success) {
       result.abilities.push({
         type: 'passive',
@@ -414,9 +468,6 @@ export class ResolveComponent implements OnDestroy {
         ],
         category: result.type,
       });
-    }
-    if ('target' in this.data.roll && this.data.roll.target >= 0) {
-      result.success = this.total >= this.data.roll.target;
     }
     this.matDialogRef.close(result);
   }

@@ -1,3 +1,4 @@
+import { BonusEffect, Effect } from 'types/effect';
 import {
   ConcreteCost,
   Cost,
@@ -12,6 +13,7 @@ import { RollRequest, RollResult } from 'types/roll';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { CharacterService } from '../components/characters/character.service';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SkilledCharacter } from 'types/character';
 import { WoundService } from '../actions/wound/wound.service';
 
@@ -22,18 +24,25 @@ export class CostService {
   constructor(
     private characterService: CharacterService,
     private firestore: AngularFirestore,
-    private woundService: WoundService
+    private woundService: WoundService,
+    private snackbarService: MatSnackBar
   ) {}
 
   handleInitiativeCosts(
     costs: InitiativeCost[],
-    character: SkilledCharacter
+    character: SkilledCharacter,
+    effects: Effect[]
   ): any {
+    const passiveMod = effects
+      .filter((effect) => effect.type === 'bonus' && effect.initiative)
+      .map((effect: BonusEffect) => effect.initiative)
+      .reduce((sum, cur) => sum + cur, 0);
     return {
-      initiative: costs.reduce(
-        (acc, curr: InitiativeCost) => acc + (curr.cost.cost as number),
-        character.initiative || 0
-      ),
+      initiative:
+        costs.reduce(
+          (acc, curr: InitiativeCost) => acc + (curr.cost.cost as number),
+          character.initiative || 0
+        ) + passiveMod,
     };
   }
 
@@ -64,13 +73,18 @@ export class CostService {
         .fill(0)
         .map((v) => Math.floor(Math.random() * 12) + 1);
       const roll = depletion.level < 0 ? Math.min(...dice) : Math.max(...dice);
-      console.log({ depletion, roll });
       if (roll < depletion.target) {
+        this.snackbarService.open('Your item depleted.', ':(', {
+          duration: 0,
+        });
         return {
           ...acc,
           [`equipment.${depletion.item.itemId}.depleted`]: true,
         };
       } else {
+        this.snackbarService.open('Your item did not deplete.', ':)', {
+          duration: 4000,
+        });
         return acc;
       }
     }, {});
@@ -123,13 +137,18 @@ export class CostService {
     );
   }
 
-  async handleCosts(costs: Cost[], character: SkilledCharacter) {
+  async handleCosts(
+    costs: Cost[],
+    character: SkilledCharacter,
+    effects: Effect[]
+  ) {
     const initiativeCosts = costs.filter(
       (cost) => cost.type === 'initiative' && cost.cost.type === 'concrete'
     ) as InitiativeCost[];
     const initiativePatch = this.handleInitiativeCosts(
       initiativeCosts,
-      character
+      character,
+      effects
     );
 
     const poolCosts = costs.filter(

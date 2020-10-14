@@ -132,9 +132,12 @@ export class RollService {
     character: SkilledCharacter,
     self: boolean
   ) {
-    const data: AttackRequestData | NoncombatRequestData = {
+    const data:
+      | AttackRequestData
+      | NoncombatRequestData
+      | DefenseRequestData = {
       self: true,
-      type: ability.category as 'attack' | 'noncombat',
+      type: ability.category as 'attack' | 'noncombat' | 'defense',
       skills: ability.skills,
       character: character,
       ability,
@@ -311,7 +314,11 @@ export class RollService {
       })
     );
 
-    await this.costService.handleCosts(costs, character);
+    const effects = result.abilities.flatMap((ability) =>
+      ability.effects.filter((effect) => effect.type === 'bonus')
+    );
+
+    await this.costService.handleCosts(costs, character, effects);
     if (roll.type === 'initiative') {
       await this.characterService.update(character, {
         initiative: result.result,
