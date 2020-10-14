@@ -1,5 +1,6 @@
+import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
+import { Character, SkilledCharacter } from 'types/character';
 import {
-  AfterViewInit,
   Component,
   Input,
   OnChanges,
@@ -10,23 +11,11 @@ import {
   ViewChildren,
 } from '@angular/core';
 import {
-  BehaviorSubject,
-  Observable,
-  Subject,
-  combineLatest,
-  merge,
-} from 'rxjs';
-import { Character, SkilledCharacter } from 'types/character';
-import {
-  debounceTime,
   distinctUntilChanged,
-  distinctUntilKeyChanged,
   filter,
   map,
   publishReplay,
   refCount,
-  scan,
-  startWith,
   switchMap,
   takeUntil,
   tap,
@@ -34,6 +23,7 @@ import {
 
 import { Ability } from 'types/ability';
 import { AclType } from 'types/acl';
+import { Action } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Attribute } from 'types/attribute';
 import { CharacterId } from 'types/idtypes';
@@ -68,8 +58,9 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
 
   actionSubject = new BehaviorSubject<{
     event: MouseEvent;
-    action: 'lock' | 'skill' | 'defense';
+    action: 'lock' | 'skill' | 'defense' | 'action';
     skill?: string;
+    ability?: Ability;
   }>(null);
 
   @ViewChildren('attributeSpinner') attributeSpinners: QueryList<
@@ -169,6 +160,24 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
 
     combineLatest([
       this.character.pipe(filter((c) => c.subtype !== 'nonplayer')),
+      this.relationship.pipe(filter((r) => r === 'player')),
+      this.action.pipe(filter((a) => a.action === 'action')),
+    ])
+      .pipe(
+        takeUntil(this.destroying),
+        distinctUntilChanged((a, b) => a[2].event === b[2].event)
+      )
+      .subscribe(([character, , { ability }]) => {
+        if (ability.category === 'attack') {
+          this.rollService.triggerAction(
+            ability,
+            character as SkilledCharacter
+          );
+        }
+      });
+
+    combineLatest([
+      this.character.pipe(filter((c) => c.subtype !== 'nonplayer')),
       this.relationship.pipe(filter((r) => ['player', 'gm'].includes(r))),
       this.action.pipe(filter((a) => a.action === 'defense')),
     ])
@@ -203,7 +212,9 @@ export class CardComponent implements OnChanges, OnInit, OnDestroy {
     this.locked = !this.locked;
   }
 
-  triggerAction(e: MouseEvent, a: Ability) {}
+  triggerAction(event: MouseEvent, ability: Ability) {
+    this.actionSubject.next({ event, action: 'action', ability });
+  }
 
   triggerDefend(e: MouseEvent) {
     this.actionSubject.next({ event: e, action: 'defense' });

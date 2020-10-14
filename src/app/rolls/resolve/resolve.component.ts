@@ -312,6 +312,22 @@ export class ResolveComponent implements OnDestroy {
       effort: this.effort.value,
       critical: false,
     };
+    if (this.effort.value > 0) {
+      result.abilities.push({
+        type: 'passive',
+        effects: [],
+        description: 'Effort spent',
+        name: 'effort',
+        costs: [
+          {
+            type: 'pool',
+            pool: [this.attribute.name],
+            cost: { type: 'concrete', cost: this.effort.value },
+          },
+        ],
+        category: result.type,
+      });
+    }
     if ('target' in this.data.roll && this.data.roll.target >= 0) {
       result.success = this.total >= this.data.roll.target;
     }

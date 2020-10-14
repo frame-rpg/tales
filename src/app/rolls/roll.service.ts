@@ -1,12 +1,21 @@
-import { CampaignId, CharacterId } from 'types/idtypes';
-import { Character, SkilledCharacter } from 'types/character';
+import { Action, AngularFirestore } from '@angular/fire/firestore';
 import {
+  AttackTemplate,
   Initiative,
+  NoncombatTemplate,
   RequestTemplate,
   RollMetadata,
   RollRequest,
   RollResult,
 } from 'types/roll';
+import { CampaignId, CharacterId } from 'types/idtypes';
+import { Character, SkilledCharacter } from 'types/character';
+import {
+  ConcreteCost,
+  DepletionCost,
+  InitiativeCost,
+  PoolCost,
+} from 'types/cost';
 import { InjectedData, ResolveComponent } from './resolve/resolve.component';
 import { Observable, of } from 'rxjs';
 import {
@@ -14,10 +23,11 @@ import {
   RequestDialogData,
 } from './request/request.component';
 
-import { AngularFirestore } from '@angular/fire/firestore';
+import { Ability } from 'types/ability';
 import { CharacterService } from '../components/characters/character.service';
 import { FirebaseApp } from '@angular/fire';
 import { Injectable } from '@angular/core';
+import { Item } from 'types/item';
 import { MatDialog } from '@angular/material/dialog';
 import { SkillType } from 'types/skill';
 import { Weapon } from 'types/equipment';
@@ -44,7 +54,7 @@ interface AttackRequestData extends BaseRequestData {
   type: 'attack';
   self: boolean;
   character: SkilledCharacter;
-  weapon?: Weapon;
+  ability: Ability;
 }
 
 interface DefenseRequestData extends BaseRequestData {
@@ -57,6 +67,7 @@ interface NoncombatRequestData extends BaseRequestData {
   type: 'noncombat';
   self: boolean;
   character: SkilledCharacter;
+  ability?: Ability;
 }
 
 type RequestData =
@@ -104,6 +115,89 @@ export class RollService {
     } else {
       await this.scene(campaign);
     }
+  }
+
+  async triggerAction(ability: Ability, character: SkilledCharacter) {
+    const data: AttackRequestData | NoncombatRequestData = {
+      self: true,
+      type: ability.category as 'attack' | 'noncombat',
+      skills: ability.skills,
+      character: character,
+      ability,
+    };
+    const partialRequest = (await this.dialogService
+      .open<RequestComponent, RequestDialogData, RequestTemplate>(
+        RequestComponent,
+        {
+          data,
+        }
+      )
+      .afterClosed()
+      .pipe(take(1))
+      .toPromise()) as AttackTemplate | NoncombatTemplate;
+    if (!partialRequest) {
+      return;
+    }
+    const adHocPassive: Ability = {
+      type: 'passive',
+      name: 'Ad hoc ability',
+      description: 'Applied during roll trigger',
+      costs: [],
+      category: ability.category,
+      effects: [],
+    };
+
+    if ('assets' in partialRequest && partialRequest.assets !== 0) {
+      adHocPassive.effects.push({
+        duration: 'roll',
+        type: 'bonus',
+        assets: partialRequest.assets,
+      });
+    }
+    if ('edge' in partialRequest && partialRequest.edge !== 0) {
+      adHocPassive.effects.push({
+        duration: 'roll',
+        type: 'bonus',
+        edge: partialRequest.edge,
+      });
+    }
+    if ('damage' in partialRequest && partialRequest.damage !== 0) {
+      adHocPassive.effects.push({
+        duration: 'roll',
+        type: 'bonus',
+        damage: partialRequest.damage,
+      });
+    }
+    if ('initiative' in partialRequest && partialRequest.initiative !== 0) {
+      adHocPassive.effects.push({
+        duration: 'roll',
+        type: 'bonus',
+        initiative: partialRequest.initiative,
+      });
+    }
+
+    const meta: Partial<RollMetadata> = {
+      at: new Date(),
+      archive: false,
+      state: 'requested',
+    };
+    const req = {
+      ...partialRequest,
+      ...meta,
+      abilities: [ability],
+    } as RollRequest;
+
+    if (adHocPassive.effects.length > 0) {
+      req.abilities.push(adHocPassive);
+    }
+
+    if (data.skills) {
+      req.skills = data.skills;
+    }
+    await this.resolve(
+      { ...req, character: pluckCharacterId(data.character) },
+      data.character
+    );
   }
 
   async request(data: RequestData) {
@@ -166,49 +260,34 @@ export class RollService {
         .doc(`/campaigns/${result.character.campaignId}/rolls/${result.rollId}`)
         .update(result);
     } else {
-      console.log(`/campaigns/${result.character.campaignId}/rolls`);
       await this.firestore
         .collection(`/campaigns/${result.character.campaignId}/rolls`)
         .add(result);
     }
 
-    const patch: any = {};
-    if (roll.type === 'initiative') {
-      patch.initiative = result.result;
-    } else if ('initiative' in roll) {
-      patch.initiative = character.initiative + roll.initiative + result.effort;
-    } else {
-      patch.initiative = character.initiative + result.effort;
-    }
-    if (result.effort) {
-      patch[`attributes.${result.attribute}.current`] = Math.max(
-        0,
-        character.attributes[result.attribute].current - result.effort
-      );
-    }
-    if (result.critical) {
-      patch[`attributes.${result.attribute}.current`] = Math.max(
-        0,
-        character.attributes[result.attribute].current - 3
-      );
-    }
-    await this.characterService.update(character, patch);
+    this.handleCosts(result, character);
+    return;
 
-    if (roll.type === 'defense' && !result.success) {
-      await this.sendRequest({
-        at: new Date(),
-        type: 'health',
-        assets: 0,
-        target: roll.damage + roll.target - result.result,
-        edge: 0,
-        state: 'requested',
-        items: [],
-        archive: false,
-        character: pluckCharacterId(character),
-      });
-    } else if (roll.type === 'health' && !result.success) {
-      this.woundService.triggerWound(character);
-    }
+    // const patch: any = {};
+    // if (roll.type === 'initiative') {
+    //   patch.initiative = result.result;
+    // await this.characterService.update(character, patch);
+
+    // if (roll.type === 'defense' && !result.success) {
+    //   await this.sendRequest({
+    //     at: new Date(),
+    //     type: 'health',
+    //     assets: 0,
+    //     target: roll.damage + roll.target - result.result,
+    //     edge: 0,
+    //     state: 'requested',
+    //     abilities: [],
+    //     archive: false,
+    //     character: pluckCharacterId(character),
+    //   });
+    // } else if (roll.type === 'health' && !result.success) {
+    //   this.woundService.triggerWound(character);
+    // }
   }
 
   results(campaign: CampaignId): Observable<RollResult[]> {
@@ -272,6 +351,58 @@ export class RollService {
             archive: false,
             character: pluckCharacterId(character),
           });
+        }
+      })
+    );
+  }
+
+  async handleCosts(roll: RollResult, character: SkilledCharacter) {
+    const initiativeCosts = roll.abilities
+      .flatMap((ability) => ability.costs)
+      .filter(
+        (cost) => cost.type === 'initiative' && cost.cost.type === 'concrete'
+      )
+      .reduce(
+        (acc, curr: InitiativeCost) => acc + (curr.cost.cost as number),
+        (character.initiative || 0) + roll.effort
+      );
+    if (initiativeCosts !== character.initiative) {
+      await this.characterService.setInitiative(character, initiativeCosts);
+    }
+    const poolCosts: Record<string, number> = roll.abilities
+      .flatMap((ability) => ability.costs)
+      .filter((cost) => cost.type === 'pool' && cost.cost.type === 'concrete')
+      .reduce(
+        (acc, curr: PoolCost & ConcreteCost) => ({
+          ...acc,
+          [curr.pool[0]]: (acc[curr.pool[0]] || 0) + curr.cost.cost,
+        }),
+        {}
+      );
+    const poolPatch = Object.fromEntries(
+      Object.entries(poolCosts).map(([attr, cost]) => [
+        `attributes.${attr}.current`,
+        Math.max(character.attributes[attr]?.current - cost, 0),
+      ])
+    );
+    if (Object.keys(poolPatch).length > 0) {
+      await this.characterService.update(character, poolPatch);
+    }
+
+    const depletionCosts = roll.abilities
+      .flatMap((ability) => ability.costs)
+      .filter((cost) => cost.type === 'depletion');
+
+    await Promise.all(
+      depletionCosts.map((depletion: DepletionCost) => {
+        const diceCount = Math.abs(depletion.level) + 1;
+        const dice = new Array(diceCount)
+          .fill(0)
+          .map((v) => Math.floor(Math.random() * 12) + 1);
+        const roll =
+          depletion.level < 0 ? Math.min(...dice) : Math.max(...dice);
+        if (roll < depletion.target) {
+          await this.characterService.deplete(depletion.item);
         }
       })
     );

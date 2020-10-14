@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "buildAdmin": "tsc --project admin/tsconfig.json",
-    "seedEmulators": "npm run-script buildAdmin && env FIRESTORE_EMULATOR_HOST=localhost:8080  node admin/build/seedFF.js --gm d78TvAPWYnU3xVOBAo5TFBCUNmy1 --player ZCOPITFHMmgiKmXpgJRXAhHqgRe2",
+    "seedEmulators": "npm run-script buildAdmin && env FIRESTORE_EMULATOR_HOST=localhost:8080  node admin/build/seedFF.js --gm d78TvAPWYnU3xVOBAo5TFBCUNmy1 --player Jf05035Th7OeMDguUN893kvM9wD2",
     "seedRules": "env FIRESTORE_EMULATOR_HOST=localhost:8080  node rules/seed.js --gm d78TvAPWYnU3xVOBAo5TFBCUNmy1",
     "testSeed": "env FIRESTORE_EMULATOR_HOST=localhost:8080  node admin/build/import.js admin/ffdump.json"
   },

@@ -6,7 +6,6 @@ import { publishReplay, refCount, switchMap } from 'rxjs/operators';
 import { AclType } from 'types/acl';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Cost } from 'types/cost';
 import { Effect } from 'types/effect';
 import { Injectable } from '@angular/core';
 import { Item } from 'types/item';
@@ -73,7 +72,7 @@ export class CharacterService {
         .filter((ability) => ability.type === type)
         .filter(
           (ability) =>
-            !('category' in ability || 'skills' in ability) ||
+            !('category' in filter || 'skills' in filter) ||
             ('category' in ability && ability.category === filter.category) ||
             ('skills' in ability &&
               ability.skills?.some((skill) => filter.skills?.includes(skill)))
@@ -88,6 +87,7 @@ export class CharacterService {
           from: item.owner,
         }))
     );
+
     const characterAbilities = character.abilities.filter(
       (ability) => ability.type === type
     );
@@ -140,6 +140,14 @@ export class CharacterService {
     await this.update(character, {
       carried: firestore.FieldValue.arrayUnion({ ...item, owner }),
     });
+  }
+
+  async deplete(item: {
+    characterId: string;
+    campaignId: string;
+    itemId: string;
+  }) {
+    throw new Error('Method not implemented.');
   }
 
   async rest(characters: Character[]) {

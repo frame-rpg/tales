@@ -116,7 +116,6 @@ export class RequestComponent {
           {}
         )
     );
-    console.log(this.req);
   }
 
   ok() {

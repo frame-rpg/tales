@@ -3,6 +3,7 @@ import { Equipment, Weapon } from './equipment';
 import { CharacterId } from './idtypes';
 import { CharacterSkill, SkillType } from './skill';
 import { Attribute, AttributeName } from './attribute';
+import { Ability } from './ability';
 
 export type RollState = 'requested' | 'rolled';
 
@@ -18,7 +19,7 @@ export interface BasicRoll {
   type: SkillType;
   assets: number;
   edge: number;
-  items: Equipment[];
+  abilities: Ability[];
   skills?: string[];
 }
 
@@ -78,6 +79,7 @@ export interface BasicResult {
   critical: boolean;
   attribute: AttributeName;
   skill: CharacterSkill;
+  abilities: Ability[];
 }
 
 export type InitiativeRequest = Initiative & BasicRequest & RollMetadata;

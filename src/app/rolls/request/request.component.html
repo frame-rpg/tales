@@ -7,7 +7,7 @@
           autocomplete="disabled" />
     </mat-form-field>
     <mat-form-field appearance="outline" *ngIf="has.damage">
-      <mat-label>Damage</mat-label>
+      <mat-label>Bonus Damage</mat-label>
       <input matInput formControlName="damage" type="text" inputmode="numeric"
           autocomplete="disabled" />
     </mat-form-field>
@@ -25,7 +25,7 @@
   <div mat-dialog-actions class="buttonRow">
     <button mat-raised-button [matDialogClose]="false">Cancel</button>
     <button mat-raised-button color="primary" [disabled]="req.invalid"
-        cdkFocusInitial (click)="ok()">
+        (click)="ok()">
       Ok
     </button>
   </div>

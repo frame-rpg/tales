@@ -22,7 +22,7 @@ function weapon({
     abilities: [
       {
         type: 'action',
-        name: 'Attack',
+        name: `Attack: ${name}`,
         description: `Basic attack with a ${name}.`,
         category: 'attack',
         skills,
@@ -139,7 +139,7 @@ export const longbow = weapon({
   initiative: 6,
   damage: 3,
   size: 2,
-  skills: ['hurling', 'sniper'],
+  skills: ['hipshot', 'quickdraw', 'sniper'],
 });
 
 export const stoneCloak: Item = {
