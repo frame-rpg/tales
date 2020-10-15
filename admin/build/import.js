@@ -28,6 +28,17 @@ const fs = __importStar(require("fs"));
         projectId: 'framesystem-rpg',
     });
     const data = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
+    await Promise.all(Object.entries(data.users).map(async ([id, user]) => {
+        console.log(user);
+        await app
+            .firestore()
+            .doc(`/users/${id}`)
+            .set(restoreDate(user.user));
+        await Promise.all(user.media.map((media) => app
+            .firestore()
+            .doc(`/users/${id}/media/${media.mediaId}`)
+            .set(restoreDate(media))));
+    }));
     await Promise.all(Object.entries(data.pages).map(async ([id, page]) => {
         await app
             .firestore()
@@ -47,6 +58,14 @@ const fs = __importStar(require("fs"));
             .firestore()
             .doc(`/campaigns/${id}/characters/${character.characterId}`)
             .set(restoreDate(character))));
+        await Promise.all(campaign.rolls.map((roll) => app
+            .firestore()
+            .doc(`/campaigns/${id}/rolls/${roll.rollId}`)
+            .set(restoreDate(roll))));
+        await Promise.all(campaign.chat.map((chat) => app
+            .firestore()
+            .doc(`/campaigns/${id}/chat/${chat.chatId}`)
+            .set(restoreDate(chat))));
     }));
     await Promise.all(Object.entries(data.users).map(async ([id, user]) => {
         await app
@@ -60,7 +79,7 @@ const fs = __importStar(require("fs"));
     }));
 })();
 function restoreDate(obj) {
-    return Object.fromEntries(Object.entries(obj).map(([key, val]) => val._seconds > 0
+    return Object.fromEntries(Object.entries(obj).map(([key, val]) => val?._seconds > 0
         ? [key, new admin.firestore.Timestamp(val._seconds, val._nanoseconds)]
         : [key, val]));
 }

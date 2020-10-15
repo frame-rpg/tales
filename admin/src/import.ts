@@ -11,6 +11,23 @@ import * as fs from 'fs';
   const data = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
 
   await Promise.all(
+    Object.entries(data.users).map(async ([id, user]) => {
+      await app
+        .firestore()
+        .doc(`/users/${id}`)
+        .set(restoreDate((user as any).user));
+      await Promise.all(
+        (user as any).media.map((media: any) =>
+          app
+            .firestore()
+            .doc(`/users/${id}/media/${media.mediaId}`)
+            .set(restoreDate(media))
+        )
+      );
+    })
+  );
+
+  await Promise.all(
     Object.entries(data.pages).map(async ([id, page]) => {
       await app
         .firestore()
@@ -41,6 +58,22 @@ import * as fs from 'fs';
             .set(restoreDate(character))
         )
       );
+      await Promise.all(
+        (campaign as any).rolls.map((roll: any) =>
+          app
+            .firestore()
+            .doc(`/campaigns/${id}/rolls/${roll.rollId}`)
+            .set(restoreDate(roll))
+        )
+      );
+      await Promise.all(
+        (campaign as any).chat.map((chat: any) =>
+          app
+            .firestore()
+            .doc(`/campaigns/${id}/chat/${chat.chatId}`)
+            .set(restoreDate(chat))
+        )
+      );
     })
   );
 
@@ -65,7 +98,7 @@ import * as fs from 'fs';
 function restoreDate<T>(obj: T): T {
   return Object.fromEntries(
     Object.entries(obj).map(([key, val]) =>
-      val._seconds > 0
+      val?._seconds > 0
         ? [key, new admin.firestore.Timestamp(val._seconds, val._nanoseconds)]
         : [key, val]
     )
