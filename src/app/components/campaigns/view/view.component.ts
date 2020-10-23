@@ -9,6 +9,7 @@ import {
   map,
   publishReplay,
   refCount,
+  startWith,
   switchMap,
   takeUntil,
 } from 'rxjs/operators';
@@ -108,7 +109,10 @@ export class ViewComponent implements OnInit, OnDestroy {
         characters.filter((character) =>
           ['gm', 'player'].includes(character.acl[uid])
         )
-      )
+      ),
+      startWith([]),
+      publishReplay(1),
+      refCount()
     );
 
     this.present = combineLatest([

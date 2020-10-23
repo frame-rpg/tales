@@ -8,9 +8,16 @@ import { NgModule } from '@angular/core';
 import { PipesModule } from 'src/app/core/pipes/pipes.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { SheetComponent } from './sheet/sheet.component';
+import { SmallcardComponent } from './smallcard/smallcard.component';
 
 @NgModule({
-  declarations: [CardComponent, CreateComponent],
+  declarations: [
+    CardComponent,
+    CreateComponent,
+    SmallcardComponent,
+    SheetComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -20,6 +27,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SharedModule,
     ActionsModule,
   ],
-  exports: [CardComponent, CreateComponent],
+  exports: [CardComponent, CreateComponent, SmallcardComponent, SheetComponent],
 })
 export class CharactersModule {}

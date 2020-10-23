@@ -1,0 +1,91 @@
+@use "sass:map";
+@import '../../../../vars.scss';
+
+.card {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  width: 300px;
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 auto;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.image {
+  margin-right: 2px;
+}
+
+.status {
+  position: relative;
+  width: 100%;
+  height: 24px;
+  border: 1px solid map-get($map: $mat-primary, $key: 'main');
+  border-radius: 4px;
+  margin-top: 2px;
+}
+
+.healthBar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  &.great {
+    background-color: map-get($map: $mat-accent, $key: 'lighter');
+  }
+
+  &.good {
+    background-color: map-get($map: $mat-accent, $key: 'main');
+  }
+
+  &.medium {
+    background-color: map-get($map: $mat-accent, $key: 'darker');
+  }
+
+  &.bad {
+    background-color: map-get($map: $mat-primary, $key: 'main');
+  }
+
+  &.terrible {
+    background-color: map-get($map: $mat-warn, $key: 'lighter');
+  }
+}
+
+.statusText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  &.great {
+    color: $dark-primary-text;
+  }
+
+  &.good {
+    color: $dark-primary-text;
+  }
+
+  &.medium {
+    color: $light-primary-text;
+  }
+
+  &.bad {
+    color: $light-primary-text;
+  }
+
+  &.terrible {
+    color: $dark-primary-text;
+  }
+}

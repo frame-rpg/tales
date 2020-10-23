@@ -1,11 +1,35 @@
 <div class="main">
-  <div class="left">
-    <div class="characterBox mat-elevation-z2"
-        *ngFor="let character of characters | async | sortBy:'initiative':'asc'; trackBy:('characterId' | trackByProperty)">
-      <character-card [character]="character"> </character-card>
-    </div>
-  </div>
+  <mat-tab-group class="notebook">
+    <mat-tab label="Campaign Notes"></mat-tab>
+    <mat-tab label="My Characters" *ngIf="(notableCharacters | async).length">
+      <mat-tab-group
+          *ngIf="(notableCharacters | async).length > 1; else singleton">
+        <mat-tab [label]="character.name[0]"
+            *ngFor="let character of notableCharacters | async">
+          <framesystem-character-sheet [character]="character">
+          </framesystem-character-sheet>
+        </mat-tab>
+      </mat-tab-group>
+      <ng-template #singleton>
+        <framesystem-character-sheet
+            [character]="(notableCharacters | async)[0]">
+        </framesystem-character-sheet>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
   <div class="right">
+    <div class="characters">
+      <ng-container
+          *ngFor="let character of characters | async | sortBy:'initiative':'asc'; trackBy:('characterId' | trackByProperty)">
+        <character-card [character]="character"
+            *ngIf="gm | async; else smallCard"> </character-card>
+
+        <ng-template #smallCard>
+          <framesystem-character-smallcard [character]="character">
+          </framesystem-character-smallcard>
+        </ng-template>
+      </ng-container>
+    </div>
     <div class="actions" *ngIf="gm | async">
       <button mat-raised-button (click)="initiative($event)" color="accent">
         Initiative
@@ -18,10 +42,13 @@
         Reset
       </button>
     </div>
-    <framesystem-roll-result *ngFor="let roll of rolls | async" [result]="roll">
-    </framesystem-roll-result>
-    <framesystem-chat-view *ngFor="let msg of chat | async" [msg]="msg">
-    </framesystem-chat-view>
+    <div class="chatHistory">
+      <framesystem-roll-result *ngFor="let roll of rolls | async"
+          [result]="roll">
+      </framesystem-roll-result>
+      <framesystem-chat-view *ngFor="let msg of chat | async" [msg]="msg">
+      </framesystem-chat-view>
+    </div>
     <div class="chatCompose">
       <div class="presence">
         <framesystem-person-image [person]="presentUser" [size]="24"

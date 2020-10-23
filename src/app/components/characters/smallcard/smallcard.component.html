@@ -1,0 +1,20 @@
+<div class="card">
+  <div class="top">
+    <framesystem-person-image [person]="character" class="image">
+    </framesystem-person-image>
+    <div class="info">
+      <div class="name">{{character.name}}</div>
+      <div class="auras">
+        <mat-icon>fingerprint</mat-icon>
+        <mat-icon>home</mat-icon>
+      </div>
+    </div>
+  </div>
+  <div class="status" [matTooltip]="health + ' health, '+ woundCount+ ' wounds'"
+      matTooltipPosition="above">
+    <div class="healthBar" [style.width.%]="statusPercent" [class]="status">
+    </div>
+    <div class="statusText" [class]="status">{{ currentPool }} / {{ maxPool }}
+    </div>
+  </div>
+</div>

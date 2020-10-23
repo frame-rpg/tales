@@ -29,7 +29,6 @@ const fs = __importStar(require("fs"));
     });
     const data = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
     await Promise.all(Object.entries(data.users).map(async ([id, user]) => {
-        console.log(user);
         await app
             .firestore()
             .doc(`/users/${id}`)
