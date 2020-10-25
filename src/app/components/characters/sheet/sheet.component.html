@@ -83,7 +83,9 @@
           <span>{{action.name}}</span>
         </button>
       </mat-tab>
-      <mat-tab label="Notes"></mat-tab>
+      <mat-tab label="Notes">
+        <framesystem-notes [parent]="chr"></framesystem-notes>
+      </mat-tab>
     </mat-tab-group>
   </div>
 </div>

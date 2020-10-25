@@ -5,6 +5,7 @@ import { CreateComponent } from './create/create.component';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../../core/material/material.module';
 import { NgModule } from '@angular/core';
+import { NotesModule } from '../notes/notes.module';
 import { PipesModule } from 'src/app/core/pipes/pipes.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -23,6 +24,7 @@ import { SmallcardComponent } from './smallcard/smallcard.component';
     FormsModule,
     RouterModule,
     MaterialModule,
+    NotesModule,
     PipesModule,
     SharedModule,
     ActionsModule,

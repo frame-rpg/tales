@@ -23,7 +23,6 @@ import {
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Note } from 'types/note';
 import { addId } from 'src/app/data/rxutil';
-import { idPluck } from 'src/app/data/util';
 
 @Component({
   selector: 'framesystem-notes',
@@ -53,6 +52,7 @@ export class NotesComponent implements OnInit, OnChanges {
     this.parentSubject = new BehaviorSubject(this._parent);
     this.parent = this.parentSubject.asObservable();
     this.list = this.parent.pipe(
+      filter((v) => !!v),
       distinctUntilChanged(
         (a, b) =>
           a.type === b.type &&
@@ -113,8 +113,8 @@ export class NotesComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes._parent?.currentValue) {
-      this.parentSubject.next(changes.character.currentValue);
+    if (changes._parent?.currentValue && !changes._parent?.firstChange) {
+      this.parentSubject.next(changes._parent.currentValue);
     }
   }
 

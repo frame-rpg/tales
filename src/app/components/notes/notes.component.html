@@ -1,8 +1,12 @@
 <ul>
-  <li *ngFor="let note of notes | async" (click)="view(note)">
+  <li *ngFor="let note of list | async" (click)="view(note)">
     {{note.title}}
   </li>
 </ul>
+<button mat-button (click)="create()">
+  <mat-icon>add</mat-icon>
+  <mat-label>Create</mat-label>
+</button>
 <div *ngIf="editActive | async; else maybeView" [formGroup]="edit">
   <mat-form-field appearance="outline">
     <mat-label>Title</mat-label>
@@ -13,9 +17,9 @@
     <textarea matInput formControlName="body" cdkTextareaAutosize></textarea>
   </mat-form-field>
 </div>
-<ng-container #maybeView>
+<ng-template #maybeView>
   <div *ngIf="active | async as note">
     <h1>{{note.title}}</h1>
     <div markdown class="longform" [data]="note.content"></div>
   </div>
-</ng-container>
+</ng-template>

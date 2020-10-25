@@ -49,10 +49,28 @@ service cloud.firestore {
         allow delete: if false
       }
       match /characters/{characterId} {
+        function characterOwner() {
+          return gm() || get(/databases/$(database)/documents/campaigns/$(campaignId)/character/$(characterId)).data.acl[request.auth.uid] in ['gm', 'player'];
+        }
+
         allow read: if observer()
         allow list: if observer()
-        allow update: if debug(gm()) || debug(request.resource.data).acl[request.auth.uid] in ['gm', 'player']
+        allow update: if gm() || request.resource.data.acl[request.auth.uid] in ['gm', 'player']
         allow create: if false
+        allow delete: if false
+        match /notes/{noteId} {
+          allow read: if observer()
+          allow list: if observer()
+          allow update: if characterOwner()
+          allow create: if characterOwner()
+          allow delete: if false
+        }
+      }
+      match /notes/{noteId} {
+        allow read: if observer()
+        allow list: if observer()
+        allow update: if atLeastPlayer()
+        allow create: if atLeastPlayer()
         allow delete: if false
       }
     }

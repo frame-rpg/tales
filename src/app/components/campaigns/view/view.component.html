@@ -1,6 +1,8 @@
 <div class="main">
   <mat-tab-group class="notebook">
-    <mat-tab label="Campaign Notes"></mat-tab>
+    <mat-tab label="Campaign Notes">
+      <framesystem-notes [parent]="campaign | async"></framesystem-notes>
+    </mat-tab>
     <mat-tab label="My Characters" *ngIf="(notableCharacters | async).length">
       <mat-tab-group
           *ngIf="(notableCharacters | async).length > 1; else singleton">

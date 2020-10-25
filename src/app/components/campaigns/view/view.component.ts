@@ -24,7 +24,6 @@ import { PresenceService } from 'src/app/core/firebase/presence.service';
 import { RollService } from 'src/app/rolls/roll.service';
 import { TitleService } from 'src/app/shared/topline/title.service';
 import { User } from 'types/user';
-import { UserId } from 'types/idtypes';
 import { UserService } from '../../user/user.service';
 
 type ActionType = 'initiative' | 'noncombat' | 'reset' | 'rest';
