@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { CampaignId, CharacterId } from 'types/idtypes';
 import {
   Component,
@@ -7,18 +7,23 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import {
   distinctUntilChanged,
   distinctUntilKeyChanged,
   filter,
+  map,
   publishReplay,
   refCount,
+  scan,
   switchMap,
+  takeUntil,
 } from 'rxjs/operators';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Note } from 'types/note';
 import { addId } from 'src/app/data/rxutil';
+import { idPluck } from 'src/app/data/util';
 
 @Component({
   selector: 'framesystem-notes',
@@ -32,6 +37,15 @@ export class NotesComponent implements OnInit, OnChanges {
   activeSubject = new BehaviorSubject<Note>(null);
   active: Observable<Note>;
   list: Observable<Note[]>;
+  edit = new FormGroup({
+    title: new FormControl(),
+    body: new FormControl(),
+  });
+  editActive: Observable<boolean>;
+
+  private _destroying = new BehaviorSubject<boolean>(false);
+  destroying = this._destroying.asObservable().pipe(filter((v) => v));
+  private _action = new Subject<{ e: any; a: 'toggleEdit' }>();
 
   constructor(private firebase: AngularFirestore) {}
 
@@ -46,42 +60,56 @@ export class NotesComponent implements OnInit, OnChanges {
             a.characterId === (b as CharacterId).characterId) &&
           a.campaignId === b.campaignId
       ),
-      switchMap((c) => {
-        if (c.type === 'campaign') {
-          return this.firebase
-            .collection<Note>(`/campaigns/${c.campaignId}/notes`)
-            .valueChanges({ idField: 'noteId' });
-        } else {
-          return this.firebase
-            .collection<Note>(
-              `/campaigns/${c.campaignId}/characters/${c.characterId}/notes`
-            )
-            .valueChanges({ idField: 'noteId' });
-        }
-      }),
+      switchMap((c) =>
+        this.firebase
+          .collection<Note>(this.baseAddress())
+          .valueChanges({ idField: 'noteId' })
+      ),
       publishReplay(1),
       refCount()
     );
     this.active = this.activeSubject.asObservable().pipe(
       filter((v) => !!v),
       distinctUntilKeyChanged('noteId'),
-      switchMap((n) => {
-        if (n.parentId.type === 'campaign') {
-          return this.firebase
-            .doc<Note>(`/campaigns/${n.parentId.campaignId}/notes`)
-            .snapshotChanges();
-        } else {
-          return this.firebase
-            .doc<Note>(
-              `/campaigns/${n.parentId.campaignId}/characters/${n.parentId.characterId}/notes`
-            )
-            .snapshotChanges();
-        }
-      }),
+      switchMap((n) =>
+        this.firebase.doc<Note>(this.address(n)).snapshotChanges()
+      ),
       addId('noteId'),
       publishReplay(1),
       refCount()
     );
+
+    this.editActive = combineLatest([
+      this.active,
+      this._action.asObservable().pipe(
+        filter((v) => v.a === 'toggleEdit'),
+        distinctUntilKeyChanged('e')
+      ),
+    ]).pipe(
+      scan(
+        (acc, [currentNote, actionToggle]) => {
+          if (acc.id === currentNote.noteId) {
+            return { id: acc.id, val: !acc.val };
+          } else {
+            return { id: currentNote.noteId, val: false };
+          }
+        },
+        { id: '', val: false }
+      ),
+      map((v) => v.val),
+      publishReplay(1),
+      refCount()
+    );
+
+    combineLatest([this.active, this.editActive])
+      .pipe(
+        takeUntil(this.destroying),
+        filter(([, active]) => active)
+      )
+      .subscribe(([note]) => {
+        this.edit.get('title').patchValue(note.title);
+        this.edit.get('body').patchValue(note.content);
+      });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -90,7 +118,41 @@ export class NotesComponent implements OnInit, OnChanges {
     }
   }
 
+  async create() {
+    await this.firebase.collection<Partial<Note>>(this.baseAddress()).add({
+      updatedAt: new Date(),
+      title: 'New Note',
+      content: '',
+      parentId: idify(this._parent),
+    });
+  }
+
+  private baseAddress() {
+    return this._parent.type === 'character'
+      ? `/campaigns/${this._parent.campaignId}/characters/${this._parent.characterId}/notes`
+      : `/campaigns/${this._parent.campaignId}/notes`;
+  }
+
+  private address(note: Note) {
+    return `${this.baseAddress()}/${note.noteId}`;
+  }
+
   view(note: Note) {
     this.activeSubject.next(note);
+  }
+}
+
+function idify(thing: CampaignId | CharacterId): CampaignId | CharacterId {
+  if (thing.type === 'campaign') {
+    return {
+      type: 'campaign',
+      campaignId: thing.campaignId,
+    };
+  } else {
+    return {
+      type: 'character',
+      characterId: thing.characterId,
+      campaignId: thing.campaignId,
+    };
   }
 }
