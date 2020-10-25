@@ -1,3 +1,125 @@
 .sheet {
   height: clamp(400px, 75vh, 800px);
+  width: 100%;
+}
+
+.playerCard {
+  max-width: 500px;
+  padding: 8px;
+}
+
+.nameRow {
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 auto;
+  justify-content: space-between;
+}
+
+.lockIcon {
+  font-size: 16px;
+}
+
+.name {
+  font-weight: 500;
+}
+
+.characterBody {
+  display: flex;
+  flex-direction: column;
+}
+
+.skillLevel {
+  text-transform: capitalize;
+}
+
+.attributes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.categoryTitle {
+  text-transform: capitalize;
+}
+
+.initiative {
+  margin-right: 8px;
+}
+
+.attribute {
+  display: flex;
+  min-height: 40px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.attributeContent {
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 4px;
+}
+
+.attributeName {
+  font-weight: 500;
+  padding-right: 4px;
+  text-transform: capitalize;
+  line-height: 1.5em;
+}
+
+.pool {
+  min-width: 4em;
+}
+
+.skill {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skillInfo {
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 auto;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rollers {
+  display: flex;
+  flex-direction: row;
+}
+
+.rollButton {
+  min-width: 2rem;
+  padding: 0;
+  min-height: 2rem;
+  margin: 0 1px 0 1px;
+}
+
+.suggested {
+  background-color: var(--lightblue);
+}
+
+.unusual {
+  background-color: var(--honeydew);
+}
+
+.space {
+  display: flex;
+  flex: 1 0 auto;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-begin;
+}
+
+.infoIcon {
+  margin-left: 3px;
 }

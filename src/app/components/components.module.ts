@@ -8,9 +8,10 @@ import { PagesModule } from './pages/pages.module';
 import { RouterModule } from '@angular/router';
 import { UserModule } from './user/user.module';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { NotesComponent } from './notes/notes.component';
 
 @NgModule({
-  declarations: [WelcomeComponent],
+  declarations: [WelcomeComponent, NotesComponent],
   imports: [CommonModule, RouterModule],
   exports: [
     CharactersModule,

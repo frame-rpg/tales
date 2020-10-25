@@ -23,15 +23,17 @@ import { users } from './users';
     projectId: 'framesystem-rpg',
   });
 
-  const acl = { [flagArgs.gm]: 'gm' };
+  const fullAcl = { [flagArgs.gm]: 'gm' };
   if (flagArgs.player) {
-    acl[flagArgs.player] = 'player';
+    fullAcl[flagArgs.player] = 'player';
   }
+
+  const gmOnlyAcl = { [flagArgs.gm]: 'gm' };
 
   const ffc = await app
     .firestore()
     .doc(`/campaigns/${campaign.campaignId}`)
-    .set({ ...campaign, acl });
+    .set({ ...campaign, acl: fullAcl });
 
   await app
     .firestore()
@@ -44,10 +46,10 @@ import { users } from './users';
     Promise.all(
       characters
         .map((c) => {
-          if (flagArgs.player) {
-            return { ...c, acl } as PlayerCharacter;
+          if (flagArgs.player && c.characterId === 'stu') {
+            return { ...c, acl: fullAcl } as PlayerCharacter;
           } else {
-            return c;
+            return { ...c, acl: gmOnlyAcl } as PlayerCharacter;
           }
         })
         .map((c: PlayerCharacter) => {

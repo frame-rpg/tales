@@ -37,14 +37,15 @@ const users_1 = require("./users");
         databaseURL: 'https://framesystem-rpg.firebaseio.com',
         projectId: 'framesystem-rpg',
     });
-    const acl = { [flagArgs.gm]: 'gm' };
+    const fullAcl = { [flagArgs.gm]: 'gm' };
     if (flagArgs.player) {
-        acl[flagArgs.player] = 'player';
+        fullAcl[flagArgs.player] = 'player';
     }
+    const gmOnlyAcl = { [flagArgs.gm]: 'gm' };
     const ffc = await app
         .firestore()
         .doc(`/campaigns/${fantasyFights_1.campaign.campaignId}`)
-        .set({ ...fantasyFights_1.campaign, acl });
+        .set({ ...fantasyFights_1.campaign, acl: fullAcl });
     await app
         .firestore()
         .doc('/pages/rules')
@@ -54,11 +55,11 @@ const users_1 = require("./users");
     await Promise.all([
         Promise.all(fantasyFights_1.characters
             .map((c) => {
-            if (flagArgs.player) {
-                return { ...c, acl };
+            if (flagArgs.player && c.characterId === 'stu') {
+                return { ...c, acl: fullAcl };
             }
             else {
-                return c;
+                return { ...c, acl: gmOnlyAcl };
             }
         })
             .map((c) => {

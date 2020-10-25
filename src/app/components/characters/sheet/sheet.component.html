@@ -1,3 +1,89 @@
 <div class="sheet" *ngIf="character | async as chr">
-  {{chr.name}}
+  <div class="nameRow">
+    <div class="name">
+      {{ chr.name }}
+    </div>
+  </div>
+  <div class="characterBody">
+    <div class="attributes" *ngIf="skilled | async">
+      <div *ngFor="let attribute of attributes | async; trackBy: ('name' | trackByProperty)"
+          class="attribute">
+        <div class="attributeName">
+          {{attribute.name}}:
+        </div>
+        <div *ngIf="attribute.wound">
+          <mat-icon color="warn">sentiment_very_dissatisfied</mat-icon>
+        </div>
+        <div class="attributeContent" *ngIf="!attribute.wound">
+          <framesystem-adjust-character [max]="attribute.pool"
+              [initial]="attribute.current"
+              [path]="'attributes.'+attribute.name+'.current'"
+              [character]="character | async | extractId" *ngIf="!locked">
+          </framesystem-adjust-character>
+          <div *ngIf="locked">
+            {{ attribute.current }} / {{ attribute.pool }}
+            {{ attribute.edge > 0 ? '+'+attribute.edge : ''}}
+          </div>
+        </div>
+      </div>
+      <div class="attribute">
+        <div class="attributeName">Initiative:</div>
+        <div class="attributeContent">
+          <framesystem-adjust-character *ngIf="!locked"
+              [initial]="chr.initiative" path="initiative"
+              [character]="character | async | extractId">
+          </framesystem-adjust-character>
+          <div *ngIf="locked">
+            {{ chr.initiative }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <mat-tab-group *ngIf="chr.subtype !== 'nonplayer'">
+      <mat-tab label="Skills">
+        <div class="skills">
+          <div *ngFor="let skill of skills | async" class="skill">
+            <div class="skillInfo">
+              <div>{{skill.name}}</div>
+              <button mat-stroked-button class="skillLevel" color="primary"
+                  *ngIf="gmOrPlayer | async; else skillLevelOnly"
+                  (click)="check($event, skill)">
+                {{skill.level}}
+              </button>
+              <ng-template #skillLevelOnly>
+                <div class="skillLevel">{{skill.level}}</div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Equipment">
+        <div *ngFor="let item of equipment | async" class="item">
+          <div>
+            {{item.name}}
+          </div>
+          <div class="space"></div>
+          <mat-checkbox [checked]="item.equipped"
+              (change)="equipItem($event, item)">Equipped</mat-checkbox>
+          <mat-icon [matTooltip]="item|json" class="infoIcon">info</mat-icon>
+        </div>
+      </mat-tab>
+      <mat-tab label="Actions">
+        <button mat-menu-item (click)="toggleLock()" *ngIf="gm | async">
+          <mat-icon>{{ locked ? 'lock_open' : 'lock' }}</mat-icon>
+          <span>{{locked ? 'Unlock' : 'Lock'}} Character</span>
+        </button>
+        <button mat-menu-item (click)="triggerDefend($event)"
+            *ngIf="gm | async">
+          <mat-icon>security</mat-icon>
+          <span>Trigger Defense</span>
+        </button>
+        <button mat-menu-item (click)="triggerAction($event, action)"
+            *ngFor="let action of actions | async">
+          <span>{{action.name}}</span>
+        </button>
+      </mat-tab>
+      <mat-tab label="Notes"></mat-tab>
+    </mat-tab-group>
+  </div>
 </div>
