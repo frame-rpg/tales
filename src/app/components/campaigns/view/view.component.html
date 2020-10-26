@@ -1,7 +1,8 @@
 <div class="main">
   <mat-tab-group class="notebook">
     <mat-tab label="Campaign Notes">
-      <framesystem-notes [parent]="campaign | async"></framesystem-notes>
+      <framesystem-notes [parent]="campaign | async"
+          [editable]="playerOrGm | async"></framesystem-notes>
     </mat-tab>
     <mat-tab label="My Characters" *ngIf="(notableCharacters | async).length">
       <mat-tab-group

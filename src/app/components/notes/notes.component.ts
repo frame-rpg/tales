@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import {
+  debounceTime,
   distinctUntilChanged,
   distinctUntilKeyChanged,
   filter,
@@ -18,6 +19,7 @@ import {
   scan,
   switchMap,
   takeUntil,
+  withLatestFrom,
 } from 'rxjs/operators';
 
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -31,14 +33,15 @@ import { addId } from 'src/app/data/rxutil';
 })
 export class NotesComponent implements OnInit, OnChanges {
   @Input('parent') private _parent: CharacterId | CampaignId;
+  @Input('editable') editable: boolean = false;
   parentSubject: BehaviorSubject<CharacterId | CampaignId>;
   parent: Observable<CharacterId | CampaignId>;
   activeSubject = new BehaviorSubject<Note>(null);
   active: Observable<Note>;
   list: Observable<Note[]>;
-  edit = new FormGroup({
+  editState = new FormGroup({
     title: new FormControl(),
-    body: new FormControl(),
+    content: new FormControl(),
   });
   editActive: Observable<boolean>;
 
@@ -80,7 +83,7 @@ export class NotesComponent implements OnInit, OnChanges {
     );
 
     this.editActive = combineLatest([
-      this.active,
+      this.active.pipe(distinctUntilKeyChanged('noteId')),
       this._action.asObservable().pipe(
         filter((v) => v.a === 'toggleEdit'),
         distinctUntilKeyChanged('e')
@@ -90,6 +93,8 @@ export class NotesComponent implements OnInit, OnChanges {
         (acc, [currentNote, actionToggle]) => {
           if (acc.id === currentNote.noteId) {
             return { id: acc.id, val: !acc.val };
+          } else if (acc.id === '') {
+            return { id: currentNote.noteId, val: true };
           } else {
             return { id: currentNote.noteId, val: false };
           }
@@ -107,8 +112,25 @@ export class NotesComponent implements OnInit, OnChanges {
         filter(([, active]) => active)
       )
       .subscribe(([note]) => {
-        this.edit.get('title').patchValue(note.title);
-        this.edit.get('body').patchValue(note.content);
+        this.editState.get('title').patchValue(note.title);
+        this.editState.get('content').patchValue(note.content);
+      });
+
+    this.editState.valueChanges
+      .pipe(
+        debounceTime(100),
+        withLatestFrom(this.active),
+        distinctUntilChanged(
+          ([s1], [s2]) => s1.title === s2.title && s1.content === s2.content
+        ),
+        takeUntil(this.destroying)
+      )
+      .subscribe(([state, note]) => {
+        this.firebase.doc(this.address(note)).update({
+          updatedAt: new Date(),
+          title: this.editState.value.title,
+          content: this.editState.value.content,
+        });
       });
   }
 
@@ -116,6 +138,10 @@ export class NotesComponent implements OnInit, OnChanges {
     if (changes._parent?.currentValue && !changes._parent?.firstChange) {
       this.parentSubject.next(changes._parent.currentValue);
     }
+  }
+
+  edit(e: MouseEvent) {
+    this._action.next({ e, a: 'toggleEdit' });
   }
 
   async create() {

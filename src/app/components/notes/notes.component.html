@@ -1,25 +1,30 @@
-<ul>
-  <li *ngFor="let note of list | async" (click)="view(note)">
-    {{note.title}}
-  </li>
-</ul>
-<button mat-button (click)="create()">
-  <mat-icon>add</mat-icon>
-  <mat-label>Create</mat-label>
-</button>
-<div *ngIf="editActive | async; else maybeView" [formGroup]="edit">
-  <mat-form-field appearance="outline">
-    <mat-label>Title</mat-label>
-    <input matInput formControlName="title">
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Note</mat-label>
-    <textarea matInput formControlName="body" cdkTextareaAutosize></textarea>
-  </mat-form-field>
-</div>
-<ng-template #maybeView>
-  <div *ngIf="active | async as note">
-    <h1>{{note.title}}</h1>
-    <div markdown class="longform" [data]="note.content"></div>
+<div class="notes">
+  <ul>
+    <li *ngFor="let note of list | async" (click)="view(note)">
+      {{note.title}}
+    </li>
+  </ul>
+  <button mat-button (click)="create()">
+    <mat-icon>add</mat-icon>
+    <mat-label>Create</mat-label>
+  </button>
+  <div *ngIf="editActive | async; else maybeView" [formGroup]="editState"
+      class="edit">
+    <mat-form-field appearance="outline" class="titleEdit">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="bodyEdit">
+      <mat-label>Note</mat-label>
+      <textarea matInput formControlName="content"
+          cdkTextareaAutosize></textarea>
+    </mat-form-field>
   </div>
-</ng-template>
+  <ng-template #maybeView>
+    <div *ngIf="active | async as note">
+      <h1>{{note.title}}</h1>
+      <button mat-button *ngIf="editable" (click)="edit($event)">Edit</button>
+      <div markdown class="longform" [data]="note.content"></div>
+    </div>
+  </ng-template>
+</div>

@@ -84,7 +84,8 @@
         </button>
       </mat-tab>
       <mat-tab label="Notes">
-        <framesystem-notes [parent]="chr"></framesystem-notes>
+        <framesystem-notes [parent]="chr" [editable]="gmOrPlayer | async">
+        </framesystem-notes>
       </mat-tab>
     </mat-tab-group>
   </div>

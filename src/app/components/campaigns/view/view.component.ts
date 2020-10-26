@@ -45,6 +45,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   rolls: Observable<Roll[]>;
   nextRequest: Observable<RollRequest>;
   gm: Observable<boolean>;
+  playerOrGm: Observable<boolean>;
   user: Observable<User>;
   destroyingSubject = new BehaviorSubject<boolean>(false);
   chat: Observable<Message[]>;
@@ -98,6 +99,10 @@ export class ViewComponent implements OnInit, OnDestroy {
 
     this.gm = combineLatest([this.campaign, this.auth.user]).pipe(
       map(([{ acl }, { uid }]) => acl[uid] === 'gm')
+    );
+
+    this.playerOrGm = combineLatest([this.campaign, this.auth.user]).pipe(
+      map(([{ acl }, { uid }]) => acl[uid] === 'gm' || acl[uid] === 'player')
     );
 
     this.notableCharacters = combineLatest([
