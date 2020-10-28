@@ -47,7 +47,7 @@ export class NotesComponent implements OnInit, OnChanges {
 
   private _destroying = new BehaviorSubject<boolean>(false);
   destroying = this._destroying.asObservable().pipe(filter((v) => v));
-  private _action = new Subject<{ e: any; a: 'toggleEdit' }>();
+  private _action = new Subject<{ e: any; a: 'edit' | 'save' }>();
 
   constructor(private firebase: AngularFirestore) {}
 
@@ -85,7 +85,7 @@ export class NotesComponent implements OnInit, OnChanges {
     this.editActive = combineLatest([
       this.active.pipe(distinctUntilKeyChanged('noteId')),
       this._action.asObservable().pipe(
-        filter((v) => v.a === 'toggleEdit'),
+        filter((v) => v.a === 'edit'),
         distinctUntilKeyChanged('e')
       ),
     ]).pipe(
@@ -118,7 +118,7 @@ export class NotesComponent implements OnInit, OnChanges {
 
     this.editState.valueChanges
       .pipe(
-        debounceTime(100),
+        debounceTime(5000),
         withLatestFrom(this.active),
         distinctUntilChanged(
           ([s1], [s2]) => s1.title === s2.title && s1.content === s2.content
@@ -126,7 +126,19 @@ export class NotesComponent implements OnInit, OnChanges {
         takeUntil(this.destroying)
       )
       .subscribe(([state, note]) => {
-        this.firebase.doc(this.address(note)).update({
+        this._action.next({ e: new Date(), a: 'save' });
+      });
+
+    this._action
+      .asObservable()
+      .pipe(
+        filter((a) => a.a === 'save'),
+        distinctUntilKeyChanged('e'),
+        takeUntil(this.destroying),
+        withLatestFrom(this.active)
+      )
+      .subscribe(([, active]) => {
+        this.firebase.doc(this.address(active)).update({
           updatedAt: new Date(),
           title: this.editState.value.title,
           content: this.editState.value.content,
@@ -140,8 +152,13 @@ export class NotesComponent implements OnInit, OnChanges {
     }
   }
 
+  save(e: MouseEvent) {
+    this._action.next({ e, a: 'save' });
+    this._action.next({ e, a: 'edit' });
+  }
+
   edit(e: MouseEvent) {
-    this._action.next({ e, a: 'toggleEdit' });
+    this._action.next({ e, a: 'edit' });
   }
 
   async create() {

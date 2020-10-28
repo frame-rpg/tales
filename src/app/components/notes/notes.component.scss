@@ -1,13 +1,46 @@
+@use "sass:map";
+@import '../../../vars.scss';
+
 .notes {
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  width: clamp(400px, 100%, 800px);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 175px;
+}
+
+.listItem {
+  width: 90%;
+}
+
+.active {
+  background-color: map-get($map: $mat-accent, $key: 'lighter');
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  position: relative;
+  min-height: 500px;
 }
 
 .edit {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  width: clamp(400px, 100%, 800px);
   justify-content: stretch;
+}
+
+.action {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
 }
 
 .titleEdit {

@@ -1,30 +1,39 @@
 <div class="notes">
-  <ul>
-    <li *ngFor="let note of list | async" (click)="view(note)">
-      {{note.title}}
-    </li>
-  </ul>
-  <button mat-button (click)="create()">
-    <mat-icon>add</mat-icon>
-    <mat-label>Create</mat-label>
-  </button>
+  <div class="list">
+    <mat-nav-list>
+      <mat-list-item *ngFor="let note of list | async" (click)="view(note)"
+          class="listItem"
+          [class.active]="note?.noteId === (active | async)?.noteId">
+        {{note.title}}
+      </mat-list-item>
+    </mat-nav-list>
+    <button mat-button (click)="create()">
+      <mat-icon>add</mat-icon>
+      <mat-label>Create</mat-label>
+    </button>
+  </div>
   <div *ngIf="editActive | async; else maybeView" [formGroup]="editState"
-      class="edit">
+      class="edit body">
     <mat-form-field appearance="outline" class="titleEdit">
       <mat-label>Title</mat-label>
       <input matInput formControlName="title">
     </mat-form-field>
     <mat-form-field appearance="outline" class="bodyEdit">
       <mat-label>Note</mat-label>
-      <textarea matInput formControlName="content"
+      <textarea matInput formControlName="content" cdkAutosizeMinRows="25"
           cdkTextareaAutosize></textarea>
     </mat-form-field>
+    <button mat-fab (click)="save($event)" class="action">
+      <mat-icon>save</mat-icon>
+    </button>
   </div>
   <ng-template #maybeView>
-    <div *ngIf="active | async as note">
+    <div *ngIf="active | async as note" class="body">
       <h1>{{note.title}}</h1>
-      <button mat-button *ngIf="editable" (click)="edit($event)">Edit</button>
       <div markdown class="longform" [data]="note.content"></div>
+      <button mat-fab *ngIf="editable" (click)="edit($event)" class="action">
+        <mat-icon>edit</mat-icon>
+      </button>
     </div>
   </ng-template>
 </div>
