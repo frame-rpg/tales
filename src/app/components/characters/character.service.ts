@@ -123,7 +123,7 @@ export class CharacterService {
         filterAbilities(additional.abilities, 'passive', filter)
       );
     }
-    const auras = character.auras.filter(
+    const auras = Object.values(character.auras).filter(
       (aura) =>
         (aura.type === 'bonus' &&
           'category' in filter &&

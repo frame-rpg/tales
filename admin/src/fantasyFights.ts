@@ -144,7 +144,7 @@ export const characters: PlayerCharacter[] = [
     initiative: 0,
     equipment: {},
     abilities: [],
-    auras: [],
+    auras: {},
   },
   {
     name: 'Kewulf Trannyth',
@@ -176,7 +176,7 @@ export const characters: PlayerCharacter[] = [
     initiative: 0,
     equipment: {},
     abilities: [],
-    auras: [],
+    auras: {},
   },
   {
     name: 'Malven Stonecutter',
@@ -215,7 +215,25 @@ export const characters: PlayerCharacter[] = [
     initiative: 0,
     equipment: {},
     abilities: [],
-    auras: [],
+    auras: {
+      detectingTraps: {
+        type: 'generic',
+        duration: 'scene',
+        name: 'Spidey Sense Active',
+        description:
+          'Using your keen senses, you are trying extra hard to detect traps.',
+        icon: 'visibility',
+        badge: '2',
+      },
+      climbingWalls: {
+        type: 'generic',
+        duration: 'scene',
+        name: 'Spidey Walk Active',
+        description:
+          'Using your antigrav boots, you are literally climbing the walls.',
+        icon: 'arrow_upward',
+      },
+    },
   },
   {
     name: 'Jordiz Shirodz',
@@ -258,7 +276,7 @@ export const characters: PlayerCharacter[] = [
     initiative: 0,
     equipment: {},
     abilities: [feet],
-    auras: [],
+    auras: {},
   },
   {
     name: 'Cantaloupe "Loupe" Pantaloons',
@@ -320,6 +338,15 @@ export const characters: PlayerCharacter[] = [
         costs: [],
       },
     ],
-    auras: [],
+    auras: {
+      flying: {
+        type: 'generic',
+        duration: 'scene',
+        name: 'You are flying!',
+        description:
+          'Using the beetle carapace that you have transformed your torso into (clever decision), you take flight, giving you a clumsy lift.',
+        icon: 'flight_takeoff',
+      },
+    },
   },
 ];

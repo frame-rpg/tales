@@ -24,13 +24,8 @@
     <div class="characters">
       <ng-container
           *ngFor="let character of characters | async | sortBy:'initiative':'asc'; trackBy:('characterId' | trackByProperty)">
-        <character-card [character]="character"
-            *ngIf="gm | async; else smallCard"> </character-card>
-
-        <ng-template #smallCard>
-          <framesystem-character-smallcard [character]="character">
-          </framesystem-character-smallcard>
-        </ng-template>
+        <framesystem-character-smallcard [character]="character">
+        </framesystem-character-smallcard>
       </ng-container>
     </div>
     <div class="actions" *ngIf="gm | async">

@@ -127,7 +127,7 @@ exports.characters = [
         initiative: 0,
         equipment: {},
         abilities: [],
-        auras: [],
+        auras: {},
     },
     {
         name: 'Kewulf Trannyth',
@@ -159,7 +159,7 @@ exports.characters = [
         initiative: 0,
         equipment: {},
         abilities: [],
-        auras: [],
+        auras: {},
     },
     {
         name: 'Malven Stonecutter',
@@ -198,7 +198,23 @@ exports.characters = [
         initiative: 0,
         equipment: {},
         abilities: [],
-        auras: [],
+        auras: {
+            detectingTraps: {
+                type: 'generic',
+                duration: 'scene',
+                name: 'Spidey Sense Active',
+                description: 'Using your keen senses, you are trying extra hard to detect traps.',
+                icon: 'visibility',
+                badge: '2',
+            },
+            climbingWalls: {
+                type: 'generic',
+                duration: 'scene',
+                name: 'Spidey Walk Active',
+                description: 'Using your antigrav boots, you are literally climbing the walls.',
+                icon: 'arrow_upward',
+            },
+        },
     },
     {
         name: 'Jordiz Shirodz',
@@ -241,7 +257,7 @@ exports.characters = [
         initiative: 0,
         equipment: {},
         abilities: [equipment_1.feet],
-        auras: [],
+        auras: {},
     },
     {
         name: 'Cantaloupe "Loupe" Pantaloons',
@@ -303,6 +319,14 @@ exports.characters = [
                 costs: [],
             },
         ],
-        auras: [],
+        auras: {
+            flying: {
+                type: 'generic',
+                duration: 'scene',
+                name: 'You are flying!',
+                description: 'Using the beetle carapace that you have transformed your torso into (clever decision), you take flight, giving you a clumsy lift.',
+                icon: 'flight_takeoff',
+            },
+        },
     },
 ];

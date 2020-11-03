@@ -10,6 +10,7 @@ export interface BaseEffect {
   name?: string;
   description?: string;
   icon?: string;
+  badge?: string | number;
 }
 
 export interface BonusEffect extends BaseEffect {

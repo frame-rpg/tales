@@ -14,5 +14,5 @@ export interface CharacterBase extends CharacterId {
   initiative: number;
   equipment: Record<string, Item>;
   abilities: Ability[];
-  auras: Effect[];
+  auras: Record<string, Effect>;
 }
