@@ -335,7 +335,6 @@ export class RollService {
             .where('archive', '==', false)
             .where('state', '==', 'rolled')
             .orderBy('at')
-            .limit(20)
       )
       .valueChanges();
   }
