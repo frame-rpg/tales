@@ -5,8 +5,8 @@
     <div class="info">
       <div class="name">{{character.name}}</div>
       <div class="auras">
-        <mat-icon *ngFor="let effect of character.auras | keyvalue" matBadge="1"
-            [matTooltip]="effect.value.badge">
+        <mat-icon *ngFor="let effect of character.auras | keyvalue"
+            [matBadge]="effect.value.badge" [matTooltip]="effect.value.badge">
           {{effect.value.icon}}
         </mat-icon>
       </div>
