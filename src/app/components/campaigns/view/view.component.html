@@ -7,8 +7,8 @@
     <mat-tab label="My Characters" *ngIf="(notableCharacters | async).length">
       <mat-tab-group
           *ngIf="(notableCharacters | async).length > 1; else singleton">
-        <mat-tab [label]="character.name[0]"
-            *ngFor="let character of notableCharacters | async">
+        <mat-tab [label]="character.name[0]" *ngFor="let character of notableCharacters | async;
+            trackBy:('characterId' | trackByProperty)">
           <framesystem-character-sheet [character]="character">
           </framesystem-character-sheet>
         </mat-tab>
