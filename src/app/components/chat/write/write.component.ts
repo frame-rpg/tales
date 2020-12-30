@@ -64,7 +64,6 @@ export class WriteComponent implements OnInit, OnDestroy {
   }
 
   enter(event: KeyboardEvent) {
-    return;
     if (event.shiftKey || event.ctrlKey || event.metaKey || event.isComposing) {
       return;
     } else {

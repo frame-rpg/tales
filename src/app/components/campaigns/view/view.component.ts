@@ -1,7 +1,14 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { Character, SkilledCharacter } from 'types/character';
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Roll, RollRequest } from 'types/roll';
 import {
   distinctUntilChanged,
@@ -38,7 +45,7 @@ interface Action {
   templateUrl: './view.component.html',
   styleUrls: ['./view.component.scss'],
 })
-export class ViewComponent implements OnInit, OnDestroy {
+export class ViewComponent implements OnInit, OnDestroy, AfterViewInit {
   campaign: Observable<Campaign>;
   characters: Observable<Character[]>;
   notableCharacters: Observable<Character[]>;
@@ -58,6 +65,8 @@ export class ViewComponent implements OnInit, OnDestroy {
   action = this.actionSubject
     .asObservable()
     .pipe(distinctUntilChanged(), publishReplay(1), refCount());
+
+  @ViewChild('chatHistory') chatHistory: ElementRef;
 
   constructor(
     private campaignService: CampaignService,
@@ -189,6 +198,12 @@ export class ViewComponent implements OnInit, OnDestroy {
         }
       });
 
+    this.chat.pipe(takeUntil(this.destroying)).subscribe(() => {
+      this.chatHistory.nativeElement.children[
+        this.chatHistory.nativeElement.childElementCount - 1
+      ]?.scrollIntoViewIfNeeded();
+    });
+
     const actionStream = combineLatest([
       this.campaign,
       this.characters,
@@ -212,6 +227,16 @@ export class ViewComponent implements OnInit, OnDestroy {
     actionStream
       .pipe(filter(([, , event]) => event.type === 'reset'))
       .subscribe(([, characters]) => this.characterService.reset(characters));
+  }
+
+  ngAfterViewInit() {
+    setTimeout(
+      () =>
+        this.chatHistory.nativeElement.children[
+          this.chatHistory.nativeElement.childElementCount - 1
+        ]?.scrollIntoViewIfNeeded(),
+      300
+    );
   }
 
   initiative(event: MouseEvent) {

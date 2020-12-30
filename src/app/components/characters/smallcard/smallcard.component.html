@@ -10,13 +10,16 @@
           {{effect.value.icon}}
         </mat-icon>
       </div>
-    </div>
-  </div>
-  <div class="status" [matTooltip]="health + ' health, '+ woundCount+ ' wounds'"
-      matTooltipPosition="above">
-    <div class="healthBar" [style.width.%]="statusPercent" [class]="status">
-    </div>
-    <div class="statusText" [class]="status">{{ currentPool }} / {{ maxPool }}
+      <div class="status"
+          [matTooltip]="health + ' health, '+ woundCount+ ' wounds'"
+          matTooltipPosition="above">
+        <div class="healthBar" [style.width.%]="statusPercent" [class]="status">
+        </div>
+        <div class="statusText" [class]="status">{{ currentPool }} /
+          {{ maxPool }}
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

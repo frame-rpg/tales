@@ -14,26 +14,32 @@
   </div>
   <div *ngIf="editActive | async; else maybeView" [formGroup]="editState"
       class="edit body">
-    <mat-form-field appearance="outline" class="titleEdit">
-      <mat-label>Title</mat-label>
-      <input matInput formControlName="title">
-    </mat-form-field>
+    <div class="titleRow">
+      <mat-form-field appearance="outline" class="titleEdit">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title">
+      </mat-form-field>
+      <button mat-flat-button color="primary" (click)="save($event)">
+        <mat-icon>save</mat-icon>
+        Save
+      </button>
+    </div>
     <mat-form-field appearance="outline" class="bodyEdit">
       <mat-label>Note</mat-label>
-      <textarea matInput formControlName="content" cdkAutosizeMinRows="25"
-          cdkTextareaAutosize></textarea>
+      <textarea matInput formControlName="content" cdkTextareaAutosize
+          cdkAutosizeMinRows="25" cdkAutosizeMaxRows="50"></textarea>
     </mat-form-field>
-    <button mat-fab (click)="save($event)" class="action">
-      <mat-icon>save</mat-icon>
-    </button>
   </div>
   <ng-template #maybeView>
     <div *ngIf="active | async as note" class="body">
-      <h1>{{note.title}}</h1>
-      <div markdown class="longform" [data]="note.content"></div>
-      <button mat-fab *ngIf="editable" (click)="edit($event)" class="action">
-        <mat-icon>edit</mat-icon>
-      </button>
+      <div class="titleRow">
+        <h1>{{note.title}}</h1>
+        <button mat-flat-button color="primary" (click)="edit($event)">
+          <mat-icon>edit</mat-icon>
+          Edit
+        </button>
+      </div>
+      <div markdown class="longform content" [data]="note.content"></div>
     </div>
   </ng-template>
 </div>

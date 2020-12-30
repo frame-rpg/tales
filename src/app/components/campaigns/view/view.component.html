@@ -1,5 +1,5 @@
 <div class="main">
-  <mat-tab-group class="notebook" dynamicHeight>
+  <mat-tab-group class="left">
     <mat-tab label="Campaign Notes">
       <framesystem-notes [parent]="campaign | async"
           [editable]="playerOrGm | async"></framesystem-notes>
@@ -45,7 +45,7 @@
         Reset
       </button>
     </div>
-    <div class="chatHistory">
+    <div class="chatHistory" #chatHistory>
       <framesystem-chat-view *ngFor="let msg of chat | async" [msg]="msg">
       </framesystem-chat-view>
     </div>

@@ -38,6 +38,11 @@
     margin-bottom: 0;
     line-height: initial;
   }
+
+  img {
+    object-fit: cover;
+    max-width: 100%;
+  }
 }
 
 .notebook .mat-tab-body-wrapper {
