@@ -1,5 +1,3 @@
-import * as firebase from 'firebase/app';
-
 import { NavigationEnd, Router } from '@angular/router';
 import { combineLatest, of } from 'rxjs';
 import {
@@ -13,6 +11,7 @@ import {
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Injectable } from '@angular/core';
+import firebase from 'firebase/app';
 
 @Injectable({
   providedIn: 'root',

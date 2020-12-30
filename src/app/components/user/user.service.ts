@@ -19,7 +19,7 @@ import { Observable } from 'rxjs';
 import { PresenceService } from 'src/app/core/firebase/presence.service';
 import { Router } from '@angular/router';
 import { UserId } from 'types/idtypes';
-import { firestore } from 'firebase';
+import firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root',
@@ -93,7 +93,7 @@ export class UserService {
   getAll(users: string[]) {
     return this.firestore
       .collection<User>(`/users`, (query) =>
-        query.where(firestore.FieldPath.documentId(), 'in', users)
+        query.where(firebase.firestore.FieldPath.documentId(), 'in', users)
       )
       .valueChanges({ idField: 'userId' });
   }

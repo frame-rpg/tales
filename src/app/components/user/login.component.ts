@@ -14,7 +14,6 @@ import { FirebaseuiAngularLibraryComponent } from 'firebaseui-angular';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from './user.service';
-import { auth } from 'firebase/app';
 
 @Component({
   selector: 'tales-user-login',

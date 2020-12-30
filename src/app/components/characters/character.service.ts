@@ -12,7 +12,7 @@ import { Item } from 'types/item';
 import { Observable } from 'rxjs';
 import { SkillType } from 'types/skill';
 import { addId } from '../../data/rxutil';
-import { firestore } from 'firebase/app';
+import firebase from 'firebase/app';
 import { ulid } from 'ulid';
 
 @Injectable({
@@ -141,7 +141,7 @@ export class CharacterService {
       itemId: ulid(),
     };
     await this.update(character, {
-      carried: firestore.FieldValue.arrayUnion({ ...item, owner }),
+      carried: firebase.firestore.FieldValue.arrayUnion({ ...item, owner }),
     });
   }
 
