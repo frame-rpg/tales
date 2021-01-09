@@ -15,9 +15,9 @@ import {
 } from 'rxjs/operators';
 
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Ulid } from 'id128';
 import { UserMedia } from 'types/user';
 import { UserService } from '../../components/user/user.service';
-import { ulid } from 'ulid';
 
 @Component({
   selector: 'framesystem-image-select',
@@ -62,7 +62,7 @@ export class ImageSelectComponent implements OnInit, OnDestroy {
         takeUntil(this.destroying)
       )
       .subscribe(([file, { uid }]) => {
-        const id = ulid();
+        const id = Ulid.generate().toCanonical();
         const ref = this.storage.ref(id);
         const task = ref.put(file);
         task.then(async (result) =>
