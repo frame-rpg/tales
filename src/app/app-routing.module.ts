@@ -4,6 +4,7 @@ import {
 } from '@angular/fire/auth-guard';
 import { RouterModule, Routes } from '@angular/router';
 
+import { CampaignComponent } from './pages/campaign/campaign.component';
 import { ViewComponent as CampaignViewComponent } from './components/campaigns/view/view.component';
 import { LoginComponent } from './components/user/login.component';
 import { NgModule } from '@angular/core';
@@ -18,7 +19,7 @@ const routes: Routes = [
   },
   {
     path: 'campaigns/:campaignId',
-    component: CampaignViewComponent,
+    component: CampaignComponent,
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: () => redirectUnauthorizedTo(['login']) },
   },

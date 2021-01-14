@@ -14,6 +14,7 @@ import { FramesystemRenderer } from './staticRenderer';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MaterialModule } from './core/material/material.module';
 import { NgModule } from '@angular/core';
+import { PagesModule } from './pages/pages.module';
 import { RollsModule } from './rolls/rolls.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -43,6 +44,7 @@ const firebaseUiAuthConfig: any = {
     ComponentsModule,
     CommonModule,
     SharedModule,
+    PagesModule,
     RollsModule,
     FormsModule,
     ReactiveFormsModule,
