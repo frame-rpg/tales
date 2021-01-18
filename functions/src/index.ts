@@ -5,6 +5,7 @@ import { AppModule } from './app.module';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { NestFactory } from '@nestjs/core';
 import express from 'express';
+import { firebaseAuthMiddleware } from './auth.middleware';
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -54,6 +55,7 @@ async function createNestServer(expressInstance) {
     AppModule,
     new ExpressAdapter(expressInstance)
   );
+  app.use(firebaseAuthMiddleware);
   return app.init();
 }
 

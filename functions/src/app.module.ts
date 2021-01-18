@@ -1,7 +1,10 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule } from '@nestjs/common';
+
 import { CharacterController } from './character/character.controller';
 
 @Module({
   controllers: [CharacterController],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure() {}
+}

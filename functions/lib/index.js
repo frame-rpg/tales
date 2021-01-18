@@ -1,8 +1,35 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.onUserStatusChanged = exports.onSignup = void 0;
-const admin = require("firebase-admin");
-const functions = require("firebase-functions");
+exports.api = exports.onUserStatusChanged = exports.onSignup = void 0;
+const admin = __importStar(require("firebase-admin"));
+const functions = __importStar(require("firebase-functions"));
+const app_module_1 = require("./app.module");
+const platform_express_1 = require("@nestjs/platform-express");
+const core_1 = require("@nestjs/core");
+const express_1 = __importDefault(require("express"));
+const auth_middleware_1 = require("./auth.middleware");
 admin.initializeApp();
 const db = admin.firestore();
 exports.onSignup = functions.auth.user().onCreate((user) => {
@@ -16,25 +43,24 @@ exports.onSignup = functions.auth.user().onCreate((user) => {
 exports.onUserStatusChanged = functions.database
     .ref('/status/{uid}')
     .onUpdate(async (change, context) => {
-    // Get the data written to Realtime Database
     const eventStatus = change.after.val();
-    // Then use other event data to create a reference to the
-    // corresponding Firestore document.
     const userStatusFirestoreRef = db.doc(`status/${context.params.uid}`);
-    // It is likely that the Realtime Database change that triggered
-    // this event has already been overwritten by a fast change in
-    // online / offline status, so we'll re-read the current data
-    // and compare the timestamps.
     const statusSnapshot = await change.after.ref.once('value');
     const status = statusSnapshot.val();
-    // If the current timestamp for this data is newer than
-    // the data that triggered this event, we exit this function.
     if (status.last_changed > eventStatus.last_changed) {
         return null;
     }
-    // Otherwise, we convert the last_changed field to a Date
     eventStatus.last_changed = new Date(eventStatus.last_changed);
-    // ... and write it to Firestore.
     return userStatusFirestoreRef.set(eventStatus);
 });
+const server = express_1.default();
+async function createNestServer(expressInstance) {
+    const app = await core_1.NestFactory.create(app_module_1.AppModule, new platform_express_1.ExpressAdapter(expressInstance));
+    app.use(auth_middleware_1.firebaseAuthMiddleware);
+    return app.init();
+}
+createNestServer(server)
+    .then((v) => console.log('Nest Ready'))
+    .catch((err) => console.error('Nest broken', err));
+exports.api = functions.https.onRequest(server);
 //# sourceMappingURL=index.js.map
