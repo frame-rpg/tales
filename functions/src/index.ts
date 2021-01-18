@@ -49,14 +49,13 @@ export const onUserStatusChanged = functions.database
 
 const server = express();
 
-const createNestServer = async (expressInstance) => {
+async function createNestServer(expressInstance) {
   const app = await NestFactory.create(
     AppModule,
     new ExpressAdapter(expressInstance)
   );
-
   return app.init();
-};
+}
 
 createNestServer(server)
   .then((v) => console.log('Nest Ready'))
