@@ -5,18 +5,21 @@ import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { ActionsModule } from './actions/actions.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthInterceptor } from './auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { ComponentsModule } from './components/components.module';
 import { CoreModule } from './core/core.module';
 import { FramesystemRenderer } from './staticRenderer';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MaterialModule } from './core/material/material.module';
 import { NgModule } from '@angular/core';
 import { PagesModule } from './pages/pages.module';
 import { RollsModule } from './rolls/rolls.module';
 import { SharedModule } from './shared/shared.module';
+import { UrlInterceptor } from './url.interceptor';
 
 const firebaseUiAuthConfig: any = {
   signInFlow: 'popup',
@@ -67,7 +70,10 @@ const firebaseUiAuthConfig: any = {
       },
     }),
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: UrlInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

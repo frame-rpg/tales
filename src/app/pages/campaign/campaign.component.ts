@@ -2,7 +2,6 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { publishReplay, refCount, switchMap, take } from 'rxjs/operators';
 
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Campaign } from 'types/campaign';
 import { CampaignService } from 'src/app/components/campaigns/campaign.service';
 import { Character } from 'types/character';
@@ -10,7 +9,6 @@ import { CharacterService } from 'src/app/components/characters/character.servic
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from 'types/user';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'framesystem-campaign',
@@ -26,7 +24,6 @@ export class CampaignComponent implements OnInit {
     private campaignService: CampaignService,
     private characterService: CharacterService,
     private route: ActivatedRoute,
-    private auth: AngularFireAuth,
     private http: HttpClient
   ) {}
 
@@ -50,17 +47,11 @@ export class CampaignComponent implements OnInit {
   }
 
   async createCharacter(campaignId: string) {
-    console.log('posting');
-    const user = await this.auth.currentUser;
     this.http
-      .post(
-        `${environment.api}/character`,
-        {
-          name: 'new',
-          campaignId,
-        },
-        { headers: { authorization: `Bearer ${await user.getIdToken()}` } }
-      )
+      .post(`character/create`, {
+        name: 'new',
+        campaignId,
+      })
       .pipe(take(1))
       .subscribe((v) => console.log(v));
   }
