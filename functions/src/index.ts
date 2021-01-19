@@ -55,6 +55,7 @@ async function createNestServer(expressInstance) {
     AppModule,
     new ExpressAdapter(expressInstance)
   );
+  app.enableCors();
   app.use(firebaseAuthMiddleware);
   return app.init();
 }

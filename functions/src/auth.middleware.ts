@@ -5,6 +5,8 @@ export async function firebaseAuthMiddleware(
   res: any,
   next: () => void
 ) {
+  console.error(req.headers);
+
   if (
     (!req.headers.authorization ||
       !req.headers.authorization.startsWith('Bearer ')) &&

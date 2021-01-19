@@ -56,6 +56,7 @@ exports.onUserStatusChanged = functions.database
 const server = express_1.default();
 async function createNestServer(expressInstance) {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, new platform_express_1.ExpressAdapter(expressInstance));
+    app.enableCors();
     app.use(auth_middleware_1.firebaseAuthMiddleware);
     return app.init();
 }

@@ -1176,61 +1176,6 @@
         "signature": "95b5a3078fdc51508d5d9cde59a1dd9525b53fd42dc12265a55261fd415d3274",
         "affectsGlobalScope": false
       },
-      "../src/character/character.controller.ts": {
-        "version": "73fd02e4b1d3588e0024c971d5abc401063840111e072628877af6ac664533cf",
-        "signature": "7d0431a3a1bc95e07a8830bf3b751765d7bd49d963582a115f5278d682bd8072",
-        "affectsGlobalScope": false
-      },
-      "../src/app.module.ts": {
-        "version": "eafb0bb56f049ec508fee9a643de97bab949224964655b10b1ffd6dea0bf3f6a",
-        "signature": "cf1cc2717a5a1d4c47e05507f5f9ab6998a80df94a5703980f40a6ecd3888581",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@google-cloud/firestore/types/firestore.d.ts": {
-        "version": "a480ffca2b11ffdcdf984aa07040cec84d0b6aa347e604624b07028431a719fa",
-        "signature": "a480ffca2b11ffdcdf984aa07040cec84d0b6aa347e604624b07028431a719fa",
-        "affectsGlobalScope": true
-      },
-      "../node_modules/firebase-admin/lib/auth.d.ts": {
-        "version": "a821e1af651fea2ad08544f484c8278138c6d4ef2ea9d4585604c9b1daaedc4f",
-        "signature": "a821e1af651fea2ad08544f484c8278138c6d4ef2ea9d4585604c9b1daaedc4f",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/firebase-admin/lib/credential.d.ts": {
-        "version": "11726216dd3fa1c3d314df5e3db6b7ead7b817c905988ddef2c4f6fe94e5c71d",
-        "signature": "11726216dd3fa1c3d314df5e3db6b7ead7b817c905988ddef2c4f6fe94e5c71d",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/firebase-admin/lib/database.d.ts": {
-        "version": "b50ef599a8e23e9b6551c6f5860b4ca2bf587338af193eacd14fdd381c1bef58",
-        "signature": "b50ef599a8e23e9b6551c6f5860b4ca2bf587338af193eacd14fdd381c1bef58",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/firebase-admin/lib/messaging.d.ts": {
-        "version": "0fe6b038a585b308977cbfa56bff5041161640a3684cf2a4f339baa4cdcd5d77",
-        "signature": "0fe6b038a585b308977cbfa56bff5041161640a3684cf2a4f339baa4cdcd5d77",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/firebase-admin/lib/instance-id.d.ts": {
-        "version": "534ad9b39fcf46558d6d16ec4ffc9d8443bbc86721cd00433aa7bb74a7c39e56",
-        "signature": "534ad9b39fcf46558d6d16ec4ffc9d8443bbc86721cd00433aa7bb74a7c39e56",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/firebase-admin/lib/project-management.d.ts": {
-        "version": "69ad279f07b22926fc2b755b0e1942b03f09379ebdf4924e0831701b99644e3c",
-        "signature": "69ad279f07b22926fc2b755b0e1942b03f09379ebdf4924e0831701b99644e3c",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/firebase-admin/lib/remote-config.d.ts": {
-        "version": "bec11999164a1732d60386b1f35a2cd2de7a171a2d7a92e1df3fc4e656eee6bb",
-        "signature": "bec11999164a1732d60386b1f35a2cd2de7a171a2d7a92e1df3fc4e656eee6bb",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/firebase-admin/lib/security-rules.d.ts": {
-        "version": "af46a164934b6fe1e96bfce1f391966dc6d053b4e341e0f6b75fac2c4ca8f8df",
-        "signature": "af46a164934b6fe1e96bfce1f391966dc6d053b4e341e0f6b75fac2c4ca8f8df",
-        "affectsGlobalScope": false
-      },
       "../node_modules/@types/node/globals.d.ts": {
         "version": "fe41ed4c465521841809c5a2db899a5ce776a7118b6eb03177350c5a93ca3530",
         "signature": "fe41ed4c465521841809c5a2db899a5ce776a7118b6eb03177350c5a93ca3530",
@@ -1446,6 +1391,166 @@
         "signature": "99904fb1a722345db92cce12df63dd0037081a4e1201519398a88e587659544a",
         "affectsGlobalScope": false
       },
+      "../node_modules/@types/range-parser/index.d.ts": {
+        "version": "4e88b833be14c7f384e0dcd57bb30acd799e8e34d212635d693e41a75a71164b",
+        "signature": "4e88b833be14c7f384e0dcd57bb30acd799e8e34d212635d693e41a75a71164b",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@types/qs/index.d.ts": {
+        "version": "c236451df6139a965bb9b8fba15a43a8bebf4400ca589998e2bdc5e1291fa0f9",
+        "signature": "c236451df6139a965bb9b8fba15a43a8bebf4400ca589998e2bdc5e1291fa0f9",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@types/express-serve-static-core/index.d.ts": {
+        "version": "495cc9f802a6bce4aa21dddf13f8e61b4f0b7976621af90e31c58a4dfe4802ef",
+        "signature": "495cc9f802a6bce4aa21dddf13f8e61b4f0b7976621af90e31c58a4dfe4802ef",
+        "affectsGlobalScope": true
+      },
+      "../node_modules/@types/mime/index.d.ts": {
+        "version": "be27a64e821a3e5af838650e4aa25805c60f057d0c37a9762c378d19d364b3e6",
+        "signature": "be27a64e821a3e5af838650e4aa25805c60f057d0c37a9762c378d19d364b3e6",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@types/serve-static/index.d.ts": {
+        "version": "adde1c915ab3b61a2821c72f226546c6c119a061a2ff4d6f90b3d61c005ae1f8",
+        "signature": "adde1c915ab3b61a2821c72f226546c6c119a061a2ff4d6f90b3d61c005ae1f8",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@types/connect/index.d.ts": {
+        "version": "e6ffa74698f0a1d23e4223242ed7dcdb89d02bbbb063a1930e9f91d0385abe16",
+        "signature": "e6ffa74698f0a1d23e4223242ed7dcdb89d02bbbb063a1930e9f91d0385abe16",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@types/body-parser/index.d.ts": {
+        "version": "ebddbd167c2fabd0151f50e5df94ca6d845149c47521280d8867afe3429dd078",
+        "signature": "ebddbd167c2fabd0151f50e5df94ca6d845149c47521280d8867afe3429dd078",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@types/express/index.d.ts": {
+        "version": "af43f1d20a34fa56542ce2093fd9af37cb4f3076a648b63fd46b1ffac8948c9e",
+        "signature": "af43f1d20a34fa56542ce2093fd9af37cb4f3076a648b63fd46b1ffac8948c9e",
+        "affectsGlobalScope": false
+      },
+      "../../types/acl.d.ts": {
+        "version": "660800d3b631a779c33b8b302f4479e9362f43afe0769b8ef8d40e370916bcf1",
+        "signature": "660800d3b631a779c33b8b302f4479e9362f43afe0769b8ef8d40e370916bcf1",
+        "affectsGlobalScope": false
+      },
+      "../../types/attribute.d.ts": {
+        "version": "218d26c2ec27fac8b853e9cb3bf0bb35b831310f621b0bcc77ace73e0454efb1",
+        "signature": "218d26c2ec27fac8b853e9cb3bf0bb35b831310f621b0bcc77ace73e0454efb1",
+        "affectsGlobalScope": false
+      },
+      "../../types/cost.d.ts": {
+        "version": "4d43a622bc5e9a22aa9a74aa1cded86e453f7704680541bae819b229bc52f6e7",
+        "signature": "4d43a622bc5e9a22aa9a74aa1cded86e453f7704680541bae819b229bc52f6e7",
+        "affectsGlobalScope": false
+      },
+      "../../types/skill.d.ts": {
+        "version": "0ae1d1b11628772e16496eac5ff38a6cd4aee209436bbae4007eccab85589917",
+        "signature": "0ae1d1b11628772e16496eac5ff38a6cd4aee209436bbae4007eccab85589917",
+        "affectsGlobalScope": false
+      },
+      "../../types/effect.d.ts": {
+        "version": "b8d69afd58ccad9c552f5bfc23fbc738af8c464ffce4ef96038c62506fe9ed20",
+        "signature": "b8d69afd58ccad9c552f5bfc23fbc738af8c464ffce4ef96038c62506fe9ed20",
+        "affectsGlobalScope": false
+      },
+      "../../types/ability.d.ts": {
+        "version": "e77393b21058318ca78f545783558379dfc07fe941a7d6ec1207f737f7d999f5",
+        "signature": "e77393b21058318ca78f545783558379dfc07fe941a7d6ec1207f737f7d999f5",
+        "affectsGlobalScope": false
+      },
+      "../../types/idtypes.d.ts": {
+        "version": "abd0411863c74a2df3bd123f6ca15ef9ad68fab9708f2a4fa2641d94887df1b2",
+        "signature": "abd0411863c74a2df3bd123f6ca15ef9ad68fab9708f2a4fa2641d94887df1b2",
+        "affectsGlobalScope": false
+      },
+      "../../types/item.d.ts": {
+        "version": "7d2c998140f19cef8d4fd96a5d53973cf47d8a4026223a555bbdff0ff1bc6741",
+        "signature": "7d2c998140f19cef8d4fd96a5d53973cf47d8a4026223a555bbdff0ff1bc6741",
+        "affectsGlobalScope": false
+      },
+      "../../types/character_base.d.ts": {
+        "version": "5fa2c5101b1c38501eb942caca2bf1717da5a591f02c0de1092ccca91f11b9a6",
+        "signature": "5fa2c5101b1c38501eb942caca2bf1717da5a591f02c0de1092ccca91f11b9a6",
+        "affectsGlobalScope": false
+      },
+      "../../types/player_character.d.ts": {
+        "version": "474d6a454440e4318f1fd9f764863d50dc2dff9add5f515590d4e98b65c76641",
+        "signature": "474d6a454440e4318f1fd9f764863d50dc2dff9add5f515590d4e98b65c76641",
+        "affectsGlobalScope": false
+      },
+      "../../types/nonplayer_character.d.ts": {
+        "version": "9452ad6cddd88d671cabe5a0b44bc704dafaa80a30cb5e7400a5fc193d6b6284",
+        "signature": "9452ad6cddd88d671cabe5a0b44bc704dafaa80a30cb5e7400a5fc193d6b6284",
+        "affectsGlobalScope": false
+      },
+      "../../types/companion.d.ts": {
+        "version": "c59ea39a91ad41dae132f20976eed25ca57fc658074bbe7eb86707c3940d35b4",
+        "signature": "c59ea39a91ad41dae132f20976eed25ca57fc658074bbe7eb86707c3940d35b4",
+        "affectsGlobalScope": false
+      },
+      "../../types/character.d.ts": {
+        "version": "e2704a227beb74c90ca32faad3af8eff8b411652c7c4ed4fd586f3465df09576",
+        "signature": "e2704a227beb74c90ca32faad3af8eff8b411652c7c4ed4fd586f3465df09576",
+        "affectsGlobalScope": false
+      },
+      "../src/character/character.controller.ts": {
+        "version": "e6ed58f5cea70976ff4ed025c0a5d653713be701b8198a4d917983d8847e3355",
+        "signature": "9541d11642a20d56e95eb384a068e212d261211bbb2457bc71e79d8c97f9ae70",
+        "affectsGlobalScope": false
+      },
+      "../src/app.module.ts": {
+        "version": "eafb0bb56f049ec508fee9a643de97bab949224964655b10b1ffd6dea0bf3f6a",
+        "signature": "cf1cc2717a5a1d4c47e05507f5f9ab6998a80df94a5703980f40a6ecd3888581",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@google-cloud/firestore/types/firestore.d.ts": {
+        "version": "a480ffca2b11ffdcdf984aa07040cec84d0b6aa347e604624b07028431a719fa",
+        "signature": "a480ffca2b11ffdcdf984aa07040cec84d0b6aa347e604624b07028431a719fa",
+        "affectsGlobalScope": true
+      },
+      "../node_modules/firebase-admin/lib/auth.d.ts": {
+        "version": "a821e1af651fea2ad08544f484c8278138c6d4ef2ea9d4585604c9b1daaedc4f",
+        "signature": "a821e1af651fea2ad08544f484c8278138c6d4ef2ea9d4585604c9b1daaedc4f",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/firebase-admin/lib/credential.d.ts": {
+        "version": "11726216dd3fa1c3d314df5e3db6b7ead7b817c905988ddef2c4f6fe94e5c71d",
+        "signature": "11726216dd3fa1c3d314df5e3db6b7ead7b817c905988ddef2c4f6fe94e5c71d",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/firebase-admin/lib/database.d.ts": {
+        "version": "b50ef599a8e23e9b6551c6f5860b4ca2bf587338af193eacd14fdd381c1bef58",
+        "signature": "b50ef599a8e23e9b6551c6f5860b4ca2bf587338af193eacd14fdd381c1bef58",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/firebase-admin/lib/messaging.d.ts": {
+        "version": "0fe6b038a585b308977cbfa56bff5041161640a3684cf2a4f339baa4cdcd5d77",
+        "signature": "0fe6b038a585b308977cbfa56bff5041161640a3684cf2a4f339baa4cdcd5d77",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/firebase-admin/lib/instance-id.d.ts": {
+        "version": "534ad9b39fcf46558d6d16ec4ffc9d8443bbc86721cd00433aa7bb74a7c39e56",
+        "signature": "534ad9b39fcf46558d6d16ec4ffc9d8443bbc86721cd00433aa7bb74a7c39e56",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/firebase-admin/lib/project-management.d.ts": {
+        "version": "69ad279f07b22926fc2b755b0e1942b03f09379ebdf4924e0831701b99644e3c",
+        "signature": "69ad279f07b22926fc2b755b0e1942b03f09379ebdf4924e0831701b99644e3c",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/firebase-admin/lib/remote-config.d.ts": {
+        "version": "bec11999164a1732d60386b1f35a2cd2de7a171a2d7a92e1df3fc4e656eee6bb",
+        "signature": "bec11999164a1732d60386b1f35a2cd2de7a171a2d7a92e1df3fc4e656eee6bb",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/firebase-admin/lib/security-rules.d.ts": {
+        "version": "af46a164934b6fe1e96bfce1f391966dc6d053b4e341e0f6b75fac2c4ca8f8df",
+        "signature": "af46a164934b6fe1e96bfce1f391966dc6d053b4e341e0f6b75fac2c4ca8f8df",
+        "affectsGlobalScope": false
+      },
       "../node_modules/event-target-shim/index.d.ts": {
         "version": "2859adaa4f2db3d4f0fc37ad86f056045341496b58fba0dbc16a222f9d5d55b1",
         "signature": "2859adaa4f2db3d4f0fc37ad86f056045341496b58fba0dbc16a222f9d5d55b1",
@@ -1647,48 +1752,8 @@
         "affectsGlobalScope": false
       },
       "../src/auth.middleware.ts": {
-        "version": "05fb9bc9fba66150df1e935537aef91cea39b1d2d3a1efe8d67287b0064ee187",
+        "version": "2f4d0074465b7e5249d5c5ebd8b8098810af9714c239393ba7ae8759e2983038",
         "signature": "c5db2cab67f03397216009f46b741a0fd0fd480e255a5aef467a03ded62b4c7c",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/range-parser/index.d.ts": {
-        "version": "4e88b833be14c7f384e0dcd57bb30acd799e8e34d212635d693e41a75a71164b",
-        "signature": "4e88b833be14c7f384e0dcd57bb30acd799e8e34d212635d693e41a75a71164b",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/qs/index.d.ts": {
-        "version": "c236451df6139a965bb9b8fba15a43a8bebf4400ca589998e2bdc5e1291fa0f9",
-        "signature": "c236451df6139a965bb9b8fba15a43a8bebf4400ca589998e2bdc5e1291fa0f9",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/express-serve-static-core/index.d.ts": {
-        "version": "495cc9f802a6bce4aa21dddf13f8e61b4f0b7976621af90e31c58a4dfe4802ef",
-        "signature": "495cc9f802a6bce4aa21dddf13f8e61b4f0b7976621af90e31c58a4dfe4802ef",
-        "affectsGlobalScope": true
-      },
-      "../node_modules/@types/mime/index.d.ts": {
-        "version": "be27a64e821a3e5af838650e4aa25805c60f057d0c37a9762c378d19d364b3e6",
-        "signature": "be27a64e821a3e5af838650e4aa25805c60f057d0c37a9762c378d19d364b3e6",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/serve-static/index.d.ts": {
-        "version": "adde1c915ab3b61a2821c72f226546c6c119a061a2ff4d6f90b3d61c005ae1f8",
-        "signature": "adde1c915ab3b61a2821c72f226546c6c119a061a2ff4d6f90b3d61c005ae1f8",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/connect/index.d.ts": {
-        "version": "e6ffa74698f0a1d23e4223242ed7dcdb89d02bbbb063a1930e9f91d0385abe16",
-        "signature": "e6ffa74698f0a1d23e4223242ed7dcdb89d02bbbb063a1930e9f91d0385abe16",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/body-parser/index.d.ts": {
-        "version": "ebddbd167c2fabd0151f50e5df94ca6d845149c47521280d8867afe3429dd078",
-        "signature": "ebddbd167c2fabd0151f50e5df94ca6d845149c47521280d8867afe3429dd078",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/express/index.d.ts": {
-        "version": "af43f1d20a34fa56542ce2093fd9af37cb4f3076a648b63fd46b1ffac8948c9e",
-        "signature": "af43f1d20a34fa56542ce2093fd9af37cb4f3076a648b63fd46b1ffac8948c9e",
         "affectsGlobalScope": false
       },
       "../node_modules/firebase-functions/lib/function-configuration.d.ts": {
@@ -2042,7 +2107,7 @@
         "affectsGlobalScope": false
       },
       "../src/index.ts": {
-        "version": "c2a23e6c8a5ca7dab989ecc913250c0d1a2d25bc79d79f1528351b8c5867d552",
+        "version": "979b96e2bff4766dc258cb39814fb17fd6cf95fb719824ec49b5b216b80f6359",
         "signature": "33ce6b2c9475f115f2ee1db440d5ec0196027678cadc3cf3cef77ba008e35fa9",
         "affectsGlobalScope": false
       },
@@ -3989,7 +4054,9 @@
         "../src/character/character.controller.ts"
       ],
       "../src/character/character.controller.ts": [
-        "../node_modules/@nestjs/common/index.d.ts"
+        "../../types/character.d.ts",
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@types/express/index.d.ts"
       ],
       "../src/index.ts": [
         "../node_modules/@nestjs/core/index.d.ts",
@@ -4051,6 +4118,49 @@
         "../../node_modules/@types/webpack-sources/node_modules/source-map/source-map.d.ts",
         "../node_modules/@types/node/crypto.d.ts",
         "../node_modules/@types/node/index.d.ts"
+      ],
+      "../../types/ability.d.ts": [
+        "../../types/cost.d.ts",
+        "../../types/effect.d.ts",
+        "../../types/skill.d.ts"
+      ],
+      "../../types/character.d.ts": [
+        "../../types/character_base.d.ts",
+        "../../types/companion.d.ts",
+        "../../types/nonplayer_character.d.ts",
+        "../../types/player_character.d.ts"
+      ],
+      "../../types/character_base.d.ts": [
+        "../../types/ability.d.ts",
+        "../../types/acl.d.ts",
+        "../../types/effect.d.ts",
+        "../../types/idtypes.d.ts",
+        "../../types/item.d.ts"
+      ],
+      "../../types/companion.d.ts": [
+        "../../types/attribute.d.ts",
+        "../../types/character_base.d.ts",
+        "../../types/skill.d.ts"
+      ],
+      "../../types/cost.d.ts": [
+        "../../types/attribute.d.ts"
+      ],
+      "../../types/effect.d.ts": [
+        "../../types/skill.d.ts"
+      ],
+      "../../types/item.d.ts": [
+        "../../types/ability.d.ts"
+      ],
+      "../../types/nonplayer_character.d.ts": [
+        "../../types/character_base.d.ts"
+      ],
+      "../../types/player_character.d.ts": [
+        "../../types/attribute.d.ts",
+        "../../types/character_base.d.ts",
+        "../../types/skill.d.ts"
+      ],
+      "../../types/skill.d.ts": [
+        "../../types/attribute.d.ts"
       ]
     },
     "exportedModulesMap": {
@@ -5759,6 +5869,9 @@
       "../src/app.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts"
       ],
+      "../src/character/character.controller.ts": [
+        "../node_modules/@types/express/index.d.ts"
+      ],
       "../src/index.ts": [
         "../node_modules/firebase-admin/lib/auth.d.ts",
         "../node_modules/firebase-functions/lib/index.d.ts"
@@ -5814,6 +5927,49 @@
         "../../node_modules/@types/webpack-sources/node_modules/source-map/source-map.d.ts",
         "../node_modules/@types/node/crypto.d.ts",
         "../node_modules/@types/node/index.d.ts"
+      ],
+      "../../types/ability.d.ts": [
+        "../../types/cost.d.ts",
+        "../../types/effect.d.ts",
+        "../../types/skill.d.ts"
+      ],
+      "../../types/character.d.ts": [
+        "../../types/character_base.d.ts",
+        "../../types/companion.d.ts",
+        "../../types/nonplayer_character.d.ts",
+        "../../types/player_character.d.ts"
+      ],
+      "../../types/character_base.d.ts": [
+        "../../types/ability.d.ts",
+        "../../types/acl.d.ts",
+        "../../types/effect.d.ts",
+        "../../types/idtypes.d.ts",
+        "../../types/item.d.ts"
+      ],
+      "../../types/companion.d.ts": [
+        "../../types/attribute.d.ts",
+        "../../types/character_base.d.ts",
+        "../../types/skill.d.ts"
+      ],
+      "../../types/cost.d.ts": [
+        "../../types/attribute.d.ts"
+      ],
+      "../../types/effect.d.ts": [
+        "../../types/skill.d.ts"
+      ],
+      "../../types/item.d.ts": [
+        "../../types/ability.d.ts"
+      ],
+      "../../types/nonplayer_character.d.ts": [
+        "../../types/character_base.d.ts"
+      ],
+      "../../types/player_character.d.ts": [
+        "../../types/attribute.d.ts",
+        "../../types/character_base.d.ts",
+        "../../types/skill.d.ts"
+      ],
+      "../../types/skill.d.ts": [
+        "../../types/attribute.d.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -6267,7 +6423,20 @@
       "../../node_modules/@types/selenium-webdriver/safari.d.ts",
       "../../node_modules/@types/source-list-map/index.d.ts",
       "../../node_modules/@types/webpack-sources/index.d.ts",
-      "../../node_modules/@types/webpack-sources/node_modules/source-map/source-map.d.ts"
+      "../../node_modules/@types/webpack-sources/node_modules/source-map/source-map.d.ts",
+      "../../types/ability.d.ts",
+      "../../types/acl.d.ts",
+      "../../types/attribute.d.ts",
+      "../../types/character.d.ts",
+      "../../types/character_base.d.ts",
+      "../../types/companion.d.ts",
+      "../../types/cost.d.ts",
+      "../../types/effect.d.ts",
+      "../../types/idtypes.d.ts",
+      "../../types/item.d.ts",
+      "../../types/nonplayer_character.d.ts",
+      "../../types/player_character.d.ts",
+      "../../types/skill.d.ts"
     ]
   },
   "version": "4.0.3"

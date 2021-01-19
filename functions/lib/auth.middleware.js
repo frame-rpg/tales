@@ -22,6 +22,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.firebaseAuthMiddleware = void 0;
 const admin = __importStar(require("firebase-admin"));
 async function firebaseAuthMiddleware(req, res, next) {
+    console.error(req.headers);
     if ((!req.headers.authorization ||
         !req.headers.authorization.startsWith('Bearer ')) &&
         !(req.cookies && req.cookies.__session)) {
