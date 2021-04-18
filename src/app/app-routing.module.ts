@@ -24,6 +24,12 @@ const routes: Routes = [
     data: { authGuardPipe: () => redirectUnauthorizedTo(['login']) },
   },
   {
+    path: 'campaigns/:campaignId/live',
+    component: CampaignViewComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: () => redirectUnauthorizedTo(['login']) },
+  },
+  {
     path: 'users',
     component: UserViewRouteComponent,
     canActivate: [AngularFireAuthGuard],
